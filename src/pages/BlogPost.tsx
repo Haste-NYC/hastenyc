@@ -86,7 +86,7 @@ const BlogPost = () => {
           </div>
 
           <div className="rounded-none overflow-hidden">
-            <img src={designSystemImage} alt="Figma Design System with Slots and Variables" className="w-full h-auto" />
+            
           </div>
 
           {/* Check Designs */}
