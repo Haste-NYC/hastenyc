@@ -224,7 +224,7 @@ const BlogPost = () => {
         {/* Footer */}
         <div className="border-t border-border pt-8">
           <p className="text-muted-foreground uppercase text-sm tracking-wider">
-            Written by the Conform Studio Team
+            Written by Dilcia Alvarado
           </p>
         </div>
       </article>
