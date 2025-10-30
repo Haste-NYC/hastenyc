@@ -3,7 +3,7 @@ import { Link } from "react-router-dom";
 import keynoteImage from "@/assets/figma-schema-keynote.jpg";
 import designSystemImage from "@/assets/figma-design-system.jpg";
 import mcpImage from "@/assets/mcp-integration.jpg";
-import slotsImage from "@/assets/figma-slots-demo.png";
+import slotsImage from "@/assets/conform-studio-interface.png";
 import logo from "@/assets/logo.svg";
 const BlogPost = () => {
   return <div className="min-h-screen bg-background">
