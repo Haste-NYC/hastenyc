@@ -3,6 +3,7 @@ import { Link } from "react-router-dom";
 import keynoteImage from "@/assets/figma-schema-keynote.jpg";
 import designSystemImage from "@/assets/figma-design-system.jpg";
 import mcpImage from "@/assets/mcp-integration.jpg";
+import slotsImage from "@/assets/figma-slots-demo.png";
 const BlogPost = () => {
   return <div className="min-h-screen bg-background">
       {/* Header */}
@@ -86,7 +87,7 @@ const BlogPost = () => {
           </div>
 
           <div className="rounded-none overflow-hidden">
-            
+            <img src={slotsImage} alt="Component Slots Demo in Conform Studio" className="w-full h-auto" />
           </div>
 
           {/* Check Designs */}
