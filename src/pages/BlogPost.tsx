@@ -77,9 +77,7 @@ const BlogPost = () => {
             <h3 className="text-3xl md:text-4xl font-bold uppercase mb-4 text-brand-orange">
               EXTENDED COLLECTIONS
             </h3>
-            <p className="text-lg leading-relaxed text-foreground">
-              Multi-brand design system management is now effortless. You can duplicate collections while retaining links to originals, switch between brands seamlessly, and keep your base flexible without messy overrides. THIS IS HUGE FOR AGENCIES LIKE US managing multiple client identities.
-            </p>
+            <p className="text-lg leading-relaxed text-foreground">Multi-brand design system management is now effortless. You can duplicate collections while retaining links to originals, switch between brands seamlessly, and keep your base flexible without messy overrides.</p>
           </div>
 
           {/* Slots */}
