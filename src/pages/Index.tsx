@@ -1,6 +1,7 @@
 import { Link } from "react-router-dom";
 import { ArrowRight } from "lucide-react";
 import { Button } from "@/components/ui/button";
+import logo from "@/assets/logo.svg";
 
 const Index = () => {
   return (
@@ -8,9 +9,7 @@ const Index = () => {
       {/* Header */}
       <header className="border-b border-border">
         <div className="container mx-auto px-6 py-6">
-          <h1 className="text-3xl font-bold uppercase tracking-tight">
-            CONFORM STUDIO
-          </h1>
+          <img src={logo} alt="Conform Studio" className="h-6" />
         </div>
       </header>
 

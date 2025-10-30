@@ -4,15 +4,21 @@ import keynoteImage from "@/assets/figma-schema-keynote.jpg";
 import designSystemImage from "@/assets/figma-design-system.jpg";
 import mcpImage from "@/assets/mcp-integration.jpg";
 import slotsImage from "@/assets/figma-slots-demo.png";
+import logo from "@/assets/logo.svg";
 const BlogPost = () => {
   return <div className="min-h-screen bg-background">
       {/* Header */}
       <header className="border-b border-border">
-        <div className="container mx-auto px-6 py-8">
+        <div className="container mx-auto px-6 py-8 flex items-center gap-4">
           <Link to="/" className="inline-flex items-center gap-2 text-foreground hover:text-brand-orange transition-colors">
             <ArrowLeft className="w-5 h-5" />
             <span className="uppercase tracking-wide">Back</span>
           </Link>
+          <div className="flex-1 flex justify-center">
+            <Link to="/">
+              <img src={logo} alt="Conform Studio" className="h-6" />
+            </Link>
+          </div>
         </div>
       </header>
 
