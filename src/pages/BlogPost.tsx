@@ -90,9 +90,18 @@ const BlogPost = () => {
             </p>
           </div>
 
-          <div className="rounded-none overflow-hidden mb-6">
-            <img src="https://i.ibb.co/hRVSFv2Q/Screenshot-2025-10-30-at-1-21-04-PM-gigapixel-standard-v2-2x.png" alt="Component Slots Demo in Conform Studio" className="w-full h-auto" />
-          </div>
+        </div>
+
+        <div className="w-screen relative left-1/2 right-1/2 -mx-[50vw] mb-6">
+          <img 
+            src="https://i.ibb.co/hRVSFv2Q/Screenshot-2025-10-30-at-1-21-04-PM-gigapixel-standard-v2-2x.png" 
+            alt="Component Slots Demo in Conform Studio" 
+            className="w-full h-auto"
+            loading="eager"
+          />
+        </div>
+
+        <div className="space-y-12 mb-16">
 
           {/* Check Designs */}
           <div>
