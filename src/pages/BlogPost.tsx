@@ -3,10 +3,8 @@ import { Link } from "react-router-dom";
 import keynoteImage from "@/assets/figma-schema-keynote.jpg";
 import designSystemImage from "@/assets/figma-design-system.jpg";
 import mcpImage from "@/assets/mcp-integration.jpg";
-
 const BlogPost = () => {
-  return (
-    <div className="min-h-screen bg-background">
+  return <div className="min-h-screen bg-background">
       {/* Header */}
       <header className="border-b border-border">
         <div className="container mx-auto px-6 py-8">
@@ -24,21 +22,13 @@ const BlogPost = () => {
           FIGMA SCHEMA 2025
         </h1>
         
-        <p className="text-xl md:text-2xl gradient-text mb-8 uppercase font-bold">
-          The Future of Design Systems is Here
-        </p>
+        <p className="text-xl md:text-2xl gradient-text mb-8 uppercase font-bold">THE FUTURE OF DESIGN SYSTEMS IS HERE</p>
 
-        <div className="text-muted-foreground mb-12 uppercase text-sm tracking-wider">
-          October 28, 2025 • Conform Studio
-        </div>
+        <div className="text-muted-foreground mb-12 uppercase text-sm tracking-wider">OCTOBER 28, 2025 • DILCIA ALVARADO</div>
 
         {/* Hero Image */}
         <div className="mb-16 rounded-none overflow-hidden">
-          <img 
-            src={keynoteImage} 
-            alt="Figma Schema 2025 Keynote Stage" 
-            className="w-full h-auto"
-          />
+          <img src={keynoteImage} alt="Figma Schema 2025 Keynote Stage" className="w-full h-auto" />
         </div>
 
         {/* Intro */}
@@ -66,11 +56,7 @@ const BlogPost = () => {
         </div>
 
         <div className="mb-16 rounded-none overflow-hidden">
-          <img 
-            src={mcpImage} 
-            alt="MCP Server Integration in Development Workflow" 
-            className="w-full h-auto"
-          />
+          <img src={mcpImage} alt="MCP Server Integration in Development Workflow" className="w-full h-auto" />
         </div>
 
         {/* Key Features */}
@@ -100,11 +86,7 @@ const BlogPost = () => {
           </div>
 
           <div className="rounded-none overflow-hidden">
-            <img 
-              src={designSystemImage} 
-              alt="Figma Design System with Slots and Variables" 
-              className="w-full h-auto"
-            />
+            <img src={designSystemImage} alt="Figma Design System with Slots and Variables" className="w-full h-auto" />
           </div>
 
           {/* Check Designs */}
@@ -228,8 +210,6 @@ const BlogPost = () => {
           </p>
         </div>
       </article>
-    </div>
-  );
+    </div>;
 };
-
 export default BlogPost;
