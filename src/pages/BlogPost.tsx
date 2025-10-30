@@ -90,7 +90,7 @@ const BlogPost = () => {
             </p>
           </div>
 
-          <div className="rounded-none overflow-hidden max-w-2xl mx-auto">
+          <div className="rounded-none overflow-hidden mb-6">
             <img src={slotsImage} alt="Component Slots Demo in Conform Studio" className="w-full h-auto" />
           </div>
 
