@@ -92,7 +92,7 @@ const BlogPost = () => {
 
           <div className="rounded-none overflow-hidden mb-6">
             <img 
-              src="https://media2.dev.to/dynamic/image/width=800%2Cheight=%2Cfit=scale-down%2Cgravity=auto%2Cformat=auto/https%3A%2F%2Fdev-to-uploads.s3.amazonaws.com%2Fuploads%2Farticles%2Fyh55yarz11mdeyn5kbnf.png" 
+              src="https://dev-to-uploads.s3.amazonaws.com/uploads/articles/yh55yarz11mdeyn5kbnf.png" 
               alt="Component Slots Demo in Conform Studio" 
               className="w-full h-auto" 
               loading="lazy"
