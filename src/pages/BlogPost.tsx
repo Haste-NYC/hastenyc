@@ -1,226 +1,219 @@
-import { ArrowLeft } from "lucide-react";
+import { Button } from "@/components/ui/button";
 import { Link } from "react-router-dom";
-import keynoteImage from "@/assets/figma-schema-keynote.jpg";
-import designSystemImage from "@/assets/figma-design-system.jpg";
-import mcpImage from "@/assets/mcp-integration.jpg";
+import conformLogo from "@/assets/conform-logo.png";
+import adobeFireflyDemo from "@/assets/adobe-firefly-demo.webp";
+import adobeMaxConference from "@/assets/adobe-max-conference.jpg";
 
-import logo from "@/assets/logo.svg";
 const BlogPost = () => {
-  return <div className="min-h-screen bg-background">
+  return (
+    <div className="min-h-screen bg-background">
       {/* Header */}
       <header className="border-b border-border">
-        <div className="container mx-auto px-6 py-8 flex items-center gap-4">
-          <Link to="/" className="inline-flex items-center gap-2 text-foreground hover:text-brand-orange transition-colors">
-            <ArrowLeft className="w-5 h-5" />
-            <span className="uppercase tracking-wide">Back</span>
-          </Link>
-          <div className="flex-1 flex justify-center">
-            <Link to="/">
-              <img src={logo} alt="Conform Studio" className="h-6" />
+        <div className="container mx-auto px-6 py-6">
+          <div className="flex items-center justify-center">
+            <Link to="/" className="transition-opacity hover:opacity-80">
+              <img 
+                src={conformLogo} 
+                alt="Conform Studio - Return to home" 
+                className="h-8 w-auto"
+              />
             </Link>
           </div>
         </div>
       </header>
 
-      {/* Article */}
-      <article className="container mx-auto px-6 py-16 max-w-5xl">
-        {/* Title */}
-        <h1 className="text-6xl md:text-8xl font-bold uppercase mb-6 leading-none tracking-tight">
-          FIGMA SCHEMA 2025
-        </h1>
-        
-        <p className="text-xl md:text-2xl gradient-text mb-8 uppercase font-bold">THE FUTURE OF DESIGN SYSTEMS IS HERE</p>
-
-        <div className="text-muted-foreground mb-12 uppercase text-sm tracking-wider">OCTOBER 28, 2025 • DILCIA ALVARADO</div>
-
-        {/* Hero Image */}
-        <div className="mb-16 rounded-none overflow-hidden">
-          <img src={keynoteImage} alt="Figma Schema 2025 Keynote Stage" className="w-full h-auto" />
-        </div>
-
-        {/* Intro */}
-        <div className="prose prose-invert prose-lg max-w-none mb-16">
-          <p className="text-xl leading-relaxed text-foreground mb-6">
-            WE'RE ABSOLUTELY THRILLED TO SHARE OUR EXCITEMENT ABOUT FIGMA SCHEMA 2025. The announcements from October 28 represent a massive leap forward in how we build, scale, and maintain design systems at Conform Studio.
-          </p>
-          
-          <p className="text-xl leading-relaxed text-foreground mb-6">
-            This isn't just an incremental update—it's a fundamental reimagining of the design-to-development workflow. AND WE'RE HERE FOR IT.
-          </p>
-        </div>
-
-        {/* MCP Server Highlight */}
-        <div className="bg-card border border-brand-orange p-8 mb-16">
-          <h2 className="text-4xl md:text-5xl font-bold uppercase mb-4 gradient-orange-pink">
-            MCP SERVER: OUR NEW SECRET WEAPON
-          </h2>
-          <p className="text-lg text-foreground mb-4">
-            The Model Context Protocol (MCP) server integration is a game-changer for Conform Studio's development workflow. We're already incorporating this into our process, bringing Figma context directly into VS Code, Claude Code, and Cursor.
-          </p>
-          <p className="text-lg text-foreground">
-            THIS MEANS RICHER AI GENERATION, LIVE CODE MAPPING, AND A TRULY SEAMLESS BRIDGE BETWEEN DESIGN AND PRODUCTION CODE.
-          </p>
-        </div>
-
-        <div className="mb-16 rounded-none overflow-hidden">
-          <img src={mcpImage} alt="MCP Server Integration in Development Workflow" className="w-full h-auto" />
-        </div>
-
-        {/* Key Features */}
-        <h2 className="text-5xl md:text-6xl font-bold uppercase mb-12 leading-tight">
-          THE BIGGEST <span className="gradient-text">HIGHLIGHTS</span>
-        </h2>
-
-        <div className="space-y-12 mb-16">
-          {/* Extended Collections */}
-          <div>
-            <h3 className="text-3xl md:text-4xl font-bold uppercase mb-4 text-brand-orange">
-              EXTENDED COLLECTIONS
-            </h3>
-            <p className="text-lg leading-relaxed text-foreground">Multi-brand design system management is now effortless. You can duplicate collections while retaining links to originals, switch between brands seamlessly, and keep your base flexible without messy overrides.</p>
-          </div>
-
-          {/* Slots */}
-          <div>
-            <h3 className="text-3xl md:text-4xl font-bold uppercase mb-4 text-brand-pink">
-              SLOTS (COMPONENT SLOTS)
-            </h3>
-            <p className="text-lg leading-relaxed text-foreground">
-              Components can now have slots—allowing custom elements to be packed inside for maximum flexibility. Designers can specify what goes where, dramatically reducing maintenance overhead and keeping complex UI kits organized and scalable.
+      {/* Hero Section */}
+      <section className="border-b border-border py-20">
+        <div className="container mx-auto px-6">
+          <div className="max-w-4xl">
+            <p className="text-sm text-brand-orange uppercase tracking-wider font-bold mb-4">
+              NOVEMBER 3RD, 2025
+            </p>
+            <h1 className="text-6xl md:text-8xl font-bold uppercase leading-none mb-6">
+              THE ULTIMATE
+              <br />
+              <span className="bg-gradient-to-r from-brand-orange via-brand-pink to-brand-blue bg-clip-text text-transparent">ADOBE MAX</span>
+              <br />
+              <span className="bg-gradient-to-r from-brand-orange via-brand-pink to-brand-blue bg-clip-text text-transparent">2025</span>
+            </h1>
+            <p className="text-xl text-foreground/80 max-w-2xl">
+              The creative industry just hit a new level. Adobe MAX 2025 has arrived and it's 
+              redefining what's possible for designers, editors, and digital creators everywhere.
             </p>
           </div>
+        </div>
+      </section>
 
-          <div className="rounded-none overflow-hidden mb-6">
+      {/* Introduction */}
+      <section className="border-b border-border py-16">
+        <div className="container mx-auto px-6">
+          <div className="max-w-4xl">
+            <p className="text-lg leading-relaxed mb-6">
+              From next-gen AI assistants to intelligent automation across the Creative Cloud ecosystem, 
+              this year's MAX wasn't just an update, it was a declaration of what creativity looks like 
+              in the AI era. And as a studio built on innovation, <span className="font-bold">Conform Studio</span> couldn't 
+              be more excited.
+            </p>
+          </div>
+          <div className="mt-8">
             <img 
-              src="https://dev-to-uploads.s3.amazonaws.com/uploads/articles/yh55yarz11mdeyn5kbnf.png" 
-              alt="Component Slots Demo in Conform Studio" 
-              className="w-full h-auto" 
-              loading="lazy"
-              decoding="async"
+              src={adobeMaxConference} 
+              alt="Adobe MAX 2025 Conference - Concepting, Creating, Collaborating" 
+              className="w-full h-auto rounded-lg"
             />
           </div>
+        </div>
+      </section>
 
-          {/* Check Designs */}
-          <div>
-            <h3 className="text-3xl md:text-4xl font-bold uppercase mb-4 text-brand-blue">
-              CHECK DESIGNS
-            </h3>
-            <p className="text-lg leading-relaxed text-foreground">
-              Automated auditing scans and fixes off-brand layers, spots missing styles, and applies variables instantly. AI-powered auto-fixes smooth the developer handoff process and ensure brand consistency at scale.
+      {/* Quick Look Section */}
+      <section className="border-b border-border py-16 bg-card">
+        <div className="container mx-auto px-6">
+          <div className="max-w-4xl">
+            <h2 className="text-4xl md:text-5xl font-bold uppercase mb-8">
+              A QUICK LOOK AT
+              <br />
+              <span className="bg-gradient-to-r from-brand-orange via-brand-pink to-brand-blue bg-clip-text text-transparent">ADOBE MAX 2025</span>
+            </h2>
+            <p className="text-lg leading-relaxed mb-8">
+              At this year's MAX, Adobe unveiled a collection of experimental AI tools internally 
+              known as "Sneaks" showcasing the next frontier of creative intelligence. These projects 
+              explore new, intuitive ways to edit photos, videos, and audio with unprecedented precision 
+              and speed.
             </p>
+            <img 
+              src={adobeFireflyDemo} 
+              alt="Adobe Firefly AI-powered creative tools interface" 
+              className="w-full h-auto rounded-lg"
+            />
           </div>
+        </div>
+      </section>
 
-          {/* Performance */}
-          <div>
-            <h3 className="text-3xl md:text-4xl font-bold uppercase mb-4 text-brand-green">
-              PERFORMANCE UPGRADES
-            </h3>
-            <p className="text-lg leading-relaxed text-foreground">
-              Figma has dramatically improved speed—updates and state swaps are UP TO TEN TIMES FASTER. This allows effortless scaling of large libraries without the lag we used to tolerate.
+      {/* Features Grid */}
+      <section className="border-b border-border py-16">
+        <div className="container mx-auto px-6">
+          <div className="max-w-6xl">
+            <div className="grid md:grid-cols-3 gap-8">
+              {/* Feature 1 */}
+              <div className="space-y-4">
+                <div className="h-1 w-16 bg-brand-orange"></div>
+                <h3 className="text-2xl font-bold uppercase">
+                  PROJECT FRAME
+                  <br />
+                  FORWARD
+                </h3>
+                <p className="text-foreground/80 leading-relaxed">
+                  A revolutionary video editing tool that lets you add or remove elements from footage, 
+                  no masks, no manual tracking. You can delete a subject in one frame, and the AI automatically 
+                  applies the change across the entire sequence, seamlessly filling in the background. It's 
+                  like Photoshop's Context-Aware Fill, reimagined for moving images.
+                </p>
+              </div>
+
+              {/* Feature 2 */}
+              <div className="space-y-4">
+                <div className="h-1 w-16 bg-brand-pink"></div>
+                <h3 className="text-2xl font-bold uppercase">
+                  AI LIGHT
+                  <br />
+                  CONTROL
+                </h3>
+                <p className="text-foreground/80 leading-relaxed">
+                  Enabling creators to manipulate lighting conditions within an image as naturally as 
+                  dragging sunlight across a virtual scene. This breakthrough tool gives unprecedented 
+                  control over mood, atmosphere, and visual storytelling.
+                </p>
+              </div>
+
+              {/* Feature 3 */}
+              <div className="space-y-4">
+                <div className="h-1 w-16 bg-brand-blue"></div>
+                <h3 className="text-2xl font-bold uppercase">
+                  SMART AUDIO
+                  <br />
+                  CORRECTION
+                </h3>
+                <p className="text-foreground/80 leading-relaxed">
+                  Capable of identifying and fixing mispronunciations in recorded dialogue, saving hours 
+                  of post-production cleanup. This AI-powered tool understands context and naturally 
+                  corrects speech patterns while maintaining authentic vocal characteristics.
+                </p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* MCP Integration Section */}
+      <section className="border-b border-border py-16 bg-card">
+        <div className="container mx-auto px-6">
+          <div className="max-w-4xl">
+            <h2 className="text-4xl md:text-5xl font-bold uppercase mb-8">
+              INCORPORATING
+              <br />
+              <span className="bg-gradient-to-r from-brand-orange via-brand-pink to-brand-blue bg-clip-text text-transparent">MCP SERVER</span>
+            </h2>
+            <p className="text-lg leading-relaxed mb-6">
+              At <span className="font-bold">Conform Studio</span>, we're not just excited observers, we're 
+              active participants in this creative revolution. As we integrate these powerful new Adobe 
+              tools into our workflow, we're also leveraging the Model Context Protocol (MCP) server to 
+              streamline our development process.
+            </p>
+            <p className="text-lg leading-relaxed mb-6">
+              MCP allows us to create intelligent, context-aware development environments that understand 
+              our creative intent and technical requirements. By combining Adobe's cutting-edge AI tools 
+              with MCP's intelligent automation, we're building a workflow that's not just faster, it's smarter.
+            </p>
+            <p className="text-lg leading-relaxed">
+              This integration means our team can prototype faster, iterate more intelligently, and deliver 
+              higher-quality creative solutions to our clients. The future of creative production isn't just 
+              about powerful tools, it's about how those tools work together seamlessly.
             </p>
           </div>
         </div>
+      </section>
 
-        {/* Developer Integration */}
-        <h2 className="text-5xl md:text-6xl font-bold uppercase mb-12 leading-tight">
-          DEVELOPER & <span className="gradient-blue-green">WORKFLOW INTEGRATION</span>
-        </h2>
-
-        <div className="space-y-8 mb-16">
-          <div className="border-l-4 border-brand-orange pl-6">
-            <h4 className="text-2xl font-bold uppercase mb-2">MAKE KITS & NPM IMPORTS</h4>
-            <p className="text-lg text-foreground">
-              Generate React and CSS kits from Figma libraries, import both public and private npm packages directly into Figma Make. Use production React components as building blocks IN FIGMA.
-            </p>
-          </div>
-
-          <div className="border-l-4 border-brand-pink pl-6">
-            <h4 className="text-2xl font-bold uppercase mb-2">CODE CONNECT ENHANCEMENTS</h4>
-            <p className="text-lg text-foreground">
-              Map components to source code in one click. Example code and guidelines attached directly to components facilitate full-circle design-to-development workflows.
-            </p>
-          </div>
-
-          <div className="border-l-4 border-brand-blue pl-6">
-            <h4 className="text-2xl font-bold uppercase mb-2">VARIABLE IMPORT/EXPORT</h4>
-            <p className="text-lg text-foreground">
-              Import and export variables as JSON directly, keeping design artifacts and code PERFECTLY SYNCED.
-            </p>
+      {/* Closing Section */}
+      <section className="py-16">
+        <div className="container mx-auto px-6">
+          <div className="max-w-4xl">
+            <div className="space-y-6">
+              <h2 className="text-4xl md:text-5xl font-bold uppercase">
+                THE FUTURE IS
+                <br />
+                <span className="bg-gradient-to-r from-brand-orange via-brand-pink to-brand-blue bg-clip-text text-transparent">CREATIVE</span>
+              </h2>
+              <p className="text-lg leading-relaxed">
+                Adobe MAX 2025 has shown us that the boundaries between imagination and execution are 
+                dissolving. With AI-powered tools becoming more intuitive and powerful, and frameworks 
+                like MCP enabling smarter workflows, we're entering an era where creative vision can be 
+                realized faster and more beautifully than ever before.
+              </p>
+              <p className="text-lg leading-relaxed">
+                At <span className="font-bold">Conform Studio</span>, we're ready for this future and we're building it.
+              </p>
+            </div>
           </div>
         </div>
+      </section>
 
-        {/* Feature Table */}
-        <div className="bg-card border border-border mb-16 overflow-hidden">
-          <div className="overflow-x-auto">
-            <table className="w-full">
-              <thead className="bg-secondary">
-                <tr>
-                  <th className="text-left p-4 uppercase text-brand-orange">Feature</th>
-                  <th className="text-left p-4 uppercase text-brand-pink">Description</th>
-                  <th className="text-left p-4 uppercase text-brand-blue">Availability</th>
-                </tr>
-              </thead>
-              <tbody className="divide-y divide-border">
-                <tr>
-                  <td className="p-4 font-bold">Extended Collections</td>
-                  <td className="p-4">Multi-brand design system management</td>
-                  <td className="p-4">November 2025</td>
-                </tr>
-                <tr>
-                  <td className="p-4 font-bold">Slots</td>
-                  <td className="p-4">Custom elements in components</td>
-                  <td className="p-4">Early access</td>
-                </tr>
-                <tr>
-                  <td className="p-4 font-bold">Check Designs</td>
-                  <td className="p-4">Automated layer audit and fixes</td>
-                  <td className="p-4">Early access</td>
-                </tr>
-                <tr>
-                  <td className="p-4 font-bold">MCP Server</td>
-                  <td className="p-4">Figma context in code editors</td>
-                  <td className="p-4 gradient-text font-bold">GA THIS WEEK</td>
-                </tr>
-                <tr>
-                  <td className="p-4 font-bold">Make Kits</td>
-                  <td className="p-4">Auto-generate React/CSS kits</td>
-                  <td className="p-4">Rolling out</td>
-                </tr>
-                <tr>
-                  <td className="p-4 font-bold">Variables Expansion</td>
-                  <td className="p-4">More modes, improved authoring</td>
-                  <td className="p-4">November 2025</td>
-                </tr>
-                <tr>
-                  <td className="p-4 font-bold">Performance Upgrade</td>
-                  <td className="p-4">10x faster instance operations</td>
-                  <td className="p-4 gradient-text font-bold">IMMEDIATE</td>
-                </tr>
-              </tbody>
-            </table>
+      {/* Footer */}
+      <footer className="border-t border-border py-12">
+        <div className="container mx-auto px-6">
+          <div className="flex flex-col md:flex-row justify-between items-start md:items-center gap-4">
+            <div>
+              <p className="text-sm text-muted-foreground uppercase tracking-wider">
+                CONFORM STUDIO
+              </p>
+              <p className="text-xs text-muted-foreground mt-1">
+                Building the future of creative technology
+              </p>
+            </div>
           </div>
         </div>
-
-        {/* Conclusion */}
-        <div className="bg-gradient-to-br from-brand-orange/10 via-brand-pink/10 to-brand-blue/10 p-12 mb-16">
-          <h2 className="text-4xl md:text-5xl font-bold uppercase mb-6 gradient-text">
-            THIS IS THE FUTURE
-          </h2>
-          <p className="text-xl leading-relaxed text-foreground mb-6">
-            Schema 2025 marks Figma's evolution towards being a unified, extensible platform powering design, code, and AI at scale. At Conform Studio, we're not just watching this transformation—WE'RE ACTIVELY INTEGRATING IT INTO EVERY PROJECT.
-          </p>
-          <p className="text-xl leading-relaxed text-foreground">
-            The MCP server integration alone changes everything about how we build. FASTER. SMARTER. MORE CONNECTED.
-          </p>
-        </div>
-
-        {/* Footer */}
-        <div className="border-t border-border pt-8">
-          <p className="text-muted-foreground uppercase text-sm tracking-wider">
-            Written by Dilcia Alvarado
-          </p>
-        </div>
-      </article>
-    </div>;
+      </footer>
+    </div>
+  );
 };
+
 export default BlogPost;
