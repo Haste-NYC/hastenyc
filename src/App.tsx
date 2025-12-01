@@ -6,6 +6,9 @@ import { BrowserRouter, Routes, Route } from "react-router-dom";
 
 // Product pages (Conform Studio - main haste.nyc site)
 import ProductHome from "./pages/product/ProductHome";
+import Privacy from "./pages/product/Privacy";
+import Terms from "./pages/product/Terms";
+import Refund from "./pages/product/Refund";
 
 // Studio pages (Portfolio - formerly haste.studio)
 import StudioHome from "./pages/studio/StudioHome";
@@ -32,6 +35,9 @@ const App = () => (
         <Routes>
           {/* Product pages - Main haste.nyc site */}
           <Route path="/" element={<ProductHome />} />
+          <Route path="/privacy" element={<Privacy />} />
+          <Route path="/terms" element={<Terms />} />
+          <Route path="/refund" element={<Refund />} />
 
           {/* Studio pages - Portfolio (formerly haste.studio) */}
           <Route path="/studio" element={<StudioHome />} />
