@@ -3,9 +3,22 @@ import { Toaster as Sonner } from "@/components/ui/sonner";
 import { TooltipProvider } from "@/components/ui/tooltip";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
-import Index from "./pages/Index";
-import BlogPost from "./pages/BlogPost";
-import FigmaSchemaPost from "./pages/FigmaSchemaPost";
+
+// Product pages (Conform Studio - main haste.nyc site)
+import ProductHome from "./pages/product/ProductHome";
+
+// Studio pages (Portfolio - formerly haste.studio)
+import StudioHome from "./pages/studio/StudioHome";
+import Work from "./pages/studio/Work";
+import Press from "./pages/studio/Press";
+import Talent from "./pages/studio/Talent";
+import Inquire from "./pages/studio/Inquire";
+
+// Blog pages (formerly blog.haste.nyc)
+import BlogIndex from "./pages/blog/BlogIndex";
+import BlogPost from "./pages/blog/BlogPost";
+import FigmaSchemaPost from "./pages/blog/FigmaSchemaPost";
+
 import NotFound from "./pages/NotFound";
 
 const queryClient = new QueryClient();
@@ -17,10 +30,22 @@ const App = () => (
       <Sonner />
       <BrowserRouter>
         <Routes>
-          <Route path="/" element={<Index />} />
+          {/* Product pages - Main haste.nyc site */}
+          <Route path="/" element={<ProductHome />} />
+
+          {/* Studio pages - Portfolio (formerly haste.studio) */}
+          <Route path="/studio" element={<StudioHome />} />
+          <Route path="/studio/work" element={<Work />} />
+          <Route path="/studio/press" element={<Press />} />
+          <Route path="/studio/talent" element={<Talent />} />
+          <Route path="/studio/inquire" element={<Inquire />} />
+
+          {/* Blog pages (formerly blog.haste.nyc) */}
+          <Route path="/blog" element={<BlogIndex />} />
           <Route path="/blog/adobe-max-2025" element={<BlogPost />} />
           <Route path="/blog/figma-schema-2025" element={<FigmaSchemaPost />} />
-          {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
+
+          {/* 404 - Catch all */}
           <Route path="*" element={<NotFound />} />
         </Routes>
       </BrowserRouter>
