@@ -10,7 +10,7 @@ interface BreadcrumbsProps {
   items: BreadcrumbItem[];
 }
 
-const BASE_URL = "https://haste.nyc";
+const BASE_URL = "https://www.haste.nyc";
 
 const Breadcrumbs = ({ items }: BreadcrumbsProps) => {
   const breadcrumbSchema = {

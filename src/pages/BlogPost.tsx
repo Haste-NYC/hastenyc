@@ -4,8 +4,10 @@ import Header from "@/components/Header";
 import Footer from "@/components/Footer";
 import SEO from "@/components/SEO";
 import Breadcrumbs from "@/components/Breadcrumbs";
+import RelatedArticles from "@/components/RelatedArticles";
 import adobeFireflyDemo from "@/assets/adobe-firefly-demo.webp";
 import adobeMaxConference from "@/assets/adobe-max-conference.jpg";
+import adobeMaxHero from "@/assets/adobe-max-hero.jpg";
 
 const BlogPost = () => {
   return (
@@ -15,6 +17,7 @@ const BlogPost = () => {
         description="Adobe MAX 2025 redefines creativity with AI-powered tools including Project Frame Forward, AI Light Control, and Smart Audio Correction. The future of creative production."
         canonical="/blog/adobe-max-2025"
         type="article"
+        image={adobeMaxHero}
         article={{
           publishedTime: "2025-11-03",
           section: "AI / Creative Tools",
@@ -64,10 +67,11 @@ const BlogPost = () => {
             </p>
           </div>
           <div className="mt-8">
-            <img 
-              src={adobeMaxConference} 
-              alt="Adobe MAX 2025 Conference - Concepting, Creating, Collaborating" 
+            <img
+              src={adobeMaxConference}
+              alt="Adobe MAX 2025 Conference - Concepting, Creating, Collaborating"
               className="w-full h-auto rounded-lg"
+              loading="lazy"
             />
           </div>
         </div>
@@ -88,10 +92,11 @@ const BlogPost = () => {
               explore new, intuitive ways to edit photos, videos, and audio with unprecedented precision 
               and speed.
             </p>
-            <img 
-              src={adobeFireflyDemo} 
-              alt="Adobe Firefly AI-powered creative tools interface" 
+            <img
+              src={adobeFireflyDemo}
+              alt="Adobe Firefly AI-powered creative tools interface"
               className="w-full h-auto rounded-lg"
+              loading="lazy"
             />
           </div>
         </div>
@@ -192,9 +197,9 @@ const BlogPost = () => {
                 <span className="bg-gradient-to-r from-brand-orange via-brand-pink to-brand-blue bg-clip-text text-transparent">CREATIVE</span>
               </h2>
               <p className="text-lg leading-relaxed">
-                Adobe MAX 2025 has shown us that the boundaries between imagination and execution are 
-                dissolving. With AI-powered tools becoming more intuitive and powerful, and frameworks 
-                like MCP enabling smarter workflows, we're entering an era where creative vision can be 
+                Adobe MAX 2025 has shown us that the boundaries between imagination and execution are
+                dissolving. With AI-powered tools becoming more intuitive and powerful, and frameworks
+                like MCP enabling smarter workflows, we're entering an era where creative vision can be
                 realized faster and more beautifully than ever before.
               </p>
               <p className="text-lg leading-relaxed">
@@ -204,6 +209,8 @@ const BlogPost = () => {
           </div>
         </div>
       </section>
+
+      <RelatedArticles currentSlug="/blog/adobe-max-2025" />
 
       <Footer />
     </div>

@@ -4,6 +4,7 @@ import Header from "@/components/Header";
 import Footer from "@/components/Footer";
 import SEO from "@/components/SEO";
 import Breadcrumbs from "@/components/Breadcrumbs";
+import RelatedArticles from "@/components/RelatedArticles";
 import heroImage from "@/assets/warner-bros-battle-hero.jpg";
 
 const EntertainmentShakeupPost = () => {
@@ -18,6 +19,7 @@ const EntertainmentShakeupPost = () => {
         description="Paramount launches hostile bid for Warner Bros as Netflix competes for streaming dominance. Analysis of the $82.7B deal and its economic implications."
         canonical="/blog/entertainment-shakeup"
         type="article"
+        image={heroImage}
         article={{
           publishedTime: "2024-12-19",
           section: "Breaking News",
@@ -341,6 +343,8 @@ const EntertainmentShakeupPost = () => {
           </div>
         </main>
       </article>
+
+      <RelatedArticles currentSlug="/blog/entertainment-shakeup" />
 
       <Footer />
     </div>

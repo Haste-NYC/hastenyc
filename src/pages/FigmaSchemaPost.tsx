@@ -3,6 +3,7 @@ import Header from "@/components/Header";
 import Footer from "@/components/Footer";
 import SEO from "@/components/SEO";
 import Breadcrumbs from "@/components/Breadcrumbs";
+import RelatedArticles from "@/components/RelatedArticles";
 import figmaSchemaKeynote from "@/assets/figma-schema-keynote.jpg";
 import mcpIntegration from "@/assets/mcp-integration.jpg";
 import figmaSlotsDemo from "@/assets/figma-slots-demo.png";
@@ -15,6 +16,7 @@ const FigmaSchemaPost = () => {
         description="Figma Schema 2025 brings MCP server integration, component slots, extended collections, and 10x performance improvements. The future of design systems is here."
         canonical="/blog/figma-schema-2025"
         type="article"
+        image={figmaSchemaKeynote}
         article={{
           publishedTime: "2025-10-28",
           section: "Design Systems",
@@ -63,10 +65,11 @@ const FigmaSchemaPost = () => {
             </p>
           </div>
           <div className="mt-8">
-            <img 
-              src={figmaSchemaKeynote} 
-              alt="Figma Schema 2025 Keynote Stage" 
+            <img
+              src={figmaSchemaKeynote}
+              alt="Figma Schema 2025 Keynote Stage"
               className="w-full h-auto rounded-lg"
+              loading="lazy"
             />
           </div>
         </div>
@@ -87,10 +90,11 @@ const FigmaSchemaPost = () => {
             <p className="text-lg leading-relaxed mb-6 font-bold">
               This means richer AI generation, live code mapping, and a truly seamless bridge between design and production code.
             </p>
-            <img 
-              src={mcpIntegration} 
-              alt="MCP Server Integration in Development Workflow" 
+            <img
+              src={mcpIntegration}
+              alt="MCP Server Integration in Development Workflow"
               className="w-full h-auto rounded-lg"
+              loading="lazy"
             />
           </div>
         </div>
@@ -127,10 +131,11 @@ const FigmaSchemaPost = () => {
                 <p className="text-foreground/80 leading-relaxed mb-4">
                   Components can now have slots—allowing custom elements to be packed inside for maximum flexibility. Designers can specify what goes where, dramatically reducing maintenance overhead and keeping complex UI kits organized and scalable.
                 </p>
-                <img 
-                  src={figmaSlotsDemo} 
-                  alt="Component Slots Demo in Conform Studio" 
+                <img
+                  src={figmaSlotsDemo}
+                  alt="Component Slots Demo in Conform Studio"
                   className="w-full h-auto rounded-lg"
+                  loading="lazy"
                 />
               </div>
 
@@ -281,6 +286,8 @@ const FigmaSchemaPost = () => {
           </div>
         </div>
       </section>
+
+      <RelatedArticles currentSlug="/blog/figma-schema-2025" />
 
       <Footer />
     </div>
