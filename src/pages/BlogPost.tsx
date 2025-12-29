@@ -2,18 +2,38 @@ import { Button } from "@/components/ui/button";
 import { Link } from "react-router-dom";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
+import SEO from "@/components/SEO";
+import Breadcrumbs from "@/components/Breadcrumbs";
 import adobeFireflyDemo from "@/assets/adobe-firefly-demo.webp";
 import adobeMaxConference from "@/assets/adobe-max-conference.jpg";
 
 const BlogPost = () => {
   return (
     <div className="min-h-screen bg-background">
+      <SEO
+        title="Adobe MAX 2025 - AI-Powered Creative Tools Revolution"
+        description="Adobe MAX 2025 redefines creativity with AI-powered tools including Project Frame Forward, AI Light Control, and Smart Audio Correction. The future of creative production."
+        canonical="/blog/adobe-max-2025"
+        type="article"
+        article={{
+          publishedTime: "2025-11-03",
+          section: "AI / Creative Tools",
+          author: "HASTE.NYC",
+        }}
+      />
       <Header />
 
       {/* Hero Section */}
       <section className="border-b border-border py-20">
         <div className="container mx-auto px-6">
           <div className="max-w-4xl">
+            <Breadcrumbs
+              items={[
+                { label: "Home", href: "/" },
+                { label: "Blog", href: "/blog" },
+                { label: "Adobe MAX 2025" },
+              ]}
+            />
             <p className="text-sm text-brand-orange uppercase tracking-wider font-bold mb-4">
               NOVEMBER 3RD, 2025
             </p>

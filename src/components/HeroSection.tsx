@@ -17,15 +17,16 @@ const HeroSection = () => {
         </motion.p>
         
         {/* Main logo */}
-        <motion.div 
+        <motion.div
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.6, delay: 0.1 }}
           className="py-2"
         >
-          <img 
-            src={conformLogo} 
-            alt="Conform Studio" 
+          <h1 className="sr-only">Conform Studio - AI-Powered Post Production Automation</h1>
+          <img
+            src={conformLogo}
+            alt="Conform Studio"
             className="w-full max-w-4xl mx-auto h-auto"
           />
         </motion.div>

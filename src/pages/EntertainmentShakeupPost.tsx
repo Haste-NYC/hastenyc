@@ -2,6 +2,8 @@ import { useState } from "react";
 import { Link } from "react-router-dom";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
+import SEO from "@/components/SEO";
+import Breadcrumbs from "@/components/Breadcrumbs";
 import heroImage from "@/assets/warner-bros-battle-hero.jpg";
 
 const EntertainmentShakeupPost = () => {
@@ -11,6 +13,17 @@ const EntertainmentShakeupPost = () => {
 
   return (
     <div className="min-h-screen bg-background">
+      <SEO
+        title="Paramount's Hostile Takeover Attempt on Warner Bros"
+        description="Paramount launches hostile bid for Warner Bros as Netflix competes for streaming dominance. Analysis of the $82.7B deal and its economic implications."
+        canonical="/blog/entertainment-shakeup"
+        type="article"
+        article={{
+          publishedTime: "2024-12-19",
+          section: "Breaking News",
+          author: "HASTE.NYC",
+        }}
+      />
       <Header />
 
       <article>
@@ -28,6 +41,13 @@ const EntertainmentShakeupPost = () => {
 
           <div className="relative z-10 h-full flex flex-col justify-end px-6 md:px-12 lg:px-24 pb-12">
             <div className="max-w-5xl">
+              <Breadcrumbs
+                items={[
+                  { label: "Home", href: "/" },
+                  { label: "Blog", href: "/blog" },
+                  { label: "Entertainment Shakeup" },
+                ]}
+              />
               <span className="inline-block px-4 py-1 mb-6 text-sm font-bold uppercase tracking-wider bg-brand-orange text-black">
                 Breaking News
               </span>

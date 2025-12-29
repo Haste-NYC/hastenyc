@@ -3,10 +3,16 @@ import { Link } from "react-router-dom";
 import adobeMaxHero from "@/assets/adobe-max-hero.jpg";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
+import SEO from "@/components/SEO";
 
 const Blog = () => {
   return (
     <div className="min-h-screen bg-background">
+      <SEO
+        title="Blog - Creative Technology Insights"
+        description="Explore the latest insights on AI-powered creative tools, design systems, and post-production automation from HASTE.NYC."
+        canonical="/blog"
+      />
       <Header />
 
       {/* Hero Section */}

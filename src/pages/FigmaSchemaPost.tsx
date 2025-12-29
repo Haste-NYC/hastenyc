@@ -1,6 +1,8 @@
 import { Link } from "react-router-dom";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
+import SEO from "@/components/SEO";
+import Breadcrumbs from "@/components/Breadcrumbs";
 import figmaSchemaKeynote from "@/assets/figma-schema-keynote.jpg";
 import mcpIntegration from "@/assets/mcp-integration.jpg";
 import figmaSlotsDemo from "@/assets/figma-slots-demo.png";
@@ -8,12 +10,30 @@ import figmaSlotsDemo from "@/assets/figma-slots-demo.png";
 const FigmaSchemaPost = () => {
   return (
     <div className="min-h-screen bg-background">
+      <SEO
+        title="Figma Schema 2025 - The Future of Design Systems"
+        description="Figma Schema 2025 brings MCP server integration, component slots, extended collections, and 10x performance improvements. The future of design systems is here."
+        canonical="/blog/figma-schema-2025"
+        type="article"
+        article={{
+          publishedTime: "2025-10-28",
+          section: "Design Systems",
+          author: "Dilcia Alvarado",
+        }}
+      />
       <Header />
 
       {/* Hero Section */}
       <section className="border-b border-border py-20">
         <div className="container mx-auto px-6">
           <div className="max-w-4xl">
+            <Breadcrumbs
+              items={[
+                { label: "Home", href: "/" },
+                { label: "Blog", href: "/blog" },
+                { label: "Figma Schema 2025" },
+              ]}
+            />
             <p className="text-sm text-brand-orange uppercase tracking-wider font-bold mb-4">
               OCTOBER 28, 2025 • DILCIA ALVARADO
             </p>
