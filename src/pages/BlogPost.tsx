@@ -1,26 +1,14 @@
 import { Button } from "@/components/ui/button";
 import { Link } from "react-router-dom";
-import conformLogo from "@/assets/conform-logo.png";
+import Header from "@/components/Header";
+import Footer from "@/components/Footer";
 import adobeFireflyDemo from "@/assets/adobe-firefly-demo.webp";
 import adobeMaxConference from "@/assets/adobe-max-conference.jpg";
 
 const BlogPost = () => {
   return (
     <div className="min-h-screen bg-background">
-      {/* Header */}
-      <header className="border-b border-border">
-        <div className="container mx-auto px-6 py-6">
-          <div className="flex items-center justify-center">
-            <Link to="/" className="transition-opacity hover:opacity-80">
-              <img 
-                src={conformLogo} 
-                alt="Conform Studio - Return to home" 
-                className="h-8 w-auto"
-              />
-            </Link>
-          </div>
-        </div>
-      </header>
+      <Header />
 
       {/* Hero Section */}
       <section className="border-b border-border py-20">
@@ -197,21 +185,7 @@ const BlogPost = () => {
         </div>
       </section>
 
-      {/* Footer */}
-      <footer className="border-t border-border py-12">
-        <div className="container mx-auto px-6">
-          <div className="flex flex-col md:flex-row justify-between items-start md:items-center gap-4">
-            <div>
-              <p className="text-sm text-muted-foreground uppercase tracking-wider">
-                CONFORM STUDIO
-              </p>
-              <p className="text-xs text-muted-foreground mt-1">
-                Building the future of creative technology
-              </p>
-            </div>
-          </div>
-        </div>
-      </footer>
+      <Footer />
     </div>
   );
 };

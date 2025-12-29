@@ -31,7 +31,7 @@ const Blog = () => {
               size="lg"
               className="bg-brand-orange hover:bg-brand-orange/90 text-white font-bold uppercase"
             >
-              <Link to="/blog/figma-schema-2025">Read Latest Article</Link>
+              <Link to="/blog/entertainment-shakeup">Read Latest Article</Link>
             </Button>
           </div>
         </div>
@@ -56,10 +56,10 @@ const Blog = () => {
               </h2>
             </div>
 
-            <div className="grid gap-8 md:grid-cols-2">
+            <div className="grid gap-8 md:grid-cols-2 lg:grid-cols-3">
               {/* Figma Schema Post */}
-              <article className="border border-border bg-card hover:bg-card/80 transition-colors">
-                <div className="p-8">
+              <article className="border border-border bg-card hover:bg-card/80 transition-colors flex flex-col">
+                <div className="p-8 flex flex-col flex-grow">
                   <div className="flex flex-wrap items-center gap-4 mb-6">
                     <span className="text-xs text-brand-orange uppercase tracking-wider font-bold">
                       OCTOBER 28, 2025
@@ -77,7 +77,7 @@ const Blog = () => {
                     <span className="gradient-blue-green">2025</span>
                   </h3>
 
-                  <p className="text-lg text-foreground/80 mb-6 leading-relaxed">
+                  <p className="text-lg text-foreground/80 mb-6 leading-relaxed flex-grow">
                     The future of design systems is here. MCP server integration, component slots, and 10x performance improvements.
                   </p>
 
@@ -85,7 +85,7 @@ const Blog = () => {
                     asChild
                     variant="outline"
                     size="lg"
-                    className="font-bold uppercase w-full"
+                    className="font-bold uppercase w-full mt-auto"
                   >
                     <Link to="/blog/figma-schema-2025">Read Article</Link>
                   </Button>
@@ -93,8 +93,8 @@ const Blog = () => {
               </article>
 
               {/* Adobe MAX Post */}
-              <article className="border border-border bg-card hover:bg-card/80 transition-colors">
-                <div className="p-8">
+              <article className="border border-border bg-card hover:bg-card/80 transition-colors flex flex-col">
+                <div className="p-8 flex flex-col flex-grow">
                   <div className="flex flex-wrap items-center gap-4 mb-6">
                     <span className="text-xs text-brand-orange uppercase tracking-wider font-bold">
                       NOVEMBER 3, 2025
@@ -112,7 +112,7 @@ const Blog = () => {
                     <span className="gradient-blue-green">2025</span>
                   </h3>
 
-                  <p className="text-lg text-foreground/80 mb-6 leading-relaxed">
+                  <p className="text-lg text-foreground/80 mb-6 leading-relaxed flex-grow">
                     The creative industry just hit a new level. AI-powered tools redefining what's possible for creators everywhere.
                   </p>
 
@@ -120,9 +120,44 @@ const Blog = () => {
                     asChild
                     variant="outline"
                     size="lg"
-                    className="font-bold uppercase w-full"
+                    className="font-bold uppercase w-full mt-auto"
                   >
                     <Link to="/blog/adobe-max-2025">Read Article</Link>
+                  </Button>
+                </div>
+              </article>
+
+              {/* Entertainment Shakeup Post */}
+              <article className="border border-border bg-card hover:bg-card/80 transition-colors flex flex-col">
+                <div className="p-8 flex flex-col flex-grow">
+                  <div className="flex flex-wrap items-center gap-4 mb-6">
+                    <span className="text-xs text-brand-orange uppercase tracking-wider font-bold">
+                      DECEMBER 19, 2024
+                    </span>
+                    <span className="text-xs text-muted-foreground uppercase tracking-wider">
+                      BREAKING NEWS
+                    </span>
+                  </div>
+
+                  <h3 className="text-3xl md:text-4xl font-bold uppercase leading-tight mb-4">
+                    <span className="gradient-orange-pink">HOSTILE</span>
+                    <br />
+                    <span className="gradient-pink-blue">TAKEOVER</span>
+                    <br />
+                    <span className="gradient-blue-green">ATTEMPT</span>
+                  </h3>
+
+                  <p className="text-lg text-foreground/80 mb-6 leading-relaxed flex-grow">
+                    Paramount launches hostile bid for Warner Bros. Netflix vs Paramount battle for streaming dominance.
+                  </p>
+
+                  <Button
+                    asChild
+                    variant="outline"
+                    size="lg"
+                    className="font-bold uppercase w-full mt-auto"
+                  >
+                    <Link to="/blog/entertainment-shakeup">Read Article</Link>
                   </Button>
                 </div>
               </article>

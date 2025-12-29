@@ -1,0 +1,240 @@
+{
+  // See https://go.microsoft.com/fwlink/?LinkId=733558
+  // for the documentation about the tasks.json format
+  "version": "2.0.0",
+  "tasks": [
+    {
+      "type": "npm",
+      "script": "dev",
+      "label": "npm: dev",
+      "detail": "Start Vite development server",
+      "isBackground": true,
+      "problemMatcher": {
+        "owner": "vite",
+        "fileLocation": ["relative", "${workspaceFolder}"],
+        "pattern": {
+          "regexp": "^\\s*(ERROR|WARNING)\\s+(.*):(\\d+):(\\d+)\\s+-\\s+(.*)$",
+          "file": 2,
+          "line": 3,
+          "column": 4,
+          "severity": 1,
+          "message": 5
+        },
+        "background": {
+          "activeOnStart": true,
+          "beginsPattern": "^.*VITE.*dev server running at.*$",
+          "endsPattern": "^\\s*➜\\s+Local:\\s+http://.*$"
+        }
+      },
+      "presentation": {
+        "echo": true,
+        "reveal": "always",
+        "focus": false,
+        "panel": "shared",
+        "showReuseMessage": false,
+        "clear": true
+      }
+    },
+    {
+      "type": "npm",
+      "script": "build",
+      "label": "npm: build",
+      "detail": "Build for production",
+      "group": {
+        "kind": "build",
+        "isDefault": true
+      },
+      "problemMatcher": ["$tsc"],
+      "presentation": {
+        "echo": true,
+        "reveal": "always",
+        "focus": false,
+        "panel": "shared",
+        "showReuseMessage": false,
+        "clear": true
+      }
+    },
+    {
+      "type": "npm",
+      "script": "preview",
+      "label": "npm: preview",
+      "detail": "Preview production build",
+      "isBackground": true,
+      "problemMatcher": {
+        "owner": "vite-preview",
+        "pattern": {
+          "regexp": "^$"
+        },
+        "background": {
+          "activeOnStart": true,
+          "beginsPattern": "^.*vite preview.*$",
+          "endsPattern": "^\\s*➜\\s+Local:\\s+http://.*$"
+        }
+      },
+      "presentation": {
+        "echo": true,
+        "reveal": "always",
+        "focus": false,
+        "panel": "shared",
+        "showReuseMessage": false,
+        "clear": true
+      }
+    },
+    {
+      "type": "npm",
+      "script": "lint",
+      "label": "npm: lint",
+      "detail": "Run ESLint",
+      "problemMatcher": ["$eslint-stylish"],
+      "presentation": {
+        "echo": true,
+        "reveal": "always",
+        "focus": false,
+        "panel": "shared",
+        "showReuseMessage": false,
+        "clear": true
+      }
+    },
+    {
+      "label": "Terminate All Tasks",
+      "command": "echo done ${input:terminate}",
+      "type": "shell",
+      "problemMatcher": [],
+      "options": {
+        "shell": {
+          "executable": "/bin/bash",
+          "args": ["-c"]
+        }
+      },
+      "presentation": {
+        "reveal": "silent",
+        "panel": "shared"
+      }
+    },
+    {
+      "label": "Kill Chrome Debug",
+      "type": "shell",
+      "command": "lsof -ti:9222 | xargs kill -9 2>/dev/null || true",
+      "problemMatcher": [],
+      "presentation": {
+        "reveal": "silent",
+        "panel": "shared"
+      }
+    },
+    {
+      "label": "Kill Port 8080",
+      "type": "shell",
+      "command": "lsof -ti:8080 | xargs kill -9 2>/dev/null || true",
+      "problemMatcher": [],
+      "presentation": {
+        "reveal": "silent",
+        "panel": "shared"
+      }
+    },
+    {
+      "label": "Kill Port 4173",
+      "type": "shell",
+      "command": "lsof -ti:4173 | xargs kill -9 2>/dev/null || true",
+      "problemMatcher": [],
+      "presentation": {
+        "reveal": "silent",
+        "panel": "shared"
+      }
+    },
+    {
+      "label": "Kill All Dev Servers",
+      "type": "shell",
+      "command": "lsof -ti:8080,4173 | xargs kill -9 2>/dev/null || true",
+      "problemMatcher": [],
+      "presentation": {
+        "reveal": "silent",
+        "panel": "shared"
+      }
+    },
+    {
+      "label": "Start Dev Server",
+      "dependsOn": ["Kill Chrome Debug", "Kill Port 8080"],
+      "dependsOrder": "sequence",
+      "type": "npm",
+      "script": "dev",
+      "detail": "Kill existing processes and start Vite dev server",
+      "isBackground": true,
+      "problemMatcher": {
+        "owner": "vite",
+        "fileLocation": ["relative", "${workspaceFolder}"],
+        "pattern": {
+          "regexp": "^\\s*(ERROR|WARNING)\\s+(.*):(\\d+):(\\d+)\\s+-\\s+(.*)$",
+          "file": 2,
+          "line": 3,
+          "column": 4,
+          "severity": 1,
+          "message": 5
+        },
+        "background": {
+          "activeOnStart": true,
+          "beginsPattern": "^.*VITE.*$",
+          "endsPattern": "^.*Local:.*http://.*$"
+        }
+      },
+      "presentation": {
+        "echo": true,
+        "reveal": "always",
+        "focus": false,
+        "panel": "shared",
+        "showReuseMessage": false,
+        "clear": true
+      }
+    },
+    {
+      "label": "Start Preview Server",
+      "dependsOn": ["Kill Chrome Debug", "Kill Port 4173", "npm: build"],
+      "dependsOrder": "sequence",
+      "type": "npm",
+      "script": "preview",
+      "detail": "Kill existing processes and start preview server",
+      "isBackground": true,
+      "problemMatcher": {
+        "owner": "vite-preview",
+        "pattern": {
+          "regexp": "^$"
+        },
+        "background": {
+          "activeOnStart": true,
+          "beginsPattern": "^.*vite preview.*$",
+          "endsPattern": "^.*Local:.*http://.*$"
+        }
+      },
+      "presentation": {
+        "echo": true,
+        "reveal": "always",
+        "focus": false,
+        "panel": "shared",
+        "showReuseMessage": false,
+        "clear": true
+      }
+    },
+    {
+      "label": "Install Dependencies",
+      "type": "shell",
+      "command": "npm install",
+      "detail": "Install all npm dependencies",
+      "problemMatcher": [],
+      "presentation": {
+        "echo": true,
+        "reveal": "always",
+        "focus": false,
+        "panel": "shared",
+        "showReuseMessage": false,
+        "clear": true
+      }
+    }
+  ],
+  "inputs": [
+    {
+      "id": "terminate",
+      "type": "command",
+      "command": "workbench.action.tasks.terminate",
+      "args": "terminateAll"
+    }
+  ]
+}
