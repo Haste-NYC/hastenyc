@@ -17,7 +17,7 @@ interface SEOProps {
 const BASE_URL = "https://haste.nyc";
 const DEFAULT_TITLE = "HASTE.NYC - AI-Powered Creative Technology";
 const DEFAULT_DESCRIPTION = "Conform Studio uses AI to automate post-production. 300X faster timeline conform for film and TV. Built for studios, secure, and scalable.";
-const DEFAULT_IMAGE = `${BASE_URL}/og-image.svg`;
+const DEFAULT_IMAGE = `${BASE_URL}/og-image.png`;
 
 const SEO = ({
   title,
