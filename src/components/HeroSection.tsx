@@ -23,7 +23,7 @@ const HeroSection = () => {
           transition={{ duration: 0.6, delay: 0.1 }}
           className="py-2"
         >
-          <h1 className="sr-only">Conform Studio - AI-Powered Post Production Automation</h1>
+          <h1 className="sr-only">Haste.NYC's Conform Studio - Instant project migration from Adobe Premiere to Davinci Resolve</h1>
           <img
             src={conformLogo}
             alt="Conform Studio"
