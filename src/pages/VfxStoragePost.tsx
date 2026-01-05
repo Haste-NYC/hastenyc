@@ -148,7 +148,7 @@ const VfxStoragePost = () => {
               <p className="text-2xl md:text-3xl font-black uppercase text-gradient-cool">
                 The studios that succeed at scale are the ones that treat storage as part of the workflow, not just the infrastructure.
               </p>
-              <cite className="text-muted-foreground text-sm mt-4 block font-normal normal-case">— Jennifer Wolfe, Postperspective</cite>
+              <cite className="text-muted-foreground text-sm mt-4 block font-normal normal-case">— Conform</cite>
             </blockquote>
 
             {/* Tags */}
