@@ -36,7 +36,7 @@ const VfxStoragePost = () => {
                 Industry Analysis
               </span>
               <h1 className="text-4xl md:text-6xl lg:text-7xl font-bold uppercase leading-none mb-6 text-gradient-brand">
-                ILM and Wētā: Engineering Storage for Global-Scale VFX
+                Postperspective's writer, Jenifer Wolfe, recently wrote an article on ILM and Wētā... here's our takeaways
               </h1>
               <p className="text-xl md:text-2xl text-muted-foreground max-w-3xl font-normal normal-case animate-fade-in" style={{ animationDelay: "0.2s" }}>
                 Our takeaways from Postperspective's deep dive into how the world's leading VFX studios handle storage
