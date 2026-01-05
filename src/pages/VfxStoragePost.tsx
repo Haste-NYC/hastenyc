@@ -32,20 +32,23 @@ const VfxStoragePost = () => {
                   { label: "VFX Storage" },
                 ]}
               />
-              <span className="inline-block px-4 py-1 mb-6 text-sm font-bold uppercase tracking-wider bg-brand-orange text-black">
-                Industry Analysis
-              </span>
-              <h1 className="text-4xl md:text-6xl lg:text-7xl font-bold uppercase leading-none mb-6 text-gradient-brand">
-                ILM and Wētā: Here's Our Takeaways
+              <div className="flex items-center gap-4 mb-6">
+                <span className="text-sm text-brand-orange uppercase tracking-wider font-bold">
+                  Industry Analysis
+                </span>
+                <span className="text-sm text-brand-orange uppercase tracking-wider font-bold">
+                  January 5, 2025
+                </span>
+              </div>
+              <h1 className="text-6xl md:text-8xl font-bold uppercase leading-none mb-2">
+                ILM and Wētā:
               </h1>
-              <p className="text-xl md:text-2xl text-muted-foreground max-w-3xl font-normal normal-case animate-fade-in" style={{ animationDelay: "0.2s" }}>
+              <p className="text-6xl md:text-8xl font-bold uppercase leading-none mb-6 bg-gradient-to-r from-brand-orange via-brand-pink to-brand-blue bg-clip-text text-transparent">
+                Here's Our Takeaways
+              </p>
+              <p className="text-xl text-foreground/80 max-w-3xl">
                 Postperspective's writer, Jennifer Wolfe, recently wrote an article on ILM and Wētā...
               </p>
-              <div className="flex items-center gap-6 mt-8 text-sm text-muted-foreground animate-fade-in" style={{ animationDelay: "0.4s" }}>
-                <time dateTime="2025-01-05">January 5, 2025</time>
-                <span className="w-1 h-1 rounded-full bg-brand-orange" />
-                <span>8 min read</span>
-              </div>
             </div>
           </div>
         </header>
