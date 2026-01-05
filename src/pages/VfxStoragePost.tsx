@@ -40,8 +40,10 @@ const VfxStoragePost = () => {
                   January 5, 2025
                 </span>
               </div>
-              <h1 className="text-3xl md:text-4xl font-bold uppercase leading-tight mb-6 bg-gradient-to-r from-brand-orange via-brand-pink to-brand-blue bg-clip-text text-transparent">
-                Postperspective's writer, Jennifer Wolfe, recently wrote an <a href="https://postperspective.com/how-ilm-and-weta-engineer-storage-for-global-scale-visual-effects/" target="_blank" rel="noopener noreferrer" className="underline hover:text-brand-orange transition-colors">article</a> on ILM and Wētā...here's our takeaways
+              <h1 className="text-3xl md:text-4xl font-bold uppercase leading-tight mb-6">
+                <span className="bg-gradient-to-r from-brand-orange via-brand-pink to-brand-blue bg-clip-text text-transparent">Postperspective's writer, Jennifer Wolfe, recently wrote an </span>
+                <a href="https://postperspective.com/how-ilm-and-weta-engineer-storage-for-global-scale-visual-effects/" target="_blank" rel="noopener noreferrer" className="text-brand-orange underline decoration-2 underline-offset-4 hover:text-brand-pink transition-colors">article</a>
+                <span className="bg-gradient-to-r from-brand-orange via-brand-pink to-brand-blue bg-clip-text text-transparent"> on ILM and Wētā...here's our takeaways</span>
               </h1>
               <p className="text-xl text-foreground/80 max-w-3xl">
                 How the world's leading VFX studios engineer storage for global-scale visual effects pipelines.
