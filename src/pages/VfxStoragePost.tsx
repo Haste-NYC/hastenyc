@@ -43,7 +43,7 @@ const VfxStoragePost = () => {
               <h1 className="text-6xl md:text-8xl font-bold uppercase leading-none mb-2">
                 ILM and Wētā
               </h1>
-              <p className="text-3xl md:text-4xl font-bold uppercase leading-none mb-6 bg-gradient-to-r from-brand-orange via-brand-pink to-brand-blue bg-clip-text text-transparent">
+              <p className="text-2xl md:text-3xl font-bold uppercase leading-none mb-6 bg-gradient-to-r from-brand-orange via-brand-pink to-brand-blue bg-clip-text text-transparent">
                 Postperspective's writer, Jennifer Wolfe, recently wrote an article on ILM and Wētā...here's our takeaways
               </p>
             </div>
