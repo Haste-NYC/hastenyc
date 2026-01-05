@@ -37,7 +37,7 @@ const Blog = () => {
               size="lg"
               className="bg-brand-orange hover:bg-brand-orange/90 text-white font-bold uppercase"
             >
-              <Link to="/blog/entertainment-shakeup">Read Latest Article</Link>
+              <Link to="/blog/vfx-storage-ilm-weta">Read Latest Article</Link>
             </Button>
           </div>
         </div>
@@ -63,6 +63,41 @@ const Blog = () => {
             </div>
 
             <div className="grid gap-8 md:grid-cols-2 lg:grid-cols-3">
+              {/* VFX Storage Post */}
+              <article className="border border-border bg-card hover:bg-card/80 transition-colors flex flex-col">
+                <div className="p-8 flex flex-col flex-grow">
+                  <div className="flex flex-wrap items-center gap-4 mb-6">
+                    <span className="text-xs text-brand-orange uppercase tracking-wider font-bold">
+                      JANUARY 5, 2025
+                    </span>
+                    <span className="text-xs text-muted-foreground uppercase tracking-wider">
+                      INDUSTRY ANALYSIS
+                    </span>
+                  </div>
+
+                  <h3 className="text-3xl md:text-4xl font-bold uppercase leading-tight mb-4">
+                    <span className="gradient-orange-pink">ILM & WĒTĀ</span>
+                    <br />
+                    <span className="gradient-pink-blue">VFX STORAGE</span>
+                    <br />
+                    <span className="gradient-blue-green">INSIGHTS</span>
+                  </h3>
+
+                  <p className="text-lg text-foreground/80 mb-6 leading-relaxed flex-grow">
+                    How Industrial Light & Magic and Wētā FX engineer storage for global-scale visual effects pipelines.
+                  </p>
+
+                  <Button
+                    asChild
+                    variant="outline"
+                    size="lg"
+                    className="font-bold uppercase w-full mt-auto"
+                  >
+                    <Link to="/blog/vfx-storage-ilm-weta">Read Article</Link>
+                  </Button>
+                </div>
+              </article>
+
               {/* Figma Schema Post */}
               <article className="border border-border bg-card hover:bg-card/80 transition-colors flex flex-col">
                 <div className="p-8 flex flex-col flex-grow">
