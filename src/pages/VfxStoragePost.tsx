@@ -146,7 +146,7 @@ const VfxStoragePost = () => {
             {/* Conclusion Quote */}
             <blockquote className="border-l-4 border-brand-pink pl-6 py-4 my-12">
               <p className="text-2xl md:text-3xl font-black uppercase text-gradient-cool">
-                The studios that succeed at scale are the ones that treat storage as part of the workflow, not just the infrastructure.
+                "The studios that succeed at scale are the ones that treat storage as part of the workflow, not just the infrastructure."
               </p>
               <span className="text-xl md:text-2xl font-bold uppercase mt-4 block not-italic bg-gradient-to-r from-brand-orange via-brand-pink to-brand-blue bg-clip-text text-transparent">— Conform</span>
             </blockquote>
