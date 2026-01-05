@@ -57,7 +57,7 @@ const VfxStoragePost = () => {
             {/* Lead Section */}
             <section className="mb-16">
               <p className="text-xl md:text-2xl leading-relaxed text-foreground/90 font-normal normal-case">
-                Postperspective's writer, Jennifer Wolfe, recently explored how Industrial Light & Magic (ILM) and Wētā FX engineer storage for global-scale visual effects, and one thing became immediately clear: at the highest level of post-production, storage is no longer just infrastructure — it's a critical part of the creative workflow.
+                Jennifer Wolfe recently explored how Industrial Light & Magic (ILM) and Wētā FX engineer storage for global-scale visual effects, and one thing became immediately clear: at the highest level of post-production, storage is no longer just infrastructure — it's a critical part of the creative workflow.
               </p>
             </section>
 
