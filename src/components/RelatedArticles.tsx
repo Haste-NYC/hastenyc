@@ -11,6 +11,13 @@ interface Article {
 
 const allArticles: Article[] = [
   {
+    slug: "/blog/vfx-storage-ilm-weta",
+    date: "JANUARY 5, 2025",
+    category: "INDUSTRY ANALYSIS",
+    title: ["ILM & WĒTĀ", "VFX STORAGE", "INSIGHTS"],
+    description: "How Industrial Light & Magic and Wētā FX engineer storage for global-scale visual effects pipelines.",
+  },
+  {
     slug: "/blog/figma-schema-2025",
     date: "OCTOBER 28, 2025",
     category: "DESIGN SYSTEMS",
