@@ -47,7 +47,7 @@ const VfxStoragePost = () => {
                 Here's Our Takeaways
               </p>
               <p className="text-xl text-foreground/80 max-w-3xl">
-                Postperspective's writer, Jennifer Wolfe, recently wrote an article on ILM and Wētā...
+                Postperspective's writer, Jennifer Wolfe, recently wrote an article on ILM and Wētā...here's our takeaways
               </p>
             </div>
           </div>
