@@ -36,10 +36,10 @@ const VfxStoragePost = () => {
                 Industry Analysis
               </span>
               <h1 className="text-4xl md:text-6xl lg:text-7xl font-bold uppercase leading-none mb-6 text-gradient-brand">
-                Postperspective's writer, Jenifer Wolfe, recently wrote an article on ILM and Wētā... here's our takeaways
+                ILM and Wētā: Here's Our Takeaways
               </h1>
               <p className="text-xl md:text-2xl text-muted-foreground max-w-3xl font-normal normal-case animate-fade-in" style={{ animationDelay: "0.2s" }}>
-                Our takeaways from Postperspective's deep dive into how the world's leading VFX studios handle storage
+                Postperspective's writer, Jennifer Wolfe, recently wrote an article on ILM and Wētā...
               </p>
               <div className="flex items-center gap-6 mt-8 text-sm text-muted-foreground animate-fade-in" style={{ animationDelay: "0.4s" }}>
                 <time dateTime="2025-01-05">January 5, 2025</time>
