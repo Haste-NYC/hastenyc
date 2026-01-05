@@ -3,6 +3,7 @@ import Footer from "@/components/Footer";
 import SEO from "@/components/SEO";
 import Breadcrumbs from "@/components/Breadcrumbs";
 import RelatedArticles from "@/components/RelatedArticles";
+import vfxStorageHero from "@/assets/vfx-storage-hero.jpg";
 
 const VfxStoragePost = () => {
   return (
@@ -22,7 +23,16 @@ const VfxStoragePost = () => {
 
       <article>
         {/* Hero Section */}
-        <header className="relative min-h-[400px] overflow-hidden bg-gradient-to-br from-brand-orange/20 via-background to-brand-pink/20">
+        <header className="relative min-h-[500px] overflow-hidden">
+          {/* Background Image */}
+          <div className="absolute inset-0">
+            <img 
+              src={vfxStorageHero} 
+              alt="VFX Storage Infrastructure" 
+              className="w-full h-full object-cover"
+            />
+            <div className="absolute inset-0 bg-gradient-to-t from-background via-background/80 to-background/40" />
+          </div>
           <div className="relative z-10 h-full flex flex-col justify-end px-6 md:px-12 lg:px-24 py-12">
             <div className="max-w-5xl">
               <Breadcrumbs
