@@ -40,7 +40,7 @@ const VfxStoragePost = () => {
                   January 5, 2025
                 </span>
               </div>
-              <h1 className="text-6xl md:text-8xl font-bold uppercase leading-none mb-6 bg-gradient-to-r from-brand-orange via-brand-pink to-brand-blue bg-clip-text text-transparent">
+              <h1 className="text-3xl md:text-4xl font-bold uppercase leading-tight mb-6 bg-gradient-to-r from-brand-orange via-brand-pink to-brand-blue bg-clip-text text-transparent">
                 Postperspective's writer, Jennifer Wolfe, recently wrote an article on ILM and Wētā...here's our takeaways
               </h1>
               <p className="text-xl text-foreground/80 max-w-3xl">
