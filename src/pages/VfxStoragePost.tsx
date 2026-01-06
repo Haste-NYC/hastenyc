@@ -125,7 +125,7 @@ const VfxStoragePost = () => {
             <section className="mb-16">
               <h2 className="text-3xl md:text-4xl font-bold uppercase mb-8 text-gradient-cool">Challenges of Project Migration</h2>
               <p className="text-lg leading-relaxed text-foreground/80 font-normal normal-case">
-                Large-scale studios like ILM and Wētā operate in environments where projects are constantly moving between tools, facilities, and teams. That makes <a href="/" className="text-brand-orange underline decoration-1 underline-offset-4 hover:text-brand-pink transition-colors">project migration</a> one of the most failure-prone stages of any workflow.
+                Large-scale studios like ILM and Wētā operate in environments where projects are constantly moving between tools, facilities, and teams. That makes project migration one of the most failure-prone stages of any workflow.
               </p>
             </section>
 
@@ -133,7 +133,7 @@ const VfxStoragePost = () => {
             <section className="mb-16">
               <h2 className="text-3xl md:text-4xl font-bold uppercase mb-8 text-gradient-cool">Minimizing Manual Intervention</h2>
               <p className="text-lg leading-relaxed text-foreground/80 font-normal normal-case">
-                A major point from Wolfe's reporting is how much effort ILM and Wētā put into reducing manual intervention. Frequent <a href="/blog" className="text-brand-orange underline decoration-1 underline-offset-4 hover:text-brand-pink transition-colors">media relinking</a> isn't just inefficient — it's a sign of structural pipeline issues.
+                A major point from Wolfe's reporting is how much effort ILM and Wētā put into reducing manual intervention. Frequent media relinking isn't just inefficient — it's a sign of structural pipeline issues.
               </p>
             </section>
 
@@ -144,7 +144,7 @@ const VfxStoragePost = () => {
                 At Conform we see these same challenges across real-world post-production environments every day. This article reinforces something we firmly believe: successful global VFX storage workflows are designed around how people actually work — not just how systems are built.
               </p>
               <p className="text-foreground/80 font-normal normal-case">
-                From project migration and media relinking to <a href="/" className="text-brand-orange underline decoration-1 underline-offset-4 hover:text-brand-pink transition-colors">Premiere Pro to DaVinci Resolve</a> workflows and <a href="/" className="text-brand-orange underline decoration-1 underline-offset-4 hover:text-brand-pink transition-colors">timeline conform</a> accuracy, the strongest pipelines are the ones where technology quietly removes friction, allowing creative teams to stay focused on the work.
+                From project migration and media relinking to conform accuracy and finishing reliability, the strongest pipelines are the ones where technology quietly removes friction, allowing creative teams to stay focused on the work.
               </p>
             </div>
 
