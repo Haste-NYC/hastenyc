@@ -44,7 +44,7 @@ const VfxStoragePost = () => {
               />
               <div className="flex items-center gap-4 mb-6">
                 <span className="text-sm text-brand-orange uppercase tracking-wider font-bold">
-                  Industry Analysis
+                  Written by Dilcia Alvarado
                 </span>
                 <span className="text-sm text-brand-orange uppercase tracking-wider font-bold">
                   January 5, 2025
