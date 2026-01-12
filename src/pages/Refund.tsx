@@ -13,15 +13,27 @@ const Refund = () => {
       <Header />
       <main className="py-20 px-6">
         <div className="max-w-4xl mx-auto">
-          <h1 className="font-display text-4xl md:text-5xl font-normal text-foreground mb-8 uppercase tracking-wide">
+          <h1 className="font-display text-4xl md:text-5xl font-normal text-foreground mb-2 uppercase tracking-wide">
             Refund Policy
           </h1>
-          <div className="text-foreground/80 text-sm leading-relaxed uppercase tracking-[0.04em] space-y-6">
+          <p className="text-foreground/60 text-xs uppercase tracking-[0.15em] mb-10">
+            Effective Date: July 25, 2025
+          </p>
+          
+          <div className="text-foreground/80 text-sm leading-relaxed uppercase tracking-[0.04em] space-y-8">
             <p>
-              We want you to be satisfied with our services. This policy outlines our refund procedures.
+              Conform Studio is offered with an optional free trial. After the trial period ends, all subscription fees are final and non-refundable. By subscribing, you agree to be charged automatically via Paddle.com.
             </p>
+
+            <div>
+              <h2 className="text-foreground font-medium mb-2">Cancellation</h2>
+              <p>
+                You may cancel your subscription at any time via your account dashboard. Cancellation stops future billing but does not provide a refund for prior charges.
+              </p>
+            </div>
+
             <p>
-              Please contact us for the full refund policy documentation.
+              If you believe you were charged in error, please contact us at support@haste.nyc within 7 days of the charge.
             </p>
           </div>
         </div>
