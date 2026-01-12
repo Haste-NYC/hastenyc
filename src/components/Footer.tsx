@@ -30,7 +30,7 @@ const Footer = () => {
         
         {/* Copyright */}
         <p className="text-muted-foreground text-xs uppercase tracking-[0.15em]">
-          ©2025 Haste.nyc LLC • All Rights Reserved
+          ©2026 Haste.nyc LLC • All Rights Reserved
         </p>
         
         {/* Footer Links */}
