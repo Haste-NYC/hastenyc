@@ -17,7 +17,7 @@ const Refund = () => {
             Refund Policy
           </h1>
           <p className="text-foreground/60 text-xs uppercase tracking-[0.15em] mb-10">
-            Effective Date: July 25, 2025
+            Effective Date: January 12, 2026
           </p>
           
           <div className="text-foreground/80 text-sm leading-relaxed uppercase tracking-[0.04em] space-y-8">
