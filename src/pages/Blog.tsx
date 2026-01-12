@@ -217,7 +217,7 @@ const Blog = () => {
               <span className="bg-gradient-to-r from-brand-orange to-brand-pink bg-clip-text text-transparent">NEXT GENERATION</span>
             </h2>
             <p className="text-lg text-foreground/80 leading-relaxed">
-              At <span className="font-bold">Conform Studio</span>, we're dedicated to pushing the boundaries
+              At <span className="font-bold">Haste Conform Studio</span>, we're dedicated to pushing the boundaries
               of what's possible in creative technology. From AI-powered workflows to intelligent automation,
               we're shaping the future of digital creation.
             </p>

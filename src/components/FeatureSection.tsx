@@ -31,7 +31,7 @@ const FeatureSection = () => {
       title: "Rapid Timeline Conform for Film & TV",
       description: (
         <>
-          Conform Studio uses AI to automate the most tedious, time-consuming part of post-production:{" "}
+          Haste Conform Studio uses AI to automate the most tedious, time-consuming part of post-production:{" "}
           <span className="bg-gradient-to-r from-[hsl(200,80%,60%)] via-[hsl(170,70%,50%)] to-[hsl(140,60%,50%)] bg-clip-text text-transparent">migrating projects between editorial, VFX, color, and sound.</span>{" "}
           It's faster than humanly possible—and dead accurate.
         </>
@@ -42,7 +42,7 @@ const FeatureSection = () => {
       description: (
         <>
           <span className="text-coral">What once took days now takes seconds.</span>{" "}
-          Conform Studio completes complex conform tasks at 300X the speed of human teams, without sacrificing a single frame of accuracy. It's speed you can trust, and time you can use for real creative work.
+          Haste Conform Studio completes complex conform tasks at 300X the speed of human teams, without sacrificing a single frame of accuracy. It's speed you can trust, and time you can use for real creative work.
         </>
       ),
     },
@@ -50,7 +50,7 @@ const FeatureSection = () => {
       title: "Built for Studios",
       description: (
         <>
-          Conform Studio is currently being offered to qualifying post facilities. We're{" "}
+          Haste Conform Studio is currently being offered to qualifying post facilities. We're{" "}
           <a href="https://calendar.app.google/NCawKSixwhy3DA5r9" target="_blank" rel="noopener noreferrer" className="bg-gradient-to-r from-[hsl(200,80%,60%)] via-[hsl(170,70%,50%)] to-[hsl(140,60%,50%)] bg-clip-text text-transparent hover:underline">
             onboarding Early Customers
           </a>{" "}

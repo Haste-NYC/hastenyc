@@ -23,10 +23,10 @@ const HeroSection = () => {
           transition={{ duration: 0.6, delay: 0.1 }}
           className="py-2"
         >
-          <h1 className="sr-only">Haste.NYC's Conform Studio - Instant project migration from Adobe Premiere to Davinci Resolve</h1>
+          <h1 className="sr-only">Haste Conform Studio - Instant project migration from Adobe Premiere to Davinci Resolve</h1>
           <img
             src={conformLogo}
-            alt="Conform Studio"
+            alt="Haste Conform Studio"
             className="w-full max-w-4xl mx-auto h-auto"
           />
         </motion.div>
@@ -48,7 +48,7 @@ const HeroSection = () => {
           transition={{ duration: 0.6, delay: 0.35 }}
           className="text-foreground/90 text-xs md:text-sm max-w-3xl mx-auto leading-relaxed uppercase tracking-[0.06em] pt-6"
         >
-          Conform Studio connects previously siloed creative software—Premiere, Resolve, Avid, Pro Tools—and bridges the gaps between them. Say goodbye to relinking errors, round-trip workflows, and days of manual QC.
+          Haste Conform Studio connects previously siloed creative software—Premiere, Resolve, Avid, Pro Tools—and bridges the gaps between them. Say goodbye to relinking errors, round-trip workflows, and days of manual QC.
         </motion.p>
         
         {/* CTA Button */}

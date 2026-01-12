@@ -62,7 +62,7 @@ const BlogPost = () => {
             <p className="text-lg leading-relaxed mb-6">
               From next-gen AI assistants to intelligent automation across the Creative Cloud ecosystem, 
               this year's MAX wasn't just an update, it was a declaration of what creativity looks like 
-              in the AI era. And as a studio built on innovation, <span className="font-bold">Conform Studio</span> couldn't 
+              in the AI era. And as a studio built on innovation, <span className="font-bold">Haste Conform Studio</span> couldn't 
               be more excited.
             </p>
           </div>
@@ -167,7 +167,7 @@ const BlogPost = () => {
               <span className="bg-gradient-to-r from-brand-orange via-brand-pink to-brand-blue bg-clip-text text-transparent">MCP SERVER</span>
             </h2>
             <p className="text-lg leading-relaxed mb-6">
-              At <span className="font-bold">Conform Studio</span>, we're not just excited observers, we're 
+              At <span className="font-bold">Haste Conform Studio</span>, we're not just excited observers, we're 
               active participants in this creative revolution. As we integrate these powerful new Adobe 
               tools into our workflow, we're also leveraging the Model Context Protocol (MCP) server to 
               streamline our development process.
@@ -203,7 +203,7 @@ const BlogPost = () => {
                 realized faster and more beautifully than ever before.
               </p>
               <p className="text-lg leading-relaxed">
-                At <span className="font-bold">Conform Studio</span>, we're ready for this future and we're building it.
+                At <span className="font-bold">Haste Conform Studio</span>, we're ready for this future and we're building it.
               </p>
             </div>
           </div>

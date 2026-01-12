@@ -58,7 +58,7 @@ const FigmaSchemaPost = () => {
         <div className="container mx-auto px-6">
           <div className="max-w-4xl">
             <p className="text-lg leading-relaxed mb-6">
-              We're absolutely thrilled to share our excitement about Figma Schema 2025. The announcements from October 28 represent a massive leap forward in how we build, scale, and maintain design systems at Conform Studio.
+              We're absolutely thrilled to share our excitement about Figma Schema 2025. The announcements from October 28 represent a massive leap forward in how we build, scale, and maintain design systems at Haste Conform Studio.
             </p>
             <p className="text-lg leading-relaxed mb-6">
               This isn't just an incremental update—it's a fundamental reimagining of the design-to-development workflow. And we're here for it.
@@ -85,7 +85,7 @@ const FigmaSchemaPost = () => {
               <span className="bg-gradient-to-r from-brand-orange via-brand-pink to-brand-blue bg-clip-text text-transparent">OUR NEW SECRET WEAPON</span>
             </h2>
             <p className="text-lg leading-relaxed mb-6">
-              The Model Context Protocol (MCP) server integration is a game-changer for Conform Studio's development workflow. We're already incorporating this into our process, bringing Figma context directly into VS Code, Claude Code, and Cursor.
+              The Model Context Protocol (MCP) server integration is a game-changer for Haste Conform Studio's development workflow. We're already incorporating this into our process, bringing Figma context directly into VS Code, Claude Code, and Cursor.
             </p>
             <p className="text-lg leading-relaxed mb-6 font-bold">
               This means richer AI generation, live code mapping, and a truly seamless bridge between design and production code.
@@ -133,7 +133,7 @@ const FigmaSchemaPost = () => {
                 </p>
                 <img
                   src={figmaSlotsDemo}
-                  alt="Component Slots Demo in Conform Studio"
+                  alt="Component Slots Demo in Haste Conform Studio"
                   className="w-full h-auto rounded-lg"
                   loading="lazy"
                 />
@@ -274,7 +274,7 @@ const FigmaSchemaPost = () => {
                 <span className="bg-gradient-to-r from-brand-orange via-brand-pink to-brand-blue bg-clip-text text-transparent">THE FUTURE</span>
               </h2>
               <p className="text-lg leading-relaxed">
-                Schema 2025 marks Figma's evolution towards being a unified, extensible platform powering design, code, and AI at scale. At Conform Studio, we're not just watching this transformation—we're actively integrating it into every project.
+                Schema 2025 marks Figma's evolution towards being a unified, extensible platform powering design, code, and AI at scale. At Haste Conform Studio, we're not just watching this transformation—we're actively integrating it into every project.
               </p>
               <p className="text-lg leading-relaxed font-bold">
                 The MCP server integration alone changes everything about how we build. Faster. Smarter. More connected.

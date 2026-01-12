@@ -26,7 +26,7 @@ npm run preview
 
 ## Project Architecture
 
-This is a React-based web application for Conform Studio, built with TypeScript and modern web technologies.
+This is a React-based web application for Haste Conform Studio, built with TypeScript and modern web technologies.
 
 ### Key Technology Stack
 - **Vite** - Build tool and dev server

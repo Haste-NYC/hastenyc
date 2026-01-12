@@ -1,9 +1,15 @@
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
+import SEO from "@/components/SEO";
 
 const Refund = () => {
   return (
     <div className="min-h-screen bg-background">
+      <SEO
+        title="Refund Policy"
+        description="Refund Policy for HASTE.NYC and Haste Conform Studio. Review our refund procedures and satisfaction guarantee."
+        canonical="/refund"
+      />
       <Header />
       <main className="py-20 px-6">
         <div className="max-w-4xl mx-auto">

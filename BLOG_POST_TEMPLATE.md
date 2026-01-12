@@ -15,7 +15,7 @@ Create a new blog post for haste.nyc with the following details:
 **Beat:** [AI/Creative Tools | Design Systems | Entertainment/Media | Security | Startups | Consumer Tech]
 **Target Keywords:** [Primary keyword, secondary keywords]
 **News Hook:** [What makes this timely/newsworthy]
-**Angle:** [HASTE.NYC/Conform Studio perspective or industry analysis]
+**Angle:** [HASTE.NYC/Haste Conform Studio perspective or industry analysis]
 ```
 
 ---
@@ -211,7 +211,7 @@ Add new URL entry:
 - Professional but accessible
 - Forward-looking, innovation-focused
 - Connect topics to creative production workflows
-- Reference Conform Studio where relevant
+- Reference Haste Conform Studio where relevant
 - Bold, uppercase headlines with gradient text
 - Technical accuracy without jargon overload
 
@@ -235,7 +235,7 @@ Add new URL entry:
 
 4. HASTE.NYC PERSPECTIVE
    - How this affects creative workflows
-   - Conform Studio integration opportunities
+   - Haste Conform Studio integration opportunities
    - Practical applications
 
 5. CONCLUSION

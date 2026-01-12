@@ -1,9 +1,15 @@
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
+import SEO from "@/components/SEO";
 
 const Privacy = () => {
   return (
     <div className="min-h-screen bg-background">
+      <SEO
+        title="Privacy Notice"
+        description="Privacy Notice for HASTE.NYC and Haste Conform Studio. Learn how we collect, use, and protect your information."
+        canonical="/privacy"
+      />
       <Header />
       <main className="py-20 px-6">
         <div className="max-w-4xl mx-auto">

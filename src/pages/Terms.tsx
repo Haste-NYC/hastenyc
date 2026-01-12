@@ -1,9 +1,15 @@
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
+import SEO from "@/components/SEO";
 
 const Terms = () => {
   return (
     <div className="min-h-screen bg-background">
+      <SEO
+        title="Terms of Service"
+        description="Terms of Service for HASTE.NYC and Haste Conform Studio. Review our service agreement and usage policies."
+        canonical="/terms"
+      />
       <Header />
       <main className="py-20 px-6">
         <div className="max-w-4xl mx-auto">

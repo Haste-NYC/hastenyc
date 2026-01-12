@@ -16,7 +16,7 @@ const CTASection = () => {
         </h2>
         
         <p className="text-foreground/80 text-xs md:text-sm leading-relaxed uppercase tracking-[0.04em]">
-          Haste is building the future of automated post production. Conform Studio is just the start. With more AI-powered tools on the horizon, we're streamlining the entire post-production pipeline—so creatives can spend more time creating and less time waiting.
+          Haste is building the future of automated post production. Haste Conform Studio is just the start. With more AI-powered tools on the horizon, we're streamlining the entire post-production pipeline—so creatives can spend more time creating and less time waiting.
         </p>
         
         <motion.div 
