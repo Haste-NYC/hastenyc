@@ -80,11 +80,11 @@ const Blog = () => {
                     <br />
                     <span className="gradient-pink-blue">STORAGE FOR</span>
                     <br />
-                    <span className="gradient-blue-green">GLOBAL-SCALE VFX</span>
+                    <span className="gradient-blue-green">GLOBAL-SCALE POST</span>
                   </h3>
 
                   <p className="text-lg text-foreground/80 mb-6 leading-relaxed flex-grow">
-                    How leading VFX studios engineer storage for global-scale visual effects pipelines.
+                    How the world's leading VFX studios and editorial post houses engineer storage for global-scale pipelines.
                   </p>
 
                   <Button
