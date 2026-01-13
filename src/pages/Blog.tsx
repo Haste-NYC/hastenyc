@@ -1,6 +1,6 @@
 import { Button } from "@/components/ui/button";
 import { Link } from "react-router-dom";
-import adobeMaxHero from "@/assets/adobe-max-hero.jpg";
+import vfxStorageHero from "@/assets/vfx-storage-hero.jpg";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
 import SEO from "@/components/SEO";
@@ -43,8 +43,8 @@ const Blog = () => {
         </div>
         <div className="relative h-[60vh] min-h-[400px] overflow-hidden">
           <img
-            src={adobeMaxHero}
-            alt="Adobe MAX 2025 Conference"
+            src={vfxStorageHero}
+            alt="VFX Storage Infrastructure"
             className="w-full h-full object-cover"
           />
         </div>
