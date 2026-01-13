@@ -76,15 +76,15 @@ const Blog = () => {
                   </div>
 
                   <h3 className="text-3xl md:text-4xl font-bold uppercase leading-tight mb-4">
-                    <span className="gradient-orange-pink">ILM & WĒTĀ</span>
+                    <span className="gradient-orange-pink">ENGINEERING</span>
                     <br />
-                    <span className="gradient-pink-blue">VFX STORAGE</span>
+                    <span className="gradient-pink-blue">STORAGE FOR</span>
                     <br />
-                    <span className="gradient-blue-green">INSIGHTS</span>
+                    <span className="gradient-blue-green">GLOBAL-SCALE VFX</span>
                   </h3>
 
                   <p className="text-lg text-foreground/80 mb-6 leading-relaxed flex-grow">
-                    How Industrial Light & Magic and Wētā FX engineer storage for global-scale visual effects pipelines.
+                    How leading VFX studios engineer storage for global-scale visual effects pipelines.
                   </p>
 
                   <Button
