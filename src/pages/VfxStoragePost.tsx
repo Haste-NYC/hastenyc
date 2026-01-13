@@ -9,8 +9,8 @@ const VfxStoragePost = () => {
   return (
     <div className="min-h-screen bg-background">
       <SEO
-        title="ILM and Wētā: Engineering Storage for Global-Scale VFX"
-        description="How Industrial Light & Magic and Wētā FX engineer storage for global-scale visual effects. Key takeaways on VFX pipelines, project migration, and modern post-production workflows."
+        title="Engineering Storage for Global-Scale VFX"
+        description="Key takeaways on VFX pipelines, project migration, and modern post-production workflows for global-scale visual effects."
         canonical="/blog/vfx-storage-ilm-weta"
         type="article"
         article={{
@@ -51,9 +51,7 @@ const VfxStoragePost = () => {
                 </span>
               </div>
               <h1 className="text-3xl md:text-4xl font-bold uppercase leading-tight mb-6">
-                <span className="bg-gradient-to-r from-brand-orange via-brand-pink to-brand-blue bg-clip-text text-transparent">Postperspective's writer, Jennifer Wolfe, recently wrote an </span>
-                <a href="https://postperspective.com/how-ilm-and-weta-engineer-storage-for-global-scale-visual-effects/" target="_blank" rel="noopener noreferrer" className="text-brand-orange underline decoration-2 underline-offset-4 hover:text-brand-pink transition-colors">article</a>
-                <span className="bg-gradient-to-r from-brand-orange via-brand-pink to-brand-blue bg-clip-text text-transparent"> on ILM and Wētā...here's our takeaways</span>
+                <span className="bg-gradient-to-r from-brand-orange via-brand-pink to-brand-blue bg-clip-text text-transparent">Engineering Storage for Global-Scale Visual Effects</span>
               </h1>
               <p className="text-xl text-foreground/80 max-w-3xl">
                 How the world's leading VFX studios engineer storage for global-scale visual effects pipelines.
@@ -69,7 +67,7 @@ const VfxStoragePost = () => {
             {/* Lead Section */}
             <section className="mb-16">
               <p className="text-xl md:text-2xl leading-relaxed text-foreground/90 font-normal normal-case">
-                Jennifer Wolfe recently explored how Industrial Light & Magic (ILM) and Wētā FX engineer storage for global-scale visual effects, and one thing became immediately clear: at the highest level of post-production, storage is no longer just infrastructure — it's a critical part of the creative workflow.
+                At the highest level of post-production, storage is no longer just infrastructure — it's a critical part of the creative workflow. Leading VFX studios are engineering storage for global-scale visual effects in ways that transform how creative teams operate.
               </p>
             </section>
 
@@ -102,7 +100,7 @@ const VfxStoragePost = () => {
             <section className="mb-16">
               <h2 className="text-3xl md:text-4xl font-bold uppercase mb-8 text-gradient-cool">Storage as an Active Pipeline Participant</h2>
               <p className="text-lg leading-relaxed text-foreground/80 font-normal normal-case">
-                One of the strongest insights from the article is that ILM and Wētā treat storage as an active participant in the pipeline. In modern global VFX storage workflows, storage systems must support editorial, VFX, finishing, and delivery simultaneously without becoming a bottleneck.
+                One of the strongest insights is that leading studios treat storage as an active participant in the pipeline. In modern global VFX storage workflows, storage systems must support editorial, VFX, finishing, and delivery simultaneously without becoming a bottleneck.
               </p>
 
               <div className="grid md:grid-cols-3 gap-6 my-12">
@@ -125,7 +123,7 @@ const VfxStoragePost = () => {
             <section className="mb-16">
               <h2 className="text-3xl md:text-4xl font-bold uppercase mb-8 text-gradient-cool">Challenges of Project Migration</h2>
               <p className="text-lg leading-relaxed text-foreground/80 font-normal normal-case">
-                Large-scale studios like ILM and Wētā operate in environments where projects are constantly moving between tools, facilities, and teams. That makes project migration one of the most failure-prone stages of any workflow.
+                Large-scale studios operate in environments where projects are constantly moving between tools, facilities, and teams. That makes project migration one of the most failure-prone stages of any workflow.
               </p>
             </section>
 
@@ -133,7 +131,7 @@ const VfxStoragePost = () => {
             <section className="mb-16">
               <h2 className="text-3xl md:text-4xl font-bold uppercase mb-8 text-gradient-cool">Minimizing Manual Intervention</h2>
               <p className="text-lg leading-relaxed text-foreground/80 font-normal normal-case">
-                A major point from Wolfe's reporting is how much effort ILM and Wētā put into reducing manual intervention. Frequent media relinking isn't just inefficient — it's a sign of structural pipeline issues.
+                A critical focus for leading studios is reducing manual intervention. Frequent media relinking isn't just inefficient — it's a sign of structural pipeline issues.
               </p>
             </section>
 
@@ -141,7 +139,7 @@ const VfxStoragePost = () => {
             <div className="bg-gradient-to-r from-brand-orange/20 to-brand-pink/20 p-8 md:p-12 my-16 border-l-4 border-brand-orange">
               <h3 className="text-2xl md:text-3xl mb-4 text-gradient-brand font-bold">Our Perspective and Broader Relevance</h3>
               <p className="text-foreground/80 font-normal normal-case mb-6">
-                At Conform we see these same challenges across real-world post-production environments every day. This article reinforces something we firmly believe: successful global VFX storage workflows are designed around how people actually work — not just how systems are built.
+                At Haste we see these same challenges across real-world post-production environments every day. Successful global VFX storage workflows are designed around how people actually work — not just how systems are built.
               </p>
               <p className="text-foreground/80 font-normal normal-case">
                 From project migration and media relinking to conform accuracy and finishing reliability, the strongest pipelines are the ones where technology quietly removes friction, allowing creative teams to stay focused on the work.
@@ -151,7 +149,7 @@ const VfxStoragePost = () => {
             {/* Broader Industry */}
             <section className="mb-16">
               <p className="text-lg leading-relaxed text-foreground/80 mb-6 font-normal normal-case">
-                ILM and Wētā set a high bar, but the principles they apply are increasingly relevant to post houses and studios of all sizes. For modern post-production teams, global VFX storage workflows are no longer a backend concern. They directly determine speed, reliability, and creative momentum.
+                Top-tier studios set a high bar, but the principles they apply are increasingly relevant to post houses and studios of all sizes. For modern post-production teams, global VFX storage workflows are no longer a backend concern. They directly determine speed, reliability, and creative momentum.
               </p>
             </section>
 
@@ -160,14 +158,14 @@ const VfxStoragePost = () => {
               <p className="text-2xl md:text-3xl font-black uppercase text-gradient-cool">
                 "The studios that succeed at scale are the ones that treat storage as part of the workflow, not just the infrastructure."
               </p>
-              <span className="text-xl md:text-2xl font-bold uppercase mt-4 block not-italic bg-gradient-to-r from-brand-orange via-brand-pink to-brand-blue bg-clip-text text-transparent">— Conform Studio</span>
+              <span className="text-xl md:text-2xl font-bold uppercase mt-4 block not-italic bg-gradient-to-r from-brand-orange via-brand-pink to-brand-blue bg-clip-text text-transparent">— Haste</span>
             </blockquote>
 
             {/* Tags */}
             <footer className="border-t border-border pt-8 mt-16" aria-label="Article tags">
               <nav aria-label="Related topics" className="flex justify-center">
                 <ul className="flex flex-wrap justify-center gap-3 list-none p-0 m-0">
-                  {["VFX", "Post-Production", "ILM", "Wētā FX", "Storage"].map((tag) => (
+                  {["VFX", "Post-Production", "Storage", "Pipelines"].map((tag) => (
                     <li key={tag}>
                       <span className="inline-block px-4 py-2 text-sm font-bold uppercase tracking-wider border border-border hover:border-brand-orange hover:text-brand-orange transition-colors">
                         {tag}
