@@ -9,8 +9,8 @@ const VfxStoragePost = () => {
   return (
     <div className="min-h-screen bg-background">
       <SEO
-        title="Engineering Storage for Global-Scale VFX"
-        description="Key takeaways on VFX pipelines, project migration, and modern post-production workflows for global-scale visual effects."
+        title="Engineering Storage for Global-Scale Post"
+        description="How the world's leading VFX studios and editorial post houses engineer storage for global-scale pipelines."
         canonical="/blog/vfx-storage-ilm-weta"
         type="article"
         article={{
@@ -51,10 +51,10 @@ const VfxStoragePost = () => {
                 </span>
               </div>
               <h1 className="text-3xl md:text-4xl font-bold uppercase leading-tight mb-6">
-                <span className="bg-gradient-to-r from-brand-orange via-brand-pink to-brand-blue bg-clip-text text-transparent">Engineering Storage for Global-Scale Visual Effects</span>
+                <span className="bg-gradient-to-r from-brand-orange via-brand-pink to-brand-blue bg-clip-text text-transparent">Engineering Storage for Global-Scale Post</span>
               </h1>
               <p className="text-xl text-foreground/80 max-w-3xl">
-                How the world's leading VFX studios engineer storage for global-scale visual effects pipelines.
+                How the world's leading VFX studios and editorial post houses engineer storage for global-scale pipelines.
               </p>
             </div>
           </div>
@@ -67,22 +67,22 @@ const VfxStoragePost = () => {
             {/* Lead Section */}
             <section className="mb-16">
               <p className="text-xl md:text-2xl leading-relaxed text-foreground/90 font-normal normal-case">
-                At the highest level of post-production, storage is no longer just infrastructure — it's a critical part of the creative workflow. Leading VFX studios are engineering storage for global-scale visual effects in ways that transform how creative teams operate.
+                At the highest level of post-production, storage is no longer just infrastructure — it's a critical part of the creative workflow. Leading VFX studios and editorial post houses are engineering storage for global-scale visual effects in ways that transform how creative teams operate.
               </p>
             </section>
 
-            {/* Our Perspective */}
+            {/* Haste Intro */}
             <section className="mb-16">
               <p className="text-lg leading-relaxed text-foreground/80 mb-6 font-normal normal-case">
-                At our core, we work closely with complex post-production and media pipelines, so this article strongly resonated with challenges we see across the industry. Below are our key main points and why they matter for modern post and VFX teams.
+                At Haste, we work closely with complex post-production and media pipelines, so we see these challenges across the industry daily. Below are our key takeaways and why they matter for modern post and VFX teams.
               </p>
             </section>
 
             {/* Expanding Scope */}
             <section className="mb-16">
-              <h2 className="text-3xl md:text-4xl font-bold uppercase mb-8 text-gradient-cool">The Expanding Scope of VFX Pipelines</h2>
+              <h2 className="text-3xl md:text-4xl font-bold uppercase mb-8 text-gradient-cool">The Expanding Scope of VFX and Editorial Pipelines</h2>
               <p className="text-lg leading-relaxed text-foreground/80 mb-6 font-normal normal-case">
-                Visual effects work today goes far beyond rendering; it touches every stage of the production pipeline. With frame counts and resolutions skyrocketing, studios must design storage systems that can support massive file sizes, complex simulation data, and high-speed access for artists and servers alike.
+                Visual effects and editorial work today goes far beyond rendering or cutting picture; it touches every stage of the production pipeline. With frame counts and resolutions skyrocketing, studios must design storage systems that can support massive file sizes, complex simulation data, and high-speed access for artists and servers alike.
               </p>
               <p className="text-lg leading-relaxed text-foreground/80 font-normal normal-case">
                 The focus is on scaling storage so it doesn't become a bottleneck in the broader global visual effects pipeline. Traditional shared storage and simple file servers can't keep up with terabytes of data being generated and accessed every hour.
@@ -100,7 +100,7 @@ const VfxStoragePost = () => {
             <section className="mb-16">
               <h2 className="text-3xl md:text-4xl font-bold uppercase mb-8 text-gradient-cool">Storage as an Active Pipeline Participant</h2>
               <p className="text-lg leading-relaxed text-foreground/80 font-normal normal-case">
-                One of the strongest insights is that leading studios treat storage as an active participant in the pipeline. In modern global VFX storage workflows, storage systems must support editorial, VFX, finishing, and delivery simultaneously without becoming a bottleneck.
+                One of the strongest insights is that leading studios treat storage as an active participant in the pipeline. In modern global VFX and editorial storage workflows, storage systems must support editorial, VFX, finishing, and delivery simultaneously without becoming a bottleneck.
               </p>
 
               <div className="grid md:grid-cols-3 gap-6 my-12">
@@ -119,11 +119,56 @@ const VfxStoragePost = () => {
               </div>
             </section>
 
+            {/* Innovative Storage Solutions */}
+            <section className="mb-16">
+              <h2 className="text-3xl md:text-4xl font-bold uppercase mb-8 text-gradient-cool">Innovative Storage Solutions Reshaping the Industry</h2>
+              <p className="text-lg leading-relaxed text-foreground/80 mb-8 font-normal normal-case">
+                Several technologies are driving innovation in how studios approach distributed and high-performance storage:
+              </p>
+
+              <div className="space-y-8">
+                <div className="border-l-4 border-brand-orange pl-6">
+                  <h3 className="text-xl font-bold text-brand-orange mb-2">LucidLink</h3>
+                  <p className="text-foreground/80 font-normal normal-case">
+                    Has pioneered block-streaming technology that allows editors and artists to work directly from cloud storage as if files were local. This eliminates the need to sync or download massive project files before work can begin — a game-changer for distributed editorial teams and remote VFX artists working across time zones.
+                  </p>
+                </div>
+
+                <div className="border-l-4 border-brand-pink pl-6">
+                  <h3 className="text-xl font-bold text-brand-pink mb-2">Storj</h3>
+                  <p className="text-foreground/80 font-normal normal-case">
+                    Offers decentralized cloud storage with enterprise-grade security and performance. For studios concerned about data sovereignty and redundancy, Storj's distributed architecture provides resilience that traditional centralized cloud providers can't match, while often delivering significant cost savings on long-term archival and active project storage.
+                  </p>
+                </div>
+
+                <div className="border-l-4 border-brand-blue pl-6">
+                  <h3 className="text-xl font-bold text-brand-blue mb-2">Facilis</h3>
+                  <p className="text-foreground/80 font-normal normal-case">
+                    Has addressed the hybrid workflow challenge with intelligent WLAN connectivity and local caching solutions. Their shared storage systems allow editorial teams to maintain high-speed local access while seamlessly syncing with central infrastructure — critical for post houses balancing on-premise and remote workflows.
+                  </p>
+                </div>
+
+                <div className="border-l-4 border-brand-orange pl-6">
+                  <h3 className="text-xl font-bold text-brand-orange mb-2">EditShare</h3>
+                  <p className="text-foreground/80 font-normal normal-case">
+                    Brings FUSE mount technology to collaborative editorial environments, enabling Linux-based render farms and finishing systems to mount shared storage natively. This interoperability is essential for facilities running mixed environments across editorial, color, and VFX departments.
+                  </p>
+                </div>
+
+                <div className="border-l-4 border-brand-pink pl-6">
+                  <h3 className="text-xl font-bold text-brand-pink mb-2">Suite Studios</h3>
+                  <p className="text-foreground/80 font-normal normal-case">
+                    Is redefining the post-production facility model itself, offering cloud-native infrastructure that integrates storage, compute, and creative tools into a unified platform. For editorial post houses scaling up for episodic or feature work, Suite Studios removes the complexity of provisioning and managing infrastructure entirely.
+                  </p>
+                </div>
+              </div>
+            </section>
+
             {/* Project Migration */}
             <section className="mb-16">
               <h2 className="text-3xl md:text-4xl font-bold uppercase mb-8 text-gradient-cool">Challenges of Project Migration</h2>
               <p className="text-lg leading-relaxed text-foreground/80 font-normal normal-case">
-                Large-scale studios operate in environments where projects are constantly moving between tools, facilities, and teams. That makes project migration one of the most failure-prone stages of any workflow.
+                Large-scale studios and editorial post houses operate in environments where projects are constantly moving between tools, facilities, and teams. That makes project migration one of the most failure-prone stages of any workflow.
               </p>
             </section>
 
@@ -131,15 +176,15 @@ const VfxStoragePost = () => {
             <section className="mb-16">
               <h2 className="text-3xl md:text-4xl font-bold uppercase mb-8 text-gradient-cool">Minimizing Manual Intervention</h2>
               <p className="text-lg leading-relaxed text-foreground/80 font-normal normal-case">
-                A critical focus for leading studios is reducing manual intervention. Frequent media relinking isn't just inefficient — it's a sign of structural pipeline issues.
+                A critical focus for leading studios is reducing manual intervention. Frequent media relinking isn't just inefficient — it's a sign of structural pipeline issues. The best storage architectures maintain consistent path structures and metadata across facilities, so projects move cleanly between editorial and VFX without constant troubleshooting.
               </p>
             </section>
 
             {/* Our Perspective */}
             <div className="bg-gradient-to-r from-brand-orange/20 to-brand-pink/20 p-8 md:p-12 my-16 border-l-4 border-brand-orange">
-              <h3 className="text-2xl md:text-3xl mb-4 text-gradient-brand font-bold">Our Perspective and Broader Relevance</h3>
+              <h3 className="text-2xl md:text-3xl mb-4 text-gradient-brand font-bold">Our Perspective</h3>
               <p className="text-foreground/80 font-normal normal-case mb-6">
-                At Haste we see these same challenges across real-world post-production environments every day. Successful global VFX storage workflows are designed around how people actually work — not just how systems are built.
+                At Haste we see these same challenges across real-world post-production environments every day. Successful global VFX and editorial storage workflows are designed around how people actually work — not just how systems are built.
               </p>
               <p className="text-foreground/80 font-normal normal-case">
                 From project migration and media relinking to conform accuracy and finishing reliability, the strongest pipelines are the ones where technology quietly removes friction, allowing creative teams to stay focused on the work.
@@ -149,7 +194,7 @@ const VfxStoragePost = () => {
             {/* Broader Industry */}
             <section className="mb-16">
               <p className="text-lg leading-relaxed text-foreground/80 mb-6 font-normal normal-case">
-                Top-tier studios set a high bar, but the principles they apply are increasingly relevant to post houses and studios of all sizes. For modern post-production teams, global VFX storage workflows are no longer a backend concern. They directly determine speed, reliability, and creative momentum.
+                Top-tier studios and editorial post houses set a high bar, but the principles they apply are increasingly relevant to facilities of all sizes. For modern post-production teams, global storage workflows are no longer a backend concern. They directly determine speed, reliability, and creative momentum.
               </p>
             </section>
 
@@ -164,7 +209,7 @@ const VfxStoragePost = () => {
             <footer className="border-t border-border pt-8 mt-16" aria-label="Article tags">
               <nav aria-label="Related topics" className="flex justify-center">
                 <ul className="flex flex-wrap justify-center gap-3 list-none p-0 m-0">
-                  {["VFX", "Post-Production", "Storage", "Pipelines"].map((tag) => (
+                  {["VFX", "Post-Production", "Editorial", "Storage", "Pipelines"].map((tag) => (
                     <li key={tag}>
                       <span className="inline-block px-4 py-2 text-sm font-bold uppercase tracking-wider border border-border hover:border-brand-orange hover:text-brand-orange transition-colors">
                         {tag}
