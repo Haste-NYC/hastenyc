@@ -11,11 +11,11 @@ interface Article {
 
 const allArticles: Article[] = [
   {
-    slug: "/blog/vfx-storage-ilm-weta",
+    slug: "/blog/global-storage-post",
     date: "JANUARY 5, 2025",
     category: "INDUSTRY ANALYSIS",
-    title: ["ILM & WĒTĀ", "VFX STORAGE", "INSIGHTS"],
-    description: "How Industrial Light & Magic and Wētā FX engineer storage for global-scale visual effects pipelines.",
+    title: ["ENGINEERING", "STORAGE FOR", "GLOBAL-SCALE POST"],
+    description: "How the world's leading VFX studios and editorial post houses engineer storage for global-scale pipelines.",
   },
   {
     slug: "/blog/figma-schema-2025",

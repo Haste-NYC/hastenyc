@@ -43,7 +43,7 @@ const App = () => (
           <Route path="/blog/adobe-max-2025" element={<BlogPost />} />
           <Route path="/blog/figma-schema-2025" element={<FigmaSchemaPost />} />
           <Route path="/blog/entertainment-shakeup" element={<EntertainmentShakeupPost />} />
-          <Route path="/blog/vfx-storage-ilm-weta" element={<VfxStoragePost />} />
+          <Route path="/blog/global-storage-post" element={<VfxStoragePost />} />
           {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
           <Route path="*" element={<NotFound />} />
         </Routes>
