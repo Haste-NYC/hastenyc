@@ -37,7 +37,7 @@ const Blog = () => {
               size="lg"
               className="bg-brand-orange hover:bg-brand-orange/90 text-white font-bold uppercase"
             >
-              <Link to="/blog/vfx-storage-ilm-weta">Read Latest Article</Link>
+              <Link to="/blog/global-storage-post">Read Latest Article</Link>
             </Button>
           </div>
         </div>
@@ -93,7 +93,7 @@ const Blog = () => {
                     size="lg"
                     className="font-bold uppercase w-full mt-auto"
                   >
-                    <Link to="/blog/vfx-storage-ilm-weta">Read Article</Link>
+                    <Link to="/blog/global-storage-post">Read Article</Link>
                   </Button>
                 </div>
               </article>

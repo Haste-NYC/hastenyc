@@ -11,7 +11,7 @@ const VfxStoragePost = () => {
       <SEO
         title="Engineering Storage for Global-Scale Post"
         description="How the world's leading VFX studios and editorial post houses engineer storage for global-scale pipelines."
-        canonical="/blog/vfx-storage-ilm-weta"
+        canonical="/blog/global-storage-post"
         type="article"
         article={{
           publishedTime: "2025-01-05",
@@ -128,35 +128,45 @@ const VfxStoragePost = () => {
 
               <div className="space-y-8">
                 <div className="border-l-4 border-brand-orange pl-6">
-                  <h3 className="text-xl font-bold text-brand-orange mb-2">LucidLink</h3>
+                  <h3 className="text-xl font-bold text-brand-orange mb-2">
+                    <a href="https://www.lucidlink.com" target="_blank" rel="noopener noreferrer" className="hover:underline">LucidLink</a>
+                  </h3>
                   <p className="text-foreground/80 font-normal normal-case">
                     Has pioneered block-streaming technology that allows editors and artists to work directly from cloud storage as if files were local. This eliminates the need to sync or download massive project files before work can begin — a game-changer for distributed editorial teams and remote VFX artists working across time zones.
                   </p>
                 </div>
 
                 <div className="border-l-4 border-brand-pink pl-6">
-                  <h3 className="text-xl font-bold text-brand-pink mb-2">Storj</h3>
+                  <h3 className="text-xl font-bold text-brand-pink mb-2">
+                    <a href="https://www.storj.io" target="_blank" rel="noopener noreferrer" className="hover:underline">Storj</a>
+                  </h3>
                   <p className="text-foreground/80 font-normal normal-case">
                     Offers decentralized cloud storage with enterprise-grade security and performance. For studios concerned about data sovereignty and redundancy, Storj's distributed architecture provides resilience that traditional centralized cloud providers can't match, while often delivering significant cost savings on long-term archival and active project storage.
                   </p>
                 </div>
 
                 <div className="border-l-4 border-brand-blue pl-6">
-                  <h3 className="text-xl font-bold text-brand-blue mb-2">Facilis</h3>
+                  <h3 className="text-xl font-bold text-brand-blue mb-2">
+                    <a href="https://facilis.com" target="_blank" rel="noopener noreferrer" className="hover:underline">Facilis</a>
+                  </h3>
                   <p className="text-foreground/80 font-normal normal-case">
                     Has addressed the hybrid workflow challenge with intelligent WLAN connectivity and local caching solutions. Their shared storage systems allow editorial teams to maintain high-speed local access while seamlessly syncing with central infrastructure — critical for post houses balancing on-premise and remote workflows.
                   </p>
                 </div>
 
                 <div className="border-l-4 border-brand-orange pl-6">
-                  <h3 className="text-xl font-bold text-brand-orange mb-2">EditShare</h3>
+                  <h3 className="text-xl font-bold text-brand-orange mb-2">
+                    <a href="https://www.editshare.com" target="_blank" rel="noopener noreferrer" className="hover:underline">EditShare</a>
+                  </h3>
                   <p className="text-foreground/80 font-normal normal-case">
                     Brings FUSE mount technology to collaborative editorial environments, enabling Linux-based render farms and finishing systems to mount shared storage natively. This interoperability is essential for facilities running mixed environments across editorial, color, and VFX departments.
                   </p>
                 </div>
 
                 <div className="border-l-4 border-brand-pink pl-6">
-                  <h3 className="text-xl font-bold text-brand-pink mb-2">Suite Studios</h3>
+                  <h3 className="text-xl font-bold text-brand-pink mb-2">
+                    <a href="https://www.suitestudios.io" target="_blank" rel="noopener noreferrer" className="hover:underline">Suite Studios</a>
+                  </h3>
                   <p className="text-foreground/80 font-normal normal-case">
                     Is redefining the post-production facility model itself, offering cloud-native infrastructure that integrates storage, compute, and creative tools into a unified platform. For editorial post houses scaling up for episodic or feature work, Suite Studios removes the complexity of provisioning and managing infrastructure entirely.
                   </p>
@@ -224,7 +234,7 @@ const VfxStoragePost = () => {
         </main>
       </article>
 
-      <RelatedArticles currentSlug="vfx-storage-ilm-weta" />
+      <RelatedArticles currentSlug="global-storage-post" />
       <Footer />
     </div>
   );
