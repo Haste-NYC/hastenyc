@@ -3,7 +3,7 @@ import Footer from "@/components/Footer";
 import SEO from "@/components/SEO";
 import Breadcrumbs from "@/components/Breadcrumbs";
 import RelatedArticles from "@/components/RelatedArticles";
-import finalCutProHero from "@/assets/final-cut-pro-hero.webp";
+import appleCreatorStudio from "@/assets/apple-creator-studio.webp";
 
 const FinalCutProPost = () => {
   return (
@@ -53,7 +53,7 @@ const FinalCutProPost = () => {
           </div>
           <div className="w-full max-w-6xl mx-auto">
             <img 
-              src={finalCutProHero} 
+              src={appleCreatorStudio} 
               alt="Apple Creator Studio apps including Final Cut Pro, Logic Pro, Pixelmator Pro, Keynote, Pages, Numbers, Freeform, Motion, Compressor, and MainStage" 
               className="w-full h-auto rounded-xl shadow-2xl"
               loading="eager"
