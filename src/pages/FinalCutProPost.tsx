@@ -37,7 +37,7 @@ const FinalCutProPost = () => {
             <p className="text-sm text-brand-orange uppercase tracking-wider font-bold mb-4">
               JANUARY 14TH, 2026 • POST-PRODUCTION
             </p>
-            <h1 className="text-6xl md:text-8xl font-bold uppercase leading-none mb-6">
+            <h1 className="text-6xl md:text-8xl font-bold uppercase leading-none mb-6 text-center">
               IS FINAL CUT PRO
               <br />
               <span className="bg-gradient-to-r from-brand-orange via-brand-pink to-brand-blue bg-clip-text text-transparent">MAKING A</span>
@@ -88,7 +88,7 @@ const FinalCutProPost = () => {
       <section className="border-b border-border py-16 bg-card">
         <div className="container mx-auto px-6">
           <div className="max-w-4xl mx-auto">
-            <h2 className="text-4xl md:text-5xl font-bold uppercase mb-8">
+            <h2 className="text-4xl md:text-5xl font-bold uppercase mb-8 text-center">
               THE SUBSCRIPTION THAT
               <br />
               <span className="bg-gradient-to-r from-brand-orange via-brand-pink to-brand-blue bg-clip-text text-transparent">UNDERCUTS EVERYONE</span>
@@ -112,7 +112,7 @@ const FinalCutProPost = () => {
       <section className="border-b border-border py-16">
         <div className="container mx-auto px-6">
           <div className="max-w-4xl mx-auto">
-            <h2 className="text-4xl md:text-5xl font-bold uppercase mb-8">
+            <h2 className="text-4xl md:text-5xl font-bold uppercase mb-8 text-center">
               THE M5 MAX IS WHERE
               <br />
               <span className="bg-gradient-to-r from-brand-orange via-brand-pink to-brand-blue bg-clip-text text-transparent">THIS GETS INTERESTING</span>
@@ -175,7 +175,7 @@ const FinalCutProPost = () => {
       <section className="border-b border-border py-16">
         <div className="container mx-auto px-6">
           <div className="max-w-4xl mx-auto">
-            <h2 className="text-4xl md:text-5xl font-bold uppercase mb-8">
+            <h2 className="text-4xl md:text-5xl font-bold uppercase mb-8 text-center">
               THE AI FEATURES MIGHT
               <br />
               <span className="bg-gradient-to-r from-brand-orange via-brand-pink to-brand-blue bg-clip-text text-transparent">ACTUALLY BE USEFUL</span>
@@ -202,7 +202,7 @@ const FinalCutProPost = () => {
       <section className="border-b border-border py-16 bg-card">
         <div className="container mx-auto px-6">
           <div className="max-w-4xl mx-auto">
-            <h2 className="text-4xl md:text-5xl font-bold uppercase mb-8">
+            <h2 className="text-4xl md:text-5xl font-bold uppercase mb-8 text-center">
               THE ELEPHANT IN THE ROOM:
               <br />
               <span className="bg-gradient-to-r from-brand-orange via-brand-pink to-brand-blue bg-clip-text text-transparent">ECOSYSTEM LOCK-IN</span>
@@ -248,7 +248,7 @@ const FinalCutProPost = () => {
       <section className="border-b border-border py-16 bg-card">
         <div className="container mx-auto px-6">
           <div className="max-w-4xl mx-auto">
-            <h2 className="text-4xl md:text-5xl font-bold uppercase mb-8">
+            <h2 className="text-4xl md:text-5xl font-bold uppercase mb-8 text-center">
               WHO THIS IS
               <br />
               <span className="bg-gradient-to-r from-brand-orange via-brand-pink to-brand-blue bg-clip-text text-transparent">ACTUALLY FOR</span>
@@ -275,7 +275,7 @@ const FinalCutProPost = () => {
       <section className="border-b border-border py-16">
         <div className="container mx-auto px-6">
           <div className="max-w-4xl mx-auto">
-            <h2 className="text-4xl md:text-5xl font-bold uppercase mb-8">
+            <h2 className="text-4xl md:text-5xl font-bold uppercase mb-8 text-center">
               THE VERDICT
               <br />
               <span className="bg-gradient-to-r from-brand-orange via-brand-pink to-brand-blue bg-clip-text text-transparent">(FOR NOW)</span>
@@ -303,7 +303,7 @@ const FinalCutProPost = () => {
         <div className="container mx-auto px-6">
           <div className="max-w-4xl mx-auto">
             <div className="space-y-6">
-              <h2 className="text-4xl md:text-5xl font-bold uppercase">
+              <h2 className="text-4xl md:text-5xl font-bold uppercase text-center">
                 THAT'S NOT NOSTALGIA.
                 <br />
                 <span className="bg-gradient-to-r from-brand-orange via-brand-pink to-brand-blue bg-clip-text text-transparent">THAT'S MOMENTUM.</span>
