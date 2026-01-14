@@ -39,7 +39,7 @@ const VfxStoragePost = () => {
                 items={[
                   { label: "Home", href: "/" },
                   { label: "Blog", href: "/blog" },
-                  { label: "VFX Storage" },
+                  { label: "VFX" },
                 ]}
               />
               <div className="flex items-center gap-4 mb-6">
