@@ -11,6 +11,13 @@ interface Article {
 
 const allArticles: Article[] = [
   {
+    slug: "/blog/final-cut-pro-comeback",
+    date: "JANUARY 14, 2026",
+    category: "POST-PRODUCTION",
+    title: ["IS FINAL CUT PRO", "MAKING A", "COMEBACK?"],
+    description: "Apple's Creator Studio bundle and the M5 Max suggest the company is finally serious about winning back professional editors.",
+  },
+  {
     slug: "/blog/global-storage-post",
     date: "JANUARY 5, 2025",
     category: "INDUSTRY ANALYSIS",

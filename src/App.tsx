@@ -13,6 +13,7 @@ import BlogPost from "./pages/BlogPost";
 import FigmaSchemaPost from "./pages/FigmaSchemaPost";
 import EntertainmentShakeupPost from "./pages/EntertainmentShakeupPost";
 import VfxStoragePost from "./pages/VfxStoragePost";
+import FinalCutProPost from "./pages/FinalCutProPost";
 import NotFound from "./pages/NotFound";
 
 const queryClient = new QueryClient();
@@ -44,6 +45,7 @@ const App = () => (
           <Route path="/blog/figma-schema-2025" element={<FigmaSchemaPost />} />
           <Route path="/blog/entertainment-shakeup" element={<EntertainmentShakeupPost />} />
           <Route path="/blog/global-storage-post" element={<VfxStoragePost />} />
+          <Route path="/blog/final-cut-pro-comeback" element={<FinalCutProPost />} />
           {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
           <Route path="*" element={<NotFound />} />
         </Routes>
