@@ -11,7 +11,7 @@ const FinalCutProPost = () => {
       <SEO
         title="Is Final Cut Pro Making a Comeback? Apple's Creator Studio and M5 Max"
         description="Apple's Creator Studio bundle at $12.99/month and the M5 Max chip suggest Apple is serious about winning back professional editors. Analysis of Final Cut Pro's resurgence."
-        canonical="/blog/final-cut-pro-comeback"
+        canonical="/blog/final-cut-pro"
         type="article"
         image="/og-image.png"
         article={{

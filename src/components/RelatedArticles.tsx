@@ -11,7 +11,7 @@ interface Article {
 
 const allArticles: Article[] = [
   {
-    slug: "/blog/final-cut-pro-comeback",
+    slug: "/blog/final-cut-pro",
     date: "JANUARY 14, 2026",
     category: "POST-PRODUCTION",
     title: ["IS FINAL CUT PRO", "MAKING A", "COMEBACK?"],
