@@ -20,8 +20,9 @@
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
     <image:image>
-      <image:loc>https://www.haste.nyc/og-image.png</image:loc>
-      <image:title>Is Final Cut Pro Making a Comeback? Apple Creator Studio and M5 Max</image:title>
+      <image:loc>https://www.haste.nyc/assets/apple-creator-studio.webp</image:loc>
+      <image:title>Apple Creator Studio - Is Final Cut Pro Making a Comeback?</image:title>
+      <image:caption>Apple Creator Studio bundle featuring Final Cut Pro, Logic Pro, Pixelmator Pro, and professional creative apps</image:caption>
     </image:image>
   </url>
   <url>
