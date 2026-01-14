@@ -4,7 +4,7 @@ import conformLogo from "@/assets/conform-studio-logo.png";
 
 const HeroSection = () => {
   return (
-    <section className="flex flex-col items-center px-6 pt-8 pb-24">
+    <section className="flex flex-col items-center px-6 pt-8 pb-12">
       <div className="text-center max-w-5xl mx-auto space-y-2">
         {/* Intro text - white/muted */}
         <motion.p 
