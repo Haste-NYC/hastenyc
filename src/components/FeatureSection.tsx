@@ -69,7 +69,7 @@ const FeatureSection = () => {
   ];
 
   return (
-    <section className="py-20 px-6">
+    <section className="py-12 px-6">
       <div className="max-w-4xl mx-auto">
         {features.map((feature, index) => (
           <Feature key={index} index={index} {...feature} />
