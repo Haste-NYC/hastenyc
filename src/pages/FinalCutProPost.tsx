@@ -3,7 +3,7 @@ import Footer from "@/components/Footer";
 import SEO from "@/components/SEO";
 import Breadcrumbs from "@/components/Breadcrumbs";
 import RelatedArticles from "@/components/RelatedArticles";
-import finalCutProHero from "@/assets/final-cut-pro-hero.jpg";
+import finalCutProHero from "@/assets/final-cut-pro-hero.webp";
 
 const FinalCutProPost = () => {
   return (
