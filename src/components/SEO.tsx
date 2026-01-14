@@ -12,6 +12,15 @@ interface SEOProps {
     author?: string;
     section?: string;
   };
+  video?: {
+    name: string;
+    description: string;
+    thumbnailUrl: string;
+    uploadDate: string;
+    contentUrl: string;
+    embedUrl: string;
+    duration?: string;
+  };
 }
 
 const BASE_URL = "https://www.haste.nyc";
@@ -26,6 +35,7 @@ const SEO = ({
   type = "website",
   image = DEFAULT_IMAGE,
   article,
+  video,
 }: SEOProps) => {
   const fullTitle = title ? `${title} | HASTE.NYC` : DEFAULT_TITLE;
   const fullCanonical = canonical ? `${BASE_URL}${canonical}` : BASE_URL;
@@ -58,6 +68,27 @@ const SEO = ({
       "@id": fullCanonical,
     },
     "articleSection": article.section,
+  } : null;
+
+  const videoSchema = video ? {
+    "@context": "https://schema.org",
+    "@type": "VideoObject",
+    "name": video.name,
+    "description": video.description,
+    "thumbnailUrl": video.thumbnailUrl,
+    "uploadDate": video.uploadDate,
+    "contentUrl": video.contentUrl,
+    "embedUrl": video.embedUrl,
+    "duration": video.duration,
+    "publisher": {
+      "@type": "Organization",
+      "name": "HASTE.NYC",
+      "url": BASE_URL,
+      "logo": {
+        "@type": "ImageObject",
+        "url": `${BASE_URL}/favicon.svg`,
+      },
+    },
   } : null;
 
   return (
@@ -98,6 +129,13 @@ const SEO = ({
       {articleSchema && (
         <script type="application/ld+json">
           {JSON.stringify(articleSchema)}
+        </script>
+      )}
+
+      {/* JSON-LD Schema for Videos */}
+      {videoSchema && (
+        <script type="application/ld+json">
+          {JSON.stringify(videoSchema)}
         </script>
       )}
     </Helmet>
