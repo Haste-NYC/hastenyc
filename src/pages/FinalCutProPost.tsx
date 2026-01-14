@@ -67,7 +67,7 @@ const FinalCutProPost = () => {
       {/* Introduction */}
       <section className="border-b border-border py-16">
         <div className="container mx-auto px-6">
-          <div className="max-w-3xl prose prose-lg prose-invert">
+          <div className="max-w-3xl mx-auto prose prose-lg prose-invert">
             <p className="text-lg leading-relaxed mb-6">
               Here's a thing I never thought I'd write: Final Cut Pro might actually matter again.
             </p>
@@ -87,13 +87,13 @@ const FinalCutProPost = () => {
       {/* The Subscription Section */}
       <section className="border-b border-border py-16 bg-card">
         <div className="container mx-auto px-6">
-          <div className="max-w-4xl">
+          <div className="max-w-4xl mx-auto">
             <h2 className="text-4xl md:text-5xl font-bold uppercase mb-8">
               THE SUBSCRIPTION THAT
               <br />
               <span className="bg-gradient-to-r from-brand-orange via-brand-pink to-brand-blue bg-clip-text text-transparent">UNDERCUTS EVERYONE</span>
             </h2>
-            <div className="max-w-3xl prose prose-lg prose-invert">
+            <div className="max-w-3xl mx-auto prose prose-lg prose-invert">
               <p className="text-lg leading-relaxed mb-6">
                 Let's start with the obvious: Creator Studio is absurdly cheap compared to the competition. Adobe's All Apps plan runs $59.99 per month. Apple's bundle—which includes a professional video editor, a full-featured DAW, a legitimately good image editor in Pixelmator Pro, and motion graphics tools—costs less than a quarter of that.
               </p>
@@ -111,13 +111,13 @@ const FinalCutProPost = () => {
       {/* M5 Max Section */}
       <section className="border-b border-border py-16">
         <div className="container mx-auto px-6">
-          <div className="max-w-4xl">
+          <div className="max-w-4xl mx-auto">
             <h2 className="text-4xl md:text-5xl font-bold uppercase mb-8">
               THE M5 MAX IS WHERE
               <br />
               <span className="bg-gradient-to-r from-brand-orange via-brand-pink to-brand-blue bg-clip-text text-transparent">THIS GETS INTERESTING</span>
             </h2>
-            <div className="max-w-3xl prose prose-lg prose-invert">
+            <div className="max-w-3xl mx-auto prose prose-lg prose-invert">
               <p className="text-lg leading-relaxed mb-6">
                 Here's where I start to believe Apple might actually pull this off.
               </p>
@@ -138,7 +138,7 @@ const FinalCutProPost = () => {
       {/* Performance Stats Grid */}
       <section className="border-b border-border py-16 bg-card">
         <div className="container mx-auto px-6">
-          <div className="max-w-6xl">
+          <div className="max-w-6xl mx-auto">
             <div className="grid md:grid-cols-3 gap-8">
               <div className="space-y-4">
                 <div className="h-1 w-16 bg-brand-orange"></div>
@@ -174,13 +174,13 @@ const FinalCutProPost = () => {
       {/* AI Features Section */}
       <section className="border-b border-border py-16">
         <div className="container mx-auto px-6">
-          <div className="max-w-4xl">
+          <div className="max-w-4xl mx-auto">
             <h2 className="text-4xl md:text-5xl font-bold uppercase mb-8">
               THE AI FEATURES MIGHT
               <br />
               <span className="bg-gradient-to-r from-brand-orange via-brand-pink to-brand-blue bg-clip-text text-transparent">ACTUALLY BE USEFUL</span>
             </h2>
-            <div className="max-w-3xl prose prose-lg prose-invert">
+            <div className="max-w-3xl mx-auto prose prose-lg prose-invert">
               <p className="text-lg leading-relaxed mb-6">
                 I'm generally skeptical of AI feature announcements—most of them solve problems that don't exist or create new ones that didn't need to exist. But Final Cut Pro's new additions feel genuinely practical.
               </p>
@@ -201,13 +201,13 @@ const FinalCutProPost = () => {
       {/* Ecosystem Lock-in Section */}
       <section className="border-b border-border py-16 bg-card">
         <div className="container mx-auto px-6">
-          <div className="max-w-4xl">
+          <div className="max-w-4xl mx-auto">
             <h2 className="text-4xl md:text-5xl font-bold uppercase mb-8">
               THE ELEPHANT IN THE ROOM:
               <br />
               <span className="bg-gradient-to-r from-brand-orange via-brand-pink to-brand-blue bg-clip-text text-transparent">ECOSYSTEM LOCK-IN</span>
             </h2>
-            <div className="max-w-3xl prose prose-lg prose-invert">
+            <div className="max-w-3xl mx-auto prose prose-lg prose-invert">
               <p className="text-lg leading-relaxed mb-6">
                 Here's the part where I temper the enthusiasm.
               </p>
@@ -228,8 +228,8 @@ const FinalCutProPost = () => {
       {/* Conform Studio Mention */}
       <section className="border-b border-border py-16">
         <div className="container mx-auto px-6">
-          <div className="max-w-4xl">
-            <div className="max-w-3xl prose prose-lg prose-invert">
+          <div className="max-w-4xl mx-auto">
+            <div className="max-w-3xl mx-auto prose prose-lg prose-invert">
               <p className="text-lg leading-relaxed mb-6">
                 This is exactly why tools like <span className="font-bold text-brand-orange">Conform Studio</span> have emerged to handle what the native export options can't: automatic timeline conform that actually preserves your work. One-click Premiere Pro to DaVinci Resolve conversion that doesn't lose your effects, doesn't break your nested sequences, and doesn't leave you hunting down media offline errors for hours. It's the kind of instant project migration that should have existed a decade ago.
               </p>
@@ -247,13 +247,13 @@ const FinalCutProPost = () => {
       {/* Who This Is For */}
       <section className="border-b border-border py-16 bg-card">
         <div className="container mx-auto px-6">
-          <div className="max-w-4xl">
+          <div className="max-w-4xl mx-auto">
             <h2 className="text-4xl md:text-5xl font-bold uppercase mb-8">
               WHO THIS IS
               <br />
               <span className="bg-gradient-to-r from-brand-orange via-brand-pink to-brand-blue bg-clip-text text-transparent">ACTUALLY FOR</span>
             </h2>
-            <div className="max-w-3xl prose prose-lg prose-invert">
+            <div className="max-w-3xl mx-auto prose prose-lg prose-invert">
               <p className="text-lg leading-relaxed mb-6">
                 Creator Studio feels designed for the growing middle of the industry: agile teams, independent studios, YouTube creators, and production houses that value speed over legacy compatibility.
               </p>
@@ -274,13 +274,13 @@ const FinalCutProPost = () => {
       {/* The Verdict */}
       <section className="border-b border-border py-16">
         <div className="container mx-auto px-6">
-          <div className="max-w-4xl">
+          <div className="max-w-4xl mx-auto">
             <h2 className="text-4xl md:text-5xl font-bold uppercase mb-8">
               THE VERDICT
               <br />
               <span className="bg-gradient-to-r from-brand-orange via-brand-pink to-brand-blue bg-clip-text text-transparent">(FOR NOW)</span>
             </h2>
-            <div className="max-w-3xl prose prose-lg prose-invert">
+            <div className="max-w-3xl mx-auto prose prose-lg prose-invert">
               <p className="text-lg leading-relaxed mb-6">
                 Is Final Cut Pro making a comeback? In the sense that it's now genuinely competitive with Premiere Pro for many workflows, yes. In the sense that it's going to reclaim the industry dominance it had in 2008, probably not.
               </p>
@@ -301,14 +301,14 @@ const FinalCutProPost = () => {
       {/* Closing Section */}
       <section className="py-16">
         <div className="container mx-auto px-6">
-          <div className="max-w-4xl">
+          <div className="max-w-4xl mx-auto">
             <div className="space-y-6">
               <h2 className="text-4xl md:text-5xl font-bold uppercase">
                 THAT'S NOT NOSTALGIA.
                 <br />
                 <span className="bg-gradient-to-r from-brand-orange via-brand-pink to-brand-blue bg-clip-text text-transparent">THAT'S MOMENTUM.</span>
               </h2>
-              <div className="max-w-3xl prose prose-lg prose-invert">
+              <div className="max-w-3xl mx-auto prose prose-lg prose-invert">
                 <p className="text-lg leading-relaxed mb-6">
                   The M5 Max MacBook Pro arrives in a few months. If the benchmarks hold up, Apple won't just be offering competitive tools—it'll be offering the fastest portable editing system money can buy, with software included for less than the cost of a single Adobe license.
                 </p>
