@@ -3,6 +3,7 @@ import Footer from "@/components/Footer";
 import SEO from "@/components/SEO";
 import Breadcrumbs from "@/components/Breadcrumbs";
 import RelatedArticles from "@/components/RelatedArticles";
+import finalCutProHero from "@/assets/final-cut-pro-hero.jpg";
 
 const FinalCutProPost = () => {
   return (
@@ -23,7 +24,7 @@ const FinalCutProPost = () => {
       {/* Hero Section */}
       <section className="border-b border-border py-20">
         <div className="container mx-auto px-6">
-          <div className="max-w-4xl">
+          <div className="max-w-4xl mb-12">
             <Breadcrumbs
               items={[
                 { label: "Home", href: "/" },
@@ -47,6 +48,13 @@ const FinalCutProPost = () => {
             <p className="text-sm text-muted-foreground mt-6">
               By <span className="text-foreground font-medium">Jordan Taylor Fuller</span>
             </p>
+          </div>
+          <div className="w-full">
+            <img 
+              src={finalCutProHero} 
+              alt="Apple Creator Studio apps including Final Cut Pro, Logic Pro, Pixelmator Pro, Keynote, Pages, Numbers, Freeform, Motion, Compressor, and MainStage" 
+              className="w-full h-auto rounded-lg"
+            />
           </div>
         </div>
       </section>
