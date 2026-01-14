@@ -10,11 +10,13 @@ const FinalCutProPost = () => {
     <div className="min-h-screen bg-background">
       <SEO
         title="Is Final Cut Pro Making a Comeback? Apple's Creator Studio and M5 Max"
-        description="Apple's Creator Studio bundle and the M5 Max suggest the company is finally serious about winning back professional editors. Whether that's enough is another question entirely."
+        description="Apple's Creator Studio bundle at $12.99/month and the M5 Max chip suggest Apple is serious about winning back professional editors. Analysis of Final Cut Pro's resurgence."
         canonical="/blog/final-cut-pro-comeback"
         type="article"
+        image="/og-image.png"
         article={{
           publishedTime: "2026-01-14",
+          modifiedTime: "2026-01-14",
           section: "Post-Production",
           author: "Jordan Taylor Fuller",
         }}
