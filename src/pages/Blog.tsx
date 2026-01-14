@@ -1,6 +1,6 @@
 import { Button } from "@/components/ui/button";
 import { Link } from "react-router-dom";
-import vfxStorageHero from "@/assets/vfx-storage-hero.jpg";
+import finalCutProHero from "@/assets/final-cut-pro-hero.webp";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
 import SEO from "@/components/SEO";
@@ -19,33 +19,38 @@ const Blog = () => {
       <section className="border-b border-border">
         <div className="container mx-auto px-6 py-12">
           <div className="max-w-4xl mb-8">
-            <p className="text-sm text-brand-orange uppercase tracking-wider font-bold mb-4">
-              LATEST FROM THE STUDIO
-            </p>
-            <h2 className="text-5xl md:text-7xl font-bold uppercase leading-none mb-6 gradient-text">
-              THE FUTURE OF
+            <div className="flex flex-wrap items-center gap-4 mb-6">
+              <span className="text-sm text-brand-orange uppercase tracking-wider font-bold">
+                JANUARY 14, 2026
+              </span>
+              <span className="text-sm text-muted-foreground uppercase tracking-wider">
+                POST-PRODUCTION
+              </span>
+            </div>
+            <h2 className="text-5xl md:text-7xl font-bold uppercase leading-none mb-6">
+              <span className="gradient-orange-pink">IS FINAL CUT PRO</span>
               <br />
-              CREATIVE
+              <span className="gradient-pink-blue">MAKING A</span>
               <br />
-              TECHNOLOGY
+              <span className="gradient-blue-green">COMEBACK?</span>
             </h2>
             <p className="text-xl text-foreground/80 max-w-2xl mb-8">
-              Exploring innovation at the intersection of design, AI, and creative production.
+              Apple's Creator Studio bundle and the M5 Max suggest the company is finally serious about winning back professional editors.
             </p>
             <Button
               asChild
               size="lg"
               className="bg-brand-orange hover:bg-brand-orange/90 text-white font-bold uppercase"
             >
-              <Link to="/blog/final-cut-pro">Read Latest Article</Link>
+              <Link to="/blog/final-cut-pro">Read Article</Link>
             </Button>
           </div>
         </div>
         <div className="relative h-[60vh] min-h-[400px] overflow-hidden">
           <img
-            src={vfxStorageHero}
-            alt="VFX Storage Infrastructure"
-            className="w-full h-full object-cover"
+            src={finalCutProHero}
+            alt="Apple Creator Studio featuring Final Cut Pro, Logic Pro, and creative apps"
+            className="w-full h-full object-cover object-center"
           />
         </div>
       </section>
