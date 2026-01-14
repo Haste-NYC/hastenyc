@@ -45,7 +45,7 @@ const App = () => (
           <Route path="/blog/figma-schema-2025" element={<FigmaSchemaPost />} />
           <Route path="/blog/entertainment-shakeup" element={<EntertainmentShakeupPost />} />
           <Route path="/blog/global-storage-post" element={<VfxStoragePost />} />
-          <Route path="/blog/final-cut-pro-comeback" element={<FinalCutProPost />} />
+          <Route path="/blog/final-cut-pro" element={<FinalCutProPost />} />
           {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
           <Route path="*" element={<NotFound />} />
         </Routes>

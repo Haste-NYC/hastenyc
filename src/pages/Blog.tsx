@@ -37,7 +37,7 @@ const Blog = () => {
               size="lg"
               className="bg-brand-orange hover:bg-brand-orange/90 text-white font-bold uppercase"
             >
-              <Link to="/blog/final-cut-pro-comeback">Read Latest Article</Link>
+              <Link to="/blog/final-cut-pro">Read Latest Article</Link>
             </Button>
           </div>
         </div>
@@ -93,7 +93,7 @@ const Blog = () => {
                     size="lg"
                     className="font-bold uppercase w-full mt-auto"
                   >
-                    <Link to="/blog/final-cut-pro-comeback">Read Article</Link>
+                    <Link to="/blog/final-cut-pro">Read Article</Link>
                   </Button>
                 </div>
               </article>
