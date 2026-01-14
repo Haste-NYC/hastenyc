@@ -49,11 +49,14 @@ const FinalCutProPost = () => {
               By <span className="text-foreground font-medium">Jordan Taylor Fuller</span>
             </p>
           </div>
-          <div className="w-full">
+          <div className="w-full max-w-6xl mx-auto">
             <img 
               src={finalCutProHero} 
               alt="Apple Creator Studio apps including Final Cut Pro, Logic Pro, Pixelmator Pro, Keynote, Pages, Numbers, Freeform, Motion, Compressor, and MainStage" 
-              className="w-full h-auto rounded-lg"
+              className="w-full h-auto rounded-xl shadow-2xl"
+              loading="eager"
+              decoding="async"
+              style={{ imageRendering: 'auto' }}
             />
           </div>
         </div>
