@@ -1,6 +1,6 @@
 import { Button } from "@/components/ui/button";
 import { Link } from "react-router-dom";
-import finalCutProHero from "@/assets/final-cut-pro-hero.webp";
+import appleCreatorStudio from "@/assets/apple-creator-studio.webp";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
 import SEO from "@/components/SEO";
@@ -48,7 +48,7 @@ const Blog = () => {
         </div>
         <div className="relative h-[60vh] min-h-[400px] overflow-hidden">
           <img
-            src={finalCutProHero}
+            src={appleCreatorStudio}
             alt="Apple Creator Studio featuring Final Cut Pro, Logic Pro, and creative apps"
             className="w-full h-full object-cover object-center"
           />
