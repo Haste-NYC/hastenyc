@@ -131,3 +131,61 @@
 
 ---
 
+### Iteration: US-006 - Create checkout page with plan selection
+**Date**: 2026-01-20
+**Status**: Complete
+
+**What was implemented**:
+- Created src/pages/Checkout.tsx with dark theme
+- Integrated PricingPlans component for plan selection
+- Order summary section showing selected plan, price, and savings
+- Continue to Payment button that is disabled until a plan is selected
+- Unauthenticated users see sign-in/sign-up prompt with buttons
+- Selected plan stored in component state as { priceId, planType }
+- Added route /checkout in App.tsx above catch-all
+- Shows logged-in user email at bottom with switch account link
+
+**Learnings/Patterns discovered**:
+- useAuth hook returns user, isAuthenticated, isLoading for conditional rendering
+- PricingPlans component callback provides both priceId and planType
+- Sticky positioning (sticky top-8) works well for order summary on large screens
+- Grid layout with lg:col-span-2 and lg:col-span-1 for responsive 2/1 column split
+
+**Files changed**:
+- src/pages/Checkout.tsx (new)
+- src/App.tsx (updated - added Checkout import and route)
+
+---
+
+### Iteration: US-007 - Create API endpoint for Stripe checkout session
+**Date**: 2026-01-20
+**Status**: Complete
+
+**What was implemented**:
+- Created api/create-checkout-session.ts with serverless function for Stripe checkout session
+- Function accepts POST with priceId and customerEmail in body
+- Creates Stripe checkout session with mode: subscription
+- Sets success_url to /checkout/success?session_id={CHECKOUT_SESSION_ID}
+- Sets cancel_url to /checkout
+- Returns session URL for redirect
+- Created server.js with Express for local API development
+- Added express, cors, dotenv packages
+- Added npm run server script to package.json
+- Updated .env.example with API_PORT and FRONTEND_URL placeholders
+
+**Learnings/Patterns discovered**:
+- Express 5 uses native ES modules (import/export) since package.json has "type": "module"
+- dotenv.config({ path: '.env.local' }) for loading local environment files
+- Stripe apiVersion parameter now uses format '2025-05-28.basil'
+- API server runs on port 3001 while Vite dev server runs on 5173
+
+**Files changed**:
+- api/create-checkout-session.ts (new)
+- server.js (new)
+- package.json (updated - added server script, express/cors/dotenv deps)
+- package-lock.json (updated)
+- .env.example (updated - added API_PORT, FRONTEND_URL)
+- .env.local (updated - added API_PORT, FRONTEND_URL)
+
+---
+

@@ -129,8 +129,8 @@
         "Verify in browser using /web-dev skill"
       ],
       "priority": 6,
-      "passes": false,
-      "notes": ""
+      "passes": true,
+      "notes": "Checkout.tsx created with PricingPlans component, order summary with selected plan details, Continue to Payment button (disabled until plan selected), sign-in/sign-up prompt for unauthenticated users, route added at /checkout"
     },
     {
       "id": "US-007",
@@ -150,8 +150,8 @@
         "Lint passes"
       ],
       "priority": 7,
-      "passes": false,
-      "notes": ""
+      "passes": true,
+      "notes": "Created api/create-checkout-session.ts with Stripe checkout session endpoint, server.js for local API testing with express/cors, added express/cors/dotenv packages"
     },
     {
       "id": "US-008",
