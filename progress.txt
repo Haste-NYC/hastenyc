@@ -106,3 +106,28 @@
 
 ---
 
+### Iteration: US-005 - Create pricing plan selection component
+**Date**: 2026-01-20
+**Status**: Complete
+
+**What was implemented**:
+- Created src/components/PricingPlans.tsx with monthly/yearly toggle
+- Switch component toggles between monthly ($29/mo) and yearly ($279/yr) plans
+- Badge component displays savings percentage (20%) for yearly plan
+- Card with highlighted border (pink-500) when selected
+- Features list with gradient checkmark icons
+- Select Plan button with gradient styling when selected
+- Component accepts onSelectPlan callback and selectedPriceId props
+- Uses stripeConfig for price IDs
+
+**Learnings/Patterns discovered**:
+- Switch component from Shadcn UI accepts checked/onCheckedChange props
+- Custom gradient styling on Switch: data-[state=checked]:bg-gradient-to-r
+- Card selection pattern: conditional border color + shadow for visual feedback
+- Badge component works well for savings/promotion labels
+
+**Files changed**:
+- src/components/PricingPlans.tsx (new)
+
+---
+
