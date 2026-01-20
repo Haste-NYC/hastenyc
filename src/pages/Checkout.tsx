@@ -155,6 +155,9 @@ const Checkout = () => {
                   )}
                 </Button>
 
+                <p className="text-xs text-green-400 text-center font-medium">
+                  Start your 7-day free trial today
+                </p>
                 <p className="text-xs text-gray-500 text-center">
                   You will be redirected to Stripe for secure payment processing.
                 </p>

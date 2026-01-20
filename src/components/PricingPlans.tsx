@@ -82,6 +82,9 @@ const PricingPlans = ({ onSelectPlan, selectedPriceId }: PricingPlansProps) => {
               ${Math.round(yearlyPrice / 12)}/month when billed yearly
             </p>
           )}
+          <p className="text-sm text-green-400 mt-2 font-medium">
+            7-day free trial included
+          </p>
         </CardHeader>
 
         <CardContent className="space-y-4">
