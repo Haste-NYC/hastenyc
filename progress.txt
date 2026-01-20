@@ -290,3 +290,26 @@
 
 ---
 
+### Iteration: US-012 - Connect sign-in form to auth context
+**Date**: 2026-01-20
+**Status**: Complete
+
+**What was implemented**:
+- Updated SignIn.tsx to use useAuth hook for signIn function
+- Added loading state with useState and Loader2 spinner
+- On form submit, calls signIn with email/password
+- On success, redirects to returnUrl query param (if present) or home page
+- On error, displays toast notification via Sonner
+- Button shows loading spinner and "Signing in..." text during request
+
+**Learnings/Patterns discovered**:
+- useSearchParams from react-router-dom for reading query params (returnUrl)
+- decodeURIComponent for decoding encoded return URL
+- try/catch with toast.error for user-friendly error display
+- Pattern: setIsLoading(true) at start, setIsLoading(false) in finally block
+
+**Files changed**:
+- src/pages/SignIn.tsx (updated - added auth integration with loading/error states)
+
+---
+
