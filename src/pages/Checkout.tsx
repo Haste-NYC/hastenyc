@@ -3,7 +3,9 @@ import { Link } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Separator } from "@/components/ui/separator";
+import { Loader2 } from "lucide-react";
 import { useAuth } from "@/contexts/AuthContext";
+import { useCheckout } from "@/hooks/useCheckout";
 import PricingPlans from "@/components/PricingPlans";
 
 interface SelectedPlan {
@@ -14,14 +16,19 @@ interface SelectedPlan {
 const Checkout = () => {
   const { isAuthenticated, user } = useAuth();
   const [selectedPlan, setSelectedPlan] = useState<SelectedPlan | null>(null);
+  const { isLoading, startCheckout } = useCheckout();
 
   const handleSelectPlan = (priceId: string, planType: "monthly" | "yearly") => {
     setSelectedPlan({ priceId, planType });
   };
 
-  const handleContinueToPayment = () => {
-    // Will be connected to Stripe checkout in US-008
-    console.log("Continue to payment with:", selectedPlan);
+  const handleContinueToPayment = async () => {
+    if (!selectedPlan || !user?.email) return;
+
+    await startCheckout({
+      priceId: selectedPlan.priceId,
+      customerEmail: user.email,
+    });
   };
 
   // If not authenticated, show sign-in/sign-up prompt
@@ -131,14 +138,21 @@ const Checkout = () => {
 
                 <Button
                   onClick={handleContinueToPayment}
-                  disabled={!selectedPlan}
+                  disabled={!selectedPlan || isLoading}
                   className={`w-full font-semibold py-6 mt-4 ${
-                    selectedPlan
+                    selectedPlan && !isLoading
                       ? "bg-gradient-to-r from-pink-500 to-purple-500 hover:from-pink-600 hover:to-purple-600 text-white"
                       : "bg-gray-800 text-gray-500 cursor-not-allowed"
                   }`}
                 >
-                  Continue to Payment
+                  {isLoading ? (
+                    <>
+                      <Loader2 className="mr-2 h-4 w-4 animate-spin" />
+                      Redirecting to Stripe...
+                    </>
+                  ) : (
+                    "Continue to Payment"
+                  )}
                 </Button>
 
                 <p className="text-xs text-gray-500 text-center">
