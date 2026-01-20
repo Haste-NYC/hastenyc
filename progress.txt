@@ -189,3 +189,32 @@
 
 ---
 
+### Iteration: US-008 - Integrate Stripe checkout redirect
+**Date**: 2026-01-20
+**Status**: Complete
+
+**What was implemented**:
+- Created src/lib/stripe.ts with loadStripe singleton initialization using publishable key from config
+- Created src/hooks/useCheckout.ts hook that handles checkout API call with loading/error states
+- Hook calls /api/create-checkout-session endpoint with priceId and customerEmail
+- On successful response, redirects to Stripe checkout URL via window.location.href
+- On error, displays toast notification using Sonner
+- Updated Checkout.tsx to use useCheckout hook
+- Button shows Loader2 spinner and "Redirecting to Stripe..." text during loading
+- Added VITE_API_URL environment variable for configuring API endpoint
+
+**Learnings/Patterns discovered**:
+- Use singleton pattern for loadStripe to avoid creating multiple Stripe instances
+- VITE_API_URL allows configuring API endpoint (defaults to localhost:3001)
+- Sonner toast.error() for user-friendly error notifications
+- Loader2 from lucide-react with animate-spin for loading spinners
+
+**Files changed**:
+- src/lib/stripe.ts (new)
+- src/hooks/useCheckout.ts (new)
+- src/pages/Checkout.tsx (updated - added useCheckout hook integration with loading state)
+- .env.example (updated - added VITE_API_URL)
+- .env.local (updated - added VITE_API_URL)
+
+---
+
