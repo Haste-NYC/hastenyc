@@ -1,0 +1,10 @@
+# Progress Log
+
+## Codebase Patterns
+<!-- Consolidated patterns discovered during implementation. Check this first each iteration. -->
+
+---
+
+## Iteration History
+<!-- Append-only log of each iteration's learnings -->
+
