@@ -32,3 +32,27 @@
 
 ---
 
+### Iteration: US-002 - Create auth context and state management
+**Date**: 2026-01-20
+**Status**: Complete
+
+**What was implemented**:
+- Created src/contexts/AuthContext.tsx with AuthProvider component
+- Context provides: user object, isAuthenticated boolean, isLoading boolean
+- Context provides: signIn, signUp, signOut, updateSubscriptionStatus functions
+- User object has: id, email, name, subscriptionStatus fields
+- Auth state stored in localStorage with key "haste_auth_user"
+- Users list stored separately for sign-up/sign-in persistence
+- Wrapped App with AuthProvider in main.tsx
+
+**Learnings/Patterns discovered**:
+- Use crypto.randomUUID() for generating user IDs in browser
+- Export both AuthProvider component and useAuth hook from same file
+- Store user list separately from current user for multi-user demo support
+
+**Files changed**:
+- src/contexts/AuthContext.tsx (new)
+- src/main.tsx (updated - wrapped App with AuthProvider)
+
+---
+

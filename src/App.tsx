@@ -22,6 +22,9 @@ import BlogIndex from "./pages/blog/BlogIndex";
 import BlogPost from "./pages/blog/BlogPost";
 import FigmaSchemaPost from "./pages/blog/FigmaSchemaPost";
 
+// Auth pages
+import SignIn from "./pages/SignIn";
+
 import NotFound from "./pages/NotFound";
 
 const queryClient = new QueryClient();
@@ -50,6 +53,9 @@ const App = () => (
           <Route path="/blog" element={<BlogIndex />} />
           <Route path="/blog/adobe-max-2025" element={<BlogPost />} />
           <Route path="/blog/figma-schema-2025" element={<FigmaSchemaPost />} />
+
+          {/* Auth pages */}
+          <Route path="/signin" element={<SignIn />} />
 
           {/* 404 - Catch all */}
           <Route path="*" element={<NotFound />} />
