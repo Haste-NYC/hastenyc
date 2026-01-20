@@ -81,3 +81,28 @@
 
 ---
 
+### Iteration: US-004 - Create sign-up page UI
+**Date**: 2026-01-20
+**Status**: Complete
+
+**What was implemented**:
+- Created src/pages/SignUp.tsx with dark theme (bg-black, text-white)
+- Name input with zod validation (required)
+- Email input with zod validation (required, valid email format)
+- Password input with zod validation (required, min 8 characters)
+- Confirm password input with zod refine validation (must match password)
+- Create Account button with gradient styling (pink-500 to purple-500)
+- Link to Sign In page for existing users
+- Form uses react-hook-form with zodResolver
+- Added route /signup in App.tsx above catch-all
+
+**Learnings/Patterns discovered**:
+- Use z.refine() for cross-field validation like password matching
+- refine() takes a predicate function and options with message and path for error placement
+
+**Files changed**:
+- src/pages/SignUp.tsx (new)
+- src/App.tsx (updated - added SignUp import and route)
+
+---
+
