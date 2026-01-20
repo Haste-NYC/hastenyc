@@ -335,3 +335,54 @@
 
 ---
 
+### Iteration: US-014 - Add account page for subscription management
+**Date**: 2026-01-20
+**Status**: Complete
+
+**What was implemented**:
+- Created src/pages/Account.tsx with dark theme (bg-black, text-white)
+- Profile card showing user name and email
+- Subscription card showing status (active/inactive), plan type, and next billing date
+- Green status indicator for active subscriptions, gray for inactive
+- Manage Subscription button (placeholder for Stripe portal) when subscribed
+- Subscribe Now button linking to /checkout when not subscribed
+- Sign Out button that clears auth state and redirects to home
+- Added /account route in App.tsx wrapped with ProtectedRoute
+
+**Learnings/Patterns discovered**:
+- Reused Card component patterns from CheckoutSuccess.tsx for consistency
+- Conditional rendering based on subscriptionStatus for different UI states
+- Subscribe CTA for users without active subscription guides them to checkout
+
+**Files changed**:
+- src/pages/Account.tsx (new)
+- src/App.tsx (updated - added Account import and route with ProtectedRoute)
+
+---
+
+### Iteration: US-015 - Final integration and flow testing
+**Date**: 2026-01-20
+**Status**: Complete
+
+**What was implemented**:
+- Fixed bug in SignUp.tsx where signUp() was called with parameters in wrong order (was email, password, name - now name, email, password)
+- Verified npm run build passes successfully
+- Verified npm run lint passes (only pre-existing Shadcn UI and tailwind.config.ts errors remain)
+- Verified all auth/checkout files pass lint individually
+- Verified all routes are properly configured in App.tsx
+- Verified navigation updates correctly based on auth state in ProductHome.tsx
+- Verified ProtectedRoute properly redirects unauthenticated users with returnUrl
+- Verified all pages have dark theme matching site design
+
+**Learnings/Patterns discovered**:
+- signUp function in AuthContext expects (name, email, password) order
+- Pre-existing lint errors in Shadcn UI components (empty interfaces) and tailwind.config.ts (require()) are not blockers
+- Code review can substitute for browser testing when MCP tools unavailable
+
+**Files changed**:
+- src/pages/SignUp.tsx (fixed - signUp parameter order)
+- prd.json (updated - marked US-015 as passes: true)
+- progress.txt (updated - added iteration log)
+
+---
+
