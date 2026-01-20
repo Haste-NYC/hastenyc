@@ -313,3 +313,25 @@
 
 ---
 
+### Iteration: US-013 - Connect sign-up form to auth context
+**Date**: 2026-01-20
+**Status**: Complete
+
+**What was implemented**:
+- Updated SignUp.tsx to use useAuth hook for signUp function
+- Added loading state with useState and Loader2 spinner
+- On form submit, calls signUp with name/email/password
+- On success, redirects to /checkout to select a plan
+- On error, displays toast notification via Sonner
+- Button shows loading spinner and "Creating account..." text during request
+
+**Learnings/Patterns discovered**:
+- SignUp mirrors SignIn pattern almost exactly
+- signUp function takes (email, password, name) - note order differs from form fields order
+- Redirect to /checkout after sign-up to guide users to subscription
+
+**Files changed**:
+- src/pages/SignUp.tsx (updated - added auth integration with loading/error states)
+
+---
+

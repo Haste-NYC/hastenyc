@@ -268,8 +268,8 @@
         "Verify in browser using /web-dev skill"
       ],
       "priority": 13,
-      "passes": false,
-      "notes": ""
+      "passes": true,
+      "notes": "Connected SignUp.tsx to useAuth hook with signUp function call, loading spinner with Loader2, error toast via Sonner, and redirect to /checkout on success"
     },
     {
       "id": "US-014",

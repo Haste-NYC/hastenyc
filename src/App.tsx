@@ -27,6 +27,7 @@ import SignIn from "./pages/SignIn";
 import SignUp from "./pages/SignUp";
 import Checkout from "./pages/Checkout";
 import CheckoutSuccess from "./pages/CheckoutSuccess";
+import Account from "./pages/Account";
 import { ProtectedRoute } from "./components/ProtectedRoute";
 
 import NotFound from "./pages/NotFound";
@@ -63,6 +64,7 @@ const App = () => (
           <Route path="/signup" element={<SignUp />} />
           <Route path="/checkout" element={<ProtectedRoute><Checkout /></ProtectedRoute>} />
           <Route path="/checkout/success" element={<CheckoutSuccess />} />
+          <Route path="/account" element={<ProtectedRoute><Account /></ProtectedRoute>} />
 
           {/* 404 - Catch all */}
           <Route path="*" element={<NotFound />} />
