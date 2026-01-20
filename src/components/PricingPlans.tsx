@@ -22,8 +22,8 @@ const features = [
 const PricingPlans = ({ onSelectPlan, selectedPriceId }: PricingPlansProps) => {
   const [isYearly, setIsYearly] = useState(false);
 
-  const monthlyPrice = 29;
-  const yearlyPrice = 279;
+  const monthlyPrice = 49;
+  const yearlyPrice = 490;
   const yearlySavings = Math.round(((monthlyPrice * 12 - yearlyPrice) / (monthlyPrice * 12)) * 100);
 
   const currentPriceId = isYearly ? stripeConfig.priceYearly : stripeConfig.priceMonthly;

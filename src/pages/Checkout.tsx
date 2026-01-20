@@ -73,8 +73,8 @@ const Checkout = () => {
     );
   }
 
-  const monthlyPrice = 29;
-  const yearlyPrice = 279;
+  const monthlyPrice = 49;
+  const yearlyPrice = 490;
 
   return (
     <div className="min-h-screen bg-black text-white py-12 px-4">
