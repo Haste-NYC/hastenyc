@@ -24,6 +24,7 @@ import FigmaSchemaPost from "./pages/blog/FigmaSchemaPost";
 
 // Auth pages
 import SignIn from "./pages/SignIn";
+import SignUp from "./pages/SignUp";
 
 import NotFound from "./pages/NotFound";
 
@@ -56,6 +57,7 @@ const App = () => (
 
           {/* Auth pages */}
           <Route path="/signin" element={<SignIn />} />
+          <Route path="/signup" element={<SignUp />} />
 
           {/* 404 - Catch all */}
           <Route path="*" element={<NotFound />} />

@@ -56,3 +56,28 @@
 
 ---
 
+### Iteration: US-003 - Create sign-in page UI
+**Date**: 2026-01-20
+**Status**: Complete
+
+**What was implemented**:
+- Created src/pages/SignIn.tsx with dark theme (bg-black, text-white)
+- Email input with zod validation (required, valid email format)
+- Password input with zod validation (required, min 8 characters)
+- Sign In button with gradient styling (pink-500 to purple-500)
+- Link to Sign Up page for new users
+- Link to forgot password (placeholder route)
+- Form uses react-hook-form with zodResolver
+- Added route /signin in App.tsx above catch-all
+
+**Learnings/Patterns discovered**:
+- Use zodResolver from @hookform/resolvers/zod for form validation
+- Form styling pattern: bg-gray-900 border-gray-700 for dark inputs
+- Gradient button: bg-gradient-to-r from-pink-500 to-purple-500
+
+**Files changed**:
+- src/pages/SignIn.tsx (new)
+- src/App.tsx (updated - added SignIn import and route)
+
+---
+
