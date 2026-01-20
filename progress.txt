@@ -266,3 +266,27 @@
 
 ---
 
+### Iteration: US-011 - Create protected route wrapper component
+**Date**: 2026-01-20
+**Status**: Complete
+
+**What was implemented**:
+- Created src/components/ProtectedRoute.tsx component
+- Component checks isAuthenticated from auth context
+- If loading, shows Loader2 spinner in black background
+- If not authenticated, redirects to /signin with returnUrl query param
+- If authenticated, renders children
+- Updated App.tsx to wrap /checkout route with ProtectedRoute
+
+**Learnings/Patterns discovered**:
+- Use useLocation from react-router-dom to get current path for return URL
+- encodeURIComponent for encoding URL path in query param
+- Navigate component with replace prop prevents back button issues
+- Pattern for protected route: check isLoading first, then isAuthenticated
+
+**Files changed**:
+- src/components/ProtectedRoute.tsx (new)
+- src/App.tsx (updated - added ProtectedRoute import and wrapped /checkout route)
+
+---
+

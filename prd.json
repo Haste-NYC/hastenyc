@@ -229,8 +229,8 @@
         "Lint passes"
       ],
       "priority": 11,
-      "passes": false,
-      "notes": ""
+      "passes": true,
+      "notes": "Created ProtectedRoute.tsx with loading spinner, redirect to /signin with returnUrl query param, wrapped /checkout route in App.tsx"
     },
     {
       "id": "US-012",

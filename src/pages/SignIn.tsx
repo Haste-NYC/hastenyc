@@ -1,7 +1,10 @@
+import { useState } from "react";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { z } from "zod";
-import { Link } from "react-router-dom";
+import { Link, useNavigate, useSearchParams } from "react-router-dom";
+import { Loader2 } from "lucide-react";
+import { toast } from "sonner";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import {
@@ -12,6 +15,7 @@ import {
   FormLabel,
   FormMessage,
 } from "@/components/ui/form";
+import { useAuth } from "@/contexts/AuthContext";
 
 const signInSchema = z.object({
   email: z
@@ -27,6 +31,11 @@ const signInSchema = z.object({
 type SignInFormValues = z.infer<typeof signInSchema>;
 
 const SignIn = () => {
+  const [isLoading, setIsLoading] = useState(false);
+  const { signIn } = useAuth();
+  const navigate = useNavigate();
+  const [searchParams] = useSearchParams();
+
   const form = useForm<SignInFormValues>({
     resolver: zodResolver(signInSchema),
     defaultValues: {
@@ -35,9 +44,23 @@ const SignIn = () => {
     },
   });
 
-  const onSubmit = (data: SignInFormValues) => {
-    // Will be connected to auth context in US-012
-    console.log("Sign in data:", data);
+  const onSubmit = async (data: SignInFormValues) => {
+    setIsLoading(true);
+    try {
+      await signIn(data.email, data.password);
+
+      // Redirect to return URL or home
+      const returnUrl = searchParams.get("returnUrl");
+      if (returnUrl) {
+        navigate(decodeURIComponent(returnUrl));
+      } else {
+        navigate("/");
+      }
+    } catch (error) {
+      toast.error(error instanceof Error ? error.message : "Sign in failed. Please try again.");
+    } finally {
+      setIsLoading(false);
+    }
   };
 
   return (
@@ -103,9 +126,17 @@ const SignIn = () => {
 
             <Button
               type="submit"
+              disabled={isLoading}
               className="w-full bg-gradient-to-r from-pink-500 to-purple-500 hover:from-pink-600 hover:to-purple-600 text-white font-semibold py-2"
             >
-              Sign In
+              {isLoading ? (
+                <>
+                  <Loader2 className="mr-2 h-4 w-4 animate-spin" />
+                  Signing in...
+                </>
+              ) : (
+                "Sign In"
+              )}
             </Button>
           </form>
         </Form>
