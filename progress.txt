@@ -8,3 +8,27 @@
 ## Iteration History
 <!-- Append-only log of each iteration's learnings -->
 
+### Iteration: US-001 - Create Stripe configuration and environment setup
+**Date**: 2026-01-20
+**Status**: Complete
+
+**What was implemented**:
+- Created src/config/stripe.ts with publishable key and price IDs from environment variables
+- Created .env.example with placeholder variables for Stripe keys
+- Created .env.local with actual test keys from PRD (gitignored via existing *.local pattern)
+- Installed @stripe/stripe-js (client-side) and stripe (server-side) packages
+
+**Learnings/Patterns discovered**:
+- Environment variables for Vite use VITE_ prefix to be exposed to client
+- .gitignore already has *.local pattern, no need to add .env.local explicitly
+- Pre-existing lint errors exist in Shadcn UI components and tailwind.config.ts - these are not blockers
+
+**Files changed**:
+- src/config/stripe.ts (new)
+- .env.example (new)
+- .env.local (new, gitignored)
+- package.json (updated dependencies)
+- package-lock.json (updated)
+
+---
+
