@@ -55,7 +55,7 @@ const SignUp = () => {
   const onSubmit = async (data: SignUpFormValues) => {
     setIsLoading(true);
     try {
-      await signUp(data.email, data.password, data.name);
+      await signUp(data.name, data.email, data.password);
       navigate("/checkout");
     } catch (error) {
       toast.error(error instanceof Error ? error.message : "Sign up failed. Please try again.");
