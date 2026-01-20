@@ -244,3 +244,25 @@
 
 ---
 
+### Iteration: US-010 - Add auth navigation links to header
+**Date**: 2026-01-20
+**Status**: Complete
+
+**What was implemented**:
+- Updated ProductHome.tsx navigation to use useAuth hook for authentication state
+- When not authenticated: shows Sign In text link and Sign Up gradient button
+- When authenticated: shows Subscribe CTA button (if not subscribed), user email, and Sign Out button
+- Sign Out button clears auth state and redirects to home using useNavigate
+- Subscribe button links to /checkout and has pink-500 outline styling
+
+**Learnings/Patterns discovered**:
+- Navigation was inline in ProductHome.tsx, not a separate component
+- useNavigate from react-router-dom for programmatic navigation after sign out
+- Pink outline button pattern: border-pink-500 text-pink-500 hover:bg-pink-500/10
+- Conditional rendering with fragments (<></>) for multiple auth-state-dependent elements
+
+**Files changed**:
+- src/pages/product/ProductHome.tsx (updated - added auth state to navigation)
+
+---
+
