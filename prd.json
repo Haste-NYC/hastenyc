@@ -1,0 +1,317 @@
+{
+  "project": "Haste Conform Studio",
+  "branchName": "ralph/auth-stripe-subscription",
+  "description": "Sign up/sign in module with Stripe embedded checkout for monthly/yearly subscriptions",
+  "stripeConfig": {
+    "publishableKey": "pk_test_51SrAZvDQ1cMtHVeYcJlDafDr2gXBpsrDgd2izCeBOoe8vkNeVvMmy3AQ2hQEZoTsVtNpI0kitmoMs1cNjPvvZGqE00LWGEZrFJ",
+    "priceMonthly": "price_1SrAhTDQ1cMtHVeYq07uZxzg",
+    "priceYearly": "price_1SrAlADQ1cMtHVeYXzhTwCuq"
+  },
+  "userStories": [
+    {
+      "id": "US-001",
+      "title": "Create Stripe configuration and environment setup",
+      "description": "As a developer, I need Stripe configured so the app can process subscriptions.",
+      "acceptanceCriteria": [
+        "Create src/config/stripe.ts with publishable key and price IDs",
+        "Create .env.example with VITE_STRIPE_PUBLISHABLE_KEY, VITE_STRIPE_PRICE_MONTHLY, VITE_STRIPE_PRICE_YEARLY placeholders",
+        "Create .env.local with actual test keys from stripeConfig above",
+        "Add @stripe/stripe-js package to dependencies",
+        "Add stripe package to dependencies for server-side",
+        "Update .gitignore to exclude .env.local",
+        "Typecheck passes",
+        "Lint passes"
+      ],
+      "priority": 1,
+      "passes": false,
+      "notes": ""
+    },
+    {
+      "id": "US-002",
+      "title": "Create auth context and state management",
+      "description": "As a developer, I need auth state management so components can access user authentication status.",
+      "acceptanceCriteria": [
+        "Create src/contexts/AuthContext.tsx with AuthProvider component",
+        "Context provides: user object, isAuthenticated boolean, isLoading boolean",
+        "Context provides: signIn, signUp, signOut functions",
+        "Store auth state in localStorage for persistence",
+        "User object has: id, email, name, subscriptionStatus fields",
+        "Wrap App with AuthProvider in main.tsx",
+        "Typecheck passes",
+        "Lint passes"
+      ],
+      "priority": 2,
+      "passes": false,
+      "notes": ""
+    },
+    {
+      "id": "US-003",
+      "title": "Create sign-in page UI",
+      "description": "As a user, I want to sign in to my account so I can access my subscription.",
+      "acceptanceCriteria": [
+        "Create src/pages/SignIn.tsx page component",
+        "Dark theme matching existing site design (bg-black, text-white)",
+        "Email input field with validation (required, valid email format)",
+        "Password input field with validation (required, min 8 chars)",
+        "Sign In button with gradient styling (pink to purple)",
+        "Link to Sign Up page for new users",
+        "Link to forgot password (can be placeholder)",
+        "Form uses react-hook-form with zod validation",
+        "Show error messages for invalid inputs",
+        "Add route /signin in App.tsx above catch-all",
+        "Typecheck passes",
+        "Lint passes",
+        "Verify in browser using /web-dev skill"
+      ],
+      "priority": 3,
+      "passes": false,
+      "notes": ""
+    },
+    {
+      "id": "US-004",
+      "title": "Create sign-up page UI",
+      "description": "As a new user, I want to create an account so I can subscribe to the service.",
+      "acceptanceCriteria": [
+        "Create src/pages/SignUp.tsx page component",
+        "Dark theme matching existing site design",
+        "Name input field with validation (required)",
+        "Email input field with validation (required, valid email)",
+        "Password input field with validation (required, min 8 chars)",
+        "Confirm password field with validation (must match)",
+        "Create Account button with gradient styling",
+        "Link to Sign In page for existing users",
+        "Form uses react-hook-form with zod validation",
+        "Show error messages for invalid inputs",
+        "Add route /signup in App.tsx above catch-all",
+        "Typecheck passes",
+        "Lint passes",
+        "Verify in browser using /web-dev skill"
+      ],
+      "priority": 4,
+      "passes": false,
+      "notes": ""
+    },
+    {
+      "id": "US-005",
+      "title": "Create pricing plan selection component",
+      "description": "As a user, I want to choose between monthly and yearly subscription plans.",
+      "acceptanceCriteria": [
+        "Create src/components/PricingPlans.tsx component",
+        "Display two plan options: Monthly ($XX/mo) and Yearly ($XX/yr)",
+        "Yearly plan shows savings badge (e.g., 'Save 20%')",
+        "Toggle or tabs to switch between monthly/yearly view",
+        "Selected plan has highlighted border/styling",
+        "Each plan card shows: price, billing period, features list",
+        "Select Plan button on each card",
+        "Dark theme with gradient accents matching site design",
+        "Typecheck passes",
+        "Lint passes",
+        "Verify in browser using /web-dev skill"
+      ],
+      "priority": 5,
+      "passes": false,
+      "notes": ""
+    },
+    {
+      "id": "US-006",
+      "title": "Create checkout page with plan selection",
+      "description": "As a user, I want a checkout page where I select my plan before payment.",
+      "acceptanceCriteria": [
+        "Create src/pages/Checkout.tsx page component",
+        "Include PricingPlans component for plan selection",
+        "Show order summary section with selected plan details",
+        "Continue to Payment button (disabled until plan selected)",
+        "If not authenticated, show sign-in/sign-up prompt first",
+        "Store selected priceId in component state",
+        "Add route /checkout in App.tsx above catch-all",
+        "Typecheck passes",
+        "Lint passes",
+        "Verify in browser using /web-dev skill"
+      ],
+      "priority": 6,
+      "passes": false,
+      "notes": ""
+    },
+    {
+      "id": "US-007",
+      "title": "Create API endpoint for Stripe checkout session",
+      "description": "As a developer, I need a server endpoint to create Stripe checkout sessions.",
+      "acceptanceCriteria": [
+        "Create api/create-checkout-session.ts serverless function",
+        "Function accepts POST with priceId and customerEmail in body",
+        "Creates Stripe checkout session with mode: subscription",
+        "Sets success_url to /checkout/success?session_id={CHECKOUT_SESSION_ID}",
+        "Sets cancel_url to /checkout",
+        "Returns session URL for redirect",
+        "Uses STRIPE_SECRET_KEY from environment",
+        "Add express and cors packages if needed for local dev",
+        "Create simple server.js for local API testing",
+        "Typecheck passes",
+        "Lint passes"
+      ],
+      "priority": 7,
+      "passes": false,
+      "notes": ""
+    },
+    {
+      "id": "US-008",
+      "title": "Integrate Stripe checkout redirect",
+      "description": "As a user, I want to be redirected to Stripe checkout to complete payment.",
+      "acceptanceCriteria": [
+        "Create src/lib/stripe.ts with loadStripe initialization",
+        "Create src/hooks/useCheckout.ts hook for checkout logic",
+        "Hook calls API endpoint with selected priceId",
+        "Hook handles loading and error states",
+        "On success, redirect to Stripe checkout URL",
+        "Update Checkout.tsx to use useCheckout hook",
+        "Show loading spinner during redirect",
+        "Show error toast if checkout creation fails",
+        "Typecheck passes",
+        "Lint passes"
+      ],
+      "priority": 8,
+      "passes": false,
+      "notes": ""
+    },
+    {
+      "id": "US-009",
+      "title": "Create checkout success page",
+      "description": "As a user, I want to see a confirmation after successful payment.",
+      "acceptanceCriteria": [
+        "Create src/pages/CheckoutSuccess.tsx page component",
+        "Parse session_id from URL query params",
+        "Display success message with checkmark icon",
+        "Show subscription details (plan name, next billing date placeholder)",
+        "Manage Subscription button (placeholder for Stripe portal)",
+        "Go to Dashboard/Home button",
+        "Update user auth context with subscriptionStatus: active",
+        "Add route /checkout/success in App.tsx above catch-all",
+        "Dark theme matching site design with success green accent",
+        "Typecheck passes",
+        "Lint passes",
+        "Verify in browser using /web-dev skill"
+      ],
+      "priority": 9,
+      "passes": false,
+      "notes": ""
+    },
+    {
+      "id": "US-010",
+      "title": "Add auth navigation links to header",
+      "description": "As a user, I want to see sign in/sign up links or my account in the navigation.",
+      "acceptanceCriteria": [
+        "Update main navigation component (find in src/components)",
+        "When not authenticated: show Sign In and Sign Up links",
+        "When authenticated: show user email/name and Sign Out button",
+        "Sign Out clears auth state and redirects to home",
+        "Add Subscribe/Pricing CTA button in nav when not subscribed",
+        "Use useAuth hook to get authentication state",
+        "Typecheck passes",
+        "Lint passes",
+        "Verify in browser using /web-dev skill"
+      ],
+      "priority": 10,
+      "passes": false,
+      "notes": ""
+    },
+    {
+      "id": "US-011",
+      "title": "Create protected route wrapper component",
+      "description": "As a developer, I need to protect routes that require authentication.",
+      "acceptanceCriteria": [
+        "Create src/components/ProtectedRoute.tsx component",
+        "Component checks isAuthenticated from auth context",
+        "If not authenticated, redirect to /signin with return URL",
+        "If loading, show loading spinner",
+        "If authenticated, render children",
+        "Wrap /checkout route with ProtectedRoute in App.tsx",
+        "Typecheck passes",
+        "Lint passes"
+      ],
+      "priority": 11,
+      "passes": false,
+      "notes": ""
+    },
+    {
+      "id": "US-012",
+      "title": "Connect sign-in form to auth context",
+      "description": "As a user, I want my sign-in form to actually authenticate me.",
+      "acceptanceCriteria": [
+        "Update SignIn.tsx to use useAuth hook",
+        "On form submit, call signIn function with email/password",
+        "Show loading state on button during sign-in",
+        "On success, redirect to return URL or home page",
+        "On error, show error message (invalid credentials)",
+        "For demo: accept any valid email/password format",
+        "Store user in localStorage via auth context",
+        "Typecheck passes",
+        "Lint passes",
+        "Verify in browser using /web-dev skill"
+      ],
+      "priority": 12,
+      "passes": false,
+      "notes": ""
+    },
+    {
+      "id": "US-013",
+      "title": "Connect sign-up form to auth context",
+      "description": "As a user, I want my sign-up form to create my account.",
+      "acceptanceCriteria": [
+        "Update SignUp.tsx to use useAuth hook",
+        "On form submit, call signUp function with name/email/password",
+        "Show loading state on button during sign-up",
+        "On success, redirect to /checkout to select plan",
+        "On error, show error message",
+        "For demo: create user and store in localStorage",
+        "Typecheck passes",
+        "Lint passes",
+        "Verify in browser using /web-dev skill"
+      ],
+      "priority": 13,
+      "passes": false,
+      "notes": ""
+    },
+    {
+      "id": "US-014",
+      "title": "Add account page for subscription management",
+      "description": "As a user, I want to view my account and subscription status.",
+      "acceptanceCriteria": [
+        "Create src/pages/Account.tsx page component",
+        "Display user info: name, email",
+        "Display subscription status: active/inactive, plan type",
+        "Display next billing date (placeholder)",
+        "Manage Subscription button (Stripe portal placeholder)",
+        "Sign Out button",
+        "Protect route with ProtectedRoute",
+        "Add route /account in App.tsx above catch-all",
+        "Dark theme matching site design",
+        "Typecheck passes",
+        "Lint passes",
+        "Verify in browser using /web-dev skill"
+      ],
+      "priority": 14,
+      "passes": false,
+      "notes": ""
+    },
+    {
+      "id": "US-015",
+      "title": "Final integration and flow testing",
+      "description": "As a developer, I need to verify the complete auth and checkout flow works.",
+      "acceptanceCriteria": [
+        "Full flow test: Home -> Sign Up -> Checkout -> Select Plan -> Stripe -> Success",
+        "Sign out and sign back in flow works",
+        "Navigation updates correctly based on auth state",
+        "Protected routes redirect to sign-in when not authenticated",
+        "All pages match dark theme design",
+        "No console errors in browser",
+        "npm run build succeeds without errors",
+        "Typecheck passes",
+        "Lint passes",
+        "Verify complete flow in browser using /web-dev skill"
+      ],
+      "priority": 15,
+      "passes": false,
+      "notes": ""
+    }
+  ]
+}
