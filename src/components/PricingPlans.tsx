@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { motion } from "framer-motion";
 import { Card, CardContent, CardFooter, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Switch } from "@/components/ui/switch";
@@ -144,16 +145,20 @@ const PricingPlans = ({ onSelectPlan, selectedPriceId, onScheduleCall }: Pricing
       {/* Pricing Cards */}
       <div className="grid md:grid-cols-3 gap-6">
         {tiers.map((tier) => (
-          <Card
+          <motion.div
             key={tier.name}
-            className={`bg-gray-900 border-2 transition-all duration-200 relative ${
-              isSelected(tier)
-                ? "border-pink-500 shadow-lg shadow-pink-500/20"
-                : tier.popular
-                ? "border-purple-500"
-                : "border-gray-700 hover:border-gray-600"
-            }`}
+            whileHover={{ y: -4, transition: { duration: 0.2 } }}
+            className="h-full"
           >
+            <Card
+              className={`bg-gray-900 border-2 transition-all duration-200 relative h-full hover:shadow-lg hover:shadow-purple-500/10 ${
+                isSelected(tier)
+                  ? "border-pink-500 shadow-lg shadow-pink-500/20"
+                  : tier.popular
+                  ? "border-purple-500"
+                  : "border-gray-700 hover:border-gray-600"
+              }`}
+            >
             {tier.popular && (
               <div className="absolute -top-3 left-1/2 -translate-x-1/2">
                 <Badge className="bg-gradient-to-r from-pink-500 to-purple-500 text-white border-0 px-3">
@@ -233,7 +238,8 @@ const PricingPlans = ({ onSelectPlan, selectedPriceId, onScheduleCall }: Pricing
                   : "Select Plan"}
               </Button>
             </CardFooter>
-          </Card>
+            </Card>
+          </motion.div>
         ))}
       </div>
     </div>

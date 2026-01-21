@@ -1,10 +1,32 @@
+import { useRef, useState, useEffect } from "react";
 import { Button } from "@/components/ui/button";
-import { motion } from "framer-motion";
+import { motion, useScroll, useTransform } from "framer-motion";
 import { useLenis } from "lenis/react";
 import conformLogo from "@/assets/conform-studio-logo.png";
 
 const HeroSection = () => {
   const lenis = useLenis();
+  const sectionRef = useRef<HTMLElement>(null);
+  const [isDesktop, setIsDesktop] = useState(false);
+
+  // Check for desktop breakpoint on client
+  useEffect(() => {
+    const checkDesktop = () => {
+      setIsDesktop(window.matchMedia("(min-width: 768px)").matches);
+    };
+    checkDesktop();
+    window.addEventListener("resize", checkDesktop);
+    return () => window.removeEventListener("resize", checkDesktop);
+  }, []);
+
+  // Set up scroll tracking for parallax
+  const { scrollYProgress } = useScroll({
+    target: sectionRef,
+    offset: ["start start", "end start"],
+  });
+
+  // Create parallax transform (only applied on desktop)
+  const backgroundY = useTransform(scrollYProgress, [0, 1], ["0%", "30%"]);
 
   const scrollToPricing = () => {
     lenis?.scrollTo("#pricing", {
@@ -15,14 +37,18 @@ const HeroSection = () => {
   };
 
   return (
-    <section className="relative flex flex-col items-center px-6 pt-8 pb-12 min-h-[calc(100vh-80px)]">
-      {/* Ethereal gradient background - soft purple/blue glow */}
-      <div
+    <section
+      ref={sectionRef}
+      className="relative flex flex-col items-center px-6 pt-8 pb-12 min-h-[calc(100vh-80px)]"
+    >
+      {/* Ethereal gradient background - soft purple/blue glow with parallax on desktop */}
+      <motion.div
         className="absolute pointer-events-none z-0"
         style={{
           top: "40%",
           left: "50%",
-          transform: "translate(-50%, -50%)",
+          x: "-50%",
+          y: isDesktop ? backgroundY : "-50%",
           width: "200vw",
           height: "200vh",
           background:
