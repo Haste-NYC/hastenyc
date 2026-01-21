@@ -30,12 +30,12 @@ Decimal phases appear between their surrounding integers in numeric order.
   5. User sees 4 feature sections with UI screenshots, bold statistics, and generous negative space
   6. User sees FAQ accordion that expands/collapses questions
   7. User sees three pricing tiers (Freelancer, Studio, Enterprise) with monthly/yearly toggle and feature lists
-**Plans**: TBD
+**Plans**: 3 plans
 
 Plans:
-- [ ] 01-01: TBD during planning
-- [ ] 01-02: TBD during planning
-- [ ] 01-03: TBD during planning
+- [ ] 01-01-PLAN.md — Navigation & Page Structure
+- [ ] 01-02-PLAN.md — Hero & Features Sections
+- [ ] 01-03-PLAN.md — About, FAQ & Pricing Sections
 
 ### Phase 2: Scroll & Animation
 **Goal**: Premium scroll-driven experience with buttery-smooth animations, view-triggered reveals, and scroll-linked effects
