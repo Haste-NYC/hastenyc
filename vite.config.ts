@@ -3,6 +3,7 @@ import react from "@vitejs/plugin-react-swc";
 import path from "path";
 import { componentTagger } from "lovable-tagger";
 import { ViteImageOptimizer } from "vite-plugin-image-optimizer";
+import { visualizer } from "rollup-plugin-visualizer";
 
 // https://vitejs.dev/config/
 export default defineConfig(({ mode }) => ({
@@ -18,6 +19,11 @@ export default defineConfig(({ mode }) => ({
       jpeg: { quality: 80 },
       jpg: { quality: 80 },
       webp: { quality: 80, lossless: false },
+    }),
+    mode === "production" && visualizer({
+      filename: 'dist/stats.html',
+      gzipSize: true,
+      brotliSize: true,
     }),
   ].filter(Boolean),
   resolve: {
