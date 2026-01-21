@@ -84,7 +84,8 @@ const HeroSection = () => {
             className="w-full max-w-4xl mx-auto h-auto"
             width={1952}
             height={352}
-            fetchPriority="high"
+            // @ts-expect-error fetchpriority is valid HTML but React doesn't have types yet
+            fetchpriority="high"
             decoding="async"
           />
         </motion.div>
