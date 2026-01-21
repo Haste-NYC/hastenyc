@@ -14,6 +14,7 @@ import FigmaSchemaPost from "./pages/FigmaSchemaPost";
 import EntertainmentShakeupPost from "./pages/EntertainmentShakeupPost";
 import VfxStoragePost from "./pages/VfxStoragePost";
 import FinalCutProPost from "./pages/FinalCutProPost";
+import StyleGuide from "./pages/StyleGuide";
 import NotFound from "./pages/NotFound";
 
 const queryClient = new QueryClient();
