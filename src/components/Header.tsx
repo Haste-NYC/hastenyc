@@ -1,7 +1,12 @@
+import { useState } from "react";
+import { Button } from "@/components/ui/button";
+import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet";
+import { Menu } from "lucide-react";
+
 const HasteLogo = () => (
-  <svg 
-    className="h-6 md:h-7 w-auto" 
-    viewBox="0 0 89 33" 
+  <svg
+    className="h-6 md:h-7 w-auto"
+    viewBox="0 0 89 33"
     fill="none"
   >
     <path d="M0 0V32.0003H7.56428V0H0Z" fill="white" />
@@ -17,13 +22,104 @@ const HasteLogo = () => (
   </svg>
 );
 
+const navLinks = [
+  { label: "Overview", id: "hero" },
+  { label: "Features", id: "features" },
+  { label: "About", id: "about" },
+  { label: "FAQ", id: "faq" },
+];
+
 const Header = () => {
+  const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
+
+  const scrollToSection = (id: string) => {
+    const element = document.getElementById(id);
+    if (!element) return;
+
+    const headerOffset = 80;
+    const elementPosition = element.getBoundingClientRect().top;
+    const offsetPosition = elementPosition + window.pageYOffset - headerOffset;
+
+    window.scrollTo({
+      top: offsetPosition,
+      behavior: 'smooth'
+    });
+
+    setMobileMenuOpen(false);
+  };
+
+  const scrollToPricing = () => scrollToSection("pricing");
+
   return (
-    <header className="py-6 px-8">
-      <nav className="flex items-center justify-center">
+    <header className="fixed top-0 w-full z-50 py-4 px-6 bg-background/95 backdrop-blur-sm border-b border-border/40">
+      <nav className="flex items-center justify-between max-w-7xl mx-auto">
+        {/* Logo */}
         <a href="/" className="hover:opacity-80 transition-opacity">
           <HasteLogo />
         </a>
+
+        {/* Desktop Navigation */}
+        <div className="hidden md:flex items-center gap-8">
+          {navLinks.map(link => (
+            <a
+              key={link.id}
+              href={`#${link.id}`}
+              onClick={(e) => {
+                e.preventDefault();
+                scrollToSection(link.id);
+              }}
+              className="text-foreground/80 hover:text-foreground text-sm uppercase tracking-wider transition-colors"
+            >
+              {link.label}
+            </a>
+          ))}
+
+          <Button onClick={scrollToPricing} variant="hero" size="lg">
+            Start Trial
+          </Button>
+
+          <a
+            href="/signin"
+            className="text-foreground/80 hover:text-foreground text-sm uppercase tracking-wider transition-colors"
+          >
+            Sign In
+          </a>
+        </div>
+
+        {/* Mobile Menu */}
+        <Sheet open={mobileMenuOpen} onOpenChange={setMobileMenuOpen}>
+          <SheetTrigger asChild className="md:hidden">
+            <Button variant="ghost" size="icon">
+              <Menu className="h-6 w-6" />
+            </Button>
+          </SheetTrigger>
+          <SheetContent side="right" className="w-[300px]">
+            <div className="flex flex-col gap-6 mt-8">
+              {navLinks.map(link => (
+                <a
+                  key={link.id}
+                  href={`#${link.id}`}
+                  onClick={(e) => {
+                    e.preventDefault();
+                    scrollToSection(link.id);
+                  }}
+                  className="text-foreground text-lg uppercase tracking-wider"
+                >
+                  {link.label}
+                </a>
+              ))}
+              <Button onClick={scrollToPricing} variant="hero" size="lg" className="w-full">
+                Start Trial
+              </Button>
+              <a
+                href="/signin"
+                className="text-foreground/80 text-center text-lg uppercase tracking-wider"
+              >
+                Sign In
+              </a>
+            </div>
+          </SheetContent>
+        </Sheet>
       </nav>
     </header>
   );
