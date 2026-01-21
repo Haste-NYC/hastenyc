@@ -19,3 +19,21 @@ Starting fixes at Wed Jan 21 10:41:05 CST 2026
 - src/components/PricingPlans.tsx
 
 ---
+
+### Iteration: FIX-002 - Schedule a Call opens Google Meet
+**Date**: Wed Jan 21 2026
+**Status**: Complete
+
+**What was implemented**:
+- Changed Enterprise tier "Schedule a Call" button to open Google Calendar scheduling link
+- In handleSelectPlan function, changed window.open URL from "mailto:sales@haste.nyc?subject=Enterprise%20Inquiry" to "https://calendar.app.google/BBFibVC74CU2MQY37"
+- Link opens in new tab (_blank) as before
+
+**Learnings/Patterns discovered**:
+- The handleSelectPlan function at line 97-113 handles both Enterprise (schedule call) and non-Enterprise (Stripe checkout) flows
+- The onScheduleCall callback prop takes precedence if provided, otherwise falls back to direct window.open
+
+**Files changed**:
+- src/components/PricingPlans.tsx
+
+---

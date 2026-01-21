@@ -31,7 +31,8 @@
         "Lint passes"
       ],
       "priority": 2,
-      "passes": false
+      "passes": true,
+      "notes": "Changed window.open URL from mailto:sales@haste.nyc to Google Calendar link"
     },
     {
       "id": "FIX-003",
