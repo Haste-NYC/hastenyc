@@ -1,8 +1,6 @@
 import Header from "@/components/Header";
 import HeroSection from "@/components/HeroSection";
-import VideoSection from "@/components/VideoSection";
 import FeatureSection from "@/components/FeatureSection";
-import CTASection from "@/components/CTASection";
 import Footer from "@/components/Footer";
 import SEO from "@/components/SEO";
 
@@ -25,10 +23,36 @@ const Index = () => {
       />
       <Header />
       <main>
-        <HeroSection />
-        <VideoSection />
-        <FeatureSection />
-        <CTASection />
+        {/* Hero - full height minus header */}
+        <section id="hero" className="pt-20">
+          <HeroSection />
+        </section>
+
+        {/* Features - full height sections */}
+        <section id="features" className="min-h-screen py-24">
+          <FeatureSection />
+        </section>
+
+        {/* About - placeholder for Plan 03 */}
+        <section id="about" className="py-24">
+          <div className="min-h-[400px] flex items-center justify-center">
+            <p className="text-foreground/60">About Section (Plan 03)</p>
+          </div>
+        </section>
+
+        {/* FAQ - placeholder for Plan 03 */}
+        <section id="faq" className="py-24">
+          <div className="min-h-[400px] flex items-center justify-center">
+            <p className="text-foreground/60">FAQ Section (Plan 03)</p>
+          </div>
+        </section>
+
+        {/* Pricing - placeholder for Plan 03 */}
+        <section id="pricing" className="py-24">
+          <div className="min-h-[400px] flex items-center justify-center">
+            <p className="text-foreground/60">Pricing Section (Plan 03)</p>
+          </div>
+        </section>
       </main>
       <Footer />
     </div>
