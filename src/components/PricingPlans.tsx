@@ -151,7 +151,7 @@ const PricingPlans = ({ onSelectPlan, selectedPriceId, onScheduleCall }: Pricing
             className="h-full"
           >
             <Card
-              className={`bg-gray-900 border-2 transition-all duration-200 relative h-full hover:shadow-lg hover:shadow-purple-500/10 ${
+              className={`bg-gray-900 border-2 transition-all duration-200 relative h-full flex flex-col hover:shadow-lg hover:shadow-purple-500/10 ${
                 isSelected(tier)
                   ? "border-pink-500 shadow-lg shadow-pink-500/20"
                   : tier.popular
@@ -207,7 +207,7 @@ const PricingPlans = ({ onSelectPlan, selectedPriceId, onScheduleCall }: Pricing
               )}
             </CardHeader>
 
-            <CardContent className="space-y-4">
+            <CardContent className="space-y-4 flex-grow">
               <ul className="space-y-2">
                 {tier.features.map((feature, index) => (
                   <li key={index} className="flex items-center gap-3">
@@ -220,7 +220,7 @@ const PricingPlans = ({ onSelectPlan, selectedPriceId, onScheduleCall }: Pricing
               </ul>
             </CardContent>
 
-            <CardFooter>
+            <CardFooter className="mt-auto">
               <Button
                 onClick={() => handleSelectPlan(tier)}
                 className={`w-full font-semibold py-5 ${
