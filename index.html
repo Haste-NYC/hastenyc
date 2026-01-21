@@ -19,10 +19,25 @@
     <!-- Google Search Console Verification (replace with your code) -->
     <!-- <meta name="google-site-verification" content="YOUR_VERIFICATION_CODE" /> -->
 
-    <!-- Google Fonts -->
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Space+Grotesk:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <!-- Self-hosted fonts with preload -->
+    <link rel="preload" href="/fonts/inter-var.woff2" as="font" type="font/woff2" crossorigin>
+    <link rel="preload" href="/fonts/space-grotesk-var.woff2" as="font" type="font/woff2" crossorigin>
+    <style>
+      @font-face {
+        font-family: 'Inter';
+        src: url('/fonts/inter-var.woff2') format('woff2');
+        font-weight: 100 900;
+        font-display: swap;
+        font-style: normal;
+      }
+      @font-face {
+        font-family: 'Space Grotesk';
+        src: url('/fonts/space-grotesk-var.woff2') format('woff2');
+        font-weight: 300 700;
+        font-display: swap;
+        font-style: normal;
+      }
+    </style>
 
     <!-- Primary Meta Tags -->
     <title>Haste Conform Studio - Premiere to Resolve</title>
