@@ -82,6 +82,10 @@ const HeroSection = () => {
             src={conformLogo}
             alt="Haste Conform Studio"
             className="w-full max-w-4xl mx-auto h-auto"
+            width={1952}
+            height={352}
+            fetchPriority="high"
+            decoding="async"
           />
         </motion.div>
 
