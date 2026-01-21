@@ -13,7 +13,7 @@ Transform the current placeholder site into a premium one-page scrolling experie
 Decimal phases appear between their surrounding integers in numeric order.
 
 - [x] **Phase 1: Static Foundation** - All sections with content, layout, responsive design (no animations)
-- [ ] **Phase 2: Scroll & Animation** - Scroll infrastructure, view-triggered animations, scroll-linked effects
+- [x] **Phase 2: Scroll & Animation** - Scroll infrastructure, view-triggered animations, scroll-linked effects
 - [ ] **Phase 3: Performance & Polish** - Optimization, Core Web Vitals, accessibility validation
 
 ## Phase Details
@@ -53,8 +53,8 @@ Plans:
 **Plans**: 2 plans
 
 Plans:
-- [ ] 02-01-PLAN.md — Scroll Infrastructure (Lenis + MotionConfig)
-- [ ] 02-02-PLAN.md — Animations & Polish (active nav, parallax, hover states)
+- [x] 02-01-PLAN.md — Scroll Infrastructure (Lenis + MotionConfig)
+- [x] 02-02-PLAN.md — Animations & Polish (active nav, parallax, hover states)
 
 ### Phase 3: Performance & Polish
 **Goal**: 60fps scroll performance, Core Web Vitals compliance, and production-ready optimization
@@ -78,5 +78,5 @@ Phases execute in numeric order: 1 → 2 → 3
 | Phase | Plans Complete | Status | Completed |
 |-------|----------------|--------|-----------|
 | 1. Static Foundation | 3/3 | Complete | 2026-01-20 |
-| 2. Scroll & Animation | 0/2 | Not started | - |
+| 2. Scroll & Animation | 2/2 | Complete | 2026-01-21 |
 | 3. Performance & Polish | 0/1 | Not started | - |
