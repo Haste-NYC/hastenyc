@@ -47,6 +47,7 @@ const App = () => (
           <Route path="/blog/entertainment-shakeup" element={<EntertainmentShakeupPost />} />
           <Route path="/blog/global-storage-post" element={<VfxStoragePost />} />
           <Route path="/blog/final-cut-pro" element={<FinalCutProPost />} />
+          <Route path="/style-guide" element={<StyleGuide />} />
           {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
           <Route path="*" element={<NotFound />} />
         </Routes>
