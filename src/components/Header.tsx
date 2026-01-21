@@ -3,6 +3,7 @@ import { Button } from "@/components/ui/button";
 import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet";
 import { Menu } from "lucide-react";
 import { useLenis } from "lenis/react";
+import { useActiveSection } from "@/hooks/useActiveSection";
 
 const HasteLogo = () => (
   <svg
@@ -33,6 +34,7 @@ const navLinks = [
 const Header = () => {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const lenis = useLenis();
+  const activeSection = useActiveSection();
 
   const scrollToSection = (id: string) => {
     lenis?.scrollTo(`#${id}`, {
@@ -64,7 +66,11 @@ const Header = () => {
                 e.preventDefault();
                 scrollToSection(link.id);
               }}
-              className="text-foreground/80 hover:text-foreground text-sm uppercase tracking-wider transition-colors"
+              className={`relative text-sm uppercase tracking-wider transition-colors after:absolute after:bottom-0 after:left-0 after:w-full after:h-0.5 after:bg-gradient-to-r after:from-pink-500 after:to-purple-500 after:scale-x-0 after:transition-transform after:duration-300 ${
+                activeSection === link.id
+                  ? "text-foreground font-medium after:scale-x-100"
+                  : "text-foreground/60 hover:text-foreground"
+              }`}
             >
               {link.label}
             </a>
@@ -99,7 +105,11 @@ const Header = () => {
                     e.preventDefault();
                     scrollToSection(link.id);
                   }}
-                  className="text-foreground text-lg uppercase tracking-wider"
+                  className={`text-lg uppercase tracking-wider transition-colors ${
+                    activeSection === link.id
+                      ? "text-foreground font-medium"
+                      : "text-foreground/60"
+                  }`}
                 >
                   {link.label}
                 </a>
