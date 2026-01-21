@@ -14,6 +14,15 @@ import FigmaSchemaPost from "./pages/FigmaSchemaPost";
 import EntertainmentShakeupPost from "./pages/EntertainmentShakeupPost";
 import VfxStoragePost from "./pages/VfxStoragePost";
 import FinalCutProPost from "./pages/FinalCutProPost";
+
+// Auth pages
+import SignIn from "./pages/SignIn";
+import SignUp from "./pages/SignUp";
+import Checkout from "./pages/Checkout";
+import CheckoutSuccess from "./pages/CheckoutSuccess";
+import Account from "./pages/Account";
+import { ProtectedRoute } from "./components/ProtectedRoute";
+
 import NotFound from "./pages/NotFound";
 
 const queryClient = new QueryClient();
@@ -46,6 +55,14 @@ const App = () => (
           <Route path="/blog/entertainment-shakeup" element={<EntertainmentShakeupPost />} />
           <Route path="/blog/global-storage-post" element={<VfxStoragePost />} />
           <Route path="/blog/final-cut-pro" element={<FinalCutProPost />} />
+
+          {/* Auth pages */}
+          <Route path="/signin" element={<SignIn />} />
+          <Route path="/signup" element={<SignUp />} />
+          <Route path="/checkout" element={<ProtectedRoute><Checkout /></ProtectedRoute>} />
+          <Route path="/checkout/success" element={<CheckoutSuccess />} />
+          <Route path="/account" element={<ProtectedRoute><Account /></ProtectedRoute>} />
+
           {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
           <Route path="*" element={<NotFound />} />
         </Routes>

@@ -1,8 +1,17 @@
 import { Button } from "@/components/ui/button";
-import { Link } from "react-router-dom";
-import { ChevronRight, Zap, Shield, Gauge } from "lucide-react";
+import { Link, useNavigate } from "react-router-dom";
+import { ChevronRight, Zap, Shield, Gauge, LogOut } from "lucide-react";
+import { useAuth } from "@/contexts/AuthContext";
 
 const ProductHome = () => {
+  const { user, isAuthenticated, signOut } = useAuth();
+  const navigate = useNavigate();
+
+  const handleSignOut = () => {
+    signOut();
+    navigate("/");
+  };
+
   return (
     <div className="min-h-screen bg-black text-white">
       {/* Navigation */}
@@ -19,15 +28,43 @@ const ProductHome = () => {
               <Link to="/blog" className="text-gray-300 hover:text-white transition-colors">
                 Blog
               </Link>
-              <Button
-                asChild
-                size="sm"
-                className="bg-gradient-to-r from-pink-500 to-purple-500 hover:from-pink-600 hover:to-purple-600"
-              >
-                <a href="https://calendly.com/conform-studio" target="_blank" rel="noopener noreferrer">
-                  Schedule Demo
-                </a>
-              </Button>
+              {isAuthenticated ? (
+                <>
+                  {user?.subscriptionStatus !== "active" && (
+                    <Button
+                      asChild
+                      size="sm"
+                      variant="outline"
+                      className="border-pink-500 text-pink-500 hover:bg-pink-500/10"
+                    >
+                      <Link to="/checkout">Subscribe</Link>
+                    </Button>
+                  )}
+                  <span className="text-gray-300 text-sm">{user?.email}</span>
+                  <Button
+                    size="sm"
+                    variant="ghost"
+                    onClick={handleSignOut}
+                    className="text-gray-300 hover:text-white hover:bg-gray-800"
+                  >
+                    <LogOut className="h-4 w-4 mr-2" />
+                    Sign Out
+                  </Button>
+                </>
+              ) : (
+                <>
+                  <Link to="/signin" className="text-gray-300 hover:text-white transition-colors">
+                    Sign In
+                  </Link>
+                  <Button
+                    asChild
+                    size="sm"
+                    className="bg-gradient-to-r from-pink-500 to-purple-500 hover:from-pink-600 hover:to-purple-600"
+                  >
+                    <Link to="/signup">Sign Up</Link>
+                  </Button>
+                </>
+              )}
             </div>
           </div>
         </div>
