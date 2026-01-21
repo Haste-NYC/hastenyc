@@ -99,7 +99,7 @@ const PricingPlans = ({ onSelectPlan, selectedPriceId, onScheduleCall }: Pricing
       if (onScheduleCall) {
         onScheduleCall();
       } else {
-        window.open("mailto:sales@haste.nyc?subject=Enterprise%20Inquiry", "_blank");
+        window.open("https://calendar.app.google/BBFibVC74CU2MQY37", "_blank");
       }
       return;
     }
