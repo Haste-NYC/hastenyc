@@ -27,3 +27,6 @@ dist-ssr
 
 # Ralph autonomous agent loop
 .ralph/
+
+# GSD planning intel (local, regenerated)
+.planning/intel/
