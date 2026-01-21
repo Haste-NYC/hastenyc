@@ -92,7 +92,7 @@ const tiers: PricingTier[] = [
 ];
 
 const PricingPlans = ({ onSelectPlan, selectedPriceId, onScheduleCall }: PricingPlansProps) => {
-  const [isYearly, setIsYearly] = useState(false);
+  const [isYearly, setIsYearly] = useState(true);
 
   const handleSelectPlan = (tier: PricingTier) => {
     if (tier.isEnterprise) {
