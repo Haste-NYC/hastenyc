@@ -11,15 +11,22 @@ import PricingPlans from "@/components/PricingPlans";
 interface SelectedPlan {
   priceId: string;
   planType: "monthly" | "yearly";
+  tierName: string;
 }
+
+// Pricing configuration
+const tierPricing: Record<string, { monthly: number; yearly: number }> = {
+  Freelancer: { monthly: 49, yearly: 490 },
+  Studio: { monthly: 129, yearly: 1290 },
+};
 
 const Checkout = () => {
   const { isAuthenticated, user } = useAuth();
   const [selectedPlan, setSelectedPlan] = useState<SelectedPlan | null>(null);
   const { isLoading, startCheckout } = useCheckout();
 
-  const handleSelectPlan = (priceId: string, planType: "monthly" | "yearly") => {
-    setSelectedPlan({ priceId, planType });
+  const handleSelectPlan = (priceId: string, planType: "monthly" | "yearly", tierName: string) => {
+    setSelectedPlan({ priceId, planType, tierName });
   };
 
   const handleContinueToPayment = async () => {
@@ -73,12 +80,32 @@ const Checkout = () => {
     );
   }
 
-  const monthlyPrice = 49;
-  const yearlyPrice = 490;
+  const getPrice = () => {
+    if (!selectedPlan) return 0;
+    const pricing = tierPricing[selectedPlan.tierName];
+    if (!pricing) return 0;
+    return selectedPlan.planType === "yearly" ? pricing.yearly : pricing.monthly;
+  };
+
+  const getMonthlyEquivalent = () => {
+    if (!selectedPlan) return 0;
+    const pricing = tierPricing[selectedPlan.tierName];
+    if (!pricing) return 0;
+    return selectedPlan.planType === "yearly"
+      ? Math.round(pricing.yearly / 12)
+      : pricing.monthly;
+  };
+
+  const getYearlySavings = () => {
+    if (!selectedPlan || selectedPlan.planType !== "yearly") return 0;
+    const pricing = tierPricing[selectedPlan.tierName];
+    if (!pricing) return 0;
+    return pricing.monthly * 12 - pricing.yearly;
+  };
 
   return (
     <div className="min-h-screen bg-black text-white py-12 px-4">
-      <div className="max-w-4xl mx-auto space-y-8">
+      <div className="max-w-6xl mx-auto space-y-8">
         {/* Header */}
         <div className="text-center">
           <Link to="/" className="inline-block mb-8">
@@ -90,60 +117,44 @@ const Checkout = () => {
           </p>
         </div>
 
-        <div className="grid lg:grid-cols-3 gap-8">
-          {/* Plan Selection - 2 columns on large screens */}
-          <div className="lg:col-span-2">
-            <PricingPlans
-              onSelectPlan={handleSelectPlan}
-              selectedPriceId={selectedPlan?.priceId}
-            />
-          </div>
+        {/* Pricing Plans - Full Width */}
+        <PricingPlans
+          onSelectPlan={handleSelectPlan}
+          selectedPriceId={selectedPlan?.priceId}
+        />
 
-          {/* Order Summary */}
-          <div className="lg:col-span-1">
-            <Card className="bg-gray-900 border-gray-700 sticky top-8">
+        {/* Order Summary - Centered below plans */}
+        {selectedPlan && (
+          <div className="max-w-md mx-auto">
+            <Card className="bg-gray-900 border-gray-700">
               <CardHeader>
                 <CardTitle className="text-white">Order Summary</CardTitle>
               </CardHeader>
               <CardContent className="space-y-4">
-                {selectedPlan ? (
-                  <>
-                    <div className="flex justify-between text-gray-300">
-                      <span>{selectedPlan.planType === "yearly" ? "Yearly Plan" : "Monthly Plan"}</span>
-                      <span>
-                        ${selectedPlan.planType === "yearly" ? yearlyPrice : monthlyPrice}
-                      </span>
-                    </div>
-                    <Separator className="bg-gray-700" />
-                    <div className="flex justify-between text-white font-semibold">
-                      <span>Total</span>
-                      <span>
-                        ${selectedPlan.planType === "yearly" ? yearlyPrice : monthlyPrice}
-                        <span className="text-gray-400 font-normal">
-                          /{selectedPlan.planType === "yearly" ? "year" : "month"}
-                        </span>
-                      </span>
-                    </div>
-                    {selectedPlan.planType === "yearly" && (
-                      <p className="text-sm text-green-400">
-                        You save ${monthlyPrice * 12 - yearlyPrice}/year with the yearly plan!
-                      </p>
-                    )}
-                  </>
-                ) : (
-                  <p className="text-gray-400 text-center py-4">
-                    Select a plan to see pricing details
+                <div className="flex justify-between text-gray-300">
+                  <span>{selectedPlan.tierName} - {selectedPlan.planType === "yearly" ? "Yearly" : "Monthly"}</span>
+                  <span>${getPrice()}</span>
+                </div>
+                <Separator className="bg-gray-700" />
+                <div className="flex justify-between text-white font-semibold">
+                  <span>Total</span>
+                  <span>
+                    ${getPrice()}
+                    <span className="text-gray-400 font-normal">
+                      /{selectedPlan.planType === "yearly" ? "year" : "month"}
+                    </span>
+                  </span>
+                </div>
+                {selectedPlan.planType === "yearly" && (
+                  <p className="text-sm text-green-400">
+                    You save ${getYearlySavings()}/year with the yearly plan!
                   </p>
                 )}
 
                 <Button
                   onClick={handleContinueToPayment}
-                  disabled={!selectedPlan || isLoading}
-                  className={`w-full font-semibold py-6 mt-4 ${
-                    selectedPlan && !isLoading
-                      ? "bg-gradient-to-r from-pink-500 to-purple-500 hover:from-pink-600 hover:to-purple-600 text-white"
-                      : "bg-gray-800 text-gray-500 cursor-not-allowed"
-                  }`}
+                  disabled={isLoading}
+                  className="w-full font-semibold py-6 mt-4 bg-gradient-to-r from-pink-500 to-purple-500 hover:from-pink-600 hover:to-purple-600 text-white"
                 >
                   {isLoading ? (
                     <>
@@ -164,7 +175,7 @@ const Checkout = () => {
               </CardContent>
             </Card>
           </div>
-        </div>
+        )}
 
         {/* User info */}
         <div className="text-center text-gray-500 text-sm">
