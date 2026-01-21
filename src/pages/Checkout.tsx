@@ -16,8 +16,8 @@ interface SelectedPlan {
 
 // Pricing configuration
 const tierPricing: Record<string, { monthly: number; yearly: number }> = {
-  Freelancer: { monthly: 49, yearly: 490 },
-  Studio: { monthly: 129, yearly: 1290 },
+  Freelancer: { monthly: 49, yearly: 468 },
+  Studio: { monthly: 129, yearly: 1188 },
 };
 
 const Checkout = () => {

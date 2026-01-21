@@ -31,7 +31,7 @@ const tiers: PricingTier[] = [
     name: "Freelancer",
     description: "Perfect for independent creators",
     monthlyPrice: 49,
-    yearlyPrice: 490,
+    yearlyPrice: 468,
     seats: "1 seat / device license",
     icon: <Users className="w-5 h-5" />,
     features: [
@@ -49,7 +49,7 @@ const tiers: PricingTier[] = [
     name: "Studio",
     description: "For small teams and studios",
     monthlyPrice: 129,
-    yearlyPrice: 1290,
+    yearlyPrice: 1188,
     seats: "3 seats / device licenses",
     icon: <Building2 className="w-5 h-5" />,
     features: [
@@ -117,7 +117,7 @@ const PricingPlans = ({ onSelectPlan, selectedPriceId, onScheduleCall }: Pricing
     return selectedPriceId === priceId;
   };
 
-  const yearlySavings = Math.round(((49 * 12 - 490) / (49 * 12)) * 100);
+  const yearlySavings = Math.round(((49 * 12 - 468) / (49 * 12)) * 100);
 
   return (
     <div className="w-full space-y-8">
