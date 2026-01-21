@@ -175,14 +175,14 @@ const PricingPlans = ({ onSelectPlan, selectedPriceId, onScheduleCall }: Pricing
                 {tier.monthlyPrice !== null ? (
                   <>
                     <span className="text-4xl font-bold text-white">
-                      ${isYearly ? tier.yearlyPrice : tier.monthlyPrice}
+                      ${isYearly && tier.yearlyPrice ? Math.round(tier.yearlyPrice / 12) : tier.monthlyPrice}
                     </span>
                     <span className="text-gray-400 ml-2">
-                      /{isYearly ? "year" : "month"}
+                      /month
                     </span>
-                    {isYearly && tier.yearlyPrice && tier.monthlyPrice && (
+                    {isYearly && tier.yearlyPrice && (
                       <p className="text-sm text-gray-400 mt-1">
-                        ${Math.round(tier.yearlyPrice / 12)}/month when billed yearly
+                        ${tier.yearlyPrice} billed yearly
                       </p>
                     )}
                   </>
