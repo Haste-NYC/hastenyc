@@ -24,6 +24,28 @@ npm run lint
 npm run preview
 ```
 
+## Testing and Development
+
+**IMPORTANT**: Use the `/web-dev` skill for all debugging, development, and testing tasks that require visual verification.
+
+The `/web-dev` skill will:
+- Launch the Vite dev server on an available port
+- Open Chrome with Claude for Chrome extension attached
+- Enable visual testing, screenshot capture, and browser automation
+
+```bash
+# In Claude Code, run:
+/web-dev
+```
+
+This provides access to:
+- Live screenshots of the running app
+- Click, type, scroll interactions
+- Console log monitoring
+- Network request inspection
+- Element finding by description
+
+
 ## Project Architecture
 
 This is a React-based web application for Haste Conform Studio, built with TypeScript and modern web technologies.
@@ -122,5 +144,6 @@ Order stories by dependency (earlier stories cannot depend on later ones):
 
 ### Skills
 
+- `/web-dev` - Launch dev server with Chrome for visual testing/debugging
 - `/prd` - Generate a PRD from a feature description (asks clarifying questions)
 - `/ralph` - Convert PRD markdown to prd.json format
