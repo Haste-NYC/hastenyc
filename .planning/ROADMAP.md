@@ -65,10 +65,11 @@ Plans:
   2. User experiences fast page load (LCP < 2.5s) validated via Lighthouse
   3. User on mobile device experiences acceptable performance (tested on iPhone SE and mid-range Android)
   4. Site passes Core Web Vitals thresholds (LCP < 2.5s, INP < 200ms, CLS < 0.1)
-**Plans**: TBD
+**Plans**: 2 plans
 
 Plans:
-- [ ] 03-01: TBD during planning
+- [ ] 03-01-PLAN.md — Build Optimization (image compression + bundle splitting)
+- [ ] 03-02-PLAN.md — Font & LCP Optimization (self-host fonts + Web Vitals monitoring)
 
 ## Progress
 
@@ -79,4 +80,4 @@ Phases execute in numeric order: 1 → 2 → 3
 |-------|----------------|--------|-----------|
 | 1. Static Foundation | 3/3 | Complete | 2026-01-20 |
 | 2. Scroll & Animation | 2/2 | Complete | 2026-01-21 |
-| 3. Performance & Polish | 0/1 | Not started | - |
+| 3. Performance & Polish | 0/2 | Not started | - |
