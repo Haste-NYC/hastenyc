@@ -1,6 +1,9 @@
 import Header from "@/components/Header";
 import HeroSection from "@/components/HeroSection";
 import FeatureSection from "@/components/FeatureSection";
+import AboutSection from "@/components/AboutSection";
+import FAQSection from "@/components/FAQSection";
+import PricingSection from "@/components/PricingSection";
 import Footer from "@/components/Footer";
 import SEO from "@/components/SEO";
 
@@ -33,25 +36,19 @@ const Index = () => {
           <FeatureSection />
         </section>
 
-        {/* About - placeholder for Plan 03 */}
+        {/* About */}
         <section id="about" className="py-24">
-          <div className="min-h-[400px] flex items-center justify-center">
-            <p className="text-foreground/60">About Section (Plan 03)</p>
-          </div>
+          <AboutSection />
         </section>
 
-        {/* FAQ - placeholder for Plan 03 */}
+        {/* FAQ */}
         <section id="faq" className="py-24">
-          <div className="min-h-[400px] flex items-center justify-center">
-            <p className="text-foreground/60">FAQ Section (Plan 03)</p>
-          </div>
+          <FAQSection />
         </section>
 
-        {/* Pricing - placeholder for Plan 03 */}
+        {/* Pricing */}
         <section id="pricing" className="py-24">
-          <div className="min-h-[400px] flex items-center justify-center">
-            <p className="text-foreground/60">Pricing Section (Plan 03)</p>
-          </div>
+          <PricingSection />
         </section>
       </main>
       <Footer />
