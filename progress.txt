@@ -37,3 +37,24 @@ Starting fixes at Wed Jan 21 10:41:05 CST 2026
 - src/components/PricingPlans.tsx
 
 ---
+
+### Iteration: FIX-003 - Select Plan triggers Stripe checkout
+**Date**: Wed Jan 21 2026
+**Status**: Complete
+
+**What was implemented**:
+- Imported useCheckout hook from @/hooks/useCheckout in PricingSection.tsx
+- Destructured { isLoading, startCheckout } from useCheckout()
+- Created handleSelectPlan function that calls startCheckout with priceId and customerEmail: 'guest@checkout.com'
+- Passed onSelectPlan={handleSelectPlan} prop to PricingPlans component
+- Added loading overlay that displays "Redirecting to checkout..." when isLoading is true
+
+**Learnings/Patterns discovered**:
+- useCheckout hook handles Stripe checkout session creation via API call to /api/create-checkout-session
+- The hook returns { isLoading, error, startCheckout } with startCheckout accepting { priceId, customerEmail }
+- PricingPlans component already has onSelectPlan prop that receives (priceId, planType, tierName)
+
+**Files changed**:
+- src/components/PricingSection.tsx
+
+---

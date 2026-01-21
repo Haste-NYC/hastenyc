@@ -48,7 +48,8 @@
         "Lint passes"
       ],
       "priority": 3,
-      "passes": false
+      "passes": true,
+      "notes": "Added useCheckout hook integration with loading overlay. handleSelectPlan calls startCheckout with priceId and guest email."
     },
     {
       "id": "FIX-004",

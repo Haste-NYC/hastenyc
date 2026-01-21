@@ -116,40 +116,11 @@ const HeroSection = () => {
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.6, delay: 0.5 }}
-          className="pt-6 flex flex-col items-center gap-4"
+          className="pt-6"
         >
           <Button variant="hero" size="xl" onClick={scrollToPricing}>
             Start Free Trial
           </Button>
-          <a
-            href="#video"
-            onClick={(e) => {
-              e.preventDefault();
-              lenis?.scrollTo("#video", {
-                offset: -80,
-                duration: 1.2,
-              });
-            }}
-            className="text-foreground/70 hover:text-foreground text-xs uppercase tracking-[0.15em] transition-colors"
-          >
-            Watch Demo
-          </a>
-        </motion.div>
-
-        {/* Product Screenshot Placeholder */}
-        <motion.div
-          initial={{ opacity: 0, y: 40 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true, margin: "-50px" }}
-          transition={{ duration: 0.7, delay: 0.6 }}
-          className="pt-12 max-w-[800px] mx-auto"
-        >
-          {/* TODO: Replace with actual product screenshot from /src/assets/ */}
-          <div className="aspect-[16/9] bg-gray-800/50 rounded-xl border border-gray-700/50 flex items-center justify-center shadow-2xl">
-            <span className="text-gray-500 text-sm uppercase tracking-wider">
-              Product Screenshot
-            </span>
-          </div>
         </motion.div>
       </div>
     </section>

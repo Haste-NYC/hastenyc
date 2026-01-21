@@ -1,5 +1,6 @@
 import Header from "@/components/Header";
 import HeroSection from "@/components/HeroSection";
+import VideoSection from "@/components/VideoSection";
 import FeatureSection from "@/components/FeatureSection";
 import AboutSection from "@/components/AboutSection";
 import FAQSection from "@/components/FAQSection";
@@ -30,6 +31,9 @@ const Index = () => {
         <section id="hero" className="pt-20">
           <HeroSection />
         </section>
+
+        {/* Video Demo */}
+        <VideoSection />
 
         {/* Features - full height sections */}
         <section id="features" className="min-h-screen py-24">
