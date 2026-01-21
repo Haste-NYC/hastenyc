@@ -50,11 +50,11 @@ Plans:
   6. User sees pricing card hover states with smooth transitions
   7. User with motion sensitivity sees simplified animations (prefers-reduced-motion support)
   8. User on desktop sees subtle parallax effect in hero section background
-**Plans**: TBD
+**Plans**: 2 plans
 
 Plans:
-- [ ] 02-01: TBD during planning
-- [ ] 02-02: TBD during planning
+- [ ] 02-01-PLAN.md — Scroll Infrastructure (Lenis + MotionConfig)
+- [ ] 02-02-PLAN.md — Animations & Polish (active nav, parallax, hover states)
 
 ### Phase 3: Performance & Polish
 **Goal**: 60fps scroll performance, Core Web Vitals compliance, and production-ready optimization
