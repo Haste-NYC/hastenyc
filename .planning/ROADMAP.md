@@ -14,7 +14,7 @@ Decimal phases appear between their surrounding integers in numeric order.
 
 - [x] **Phase 1: Static Foundation** - All sections with content, layout, responsive design (no animations)
 - [x] **Phase 2: Scroll & Animation** - Scroll infrastructure, view-triggered animations, scroll-linked effects
-- [ ] **Phase 3: Performance & Polish** - Optimization, Core Web Vitals, accessibility validation
+- [x] **Phase 3: Performance & Polish** - Optimization, Core Web Vitals, accessibility validation
 
 ## Phase Details
 
@@ -68,8 +68,8 @@ Plans:
 **Plans**: 2 plans
 
 Plans:
-- [ ] 03-01-PLAN.md — Build Optimization (image compression + bundle splitting)
-- [ ] 03-02-PLAN.md — Font & LCP Optimization (self-host fonts + Web Vitals monitoring)
+- [x] 03-01-PLAN.md — Build Optimization (image compression + bundle splitting)
+- [x] 03-02-PLAN.md — Font & LCP Optimization (self-host fonts + Web Vitals monitoring)
 
 ## Progress
 
@@ -80,4 +80,4 @@ Phases execute in numeric order: 1 → 2 → 3
 |-------|----------------|--------|-----------|
 | 1. Static Foundation | 3/3 | Complete | 2026-01-20 |
 | 2. Scroll & Animation | 2/2 | Complete | 2026-01-21 |
-| 3. Performance & Polish | 0/2 | Not started | - |
+| 3. Performance & Polish | 2/2 | Complete | 2026-01-21 |
