@@ -1,80 +1,135 @@
 import { motion } from "framer-motion";
 
-interface FeatureProps {
+interface FeatureData {
+  statistic: string;
+  statisticSuffix?: string;
   title: string;
-  description: React.ReactNode;
-  index: number;
+  description: string;
+  useGradientStat?: boolean;
 }
 
-const Feature = ({ title, description, index }: FeatureProps) => {
+const features: FeatureData[] = [
+  {
+    statistic: "300X",
+    statisticSuffix: "Faster",
+    title: "Premiere to Resolve, Instantly",
+    description:
+      "What once took days now takes seconds. Migrate timelines from Adobe Premiere to DaVinci Resolve with AI-powered automation that preserves every edit, every effect, every frame.",
+    useGradientStat: true,
+  },
+  {
+    statistic: "100%",
+    statisticSuffix: "Frame Accuracy",
+    title: "100% Accurate, Every Time",
+    description:
+      "Multi-track timelines, complex effects, speed ramps, bezier curves—all preserved perfectly. No manual fixes, no frame offsets, no lost work.",
+    useGradientStat: true,
+  },
+  {
+    statistic: "Unlimited",
+    statisticSuffix: "Projects",
+    title: "Complex Effects, Zero Compromises",
+    description:
+      "Speed ramps, motion keyframes, Essential Graphics, transitions—Haste Conform Studio handles the effects that break other tools. Built for professional film and TV workflows.",
+    useGradientStat: false,
+  },
+  {
+    statistic: "TPN+",
+    statisticSuffix: "Certified",
+    title: "TPN+ Compliant, Studio Ready",
+    description:
+      "Your media never leaves your pipeline. Built for high-security post-production environments trusted by studios and networks. SOC2 compliant, on-premise deployment available.",
+    useGradientStat: false,
+  },
+];
+
+interface FeatureSectionItemProps {
+  feature: FeatureData;
+  index: number;
+  isReversed: boolean;
+}
+
+const FeatureSectionItem = ({
+  feature,
+  index,
+  isReversed,
+}: FeatureSectionItemProps) => {
   return (
-    <motion.div 
-      initial={{ opacity: 0, y: 30 }}
-      whileInView={{ opacity: 1, y: 0 }}
-      viewport={{ once: true, margin: "-50px" }}
-      transition={{ duration: 0.6, delay: index * 0.1 }}
-      className="text-left max-w-4xl py-8 last:pb-0"
-    >
-      <h3 className="font-display text-2xl md:text-4xl font-normal text-foreground mb-4 uppercase tracking-wide">
-        {title}
-      </h3>
-      <p className="text-foreground/80 text-xs md:text-sm leading-relaxed uppercase tracking-[0.04em]">
-        {description}
-      </p>
-    </motion.div>
+    <div className="min-h-screen flex items-center py-24 px-6">
+      <div className="max-w-7xl mx-auto w-full">
+        <div
+          className={`grid grid-cols-1 md:grid-cols-2 gap-12 md:gap-16 items-center ${
+            isReversed ? "md:[&>*:first-child]:order-2" : ""
+          }`}
+        >
+          {/* Text Content */}
+          <motion.div
+            initial={{ opacity: 0, x: isReversed ? 30 : -30 }}
+            whileInView={{ opacity: 1, x: 0 }}
+            viewport={{ once: true, margin: "-100px" }}
+            transition={{ duration: 0.6 }}
+            className="space-y-6"
+          >
+            {/* Statistic */}
+            <div className="space-y-1">
+              <span
+                className={`block text-6xl md:text-8xl font-bold tracking-tight ${
+                  feature.useGradientStat
+                    ? "bg-gradient-to-r from-pink-500 to-purple-500 bg-clip-text text-transparent"
+                    : "text-foreground"
+                }`}
+              >
+                {feature.statistic}
+              </span>
+              {feature.statisticSuffix && (
+                <span className="block text-2xl md:text-3xl font-medium text-foreground/80 uppercase tracking-wider">
+                  {feature.statisticSuffix}
+                </span>
+              )}
+            </div>
+
+            {/* Headline */}
+            <h3 className="font-display text-2xl md:text-4xl font-normal text-foreground uppercase tracking-wide">
+              {feature.title}
+            </h3>
+
+            {/* Description */}
+            <p className="text-foreground/80 text-sm md:text-base leading-relaxed max-w-lg">
+              {feature.description}
+            </p>
+          </motion.div>
+
+          {/* Image Placeholder */}
+          <motion.div
+            initial={{ opacity: 0, x: isReversed ? -30 : 30 }}
+            whileInView={{ opacity: 1, x: 0 }}
+            viewport={{ once: true, margin: "-100px" }}
+            transition={{ duration: 0.6, delay: 0.2 }}
+          >
+            {/* TODO: Replace with actual UI screenshot from /src/assets/ */}
+            <div className="aspect-[16/9] bg-gray-800/50 rounded-xl border border-gray-700/50 flex items-center justify-center">
+              <span className="text-gray-500 text-sm uppercase tracking-wider">
+                UI Screenshot {index + 1}
+              </span>
+            </div>
+          </motion.div>
+        </div>
+      </div>
+    </div>
   );
 };
 
 const FeatureSection = () => {
-  const features: { title: string; description: React.ReactNode }[] = [
-    {
-      title: "Rapid Timeline Conform for Film & TV",
-      description: (
-        <>
-          Haste Conform Studio uses AI to automate the most tedious, time-consuming part of post-production:{" "}
-          <span className="bg-gradient-to-r from-[hsl(200,80%,60%)] via-[hsl(170,70%,50%)] to-[hsl(140,60%,50%)] bg-clip-text text-transparent">migrating projects between editorial, VFX, color, and sound.</span>{" "}
-          It's faster than humanly possible—and dead accurate.
-        </>
-      ),
-    },
-    {
-      title: "300X Faster, 100% Accurate",
-      description: (
-        <>
-          <span className="text-coral">What once took days now takes seconds.</span>{" "}
-          Haste Conform Studio completes complex conform tasks at 300X the speed of human teams, without sacrificing a single frame of accuracy. It's speed you can trust, and time you can use for real creative work.
-        </>
-      ),
-    },
-    {
-      title: "Built for Studios",
-      description: (
-        <>
-          Haste Conform Studio is currently being offered to qualifying post facilities. We're{" "}
-          <a href="https://calendar.app.google/NCawKSixwhy3DA5r9" target="_blank" rel="noopener noreferrer" className="bg-gradient-to-r from-[hsl(200,80%,60%)] via-[hsl(170,70%,50%)] to-[hsl(140,60%,50%)] bg-clip-text text-transparent hover:underline">
-            onboarding Early Customers
-          </a>{" "}
-          who want to help shape the future of automated post workflows—while getting first access to speed, savings, and support.
-        </>
-      ),
-    },
-    {
-      title: "Secure. Scalable. Studio-Ready.",
-      description: (
-        <>
-          Your media never leaves your pipeline. Our platform is privacy-forward, built for TPN-compliant environments, and trusted by industry leaders.
-        </>
-      ),
-    },
-  ];
-
   return (
-    <section className="py-12 px-6">
-      <div className="max-w-4xl mx-auto">
-        {features.map((feature, index) => (
-          <Feature key={index} index={index} {...feature} />
-        ))}
-      </div>
+    <section>
+      {features.map((feature, index) => (
+        <FeatureSectionItem
+          key={index}
+          feature={feature}
+          index={index}
+          isReversed={index % 2 === 1}
+        />
+      ))}
     </section>
   );
 };
