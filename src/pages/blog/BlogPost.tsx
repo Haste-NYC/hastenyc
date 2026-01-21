@@ -1,31 +1,42 @@
 import { Button } from "@/components/ui/button";
 import { Link } from "react-router-dom";
-import conformLogo from "@/assets/conform-logo.png";
+import Header from "@/components/Header";
+import Footer from "@/components/Footer";
+import SEO from "@/components/SEO";
+import Breadcrumbs from "@/components/Breadcrumbs";
+import RelatedArticles from "@/components/RelatedArticles";
 import adobeFireflyDemo from "@/assets/adobe-firefly-demo.webp";
 import adobeMaxConference from "@/assets/adobe-max-conference.jpg";
+import adobeMaxHero from "@/assets/adobe-max-hero.jpg";
 
 const BlogPost = () => {
   return (
     <div className="min-h-screen bg-background">
-      {/* Header */}
-      <header className="border-b border-border">
-        <div className="container mx-auto px-6 py-6">
-          <div className="flex items-center justify-center">
-            <Link to="/" className="transition-opacity hover:opacity-80">
-              <img 
-                src={conformLogo} 
-                alt="Conform Studio - Return to home" 
-                className="h-8 w-auto"
-              />
-            </Link>
-          </div>
-        </div>
-      </header>
+      <SEO
+        title="Adobe MAX 2025 - AI-Powered Creative Tools Revolution"
+        description="Adobe MAX 2025 redefines creativity with AI-powered tools including Project Frame Forward, AI Light Control, and Smart Audio Correction. The future of creative production."
+        canonical="/blog/adobe-max-2025"
+        type="article"
+        image={adobeMaxHero}
+        article={{
+          publishedTime: "2025-11-03",
+          section: "AI / Creative Tools",
+          author: "HASTE.NYC",
+        }}
+      />
+      <Header />
 
       {/* Hero Section */}
       <section className="border-b border-border py-20">
         <div className="container mx-auto px-6">
           <div className="max-w-4xl">
+            <Breadcrumbs
+              items={[
+                { label: "Home", href: "/" },
+                { label: "Blog", href: "/blog" },
+                { label: "Adobe MAX 2025" },
+              ]}
+            />
             <p className="text-sm text-brand-orange uppercase tracking-wider font-bold mb-4">
               NOVEMBER 3RD, 2025
             </p>
@@ -51,15 +62,16 @@ const BlogPost = () => {
             <p className="text-lg leading-relaxed mb-6">
               From next-gen AI assistants to intelligent automation across the Creative Cloud ecosystem, 
               this year's MAX wasn't just an update, it was a declaration of what creativity looks like 
-              in the AI era. And as a studio built on innovation, <span className="font-bold">Conform Studio</span> couldn't 
+              in the AI era. And as a studio built on innovation, <span className="font-bold">Haste Conform Studio</span> couldn't 
               be more excited.
             </p>
           </div>
           <div className="mt-8">
-            <img 
-              src={adobeMaxConference} 
-              alt="Adobe MAX 2025 Conference - Concepting, Creating, Collaborating" 
+            <img
+              src={adobeMaxConference}
+              alt="Adobe MAX 2025 Conference - Concepting, Creating, Collaborating"
               className="w-full h-auto rounded-lg"
+              loading="lazy"
             />
           </div>
         </div>
@@ -80,10 +92,11 @@ const BlogPost = () => {
               explore new, intuitive ways to edit photos, videos, and audio with unprecedented precision 
               and speed.
             </p>
-            <img 
-              src={adobeFireflyDemo} 
-              alt="Adobe Firefly AI-powered creative tools interface" 
+            <img
+              src={adobeFireflyDemo}
+              alt="Adobe Firefly AI-powered creative tools interface"
               className="w-full h-auto rounded-lg"
+              loading="lazy"
             />
           </div>
         </div>
@@ -154,7 +167,7 @@ const BlogPost = () => {
               <span className="bg-gradient-to-r from-brand-orange via-brand-pink to-brand-blue bg-clip-text text-transparent">MCP SERVER</span>
             </h2>
             <p className="text-lg leading-relaxed mb-6">
-              At <span className="font-bold">Conform Studio</span>, we're not just excited observers, we're 
+              At <span className="font-bold">Haste Conform Studio</span>, we're not just excited observers, we're 
               active participants in this creative revolution. As we integrate these powerful new Adobe 
               tools into our workflow, we're also leveraging the Model Context Protocol (MCP) server to 
               streamline our development process.
@@ -184,34 +197,22 @@ const BlogPost = () => {
                 <span className="bg-gradient-to-r from-brand-orange via-brand-pink to-brand-blue bg-clip-text text-transparent">CREATIVE</span>
               </h2>
               <p className="text-lg leading-relaxed">
-                Adobe MAX 2025 has shown us that the boundaries between imagination and execution are 
-                dissolving. With AI-powered tools becoming more intuitive and powerful, and frameworks 
-                like MCP enabling smarter workflows, we're entering an era where creative vision can be 
+                Adobe MAX 2025 has shown us that the boundaries between imagination and execution are
+                dissolving. With AI-powered tools becoming more intuitive and powerful, and frameworks
+                like MCP enabling smarter workflows, we're entering an era where creative vision can be
                 realized faster and more beautifully than ever before.
               </p>
               <p className="text-lg leading-relaxed">
-                At <span className="font-bold">Conform Studio</span>, we're ready for this future and we're building it.
+                At <span className="font-bold">Haste Conform Studio</span>, we're ready for this future and we're building it.
               </p>
             </div>
           </div>
         </div>
       </section>
 
-      {/* Footer */}
-      <footer className="border-t border-border py-12">
-        <div className="container mx-auto px-6">
-          <div className="flex flex-col md:flex-row justify-between items-start md:items-center gap-4">
-            <div>
-              <p className="text-sm text-muted-foreground uppercase tracking-wider">
-                CONFORM STUDIO
-              </p>
-              <p className="text-xs text-muted-foreground mt-1">
-                Building the future of creative technology
-              </p>
-            </div>
-          </div>
-        </div>
-      </footer>
+      <RelatedArticles currentSlug="/blog/adobe-max-2025" />
+
+      <Footer />
     </div>
   );
 };

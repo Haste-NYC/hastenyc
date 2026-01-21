@@ -2,95 +2,69 @@
 @tailwind components;
 @tailwind utilities;
 
-/* Definition of the design system. All colors, gradients, fonts, etc should be defined here. 
-All colors MUST be HSL.
-*/
-
 @layer base {
   :root {
-    --background: 0 0% 3%;
-    --foreground: 0 0% 98%;
+    --background: 220 15% 5%;
+    --foreground: 0 0% 100%;
 
-    --card: 0 0% 6%;
-    --card-foreground: 0 0% 98%;
+    --card: 220 15% 8%;
+    --card-foreground: 0 0% 100%;
 
-    --popover: 0 0% 6%;
-    --popover-foreground: 0 0% 98%;
+    --popover: 220 15% 8%;
+    --popover-foreground: 0 0% 100%;
 
-    --primary: 0 0% 98%;
-    --primary-foreground: 0 0% 3%;
+    /* Pink/mauve for buttons and accents - more saturated */
+    --primary: 340 55% 60%;
+    --primary-foreground: 0 0% 100%;
 
-    --secondary: 0 0% 12%;
-    --secondary-foreground: 0 0% 98%;
+    --secondary: 220 15% 12%;
+    --secondary-foreground: 0 0% 100%;
 
-    --muted: 0 0% 12%;
-    --muted-foreground: 0 0% 60%;
+    --muted: 220 10% 20%;
+    --muted-foreground: 220 10% 55%;
 
-    --accent: 0 0% 12%;
-    --accent-foreground: 0 0% 98%;
+    /* Coral/salmon accent for taglines - more saturated */
+    --accent: 10 70% 70%;
+    --accent-foreground: 0 0% 10%;
 
-    --destructive: 0 84% 60%;
-    --destructive-foreground: 0 0% 98%;
+    --destructive: 0 84.2% 60.2%;
+    --destructive-foreground: 210 40% 98%;
 
-    --border: 0 0% 15%;
-    --input: 0 0% 15%;
-    --ring: 0 0% 98%;
+    --border: 220 15% 15%;
+    --input: 220 15% 15%;
+    --ring: 340 55% 60%;
 
-    --radius: 0rem;
+    --radius: 0.5rem;
+
+    /* Custom tokens - more saturated */
+    --gold: 30 65% 58%;
+    --dusty-rose: 340 55% 60%;
+    --dusty-rose-dark: 340 50% 50%;
+    --coral: 10 70% 70%;
+
+    /* Gradients - yellow to orange to pink */
+    --gradient-button: linear-gradient(90deg, hsl(40, 85%, 55%) 0%, hsl(15, 80%, 60%) 50%, hsl(340, 70%, 55%) 100%);
+    --shadow-glow: 0 0 30px hsl(340 60% 50% / 0.4);
 
     /* Brand colors */
     --brand-orange: 25 100% 55%;
     --brand-pink: 330 100% 65%;
     --brand-blue: 200 100% 55%;
     --brand-green: 145 100% 45%;
-    
-    --sidebar-background: 0 0% 3%;
-    --sidebar-foreground: 0 0% 98%;
-    --sidebar-primary: 0 0% 98%;
-    --sidebar-primary-foreground: 0 0% 3%;
-    --sidebar-accent: 0 0% 12%;
-    --sidebar-accent-foreground: 0 0% 98%;
-    --sidebar-border: 0 0% 15%;
-    --sidebar-ring: 0 0% 98%;
+
+    --sidebar-background: 220 15% 5%;
+    --sidebar-foreground: 0 0% 100%;
+    --sidebar-primary: 0 0% 100%;
+    --sidebar-primary-foreground: 220 15% 5%;
+    --sidebar-accent: 220 15% 12%;
+    --sidebar-accent-foreground: 0 0% 100%;
+    --sidebar-border: 220 15% 15%;
+    --sidebar-ring: 340 55% 60%;
   }
 
   .dark {
-    --background: 0 0% 3%;
-    --foreground: 0 0% 98%;
-
-    --card: 0 0% 6%;
-    --card-foreground: 0 0% 98%;
-
-    --popover: 0 0% 6%;
-    --popover-foreground: 0 0% 98%;
-
-    --primary: 0 0% 98%;
-    --primary-foreground: 0 0% 3%;
-
-    --secondary: 0 0% 12%;
-    --secondary-foreground: 0 0% 98%;
-
-    --muted: 0 0% 12%;
-    --muted-foreground: 0 0% 60%;
-
-    --accent: 0 0% 12%;
-    --accent-foreground: 0 0% 98%;
-
-    --destructive: 0 84% 60%;
-    --destructive-foreground: 0 0% 98%;
-
-    --border: 0 0% 15%;
-    --input: 0 0% 15%;
-    --ring: 0 0% 98%;
-    
-    --sidebar-background: 0 0% 3%;
-    --sidebar-foreground: 0 0% 98%;
-    --sidebar-primary: 0 0% 98%;
-    --sidebar-primary-foreground: 0 0% 3%;
-    --sidebar-accent: 0 0% 12%;
-    --sidebar-accent-foreground: 0 0% 98%;
-    --sidebar-border: 0 0% 15%;
-    --sidebar-ring: 0 0% 98%;
+    --background: 220 15% 5%;
+    --foreground: 0 0% 100%;
   }
 }
 
@@ -99,9 +73,13 @@ All colors MUST be HSL.
     @apply border-border;
   }
 
+  html {
+    scroll-behavior: smooth;
+  }
+
   body {
-    @apply bg-background text-foreground;
-    font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+    @apply bg-background text-foreground antialiased;
+    font-family: 'Inter', sans-serif;
   }
 
   h1, h2, h3, h4, h5, h6 {
@@ -110,10 +88,10 @@ All colors MUST be HSL.
   }
 
   .gradient-text {
-    background: linear-gradient(90deg, 
-      hsl(var(--brand-orange)) 0%, 
-      hsl(var(--brand-pink)) 33%, 
-      hsl(var(--brand-blue)) 66%, 
+    background: linear-gradient(90deg,
+      hsl(var(--brand-orange)) 0%,
+      hsl(var(--brand-pink)) 33%,
+      hsl(var(--brand-blue)) 66%,
       hsl(var(--brand-orange)) 100%
     );
     -webkit-background-clip: text;
@@ -122,9 +100,9 @@ All colors MUST be HSL.
   }
 
   .gradient-orange {
-    background: linear-gradient(135deg, 
-      hsl(25 100% 65%) 0%, 
-      hsl(25 100% 55%) 50%, 
+    background: linear-gradient(135deg,
+      hsl(25 100% 65%) 0%,
+      hsl(25 100% 55%) 50%,
       hsl(35 100% 50%) 100%
     );
     -webkit-background-clip: text;
@@ -133,8 +111,8 @@ All colors MUST be HSL.
   }
 
   .gradient-orange-pink {
-    background: linear-gradient(135deg, 
-      hsl(25 100% 67%) 0%, 
+    background: linear-gradient(135deg,
+      hsl(25 100% 67%) 0%,
       hsl(330 100% 65%) 100%
     );
     -webkit-background-clip: text;
@@ -143,8 +121,8 @@ All colors MUST be HSL.
   }
 
   .gradient-pink-blue {
-    background: linear-gradient(135deg, 
-      hsl(330 100% 65%) 0%, 
+    background: linear-gradient(135deg,
+      hsl(330 100% 65%) 0%,
       hsl(200 100% 55%) 100%
     );
     -webkit-background-clip: text;
@@ -153,12 +131,116 @@ All colors MUST be HSL.
   }
 
   .gradient-blue-green {
-    background: linear-gradient(135deg, 
-      hsl(200 100% 55%) 0%, 
+    background: linear-gradient(135deg,
+      hsl(200 100% 55%) 0%,
       hsl(145 100% 45%) 100%
     );
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
     background-clip: text;
+  }
+
+  .text-gradient-brand {
+    background: linear-gradient(135deg,
+      hsl(var(--brand-orange)) 0%,
+      hsl(var(--brand-pink)) 100%
+    );
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+  }
+
+  .text-gradient-cool {
+    background: linear-gradient(135deg,
+      hsl(var(--brand-blue)) 0%,
+      hsl(var(--brand-green)) 100%
+    );
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+  }
+}
+
+@layer utilities {
+  .font-display {
+    font-family: 'Inter', sans-serif;
+  }
+
+  .text-gold {
+    color: hsl(var(--gold));
+  }
+
+  .text-coral {
+    color: hsl(var(--coral));
+  }
+
+  .glow-rose {
+    box-shadow: var(--shadow-glow);
+  }
+
+  .letter-spacing-wide {
+    letter-spacing: 0.15em;
+  }
+
+  .animate-fade-in {
+    animation: fadeIn 1s ease-out forwards;
+  }
+
+  .animate-fade-in-delay {
+    animation: fadeIn 1s ease-out 0.3s forwards;
+    opacity: 0;
+  }
+
+  .animate-fade-in-delay-2 {
+    animation: fadeIn 1s ease-out 0.6s forwards;
+    opacity: 0;
+  }
+
+  .animate-slide-up {
+    animation: slideUp 0.8s ease-out forwards;
+  }
+
+  .animate-slide-up-delay {
+    animation: slideUp 0.8s ease-out 0.2s forwards;
+    opacity: 0;
+  }
+
+  .animate-pulse-glow {
+    animation: pulseGlow 3s ease-in-out infinite;
+  }
+
+  .gradient-button {
+    background: var(--gradient-button);
+  }
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes slideUp {
+  from {
+    opacity: 0;
+    transform: translateY(40px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes pulseGlow {
+  0%, 100% {
+    box-shadow: 0 0 20px hsl(350 35% 60% / 0.15);
+  }
+  50% {
+    box-shadow: 0 0 40px hsl(350 35% 60% / 0.3);
   }
 }

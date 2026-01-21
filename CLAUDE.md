@@ -45,6 +45,7 @@ This provides access to:
 - Network request inspection
 - Element finding by description
 
+
 ## Project Architecture
 
 This is a React-based web application for Haste Conform Studio, built with TypeScript and modern web technologies.
