@@ -4,6 +4,7 @@ import { TooltipProvider } from "@/components/ui/tooltip";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { BrowserRouter, Routes, Route, useLocation } from "react-router-dom";
 import { useEffect } from "react";
+import SmoothScrollProvider from "@/components/SmoothScrollProvider";
 import Index from "./pages/Index";
 import Terms from "./pages/Terms";
 import Privacy from "./pages/Privacy";
@@ -39,35 +40,37 @@ const ScrollToTop = () => {
 
 const App = () => (
   <QueryClientProvider client={queryClient}>
-    <TooltipProvider>
-      <Toaster />
-      <Sonner />
-      <BrowserRouter>
-        <ScrollToTop />
-        <Routes>
-          <Route path="/" element={<Index />} />
-          <Route path="/terms" element={<Terms />} />
-          <Route path="/privacy" element={<Privacy />} />
-          <Route path="/refund" element={<Refund />} />
-          <Route path="/blog" element={<Blog />} />
-          <Route path="/blog/adobe-max-2025" element={<BlogPost />} />
-          <Route path="/blog/figma-schema-2025" element={<FigmaSchemaPost />} />
-          <Route path="/blog/entertainment-shakeup" element={<EntertainmentShakeupPost />} />
-          <Route path="/blog/global-storage-post" element={<VfxStoragePost />} />
-          <Route path="/blog/final-cut-pro" element={<FinalCutProPost />} />
-          <Route path="/style-guide" element={<StyleGuide />} />
+    <SmoothScrollProvider>
+      <TooltipProvider>
+        <Toaster />
+        <Sonner />
+        <BrowserRouter>
+          <ScrollToTop />
+          <Routes>
+            <Route path="/" element={<Index />} />
+            <Route path="/terms" element={<Terms />} />
+            <Route path="/privacy" element={<Privacy />} />
+            <Route path="/refund" element={<Refund />} />
+            <Route path="/blog" element={<Blog />} />
+            <Route path="/blog/adobe-max-2025" element={<BlogPost />} />
+            <Route path="/blog/figma-schema-2025" element={<FigmaSchemaPost />} />
+            <Route path="/blog/entertainment-shakeup" element={<EntertainmentShakeupPost />} />
+            <Route path="/blog/global-storage-post" element={<VfxStoragePost />} />
+            <Route path="/blog/final-cut-pro" element={<FinalCutProPost />} />
+            <Route path="/style-guide" element={<StyleGuide />} />
 
-          {/* Auth pages */}
-          <Route path="/signin" element={<SignIn />} />
-          <Route path="/signup" element={<SignUp />} />
-          <Route path="/checkout" element={<ProtectedRoute><Checkout /></ProtectedRoute>} />
-          <Route path="/checkout/success" element={<CheckoutSuccess />} />
-          <Route path="/account" element={<ProtectedRoute><Account /></ProtectedRoute>} />
-          {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
-          <Route path="*" element={<NotFound />} />
-        </Routes>
-      </BrowserRouter>
-    </TooltipProvider>
+            {/* Auth pages */}
+            <Route path="/signin" element={<SignIn />} />
+            <Route path="/signup" element={<SignUp />} />
+            <Route path="/checkout" element={<ProtectedRoute><Checkout /></ProtectedRoute>} />
+            <Route path="/checkout/success" element={<CheckoutSuccess />} />
+            <Route path="/account" element={<ProtectedRoute><Account /></ProtectedRoute>} />
+            {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
+            <Route path="*" element={<NotFound />} />
+          </Routes>
+        </BrowserRouter>
+      </TooltipProvider>
+    </SmoothScrollProvider>
   </QueryClientProvider>
 );
 

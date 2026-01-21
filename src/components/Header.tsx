@@ -2,6 +2,7 @@ import { useState } from "react";
 import { Button } from "@/components/ui/button";
 import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet";
 import { Menu } from "lucide-react";
+import { useLenis } from "lenis/react";
 
 const HasteLogo = () => (
   <svg
@@ -31,18 +32,13 @@ const navLinks = [
 
 const Header = () => {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
+  const lenis = useLenis();
 
   const scrollToSection = (id: string) => {
-    const element = document.getElementById(id);
-    if (!element) return;
-
-    const headerOffset = 80;
-    const elementPosition = element.getBoundingClientRect().top;
-    const offsetPosition = elementPosition + window.pageYOffset - headerOffset;
-
-    window.scrollTo({
-      top: offsetPosition,
-      behavior: 'smooth'
+    lenis?.scrollTo(`#${id}`, {
+      offset: -80,
+      duration: 1.2,
+      easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)),
     });
 
     setMobileMenuOpen(false);

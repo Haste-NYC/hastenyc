@@ -1,19 +1,16 @@
 import { Button } from "@/components/ui/button";
 import { motion } from "framer-motion";
+import { useLenis } from "lenis/react";
 import conformLogo from "@/assets/conform-studio-logo.png";
 
 const HeroSection = () => {
+  const lenis = useLenis();
+
   const scrollToPricing = () => {
-    const element = document.getElementById("pricing");
-    if (!element) return;
-
-    const headerOffset = 80;
-    const elementPosition = element.getBoundingClientRect().top;
-    const offsetPosition = elementPosition + window.pageYOffset - headerOffset;
-
-    window.scrollTo({
-      top: offsetPosition,
-      behavior: "smooth",
+    lenis?.scrollTo("#pricing", {
+      offset: -80,
+      duration: 1.2,
+      easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)),
     });
   };
 
@@ -97,14 +94,10 @@ const HeroSection = () => {
             href="#video"
             onClick={(e) => {
               e.preventDefault();
-              const videoEl = document.getElementById("video");
-              if (videoEl) {
-                const headerOffset = 80;
-                const elementPosition = videoEl.getBoundingClientRect().top;
-                const offsetPosition =
-                  elementPosition + window.pageYOffset - headerOffset;
-                window.scrollTo({ top: offsetPosition, behavior: "smooth" });
-              }
+              lenis?.scrollTo("#video", {
+                offset: -80,
+                duration: 1.2,
+              });
             }}
             className="text-foreground/70 hover:text-foreground text-xs uppercase tracking-[0.15em] transition-colors"
           >
