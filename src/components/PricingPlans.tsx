@@ -182,7 +182,7 @@ const PricingPlans = ({ onSelectPlan, selectedPriceId, onScheduleCall }: Pricing
                     </span>
                     {isYearly && tier.yearlyPrice && (
                       <p className="text-sm text-gray-400 mt-1">
-                        ${tier.yearlyPrice} billed yearly
+                        billed yearly
                       </p>
                     )}
                   </>
