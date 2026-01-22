@@ -21,8 +21,24 @@ const HasteLogo = () => (
 
 const Footer = () => {
   return (
-    <footer className="py-24 px-6">
-      <div className="max-w-4xl mx-auto text-center space-y-6">
+    <footer className="relative py-24 px-6 overflow-hidden">
+      {/* Warm gradient background (x.ai inspired) */}
+      <div
+        className="absolute inset-0 pointer-events-none"
+        style={{
+          background: `
+            linear-gradient(
+              to bottom,
+              transparent 0%,
+              rgba(255, 140, 50, 0.02) 20%,
+              rgba(255, 100, 50, 0.05) 50%,
+              rgba(255, 80, 30, 0.08) 80%,
+              rgba(255, 60, 20, 0.1) 100%
+            )
+          `,
+        }}
+      />
+      <div className="max-w-4xl mx-auto text-center space-y-6 relative z-10">
         {/* Haste Logo */}
         <div className="flex justify-center mb-4">
           <HasteLogo />

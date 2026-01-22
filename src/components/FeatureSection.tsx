@@ -135,10 +135,12 @@ const FeatureSectionItem = ({
             </motion.p>
           </motion.div>
 
-          {/* Image Placeholder */}
+          {/* Image Placeholder with glass-morphism */}
           <motion.div variants={imageVariants}>
             {/* TODO: Replace with actual UI screenshot from /src/assets/ */}
-            <div className="aspect-[16/9] bg-gray-800/50 rounded-xl border border-gray-700/50 flex items-center justify-center">
+            <div className="aspect-[16/9] glass-card rounded-xl flex items-center justify-center relative overflow-hidden group">
+              {/* Subtle inner glow */}
+              <div className="absolute inset-0 bg-gradient-to-br from-white/5 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
               <span className="text-gray-500 text-sm uppercase tracking-wider">
                 UI Screenshot {index + 1}
               </span>
@@ -152,7 +154,11 @@ const FeatureSectionItem = ({
 
 const FeatureSection = () => {
   return (
-    <section>
+    <section className="relative">
+      {/* Section label */}
+      <div className="text-center pt-12 pb-8">
+        <span className="section-label">Features</span>
+      </div>
       {features.map((feature, index) => (
         <FeatureSectionItem
           key={index}

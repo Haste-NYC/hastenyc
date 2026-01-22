@@ -10,12 +10,23 @@ const trustSignals = [
 const AboutSection = () => {
   return (
     <div className="max-w-4xl mx-auto py-24 px-6">
+      {/* Section Label */}
+      <motion.div
+        initial={{ opacity: 0 }}
+        whileInView={{ opacity: 1 }}
+        viewport={{ once: true }}
+        transition={{ duration: 0.6 }}
+        className="text-center mb-6"
+      >
+        <span className="section-label">Company</span>
+      </motion.div>
+
       {/* Section Title */}
       <motion.h2
         initial={{ opacity: 0, y: 20 }}
         whileInView={{ opacity: 1, y: 0 }}
         viewport={{ once: true }}
-        transition={{ duration: 0.6 }}
+        transition={{ duration: 0.6, delay: 0.1 }}
         className="text-3xl md:text-5xl font-bold text-center mb-12 uppercase tracking-wide"
       >
         About Haste NYC

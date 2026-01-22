@@ -28,30 +28,36 @@ const Index = () => {
       <Header />
       <main>
         {/* Hero - full height minus header */}
-        <section id="hero" className="pt-20">
+        <section id="hero" className="pt-20 relative">
           <HeroSection />
+          {/* Gradient fade to next section */}
+          <div className="absolute bottom-0 left-0 right-0 h-32 bg-gradient-to-t from-background to-transparent pointer-events-none" />
         </section>
 
         {/* Video Demo */}
         <VideoSection />
 
         {/* Features - full height sections */}
-        <section id="features" className="min-h-screen py-24">
+        <section id="features" className="min-h-screen py-24 relative">
           <FeatureSection />
         </section>
 
         {/* About */}
-        <section id="about" className="py-24">
+        <section id="about" className="py-24 relative">
+          {/* Top gradient */}
+          <div className="absolute top-0 left-0 right-0 h-24 bg-gradient-to-b from-background to-transparent pointer-events-none" />
           <AboutSection />
         </section>
 
         {/* FAQ */}
-        <section id="faq" className="py-24">
+        <section id="faq" className="py-24 relative">
           <FAQSection />
         </section>
 
         {/* Pricing */}
-        <section id="pricing" className="py-24">
+        <section id="pricing" className="py-24 relative">
+          {/* Top gradient */}
+          <div className="absolute top-0 left-0 right-0 h-24 bg-gradient-to-b from-background to-transparent pointer-events-none" />
           <PricingSection />
         </section>
       </main>

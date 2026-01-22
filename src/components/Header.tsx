@@ -82,7 +82,7 @@ const Header = () => {
 
           <a
             href="/signin"
-            className="text-foreground/80 hover:text-foreground text-sm uppercase tracking-wider transition-colors"
+            className="text-foreground/80 hover:text-foreground hover:bg-white/5 text-sm uppercase tracking-wider transition-all px-4 py-2 rounded-full border border-white/20 hover:border-white/40"
           >
             Sign In
           </a>

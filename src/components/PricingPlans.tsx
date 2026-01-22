@@ -151,12 +151,12 @@ const PricingPlans = ({ onSelectPlan, selectedPriceId, onScheduleCall }: Pricing
             className="h-full"
           >
             <Card
-              className={`bg-gray-900 border-2 transition-all duration-200 relative h-full flex flex-col hover:shadow-lg hover:shadow-purple-500/10 ${
+              className={`glass-card border-2 transition-all duration-300 relative h-full flex flex-col hover:shadow-lg hover:shadow-purple-500/10 ${
                 isSelected(tier)
                   ? "border-pink-500 shadow-lg shadow-pink-500/20"
                   : tier.popular
-                  ? "border-purple-500"
-                  : "border-gray-700 hover:border-gray-600"
+                  ? "border-purple-500/60"
+                  : "border-white/10 hover:border-white/20"
               }`}
             >
             {tier.popular && (
@@ -169,7 +169,7 @@ const PricingPlans = ({ onSelectPlan, selectedPriceId, onScheduleCall }: Pricing
 
             <CardHeader className="text-center pb-2 pt-6">
               <div className="flex items-center justify-center gap-2 mb-2">
-                <div className="p-2 rounded-lg bg-gray-800">
+                <div className="p-2.5 rounded-lg bg-white/5 border border-white/10">
                   {tier.icon}
                 </div>
               </div>

@@ -1,8 +1,82 @@
-import { useRef, useState, useEffect } from "react";
+import { useRef, useState, useEffect, useMemo } from "react";
 import { Button } from "@/components/ui/button";
 import { motion, useScroll, useTransform } from "framer-motion";
 import { useLenis } from "lenis/react";
 import conformLogo from "@/assets/conform-studio-logo.png";
+
+// Particle component for constellation effect
+const Particles = () => {
+  const particles = useMemo(() => {
+    return Array.from({ length: 30 }, (_, i) => ({
+      id: i,
+      x: Math.random() * 100,
+      y: Math.random() * 100,
+      size: Math.random() * 3 + 1,
+      delay: Math.random() * 5,
+      duration: Math.random() * 3 + 5,
+    }));
+  }, []);
+
+  return (
+    <div className="absolute inset-0 overflow-hidden pointer-events-none">
+      {particles.map((particle) => (
+        <motion.div
+          key={particle.id}
+          className="absolute rounded-full bg-white/20"
+          style={{
+            left: `${particle.x}%`,
+            top: `${particle.y}%`,
+            width: particle.size,
+            height: particle.size,
+          }}
+          animate={{
+            opacity: [0.1, 0.4, 0.1],
+            scale: [1, 1.3, 1],
+            y: [0, -20, 0],
+          }}
+          transition={{
+            duration: particle.duration,
+            delay: particle.delay,
+            repeat: Infinity,
+            ease: "easeInOut",
+          }}
+        />
+      ))}
+      {/* Connection lines between some particles */}
+      <svg className="absolute inset-0 w-full h-full">
+        <defs>
+          <linearGradient id="lineGradient" x1="0%" y1="0%" x2="100%" y2="0%">
+            <stop offset="0%" stopColor="rgba(255,255,255,0)" />
+            <stop offset="50%" stopColor="rgba(255,255,255,0.1)" />
+            <stop offset="100%" stopColor="rgba(255,255,255,0)" />
+          </linearGradient>
+        </defs>
+        {particles.slice(0, 10).map((p, i) => {
+          const next = particles[(i + 3) % particles.length];
+          return (
+            <motion.line
+              key={`line-${i}`}
+              x1={`${p.x}%`}
+              y1={`${p.y}%`}
+              x2={`${next.x}%`}
+              y2={`${next.y}%`}
+              stroke="url(#lineGradient)"
+              strokeWidth="1"
+              initial={{ pathLength: 0, opacity: 0 }}
+              animate={{ pathLength: 1, opacity: [0, 0.3, 0] }}
+              transition={{
+                duration: 8,
+                delay: i * 0.5,
+                repeat: Infinity,
+                ease: "easeInOut",
+              }}
+            />
+          );
+        })}
+      </svg>
+    </div>
+  );
+};
 
 const HeroSection = () => {
   const lenis = useLenis();
@@ -39,20 +113,44 @@ const HeroSection = () => {
   return (
     <section
       ref={sectionRef}
-      className="relative flex flex-col items-center px-6 pt-8 pb-12 min-h-[calc(100vh-80px)]"
+      className="relative flex flex-col items-center px-6 pt-8 pb-12 min-h-[calc(100vh-80px)] overflow-hidden"
     >
-      {/* Ethereal gradient background - soft purple/blue glow with parallax on desktop */}
+      {/* Particle constellation effect */}
+      <Particles />
+
+      {/* Atmospheric glow - x.ai inspired with blue/white light emanation */}
       <motion.div
         className="absolute pointer-events-none z-0"
         style={{
-          top: "40%",
+          top: "30%",
           left: "50%",
           x: "-50%",
           y: isDesktop ? backgroundY : "-50%",
           width: "200vw",
           height: "200vh",
+          background: `
+            radial-gradient(ellipse 40% 30% at 50% 40%, rgba(255, 255, 255, 0.08) 0%, transparent 50%),
+            radial-gradient(ellipse 60% 50% at 50% 50%, rgba(100, 150, 255, 0.2) 0%, rgba(150, 100, 255, 0.12) 25%, rgba(200, 100, 255, 0.06) 40%, transparent 60%)
+          `,
+        }}
+      />
+
+      {/* Secondary glow for depth */}
+      <motion.div
+        className="absolute pointer-events-none z-0"
+        initial={{ opacity: 0 }}
+        animate={{ opacity: 1 }}
+        transition={{ duration: 2 }}
+        style={{
+          top: "25%",
+          left: "50%",
+          x: "-50%",
+          y: "-50%",
+          width: "100vw",
+          height: "60vh",
           background:
-            "radial-gradient(ellipse 50% 50% at 50% 50%, rgba(200, 100, 255, 0.3) 0%, rgba(150, 100, 255, 0.15) 20%, rgba(100, 150, 255, 0.08) 35%, transparent 55%)",
+            "radial-gradient(ellipse 50% 40% at 50% 50%, rgba(200, 180, 255, 0.1) 0%, transparent 60%)",
+          filter: "blur(60px)",
         }}
       />
 
@@ -67,21 +165,29 @@ const HeroSection = () => {
           Introducing from HASTE.NYC
         </motion.p>
 
-        {/* Main logo */}
+        {/* Main logo with 3D glow effect */}
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.6, delay: 0.1 }}
-          className="py-2"
+          className="py-2 relative img-glow-container"
         >
           <h1 className="sr-only">
             Haste Conform Studio - Instant project migration from Adobe Premiere
             to Davinci Resolve
           </h1>
+          {/* Glow layer behind logo */}
+          <div
+            className="absolute inset-0 z-0"
+            style={{
+              background: "radial-gradient(ellipse 60% 80% at 50% 50%, rgba(255, 255, 255, 0.06) 0%, transparent 50%)",
+              filter: "blur(30px)",
+            }}
+          />
           <img
             src={conformLogo}
             alt="Haste Conform Studio"
-            className="w-full max-w-4xl mx-auto h-auto"
+            className="w-full max-w-4xl mx-auto h-auto relative z-10 drop-shadow-[0_0_30px_rgba(255,255,255,0.15)]"
             width={1952}
             height={352}
             // @ts-expect-error fetchpriority is valid HTML but React doesn't have types yet
@@ -90,12 +196,12 @@ const HeroSection = () => {
           />
         </motion.div>
 
-        {/* Tagline - bold value proposition */}
+        {/* Tagline - bold value proposition with subtle glow */}
         <motion.p
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.6, delay: 0.2 }}
-          className="text-foreground text-xs md:text-sm uppercase tracking-[0.25em] pt-2"
+          className="text-foreground text-xs md:text-sm uppercase tracking-[0.25em] pt-2 text-glow-subtle"
         >
           300X Faster Timeline Conform
         </motion.p>

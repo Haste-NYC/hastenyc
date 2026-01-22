@@ -244,3 +244,200 @@
     box-shadow: 0 0 40px hsl(350 35% 60% / 0.3);
   }
 }
+
+/* x.ai-inspired design utilities */
+
+/* Atmospheric glow behind hero text */
+.hero-glow {
+  position: relative;
+}
+
+.hero-glow::before {
+  content: '';
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 120%;
+  height: 200%;
+  background: radial-gradient(
+    ellipse 60% 40% at 50% 50%,
+    rgba(100, 150, 255, 0.25) 0%,
+    rgba(150, 100, 255, 0.15) 30%,
+    rgba(200, 100, 255, 0.08) 50%,
+    transparent 70%
+  );
+  pointer-events: none;
+  z-index: -1;
+}
+
+/* 3D luminous text effect */
+.text-glow-3d {
+  text-shadow:
+    0 0 20px rgba(255, 255, 255, 0.5),
+    0 0 40px rgba(255, 255, 255, 0.3),
+    0 0 60px rgba(200, 150, 255, 0.2),
+    0 0 80px rgba(150, 100, 255, 0.1);
+}
+
+.text-glow-subtle {
+  text-shadow:
+    0 0 10px rgba(255, 255, 255, 0.3),
+    0 0 20px rgba(255, 255, 255, 0.15);
+}
+
+/* Glass morphism */
+.glass-card {
+  background: rgba(255, 255, 255, 0.03);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+.glass-card-hover:hover {
+  background: rgba(255, 255, 255, 0.05);
+  border-color: rgba(255, 255, 255, 0.12);
+}
+
+/* Ghost/outline button style */
+.btn-ghost-outline {
+  background: transparent;
+  border: 1px solid rgba(255, 255, 255, 0.25);
+  color: rgba(255, 255, 255, 0.9);
+  transition: all 0.2s ease;
+}
+
+.btn-ghost-outline:hover {
+  background: rgba(255, 255, 255, 0.05);
+  border-color: rgba(255, 255, 255, 0.4);
+  color: white;
+}
+
+/* Warm footer gradient (x.ai style) */
+.footer-gradient {
+  background: linear-gradient(
+    to bottom,
+    transparent 0%,
+    rgba(255, 140, 50, 0.03) 30%,
+    rgba(255, 100, 50, 0.08) 60%,
+    rgba(255, 80, 30, 0.12) 100%
+  );
+}
+
+/* Section gradient transitions */
+.section-fade-top {
+  position: relative;
+}
+
+.section-fade-top::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 150px;
+  background: linear-gradient(to bottom, hsl(220 15% 5%), transparent);
+  pointer-events: none;
+  z-index: 1;
+}
+
+.section-fade-bottom {
+  position: relative;
+}
+
+.section-fade-bottom::after {
+  content: '';
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  height: 150px;
+  background: linear-gradient(to top, hsl(220 15% 5%), transparent);
+  pointer-events: none;
+  z-index: 1;
+}
+
+/* Bracketed section labels (x.ai style) */
+.section-label {
+  font-size: 0.75rem;
+  text-transform: uppercase;
+  letter-spacing: 0.2em;
+  color: rgba(255, 255, 255, 0.4);
+  font-family: 'SF Mono', 'Monaco', 'Inconsolata', 'Fira Code', monospace;
+}
+
+.section-label::before {
+  content: '[ ';
+}
+
+.section-label::after {
+  content: ' ]';
+}
+
+/* Particle animation keyframes */
+@keyframes float-particle {
+  0%, 100% {
+    transform: translateY(0) translateX(0);
+    opacity: 0.3;
+  }
+  25% {
+    transform: translateY(-20px) translateX(10px);
+    opacity: 0.6;
+  }
+  50% {
+    transform: translateY(-10px) translateX(-5px);
+    opacity: 0.4;
+  }
+  75% {
+    transform: translateY(-30px) translateX(15px);
+    opacity: 0.5;
+  }
+}
+
+@keyframes pulse-dot {
+  0%, 100% {
+    opacity: 0.2;
+    transform: scale(1);
+  }
+  50% {
+    opacity: 0.6;
+    transform: scale(1.2);
+  }
+}
+
+.animate-float-particle {
+  animation: float-particle 8s ease-in-out infinite;
+}
+
+.animate-pulse-dot {
+  animation: pulse-dot 3s ease-in-out infinite;
+}
+
+/* Constellation line effect */
+.constellation-line {
+  stroke: rgba(255, 255, 255, 0.1);
+  stroke-width: 1;
+}
+
+/* Image glow container */
+.img-glow-container {
+  position: relative;
+}
+
+.img-glow-container::after {
+  content: '';
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 80%;
+  height: 60%;
+  background: radial-gradient(
+    ellipse at center,
+    rgba(100, 150, 255, 0.15) 0%,
+    transparent 70%
+  );
+  pointer-events: none;
+  z-index: -1;
+  filter: blur(40px);
+}
