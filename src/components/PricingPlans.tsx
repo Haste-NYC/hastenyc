@@ -4,7 +4,7 @@ import { Card, CardContent, CardFooter, CardHeader, CardTitle } from "@/componen
 import { Button } from "@/components/ui/button";
 import { Switch } from "@/components/ui/switch";
 import { Badge } from "@/components/ui/badge";
-import { Check, Users, Building2, Calendar, ArrowRight } from "lucide-react";
+import { Check, Users, Building2, Calendar } from "lucide-react";
 import { stripeConfig } from "@/config/stripe";
 
 interface PricingPlansProps {
@@ -130,13 +130,13 @@ const PricingPlans = ({ onSelectPlan, selectedPriceId, onScheduleCall }: Pricing
         <Switch
           checked={isYearly}
           onCheckedChange={setIsYearly}
-          className="data-[state=checked]:bg-gradient-to-r data-[state=checked]:from-pink-500 data-[state=checked]:to-purple-500 data-[state=unchecked]:bg-gray-700"
+          className="data-[state=checked]:bg-white data-[state=unchecked]:bg-gray-700"
         />
         <span className={`text-sm ${isYearly ? "text-white font-medium" : "text-gray-400"}`}>
           Yearly
         </span>
         {isYearly && (
-          <Badge className="bg-gradient-to-r from-pink-500 to-purple-500 text-white border-0">
+          <Badge className="bg-white/10 text-white border border-white/20">
             Save {yearlySavings}%
           </Badge>
         )}
@@ -151,17 +151,17 @@ const PricingPlans = ({ onSelectPlan, selectedPriceId, onScheduleCall }: Pricing
             className="h-full"
           >
             <Card
-              className={`glass-card-glow border-2 transition-all duration-300 relative h-full flex flex-col ${
+              className={`bg-transparent border transition-all duration-300 relative h-full flex flex-col ${
                 isSelected(tier)
-                  ? "border-pink-500 shadow-lg shadow-pink-500/20"
+                  ? "border-white"
                   : tier.popular
-                  ? "border-purple-500/60 hover:border-purple-500/80 hover:shadow-lg hover:shadow-purple-500/15"
-                  : "border-white/10 hover:border-white/20 hover:shadow-lg hover:shadow-purple-500/10"
+                  ? "border-white/40 hover:border-white/60"
+                  : "border-white/10 hover:border-white/20"
               }`}
             >
             {tier.popular && (
               <div className="absolute -top-3 left-1/2 -translate-x-1/2">
-                <Badge className="bg-gradient-to-r from-pink-500 to-purple-500 text-white border-0 px-3">
+                <Badge className="bg-white text-gray-900 border-0 px-3">
                   Most Popular
                 </Badge>
               </div>
@@ -173,8 +173,8 @@ const PricingPlans = ({ onSelectPlan, selectedPriceId, onScheduleCall }: Pricing
                   {tier.icon}
                 </div>
               </div>
-              <CardTitle className="text-white text-xl">{tier.name}</CardTitle>
-              <p className="text-gray-400 text-sm">{tier.description}</p>
+              <CardTitle className="text-white text-xl uppercase tracking-wider">{tier.name}</CardTitle>
+              <p className="text-gray-400 text-xs uppercase tracking-wider">{tier.description}</p>
 
               <div className="mt-4">
                 {tier.monthlyPrice !== null ? (
@@ -196,22 +196,13 @@ const PricingPlans = ({ onSelectPlan, selectedPriceId, onScheduleCall }: Pricing
                 )}
               </div>
 
-              <p className="text-sm text-gray-300 mt-2 font-medium">
-                {tier.seats}
-              </p>
-
-              {!tier.isEnterprise && (
-                <p className="text-sm text-green-400 mt-1 font-medium">
-                  7-day free trial included
-                </p>
-              )}
             </CardHeader>
 
             <CardContent className="space-y-4 flex-grow">
               <ul className="space-y-2">
                 {tier.features.map((feature, index) => (
                   <li key={index} className="flex items-center gap-3">
-                    <div className="flex-shrink-0 w-4 h-4 rounded-full bg-gradient-to-r from-pink-500 to-purple-500 flex items-center justify-center">
+                    <div className="flex-shrink-0 w-4 h-4 rounded-full bg-white/20 flex items-center justify-center">
                       <Check className="w-2.5 h-2.5 text-white" />
                     </div>
                     <span className="text-gray-300 text-sm">{feature}</span>
@@ -225,10 +216,10 @@ const PricingPlans = ({ onSelectPlan, selectedPriceId, onScheduleCall }: Pricing
                 onClick={() => handleSelectPlan(tier)}
                 className={`w-full font-semibold py-5 btn-with-arrow group ${
                   isSelected(tier)
-                    ? "bg-gradient-to-r from-pink-500 to-purple-500 hover:from-pink-600 hover:to-purple-600 text-white"
+                    ? "bg-white hover:bg-gray-100 text-gray-900"
                     : tier.popular
-                    ? "bg-gradient-to-r from-pink-500 to-purple-500 hover:from-pink-600 hover:to-purple-600 text-white"
-                    : "bg-gray-800 hover:bg-gray-700 text-white border border-gray-600"
+                    ? "bg-white hover:bg-gray-100 text-gray-900"
+                    : "bg-white/10 hover:bg-white/20 text-white border border-white/20"
                 }`}
               >
                 {tier.isEnterprise
@@ -236,7 +227,6 @@ const PricingPlans = ({ onSelectPlan, selectedPriceId, onScheduleCall }: Pricing
                   : isSelected(tier)
                   ? "Selected"
                   : "Select Plan"}
-                <ArrowRight className="ml-2 w-4 h-4 transition-transform duration-200 group-hover:translate-x-1" />
               </Button>
             </CardFooter>
             </Card>

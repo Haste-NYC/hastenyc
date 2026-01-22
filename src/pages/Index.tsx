@@ -41,25 +41,25 @@ const Index = () => {
         {/* Video Demo */}
         <VideoSection />
 
-        {/* Features - full height sections */}
-        <section id="features" className="min-h-screen py-24 relative">
+        {/* Features - stacked sections with peek effect */}
+        <section id="features" className="py-12 relative">
           <FeatureSection />
         </section>
 
         {/* About */}
-        <section id="about" className="py-24 relative">
+        <section id="about" className="py-12 relative">
           {/* Top gradient */}
           <div className="absolute top-0 left-0 right-0 h-24 bg-gradient-to-b from-background to-transparent pointer-events-none" />
           <AboutSection />
         </section>
 
         {/* FAQ */}
-        <section id="faq" className="py-24 relative">
+        <section id="faq" className="py-12 relative">
           <FAQSection />
         </section>
 
         {/* Pricing */}
-        <section id="pricing" className="py-24 relative">
+        <section id="pricing" className="py-12 relative">
           {/* Top gradient */}
           <div className="absolute top-0 left-0 right-0 h-24 bg-gradient-to-b from-background to-transparent pointer-events-none" />
           <PricingSection />

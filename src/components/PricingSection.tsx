@@ -10,7 +10,7 @@ const PricingSection = () => {
   };
 
   return (
-    <div className="py-24 px-6">
+    <div className="py-12 px-6">
       <div className="max-w-7xl mx-auto">
         {/* Section Label */}
         <motion.div
@@ -28,10 +28,19 @@ const PricingSection = () => {
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
           transition={{ duration: 0.6, delay: 0.1 }}
-          className="text-3xl md:text-5xl font-bold text-center mb-12 uppercase tracking-wide"
+          className="text-3xl md:text-5xl font-bold text-center mb-4 uppercase tracking-wide"
         >
           Choose Your Plan
         </motion.h2>
+        <motion.p
+          initial={{ opacity: 0, y: 20 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+          transition={{ duration: 0.6, delay: 0.15 }}
+          className="text-center text-foreground/60 text-sm uppercase tracking-wider mb-12"
+        >
+          7 day free trial included
+        </motion.p>
         <PricingPlans onSelectPlan={handleSelectPlan} />
         {isLoading && (
           <div className="fixed inset-0 bg-black/50 flex items-center justify-center z-50">

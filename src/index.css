@@ -413,6 +413,21 @@
   animation: pulse-dot 3s ease-in-out infinite;
 }
 
+/* Right to left scrolling animation for trust badges */
+@keyframes scroll-right-to-left {
+  from {
+    transform: translateX(0);
+  }
+  to {
+    transform: translateX(-50%);
+  }
+}
+
+.animate-scroll-right-to-left {
+  animation: scroll-right-to-left 25s linear infinite;
+  will-change: transform;
+}
+
 /* Constellation line effect */
 .constellation-line {
   stroke: rgba(255, 255, 255, 0.1);
@@ -467,13 +482,13 @@
   backdrop-filter: blur(12px);
   -webkit-backdrop-filter: blur(12px);
   border: 1px solid rgba(255, 255, 255, 0.08);
-  box-shadow: 0 0 40px rgba(168, 85, 247, 0.1);
+  box-shadow: 0 0 40px rgba(255, 255, 255, 0.05);
   transition: all 0.3s ease;
 }
 
 .glass-card-glow:hover {
-  border-color: rgba(168, 85, 247, 0.3);
-  box-shadow: 0 0 60px rgba(168, 85, 247, 0.15);
+  border-color: rgba(255, 255, 255, 0.2);
+  box-shadow: 0 0 60px rgba(255, 255, 255, 0.08);
 }
 
 /* Citation text */

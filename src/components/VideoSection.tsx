@@ -34,34 +34,22 @@ const VideoSection = () => {
           See it in action
         </motion.p>
 
-        {/* Glass card frame around video */}
-        <div className="glass-card-glow rounded-xl p-3 relative">
-          {/* Enhanced outer glow */}
-          <div
-            className="absolute -inset-4 pointer-events-none z-0"
-            style={{
-              background: "radial-gradient(ellipse 80% 60% at 50% 50%, rgba(168, 85, 247, 0.08) 0%, transparent 70%)",
-              filter: "blur(20px)",
-            }}
-          />
-
-          {/* Video container with Vimeo embed */}
-          <div className="relative rounded-lg overflow-hidden">
-            <div style={{ padding: "52.5% 0 0 0", position: "relative" }}>
-              <iframe
-                src="https://player.vimeo.com/video/1081347302?badge=0&autopause=0&player_id=0&app_id=58479"
-                frameBorder="0"
-                allow="autoplay; fullscreen; picture-in-picture; clipboard-write; encrypted-media"
-                style={{
-                  position: "absolute",
-                  top: 0,
-                  left: 0,
-                  width: "100%",
-                  height: "100%",
-                }}
-                title="CONFORMSTUDIO-WEBSITE-R1"
-              />
-            </div>
+        {/* Video container with Vimeo embed */}
+        <div className="relative rounded-lg overflow-hidden">
+          <div style={{ padding: "52.5% 0 0 0", position: "relative" }}>
+            <iframe
+              src="https://player.vimeo.com/video/1081347302?badge=0&autopause=0&player_id=0&app_id=58479"
+              frameBorder="0"
+              allow="autoplay; fullscreen; picture-in-picture; clipboard-write; encrypted-media"
+              style={{
+                position: "absolute",
+                top: 0,
+                left: 0,
+                width: "100%",
+                height: "100%",
+              }}
+              title="CONFORMSTUDIO-WEBSITE-R1"
+            />
           </div>
         </div>
       </motion.div>

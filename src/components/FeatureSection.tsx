@@ -258,7 +258,7 @@ const FeatureSectionItem = ({
   const imageY = useTransform(scrollYProgress, [0, 1], ["5%", "-5%"]);
 
   return (
-    <div id={feature.id} className="min-h-screen flex items-center py-24 px-6">
+    <div id={feature.id} className="min-h-[85vh] flex items-center py-16 px-6">
       <motion.div
         className="max-w-7xl mx-auto w-full"
         variants={containerVariants}
@@ -341,10 +341,6 @@ const FeatureSectionItem = ({
 const FeatureSection = () => {
   return (
     <section className="relative">
-      {/* Section label - accent colored */}
-      <div className="text-center pt-12 pb-8">
-        <span className="section-label-accent">The Conform Studio Platform</span>
-      </div>
       {features.map((feature, index) => (
         <FeatureSectionItem
           key={index}
