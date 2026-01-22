@@ -2,7 +2,6 @@ import { useRef, useState, useEffect, useMemo } from "react";
 import { Button } from "@/components/ui/button";
 import { motion, useScroll, useTransform } from "framer-motion";
 import { useLenis } from "lenis/react";
-import { ArrowRight } from "lucide-react";
 import conformLogo from "@/assets/conform-studio-logo.png";
 import GlowingSphere from "@/components/GlowingSphere";
 
@@ -226,22 +225,19 @@ const HeroSection = () => {
           <span className="text-foreground/90">100% frame-accurate, TPN+ compliant, trusted by major studios.</span>
         </motion.p>
 
-        {/* CTA Buttons with arrow */}
+        {/* CTA Button - white pill style */}
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.6, delay: 0.5 }}
           className="pt-6"
         >
-          <Button
-            variant="hero"
-            size="xl"
+          <button
             onClick={scrollToPricing}
-            className="btn-with-arrow group"
+            className="bg-white text-gray-900 font-medium text-base px-8 py-3 rounded-full hover:bg-gray-100 transition-colors"
           >
             Start Free Trial
-            <ArrowRight className="ml-2 w-4 h-4 transition-transform duration-200 group-hover:translate-x-1" />
-          </Button>
+          </button>
         </motion.div>
       </div>
     </section>
