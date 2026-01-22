@@ -29,7 +29,7 @@ const Index = () => {
       <Header />
       <main>
         {/* Hero - full height minus header */}
-        <section id="hero" className="pt-20 relative">
+        <section id="hero" className="pt-10 relative">
           <HeroSection />
           {/* Gradient fade to next section */}
           <div className="absolute bottom-0 left-0 right-0 h-32 bg-gradient-to-t from-background to-transparent pointer-events-none" />

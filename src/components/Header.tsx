@@ -7,7 +7,7 @@ import { useActiveSection } from "@/hooks/useActiveSection";
 
 const HasteLogo = () => (
   <svg
-    className="h-6 md:h-7 w-auto"
+    className="h-4 md:h-5 w-auto"
     viewBox="0 0 89 33"
     fill="none"
   >
@@ -38,7 +38,7 @@ const Header = () => {
 
   const scrollToSection = (id: string) => {
     lenis?.scrollTo(`#${id}`, {
-      offset: -80,
+      offset: -40,
       duration: 1.2,
       easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)),
     });
@@ -49,7 +49,7 @@ const Header = () => {
   const scrollToPricing = () => scrollToSection("pricing");
 
   return (
-    <header className="fixed top-0 w-full z-50 py-4 px-6 bg-background/95 backdrop-blur-sm border-b border-border/40">
+    <header className="fixed top-0 w-full z-50 py-2 px-6 bg-background/95 backdrop-blur-sm border-b border-border/40">
       <nav className="flex items-center justify-between max-w-7xl mx-auto">
         {/* Logo */}
         <a href="/" className="hover:opacity-80 transition-opacity">
@@ -57,7 +57,7 @@ const Header = () => {
         </a>
 
         {/* Desktop Navigation */}
-        <div className="hidden md:flex items-center gap-8">
+        <div className="hidden md:flex items-center gap-6">
           {navLinks.map(link => (
             <a
               key={link.id}
@@ -66,7 +66,7 @@ const Header = () => {
                 e.preventDefault();
                 scrollToSection(link.id);
               }}
-              className={`relative text-sm uppercase tracking-wider transition-colors after:absolute after:bottom-0 after:left-0 after:w-full after:h-0.5 after:bg-gradient-to-r after:from-pink-500 after:to-purple-500 after:scale-x-0 after:transition-transform after:duration-300 ${
+              className={`relative text-xs uppercase tracking-wider transition-colors after:absolute after:bottom-0 after:left-0 after:w-full after:h-0.5 after:bg-gradient-to-r after:from-pink-500 after:to-purple-500 after:scale-x-0 after:transition-transform after:duration-300 ${
                 activeSection === link.id
                   ? "text-foreground font-medium after:scale-x-100"
                   : "text-foreground/60 hover:text-foreground"
@@ -76,13 +76,13 @@ const Header = () => {
             </a>
           ))}
 
-          <Button onClick={scrollToPricing} variant="hero" size="lg">
+          <Button onClick={scrollToPricing} variant="hero" size="sm">
             Start Trial
           </Button>
 
           <a
             href="/signin"
-            className="text-foreground/80 hover:text-foreground hover:bg-white/5 text-sm uppercase tracking-wider transition-all px-4 py-2 rounded-full border border-white/20 hover:border-white/40"
+            className="text-foreground/80 hover:text-foreground hover:bg-white/5 text-xs uppercase tracking-wider transition-all px-3 py-1.5 rounded-full border border-white/20 hover:border-white/40"
           >
             Sign In
           </a>
@@ -91,8 +91,8 @@ const Header = () => {
         {/* Mobile Menu */}
         <Sheet open={mobileMenuOpen} onOpenChange={setMobileMenuOpen}>
           <SheetTrigger asChild className="md:hidden">
-            <Button variant="ghost" size="icon">
-              <Menu className="h-6 w-6" />
+            <Button variant="ghost" size="icon" className="h-8 w-8">
+              <Menu className="h-4 w-4" />
             </Button>
           </SheetTrigger>
           <SheetContent side="right" className="w-[300px]">

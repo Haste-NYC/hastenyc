@@ -106,7 +106,7 @@ const HeroSection = () => {
 
   const scrollToPricing = () => {
     lenis?.scrollTo("#pricing", {
-      offset: -80,
+      offset: -40,
       duration: 1.2,
       easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)),
     });
