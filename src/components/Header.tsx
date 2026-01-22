@@ -81,19 +81,19 @@ const Header = () => {
 
         {/* Right side: Buttons */}
         <div className="hidden md:flex items-center gap-4">
-          <button
-            onClick={scrollToPricing}
-            className="bg-white text-gray-900 font-medium text-xs px-5 py-1.5 rounded-full hover:bg-gray-100 transition-colors"
-          >
-            Start Trial
-          </button>
-
           <a
             href="/signin"
             className="text-foreground/80 hover:text-foreground hover:bg-white/5 text-xs uppercase tracking-wider transition-all px-3 py-1.5 rounded-full border border-white/20 hover:border-white/40"
           >
             Sign In
           </a>
+
+          <button
+            onClick={scrollToPricing}
+            className="bg-white text-gray-900 font-medium text-xs px-5 py-1.5 rounded-full hover:bg-gray-100 transition-colors"
+          >
+            Start Trial
+          </button>
         </div>
 
         {/* Mobile Menu */}
