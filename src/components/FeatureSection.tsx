@@ -32,6 +32,7 @@ const imageVariants: Variants = {
 };
 
 interface FeatureData {
+  id: string;
   statistic: string;
   statisticSuffix?: string;
   title: string;
@@ -45,6 +46,7 @@ interface FeatureData {
 
 const features: FeatureData[] = [
   {
+    id: "feature-speed",
     statistic: "300X",
     statisticSuffix: "Faster",
     titleMuted: "Premiere to Resolve,",
@@ -57,6 +59,7 @@ const features: FeatureData[] = [
     mockupType: "timeline",
   },
   {
+    id: "feature-accuracy",
     statistic: "100%",
     statisticSuffix: "Frame Accuracy",
     titleMuted: "100% Accurate,",
@@ -69,6 +72,7 @@ const features: FeatureData[] = [
     mockupType: "accuracy",
   },
   {
+    id: "feature-effects",
     statistic: "Unlimited",
     statisticSuffix: "Projects",
     titleMuted: "Complex Effects,",
@@ -80,6 +84,7 @@ const features: FeatureData[] = [
     mockupType: "effects",
   },
   {
+    id: "feature-security",
     statistic: "TPN+",
     statisticSuffix: "Certified",
     titleMuted: "TPN+ Compliant,",
@@ -253,7 +258,7 @@ const FeatureSectionItem = ({
   const imageY = useTransform(scrollYProgress, [0, 1], ["5%", "-5%"]);
 
   return (
-    <div className="min-h-screen flex items-center py-24 px-6">
+    <div id={feature.id} className="min-h-screen flex items-center py-24 px-6">
       <motion.div
         className="max-w-7xl mx-auto w-full"
         variants={containerVariants}

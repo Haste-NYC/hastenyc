@@ -1,7 +1,7 @@
-import { useState } from "react";
+import { useState, useRef, useEffect } from "react";
 import { Button } from "@/components/ui/button";
 import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet";
-import { Menu } from "lucide-react";
+import { Menu, ChevronDown } from "lucide-react";
 import { useLenis } from "lenis/react";
 import { useActiveSection } from "@/hooks/useActiveSection";
 
@@ -25,15 +25,35 @@ const HasteLogo = () => (
 );
 
 const navLinks = [
-  { label: "Features", id: "features" },
   { label: "About", id: "about" },
   { label: "FAQ", id: "faq" },
 ];
 
+const featureItems = [
+  { label: "300X Faster", id: "feature-speed" },
+  { label: "100% Frame Accuracy", id: "feature-accuracy" },
+  { label: "Complex Effects", id: "feature-effects" },
+  { label: "TPN+ Certified", id: "feature-security" },
+];
+
 const Header = () => {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
+  const [featuresOpen, setFeaturesOpen] = useState(false);
+  const featuresRef = useRef<HTMLDivElement>(null);
   const lenis = useLenis();
   const activeSection = useActiveSection();
+
+  // Close dropdown when clicking outside
+  useEffect(() => {
+    const handleClickOutside = (event: MouseEvent) => {
+      if (featuresRef.current && !featuresRef.current.contains(event.target as Node)) {
+        setFeaturesOpen(false);
+      }
+    };
+
+    document.addEventListener("mousedown", handleClickOutside);
+    return () => document.removeEventListener("mousedown", handleClickOutside);
+  }, []);
 
   const scrollToSection = (id: string) => {
     lenis?.scrollTo(`#${id}`, {
@@ -43,6 +63,7 @@ const Header = () => {
     });
 
     setMobileMenuOpen(false);
+    setFeaturesOpen(false);
   };
 
   const scrollToPricing = () => scrollToSection("pricing");
@@ -58,6 +79,37 @@ const Header = () => {
 
           {/* Desktop Navigation Links */}
           <div className="hidden md:flex items-center gap-6">
+            {/* Features Dropdown */}
+            <div ref={featuresRef} className="relative">
+              <button
+                onClick={() => setFeaturesOpen(!featuresOpen)}
+                className={`relative flex items-center gap-1 text-xs uppercase tracking-wider transition-colors ${
+                  activeSection === "features"
+                    ? "text-foreground font-medium"
+                    : "text-foreground/60 hover:text-foreground"
+                }`}
+              >
+                Features
+                <ChevronDown className={`w-3 h-3 transition-transform ${featuresOpen ? "rotate-180" : ""}`} />
+              </button>
+
+              {/* Dropdown Menu */}
+              {featuresOpen && (
+                <div className="absolute top-full left-0 mt-2 py-2 w-48 bg-background/95 backdrop-blur-sm border border-border/40 rounded-lg shadow-xl">
+                  {featureItems.map((item) => (
+                    <button
+                      key={item.id}
+                      onClick={() => scrollToSection(item.id)}
+                      className="w-full text-left px-4 py-2 text-xs text-foreground/70 hover:text-foreground hover:bg-white/5 transition-colors"
+                    >
+                      {item.label}
+                    </button>
+                  ))}
+                </div>
+              )}
+            </div>
+
+            {/* Other Nav Links */}
             {navLinks.map(link => (
               <a
                 key={link.id}
@@ -104,6 +156,24 @@ const Header = () => {
           </SheetTrigger>
           <SheetContent side="right" className="w-[300px]">
             <div className="flex flex-col gap-6 mt-8">
+              {/* Features with sub-items for mobile */}
+              <div className="space-y-3">
+                <span className="text-lg uppercase tracking-wider text-foreground font-medium">
+                  Features
+                </span>
+                <div className="pl-4 space-y-2">
+                  {featureItems.map((item) => (
+                    <button
+                      key={item.id}
+                      onClick={() => scrollToSection(item.id)}
+                      className="block text-sm text-foreground/60 hover:text-foreground transition-colors"
+                    >
+                      {item.label}
+                    </button>
+                  ))}
+                </div>
+              </div>
+
               {navLinks.map(link => (
                 <a
                   key={link.id}
