@@ -140,18 +140,11 @@ const Header = () => {
           </a>
 
           <a
-            href="/signin"
+            href="/download"
             className="text-foreground/80 hover:text-foreground hover:bg-white/5 text-xs uppercase tracking-wider transition-all px-3 py-1.5 rounded-full border border-white/20 hover:border-white/40"
           >
-            Sign In
+            Download
           </a>
-
-          <button
-            onClick={scrollToPricing}
-            className="bg-white text-gray-900 font-medium text-xs px-5 py-1.5 rounded-full hover:bg-gray-100 transition-colors"
-          >
-            Start Trial
-          </button>
         </div>
 
         {/* Mobile Menu */}
@@ -204,17 +197,11 @@ const Header = () => {
               >
                 Contact Us
               </a>
-              <button
-                onClick={scrollToPricing}
-                className="w-full bg-white text-gray-900 font-medium text-base px-6 py-3 rounded-full hover:bg-gray-100 transition-colors"
-              >
-                Start Trial
-              </button>
               <a
-                href="/signin"
+                href="/download"
                 className="text-foreground/80 text-center text-lg uppercase tracking-wider"
               >
-                Sign In
+                Download
               </a>
             </div>
           </SheetContent>
