@@ -25,7 +25,6 @@ const HasteLogo = () => (
 );
 
 const navLinks = [
-  { label: "Overview", id: "hero" },
   { label: "Features", id: "features" },
   { label: "About", id: "about" },
   { label: "FAQ", id: "faq" },
