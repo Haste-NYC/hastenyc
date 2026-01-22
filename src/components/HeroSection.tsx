@@ -3,9 +3,7 @@ import { Button } from "@/components/ui/button";
 import { motion, useScroll, useTransform } from "framer-motion";
 import { useLenis } from "lenis/react";
 import conformLogo from "@/assets/conform-studio-logo.png";
-import GlowingSphere from "@/components/GlowingSphere";
 import { LoadingAnimation } from "@/components/LoadingAnimation";
-import { AppFlowAnimation } from "@/components/AppFlowAnimation";
 
 // Particle component for constellation effect
 const Particles = () => {
@@ -121,23 +119,13 @@ const HeroSection = () => {
       {/* Particle constellation effect */}
       <Particles />
 
-      {/* Glowing Sphere - positioned behind content */}
-      <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[600px] md:w-[800px] md:h-[800px] pointer-events-none z-0 opacity-40">
-        <GlowingSphere className="w-full h-full" />
-      </div>
-
-      {/* Loading Animation - spinning animation over the orb */}
+      {/* Loading Animation - spinning logo animation */}
       <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 pointer-events-none z-[1]">
         <LoadingAnimation
           spriteSheet="/loading_sprite_604.png"
-          size={400}
-          className="opacity-60"
+          size={900}
+          className="opacity-50"
         />
-      </div>
-
-      {/* App Flow Animation - shows the app workflow screenshots */}
-      <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 z-[2]">
-        <AppFlowAnimation size={340} className="opacity-95" />
       </div>
 
       {/* Atmospheric glow - x.ai inspired with blue/white light emanation */}
