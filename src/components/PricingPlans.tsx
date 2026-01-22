@@ -4,7 +4,7 @@ import { Card, CardContent, CardFooter, CardHeader, CardTitle } from "@/componen
 import { Button } from "@/components/ui/button";
 import { Switch } from "@/components/ui/switch";
 import { Badge } from "@/components/ui/badge";
-import { Check, Users, Building2, Calendar } from "lucide-react";
+import { Check, Users, Building2, Calendar, ArrowRight } from "lucide-react";
 import { stripeConfig } from "@/config/stripe";
 
 interface PricingPlansProps {
@@ -151,12 +151,12 @@ const PricingPlans = ({ onSelectPlan, selectedPriceId, onScheduleCall }: Pricing
             className="h-full"
           >
             <Card
-              className={`glass-card border-2 transition-all duration-300 relative h-full flex flex-col hover:shadow-lg hover:shadow-purple-500/10 ${
+              className={`glass-card-glow border-2 transition-all duration-300 relative h-full flex flex-col ${
                 isSelected(tier)
                   ? "border-pink-500 shadow-lg shadow-pink-500/20"
                   : tier.popular
-                  ? "border-purple-500/60"
-                  : "border-white/10 hover:border-white/20"
+                  ? "border-purple-500/60 hover:border-purple-500/80 hover:shadow-lg hover:shadow-purple-500/15"
+                  : "border-white/10 hover:border-white/20 hover:shadow-lg hover:shadow-purple-500/10"
               }`}
             >
             {tier.popular && (
@@ -223,7 +223,7 @@ const PricingPlans = ({ onSelectPlan, selectedPriceId, onScheduleCall }: Pricing
             <CardFooter className="mt-auto">
               <Button
                 onClick={() => handleSelectPlan(tier)}
-                className={`w-full font-semibold py-5 ${
+                className={`w-full font-semibold py-5 btn-with-arrow group ${
                   isSelected(tier)
                     ? "bg-gradient-to-r from-pink-500 to-purple-500 hover:from-pink-600 hover:to-purple-600 text-white"
                     : tier.popular
@@ -236,6 +236,7 @@ const PricingPlans = ({ onSelectPlan, selectedPriceId, onScheduleCall }: Pricing
                   : isSelected(tier)
                   ? "Selected"
                   : "Select Plan"}
+                <ArrowRight className="ml-2 w-4 h-4 transition-transform duration-200 group-hover:translate-x-1" />
               </Button>
             </CardFooter>
             </Card>

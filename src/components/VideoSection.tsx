@@ -4,7 +4,7 @@ const VideoSection = () => {
   return (
     <section id="video" className="py-12 px-6 relative">
       {/* Blue gradient background - centered on video, extends beyond section */}
-      <div 
+      <div
         className="absolute pointer-events-none z-0"
         style={{
           top: "50%",
@@ -15,42 +15,55 @@ const VideoSection = () => {
           background: "radial-gradient(ellipse 50% 50% at 50% 50%, rgba(30, 120, 255, 0.4) 0%, rgba(59, 130, 246, 0.2) 20%, rgba(59, 130, 246, 0.08) 35%, transparent 55%)",
         }}
       />
-      
-      <motion.div 
+
+      <motion.div
         initial={{ opacity: 0, y: 40 }}
         whileInView={{ opacity: 1, y: 0 }}
         viewport={{ once: true, margin: "-100px" }}
         transition={{ duration: 0.7 }}
         className="max-w-4xl mx-auto relative z-10"
       >
-        {/* Video container with Vimeo embed - no border */}
-        <div className="relative rounded-lg overflow-hidden">
-          <div style={{ padding: "52.5% 0 0 0", position: "relative" }}>
-            <iframe
-              src="https://player.vimeo.com/video/1081347302?badge=0&autopause=0&player_id=0&app_id=58479"
-              frameBorder="0"
-              allow="autoplay; fullscreen; picture-in-picture; clipboard-write; encrypted-media"
-              style={{
-                position: "absolute",
-                top: 0,
-                left: 0,
-                width: "100%",
-                height: "100%",
-              }}
-              title="CONFORMSTUDIO-WEBSITE-R1"
-            />
-          </div>
-        </div>
-        
-        <motion.p 
+        {/* Accent label above video - Frame.io style */}
+        <motion.p
           initial={{ opacity: 0 }}
           whileInView={{ opacity: 1 }}
           viewport={{ once: true }}
-          transition={{ duration: 0.5, delay: 0.3 }}
-          className="text-center text-foreground text-xs mt-6 uppercase tracking-[0.2em]"
+          transition={{ duration: 0.5 }}
+          className="text-center text-xs mb-6 uppercase tracking-[0.2em] section-label-accent"
         >
           See it in action
         </motion.p>
+
+        {/* Glass card frame around video */}
+        <div className="glass-card-glow rounded-xl p-3 relative">
+          {/* Enhanced outer glow */}
+          <div
+            className="absolute -inset-4 pointer-events-none z-0"
+            style={{
+              background: "radial-gradient(ellipse 80% 60% at 50% 50%, rgba(168, 85, 247, 0.08) 0%, transparent 70%)",
+              filter: "blur(20px)",
+            }}
+          />
+
+          {/* Video container with Vimeo embed */}
+          <div className="relative rounded-lg overflow-hidden">
+            <div style={{ padding: "52.5% 0 0 0", position: "relative" }}>
+              <iframe
+                src="https://player.vimeo.com/video/1081347302?badge=0&autopause=0&player_id=0&app_id=58479"
+                frameBorder="0"
+                allow="autoplay; fullscreen; picture-in-picture; clipboard-write; encrypted-media"
+                style={{
+                  position: "absolute",
+                  top: 0,
+                  left: 0,
+                  width: "100%",
+                  height: "100%",
+                }}
+                title="CONFORMSTUDIO-WEBSITE-R1"
+              />
+            </div>
+          </div>
+        </div>
       </motion.div>
     </section>
   );

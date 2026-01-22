@@ -1,5 +1,6 @@
 import Header from "@/components/Header";
 import HeroSection from "@/components/HeroSection";
+import TrustBadgeBar from "@/components/TrustBadgeBar";
 import VideoSection from "@/components/VideoSection";
 import FeatureSection from "@/components/FeatureSection";
 import AboutSection from "@/components/AboutSection";
@@ -33,6 +34,9 @@ const Index = () => {
           {/* Gradient fade to next section */}
           <div className="absolute bottom-0 left-0 right-0 h-32 bg-gradient-to-t from-background to-transparent pointer-events-none" />
         </section>
+
+        {/* Trust Badge Bar - Partner logos */}
+        <TrustBadgeBar />
 
         {/* Video Demo */}
         <VideoSection />
