@@ -27,6 +27,7 @@ const HasteLogo = () => (
 const navLinks = [
   { label: "About", id: "about" },
   { label: "FAQ", id: "faq" },
+  { label: "Pricing", id: "pricing" },
 ];
 
 const featureItems = [
