@@ -413,6 +413,21 @@
   animation: pulse-dot 3s ease-in-out infinite;
 }
 
+/* Right to left scrolling animation for trust badges */
+@keyframes scroll-right-to-left {
+  from {
+    transform: translateX(0);
+  }
+  to {
+    transform: translateX(-50%);
+  }
+}
+
+.animate-scroll-right-to-left {
+  animation: scroll-right-to-left 25s linear infinite;
+  will-change: transform;
+}
+
 /* Constellation line effect */
 .constellation-line {
   stroke: rgba(255, 255, 255, 0.1);
@@ -440,4 +455,111 @@
   pointer-events: none;
   z-index: -1;
   filter: blur(40px);
+}
+
+/* Frame.io-inspired design additions */
+
+/* Accent section label */
+.section-label-accent {
+  color: rgba(168, 85, 247, 0.9);
+  font-size: 0.75rem;
+  text-transform: uppercase;
+  letter-spacing: 0.2em;
+  font-family: 'SF Mono', 'Monaco', 'Inconsolata', 'Fira Code', monospace;
+}
+
+.section-label-accent::before {
+  content: '[ ';
+}
+
+.section-label-accent::after {
+  content: ' ]';
+}
+
+/* Enhanced glass card with glow */
+.glass-card-glow {
+  background: rgba(255, 255, 255, 0.03);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  box-shadow: 0 0 40px rgba(255, 255, 255, 0.05);
+  transition: all 0.3s ease;
+}
+
+.glass-card-glow:hover {
+  border-color: rgba(255, 255, 255, 0.2);
+  box-shadow: 0 0 60px rgba(255, 255, 255, 0.08);
+}
+
+/* Citation text */
+.citation-text {
+  font-size: 0.75rem;
+  color: rgba(255, 255, 255, 0.5);
+  font-style: italic;
+}
+
+/* 3D Sphere glow layers */
+.sphere-glow-outer {
+  background: radial-gradient(
+    circle,
+    rgba(168, 85, 247, 0.15) 0%,
+    rgba(20, 184, 166, 0.1) 30%,
+    transparent 60%
+  );
+  filter: blur(60px);
+}
+
+.sphere-glow-middle {
+  background: radial-gradient(
+    circle,
+    rgba(168, 85, 247, 0.2) 0%,
+    rgba(20, 184, 166, 0.15) 40%,
+    transparent 70%
+  );
+  filter: blur(40px);
+}
+
+.sphere-glow-inner {
+  background: radial-gradient(
+    circle,
+    rgba(20, 184, 166, 0.4) 0%,
+    rgba(168, 85, 247, 0.3) 50%,
+    transparent 70%
+  );
+}
+
+.sphere-core {
+  background: radial-gradient(
+    circle at 30% 30%,
+    rgba(255, 255, 255, 0.2) 0%,
+    rgba(20, 184, 166, 0.3) 20%,
+    rgba(168, 85, 247, 0.4) 50%,
+    rgba(100, 50, 200, 0.3) 80%,
+    transparent 100%
+  );
+  box-shadow:
+    inset 0 0 30px rgba(255, 255, 255, 0.1),
+    0 0 60px rgba(168, 85, 247, 0.3),
+    0 0 100px rgba(20, 184, 166, 0.2);
+}
+
+/* Logo grayscale effect */
+.logo-grayscale {
+  filter: grayscale(100%) brightness(0.8);
+  opacity: 0.6;
+  transition: all 0.3s ease;
+}
+
+.logo-grayscale:hover {
+  filter: grayscale(0%) brightness(1);
+  opacity: 1;
+}
+
+/* Arrow button animation */
+.btn-with-arrow svg {
+  transition: transform 0.2s ease;
+}
+
+.btn-with-arrow:hover svg {
+  transform: translateX(4px);
 }

@@ -9,7 +9,7 @@ const trustSignals = [
 
 const AboutSection = () => {
   return (
-    <div className="max-w-4xl mx-auto py-24 px-6">
+    <div className="max-w-4xl mx-auto py-12 px-6">
       {/* Section Label */}
       <motion.div
         initial={{ opacity: 0 }}

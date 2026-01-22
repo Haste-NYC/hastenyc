@@ -1,13 +1,13 @@
-import { useState } from "react";
+import { useState, useRef, useEffect } from "react";
 import { Button } from "@/components/ui/button";
 import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet";
-import { Menu } from "lucide-react";
+import { Menu, ChevronDown } from "lucide-react";
 import { useLenis } from "lenis/react";
 import { useActiveSection } from "@/hooks/useActiveSection";
 
 const HasteLogo = () => (
   <svg
-    className="h-6 md:h-7 w-auto"
+    className="h-4 md:h-5 w-auto"
     viewBox="0 0 89 33"
     fill="none"
   >
@@ -25,78 +25,156 @@ const HasteLogo = () => (
 );
 
 const navLinks = [
-  { label: "Overview", id: "hero" },
-  { label: "Features", id: "features" },
   { label: "About", id: "about" },
   { label: "FAQ", id: "faq" },
+  { label: "Pricing", id: "pricing" },
+];
+
+const featureItems = [
+  { label: "300X Faster", id: "feature-speed" },
+  { label: "100% Frame Accuracy", id: "feature-accuracy" },
+  { label: "Complex Effects", id: "feature-effects" },
+  { label: "TPN+ Certified", id: "feature-security" },
 ];
 
 const Header = () => {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
+  const [featuresOpen, setFeaturesOpen] = useState(false);
+  const featuresRef = useRef<HTMLDivElement>(null);
   const lenis = useLenis();
   const activeSection = useActiveSection();
 
+  // Close dropdown when clicking outside
+  useEffect(() => {
+    const handleClickOutside = (event: MouseEvent) => {
+      if (featuresRef.current && !featuresRef.current.contains(event.target as Node)) {
+        setFeaturesOpen(false);
+      }
+    };
+
+    document.addEventListener("mousedown", handleClickOutside);
+    return () => document.removeEventListener("mousedown", handleClickOutside);
+  }, []);
+
   const scrollToSection = (id: string) => {
     lenis?.scrollTo(`#${id}`, {
-      offset: -80,
+      offset: -40,
       duration: 1.2,
       easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)),
     });
 
     setMobileMenuOpen(false);
+    setFeaturesOpen(false);
   };
 
   const scrollToPricing = () => scrollToSection("pricing");
 
   return (
-    <header className="fixed top-0 w-full z-50 py-4 px-6 bg-background/95 backdrop-blur-sm border-b border-border/40">
+    <header className="fixed top-0 w-full z-50 py-2 px-6 bg-background/95 backdrop-blur-sm border-b border-border/40">
       <nav className="flex items-center justify-between max-w-7xl mx-auto">
-        {/* Logo */}
-        <a href="/" className="hover:opacity-80 transition-opacity">
-          <HasteLogo />
-        </a>
+        {/* Left side: Logo + Nav Links */}
+        <div className="flex items-center gap-8">
+          <a href="/" className="hover:opacity-80 transition-opacity">
+            <HasteLogo />
+          </a>
 
-        {/* Desktop Navigation */}
-        <div className="hidden md:flex items-center gap-8">
-          {navLinks.map(link => (
-            <a
-              key={link.id}
-              href={`#${link.id}`}
-              onClick={(e) => {
-                e.preventDefault();
-                scrollToSection(link.id);
-              }}
-              className={`relative text-sm uppercase tracking-wider transition-colors after:absolute after:bottom-0 after:left-0 after:w-full after:h-0.5 after:bg-gradient-to-r after:from-pink-500 after:to-purple-500 after:scale-x-0 after:transition-transform after:duration-300 ${
-                activeSection === link.id
-                  ? "text-foreground font-medium after:scale-x-100"
-                  : "text-foreground/60 hover:text-foreground"
-              }`}
-            >
-              {link.label}
-            </a>
-          ))}
+          {/* Desktop Navigation Links */}
+          <div className="hidden md:flex items-center gap-6">
+            {/* Features Dropdown */}
+            <div ref={featuresRef} className="relative">
+              <button
+                onClick={() => setFeaturesOpen(!featuresOpen)}
+                className={`relative flex items-center gap-1 text-xs uppercase tracking-wider transition-colors ${
+                  activeSection === "features"
+                    ? "text-foreground font-medium"
+                    : "text-foreground/60 hover:text-foreground"
+                }`}
+              >
+                Features
+                <ChevronDown className={`w-3 h-3 transition-transform ${featuresOpen ? "rotate-180" : ""}`} />
+              </button>
 
-          <Button onClick={scrollToPricing} variant="hero" size="lg">
-            Start Trial
-          </Button>
+              {/* Dropdown Menu */}
+              {featuresOpen && (
+                <div className="absolute top-full left-0 mt-2 py-2 w-48 bg-background/95 backdrop-blur-sm border border-border/40 rounded-lg shadow-xl">
+                  {featureItems.map((item) => (
+                    <button
+                      key={item.id}
+                      onClick={() => scrollToSection(item.id)}
+                      className="w-full text-left px-4 py-2 text-xs text-foreground/70 hover:text-foreground hover:bg-white/5 transition-colors"
+                    >
+                      {item.label}
+                    </button>
+                  ))}
+                </div>
+              )}
+            </div>
+
+            {/* Other Nav Links */}
+            {navLinks.map(link => (
+              <a
+                key={link.id}
+                href={`#${link.id}`}
+                onClick={(e) => {
+                  e.preventDefault();
+                  scrollToSection(link.id);
+                }}
+                className={`relative text-xs uppercase tracking-wider transition-colors after:absolute after:bottom-0 after:left-0 after:w-full after:h-0.5 after:bg-gradient-to-r after:from-pink-500 after:to-purple-500 after:scale-x-0 after:transition-transform after:duration-300 ${
+                  activeSection === link.id
+                    ? "text-foreground font-medium after:scale-x-100"
+                    : "text-foreground/60 hover:text-foreground"
+                }`}
+              >
+                {link.label}
+              </a>
+            ))}
+          </div>
+        </div>
+
+        {/* Right side: Buttons */}
+        <div className="hidden md:flex items-center gap-4">
+          <a
+            href="/contact"
+            className="text-foreground/60 hover:text-foreground text-xs uppercase tracking-wider transition-colors"
+          >
+            Contact Us
+          </a>
 
           <a
-            href="/signin"
-            className="text-foreground/80 hover:text-foreground hover:bg-white/5 text-sm uppercase tracking-wider transition-all px-4 py-2 rounded-full border border-white/20 hover:border-white/40"
+            href="/download"
+            className="text-foreground/80 hover:text-foreground hover:bg-white/5 text-xs uppercase tracking-wider transition-all px-3 py-1.5 rounded-full border border-white/20 hover:border-white/40"
           >
-            Sign In
+            Download
           </a>
         </div>
 
         {/* Mobile Menu */}
         <Sheet open={mobileMenuOpen} onOpenChange={setMobileMenuOpen}>
           <SheetTrigger asChild className="md:hidden">
-            <Button variant="ghost" size="icon">
-              <Menu className="h-6 w-6" />
+            <Button variant="ghost" size="icon" className="h-8 w-8">
+              <Menu className="h-4 w-4" />
             </Button>
           </SheetTrigger>
           <SheetContent side="right" className="w-[300px]">
             <div className="flex flex-col gap-6 mt-8">
+              {/* Features with sub-items for mobile */}
+              <div className="space-y-3">
+                <span className="text-lg uppercase tracking-wider text-foreground font-medium">
+                  Features
+                </span>
+                <div className="pl-4 space-y-2">
+                  {featureItems.map((item) => (
+                    <button
+                      key={item.id}
+                      onClick={() => scrollToSection(item.id)}
+                      className="block text-sm text-foreground/60 hover:text-foreground transition-colors"
+                    >
+                      {item.label}
+                    </button>
+                  ))}
+                </div>
+              </div>
+
               {navLinks.map(link => (
                 <a
                   key={link.id}
@@ -114,14 +192,17 @@ const Header = () => {
                   {link.label}
                 </a>
               ))}
-              <Button onClick={scrollToPricing} variant="hero" size="lg" className="w-full">
-                Start Trial
-              </Button>
               <a
-                href="/signin"
+                href="/contact"
+                className="text-foreground/60 text-lg uppercase tracking-wider"
+              >
+                Contact Us
+              </a>
+              <a
+                href="/download"
                 className="text-foreground/80 text-center text-lg uppercase tracking-wider"
               >
-                Sign In
+                Download
               </a>
             </div>
           </SheetContent>

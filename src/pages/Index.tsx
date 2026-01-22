@@ -1,5 +1,6 @@
 import Header from "@/components/Header";
 import HeroSection from "@/components/HeroSection";
+import TrustBadgeBar from "@/components/TrustBadgeBar";
 import VideoSection from "@/components/VideoSection";
 import FeatureSection from "@/components/FeatureSection";
 import AboutSection from "@/components/AboutSection";
@@ -28,34 +29,37 @@ const Index = () => {
       <Header />
       <main>
         {/* Hero - full height minus header */}
-        <section id="hero" className="pt-20 relative">
+        <section id="hero" className="pt-10 relative">
           <HeroSection />
           {/* Gradient fade to next section */}
           <div className="absolute bottom-0 left-0 right-0 h-32 bg-gradient-to-t from-background to-transparent pointer-events-none" />
         </section>
 
+        {/* Trust Badge Bar - Partner logos */}
+        <TrustBadgeBar />
+
         {/* Video Demo */}
         <VideoSection />
 
-        {/* Features - full height sections */}
-        <section id="features" className="min-h-screen py-24 relative">
+        {/* Features - stacked sections with peek effect */}
+        <section id="features" className="py-12 relative">
           <FeatureSection />
         </section>
 
         {/* About */}
-        <section id="about" className="py-24 relative">
+        <section id="about" className="py-12 relative">
           {/* Top gradient */}
           <div className="absolute top-0 left-0 right-0 h-24 bg-gradient-to-b from-background to-transparent pointer-events-none" />
           <AboutSection />
         </section>
 
         {/* FAQ */}
-        <section id="faq" className="py-24 relative">
+        <section id="faq" className="py-12 relative">
           <FAQSection />
         </section>
 
         {/* Pricing */}
-        <section id="pricing" className="py-24 relative">
+        <section id="pricing" className="py-12 relative">
           {/* Top gradient */}
           <div className="absolute top-0 left-0 right-0 h-24 bg-gradient-to-b from-background to-transparent pointer-events-none" />
           <PricingSection />

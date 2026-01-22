@@ -3,6 +3,7 @@ import { Button } from "@/components/ui/button";
 import { motion, useScroll, useTransform } from "framer-motion";
 import { useLenis } from "lenis/react";
 import conformLogo from "@/assets/conform-studio-logo.png";
+import { LoadingAnimation } from "@/components/LoadingAnimation";
 
 // Particle component for constellation effect
 const Particles = () => {
@@ -104,7 +105,7 @@ const HeroSection = () => {
 
   const scrollToPricing = () => {
     lenis?.scrollTo("#pricing", {
-      offset: -80,
+      offset: -40,
       duration: 1.2,
       easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)),
     });
@@ -113,10 +114,19 @@ const HeroSection = () => {
   return (
     <section
       ref={sectionRef}
-      className="relative flex flex-col items-center px-6 pt-8 pb-12 min-h-[calc(100vh-80px)] overflow-hidden"
+      className="relative flex flex-col items-center justify-center px-6 py-4 min-h-[calc(100vh-200px)] overflow-hidden"
     >
       {/* Particle constellation effect */}
       <Particles />
+
+      {/* Loading Animation - spinning logo animation */}
+      <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 pointer-events-none z-[1]">
+        <LoadingAnimation
+          spriteSheet="/loading_sprite_604.png"
+          size={900}
+          className="opacity-50"
+        />
+      </div>
 
       {/* Atmospheric glow - x.ai inspired with blue/white light emanation */}
       <motion.div
@@ -196,37 +206,42 @@ const HeroSection = () => {
           />
         </motion.div>
 
-        {/* Tagline - bold value proposition with subtle glow */}
+        {/* Two-tone tagline - Frame.io style */}
         <motion.p
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.6, delay: 0.2 }}
-          className="text-foreground text-xs md:text-sm uppercase tracking-[0.25em] pt-2 text-glow-subtle"
+          className="text-xs md:text-sm uppercase tracking-[0.25em] pt-2 text-glow-subtle"
         >
-          300X Faster Timeline Conform
+          <span className="text-foreground/60">Premiere to Resolve</span>{" "}
+          <span className="text-foreground">in Seconds</span>
         </motion.p>
 
-        {/* Description - core value prop */}
+        {/* Description - core value prop with two-tone pattern */}
         <motion.p
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.6, delay: 0.35 }}
-          className="text-foreground/90 text-xs md:text-sm max-w-3xl mx-auto leading-relaxed uppercase tracking-[0.06em] pt-6"
+          className="text-xs md:text-sm max-w-3xl mx-auto leading-relaxed uppercase tracking-[0.06em] pt-6"
         >
-          Premiere to Resolve timeline conversion in seconds, not days. 100%
-          frame-accurate, TPN+ compliant, trusted by major studios.
+          <span className="text-foreground/60">Timeline conversion that once took days</span>{" "}
+          <span className="text-foreground">now takes seconds.</span>{" "}
+          <span className="text-foreground/90">100% frame-accurate, TPN+ compliant, trusted by major studios.</span>
         </motion.p>
 
-        {/* CTA Buttons */}
+        {/* CTA Button - white pill style */}
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.6, delay: 0.5 }}
           className="pt-6"
         >
-          <Button variant="hero" size="xl" onClick={scrollToPricing}>
+          <button
+            onClick={scrollToPricing}
+            className="bg-white text-gray-900 font-medium text-base px-8 py-3 rounded-full hover:bg-gray-100 transition-colors"
+          >
             Start Free Trial
-          </Button>
+          </button>
         </motion.div>
       </div>
     </section>
