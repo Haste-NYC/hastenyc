@@ -51,31 +51,36 @@ const Header = () => {
   return (
     <header className="fixed top-0 w-full z-50 py-2 px-6 bg-background/95 backdrop-blur-sm border-b border-border/40">
       <nav className="flex items-center justify-between max-w-7xl mx-auto">
-        {/* Logo */}
-        <a href="/" className="hover:opacity-80 transition-opacity">
-          <HasteLogo />
-        </a>
+        {/* Left side: Logo + Nav Links */}
+        <div className="flex items-center gap-8">
+          <a href="/" className="hover:opacity-80 transition-opacity">
+            <HasteLogo />
+          </a>
 
-        {/* Desktop Navigation */}
-        <div className="hidden md:flex items-center gap-6">
-          {navLinks.map(link => (
-            <a
-              key={link.id}
-              href={`#${link.id}`}
-              onClick={(e) => {
-                e.preventDefault();
-                scrollToSection(link.id);
-              }}
-              className={`relative text-xs uppercase tracking-wider transition-colors after:absolute after:bottom-0 after:left-0 after:w-full after:h-0.5 after:bg-gradient-to-r after:from-pink-500 after:to-purple-500 after:scale-x-0 after:transition-transform after:duration-300 ${
-                activeSection === link.id
-                  ? "text-foreground font-medium after:scale-x-100"
-                  : "text-foreground/60 hover:text-foreground"
-              }`}
-            >
-              {link.label}
-            </a>
-          ))}
+          {/* Desktop Navigation Links */}
+          <div className="hidden md:flex items-center gap-6">
+            {navLinks.map(link => (
+              <a
+                key={link.id}
+                href={`#${link.id}`}
+                onClick={(e) => {
+                  e.preventDefault();
+                  scrollToSection(link.id);
+                }}
+                className={`relative text-xs uppercase tracking-wider transition-colors after:absolute after:bottom-0 after:left-0 after:w-full after:h-0.5 after:bg-gradient-to-r after:from-pink-500 after:to-purple-500 after:scale-x-0 after:transition-transform after:duration-300 ${
+                  activeSection === link.id
+                    ? "text-foreground font-medium after:scale-x-100"
+                    : "text-foreground/60 hover:text-foreground"
+                }`}
+              >
+                {link.label}
+              </a>
+            ))}
+          </div>
+        </div>
 
+        {/* Right side: Buttons */}
+        <div className="hidden md:flex items-center gap-4">
           <Button onClick={scrollToPricing} variant="hero" size="sm">
             Start Trial
           </Button>
