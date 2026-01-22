@@ -135,9 +135,9 @@ const HeroSection = () => {
         />
       </div>
 
-      {/* App Flow Animation - shows the app workflow on top of spinning animation */}
+      {/* App Flow Animation - shows the app workflow screenshots */}
       <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 z-[2]">
-        <AppFlowAnimation size={320} className="opacity-95" />
+        <AppFlowAnimation size={340} className="opacity-95" />
       </div>
 
       {/* Atmospheric glow - x.ai inspired with blue/white light emanation */}

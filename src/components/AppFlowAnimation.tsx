@@ -8,49 +8,28 @@ interface AppFlowAnimationProps {
 
 // The CONFORM app screens to cycle through
 const screens = [
-  { name: "dashboard", label: "Select Project", duration: 2500 },
-  { name: "project-selected", label: "Configure Options", duration: 3000 },
-  { name: "in-progress", label: "Converting", duration: 4000 },
-  { name: "complete", label: "Complete", duration: 3000 },
+  { name: "select", label: "Select Project", image: "/app-screens/screen-select.png" },
+  { name: "configure", label: "Configure Options", image: "/app-screens/screen-configure.png" },
+  { name: "progress", label: "Converting", image: "/app-screens/screen-progress.png" },
+  { name: "complete", label: "Complete", image: "/app-screens/screen-complete.png" },
 ];
 
-const BASE_URL = "http://localhost:5180";
+const CYCLE_DURATION = 3000; // 3 seconds per screen
 
 export const AppFlowAnimation = ({ size = 320, className = "" }: AppFlowAnimationProps) => {
   const [currentScreenIndex, setCurrentScreenIndex] = useState(0);
-  const [loadedScreens, setLoadedScreens] = useState<Set<string>>(new Set());
-  const [allLoaded, setAllLoaded] = useState(false);
 
-  // Track when each iframe loads
-  const handleIframeLoad = (screenName: string) => {
-    setLoadedScreens(prev => {
-      const newSet = new Set(prev);
-      newSet.add(screenName);
-      return newSet;
-    });
-  };
-
-  // Check if all screens are loaded
+  // Cycle through screens
   useEffect(() => {
-    if (loadedScreens.size === screens.length) {
-      setAllLoaded(true);
-    }
-  }, [loadedScreens]);
-
-  // Cycle through screens only after all are loaded
-  useEffect(() => {
-    if (!allLoaded) return;
-
-    const screen = screens[currentScreenIndex];
-    const timer = setTimeout(() => {
+    const timer = setInterval(() => {
       setCurrentScreenIndex((prev) => (prev + 1) % screens.length);
-    }, screen.duration);
+    }, CYCLE_DURATION);
 
-    return () => clearTimeout(timer);
-  }, [currentScreenIndex, allLoaded]);
+    return () => clearInterval(timer);
+  }, []);
 
   const currentScreen = screens[currentScreenIndex];
-  const aspectRatio = 800 / 600; // Approximate app aspect ratio
+  const aspectRatio = 16 / 10;
   const height = size / aspectRatio;
 
   return (
@@ -60,76 +39,65 @@ export const AppFlowAnimation = ({ size = 320, className = "" }: AppFlowAnimatio
     >
       {/* Glow effect behind the app window */}
       <div
-        className="absolute inset-0 rounded-xl opacity-50"
+        className="absolute inset-0 rounded-xl opacity-60"
         style={{
-          background: "radial-gradient(ellipse at center, rgba(168, 85, 247, 0.3) 0%, rgba(20, 184, 166, 0.2) 40%, transparent 70%)",
-          filter: "blur(20px)",
-          transform: "scale(1.2)",
+          background: "radial-gradient(ellipse at center, rgba(168, 85, 247, 0.4) 0%, rgba(20, 184, 166, 0.2) 40%, transparent 70%)",
+          filter: "blur(25px)",
+          transform: "scale(1.3)",
         }}
       />
 
       {/* App window container */}
       <motion.div
-        className="relative w-full h-full rounded-xl overflow-hidden shadow-2xl"
+        className="relative w-full h-full rounded-xl overflow-hidden"
         style={{
-          boxShadow: "0 25px 50px -12px rgba(0, 0, 0, 0.8), 0 0 40px rgba(168, 85, 247, 0.2)",
+          boxShadow: "0 25px 50px -12px rgba(0, 0, 0, 0.8), 0 0 60px rgba(168, 85, 247, 0.3)",
+          border: "1px solid rgba(255, 255, 255, 0.1)",
         }}
         initial={{ opacity: 0, scale: 0.95 }}
         animate={{ opacity: 1, scale: 1 }}
         transition={{ duration: 0.5 }}
       >
-        {/* All iframes preloaded, only current one visible */}
-        {screens.map((screen, index) => (
-          <div
-            key={screen.name}
-            className="absolute inset-0"
-            style={{
-              opacity: index === currentScreenIndex ? 1 : 0,
-              pointerEvents: "none",
-              transition: "opacity 0.3s ease-in-out",
+        {/* Image carousel with crossfade */}
+        <AnimatePresence mode="wait">
+          <motion.img
+            key={currentScreen.name}
+            src={currentScreen.image}
+            alt={currentScreen.label}
+            className="w-full h-full object-cover"
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            transition={{ duration: 0.5 }}
+            onError={(e) => {
+              // Hide image if not found
+              (e.target as HTMLImageElement).style.display = 'none';
             }}
-          >
-            <iframe
-              src={`${BASE_URL}/${screen.name}`}
-              className="w-full h-full border-0"
-              style={{
-                transform: "scale(0.55)",
-                transformOrigin: "top left",
-                width: `${100 / 0.55}%`,
-                height: `${100 / 0.55}%`,
-                pointerEvents: "none",
-              }}
-              onLoad={() => handleIframeLoad(screen.name)}
-              title={`Conform Studio - ${screen.label}`}
-            />
-          </div>
-        ))}
+          />
+        </AnimatePresence>
 
-        {/* Loading indicator while iframes load */}
-        {!allLoaded && (
-          <div className="absolute inset-0 flex items-center justify-center bg-black/80">
-            <div className="text-white/50 text-xs uppercase tracking-wider">
-              Loading...
-            </div>
-          </div>
-        )}
-
-        {/* Overlay to prevent interaction */}
-        <div className="absolute inset-0 pointer-events-none" />
+        {/* Subtle overlay for polish */}
+        <div
+          className="absolute inset-0 pointer-events-none"
+          style={{
+            background: "linear-gradient(180deg, rgba(0,0,0,0) 0%, rgba(0,0,0,0.2) 100%)",
+          }}
+        />
       </motion.div>
 
       {/* Screen indicator dots */}
-      <div className="absolute -bottom-6 left-1/2 -translate-x-1/2 flex gap-1.5">
+      <div className="absolute -bottom-6 left-1/2 -translate-x-1/2 flex gap-2">
         {screens.map((screen, index) => (
-          <motion.div
+          <motion.button
             key={screen.name}
-            className={`w-1.5 h-1.5 rounded-full transition-colors ${
+            onClick={() => setCurrentScreenIndex(index)}
+            className={`w-2 h-2 rounded-full transition-all ${
               index === currentScreenIndex
-                ? "bg-purple-400"
-                : "bg-white/30"
+                ? "bg-purple-400 scale-125"
+                : "bg-white/30 hover:bg-white/50"
             }`}
-            animate={index === currentScreenIndex ? { scale: [1, 1.2, 1] } : {}}
-            transition={{ duration: 0.3 }}
+            whileHover={{ scale: 1.2 }}
+            whileTap={{ scale: 0.9 }}
           />
         ))}
       </div>
@@ -138,7 +106,7 @@ export const AppFlowAnimation = ({ size = 320, className = "" }: AppFlowAnimatio
       <AnimatePresence mode="wait">
         <motion.div
           key={currentScreen.label}
-          className="absolute -bottom-12 left-1/2 -translate-x-1/2 text-white/50 text-[10px] uppercase tracking-wider whitespace-nowrap"
+          className="absolute -bottom-12 left-1/2 -translate-x-1/2 text-white/60 text-[10px] uppercase tracking-wider whitespace-nowrap"
           initial={{ opacity: 0, y: -5 }}
           animate={{ opacity: 1, y: 0 }}
           exit={{ opacity: 0, y: 5 }}
