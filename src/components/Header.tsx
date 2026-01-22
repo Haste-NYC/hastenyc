@@ -133,6 +133,13 @@ const Header = () => {
         {/* Right side: Buttons */}
         <div className="hidden md:flex items-center gap-4">
           <a
+            href="/contact"
+            className="text-foreground/60 hover:text-foreground text-xs uppercase tracking-wider transition-colors"
+          >
+            Contact Us
+          </a>
+
+          <a
             href="/signin"
             className="text-foreground/80 hover:text-foreground hover:bg-white/5 text-xs uppercase tracking-wider transition-all px-3 py-1.5 rounded-full border border-white/20 hover:border-white/40"
           >
@@ -191,6 +198,12 @@ const Header = () => {
                   {link.label}
                 </a>
               ))}
+              <a
+                href="/contact"
+                className="text-foreground/60 text-lg uppercase tracking-wider"
+              >
+                Contact Us
+              </a>
               <button
                 onClick={scrollToPricing}
                 className="w-full bg-white text-gray-900 font-medium text-base px-6 py-3 rounded-full hover:bg-gray-100 transition-colors"
