@@ -81,9 +81,12 @@ const Header = () => {
 
         {/* Right side: Buttons */}
         <div className="hidden md:flex items-center gap-4">
-          <Button onClick={scrollToPricing} variant="hero" size="sm">
+          <button
+            onClick={scrollToPricing}
+            className="bg-white text-gray-900 font-medium text-xs px-5 py-1.5 rounded-full hover:bg-gray-100 transition-colors"
+          >
             Start Trial
-          </Button>
+          </button>
 
           <a
             href="/signin"
@@ -119,9 +122,12 @@ const Header = () => {
                   {link.label}
                 </a>
               ))}
-              <Button onClick={scrollToPricing} variant="hero" size="lg" className="w-full">
+              <button
+                onClick={scrollToPricing}
+                className="w-full bg-white text-gray-900 font-medium text-base px-6 py-3 rounded-full hover:bg-gray-100 transition-colors"
+              >
                 Start Trial
-              </Button>
+              </button>
               <a
                 href="/signin"
                 className="text-foreground/80 text-center text-lg uppercase tracking-wider"
