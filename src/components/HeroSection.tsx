@@ -5,6 +5,7 @@ import { useLenis } from "lenis/react";
 import conformLogo from "@/assets/conform-studio-logo.png";
 import GlowingSphere from "@/components/GlowingSphere";
 import { LoadingAnimation } from "@/components/LoadingAnimation";
+import { AppFlowAnimation } from "@/components/AppFlowAnimation";
 
 // Particle component for constellation effect
 const Particles = () => {
@@ -132,6 +133,11 @@ const HeroSection = () => {
           size={400}
           className="opacity-60"
         />
+      </div>
+
+      {/* App Flow Animation - shows the app workflow on top of spinning animation */}
+      <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 z-[2]">
+        <AppFlowAnimation size={320} className="opacity-95" />
       </div>
 
       {/* Atmospheric glow - x.ai inspired with blue/white light emanation */}
