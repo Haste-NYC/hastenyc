@@ -58,3 +58,46 @@ Starting fixes at Wed Jan 21 10:41:05 CST 2026
 - src/components/PricingSection.tsx
 
 ---
+
+### Iteration: FIX-004 - Replace Watch Demo with Video Section
+**Date**: Wed Jan 21 2026
+**Status**: Complete
+
+**What was implemented**:
+- Removed "Watch Demo" anchor link from HeroSection.tsx (lines 124-136)
+- Removed "Product Screenshot" placeholder div from HeroSection.tsx (lines 140-153)
+- Added id="video" to existing VideoSection.tsx for anchor link functionality
+- Imported VideoSection in Index.tsx and added it between HeroSection and FeatureSection
+- VideoSection already had Vimeo embed (video ID: 1081347302), blue radial gradient background, and "See it in action" text
+
+**Learnings/Patterns discovered**:
+- VideoSection.tsx component already existed with proper Vimeo embed and styling
+- HeroSection uses Lenis for smooth scrolling to anchor targets
+- Section components use motion from framer-motion for animations
+
+**Files changed**:
+- src/components/HeroSection.tsx
+- src/components/VideoSection.tsx
+- src/pages/Index.tsx
+
+---
+
+### Iteration: FIX-005 - Align pricing card buttons at bottom
+**Date**: Wed Jan 21 2026
+**Status**: Complete
+
+**What was implemented**:
+- Added `flex flex-col` to Card component className for flex column layout
+- Added `flex-grow` to CardContent to expand and fill available space
+- Added `mt-auto` to CardFooter to push buttons to the bottom of the card
+- All three pricing cards (Freelancer, Studio, Enterprise) now have buttons aligned at the same vertical position
+
+**Learnings/Patterns discovered**:
+- Standard flexbox pattern for equal-height cards: parent uses `flex flex-col`, content area uses `flex-grow`, footer uses `mt-auto`
+- The motion.div wrapper already had `h-full` which enables the equal height behavior
+- Card component already had `h-full` for height inheritance
+
+**Files changed**:
+- src/components/PricingPlans.tsx
+
+---

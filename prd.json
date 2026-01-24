@@ -66,7 +66,8 @@
         "Lint passes"
       ],
       "priority": 4,
-      "passes": false
+      "passes": true,
+      "notes": "Removed Watch Demo link and Product Screenshot placeholder from HeroSection.tsx. Added id='video' to existing VideoSection.tsx. Added VideoSection between Hero and Features in Index.tsx."
     },
     {
       "id": "FIX-005",
@@ -82,7 +83,8 @@
         "Lint passes"
       ],
       "priority": 5,
-      "passes": false
+      "passes": true,
+      "notes": "Added flex flex-col to Card, flex-grow to CardContent, and mt-auto to CardFooter for consistent button alignment"
     }
   ]
 }
