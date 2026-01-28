@@ -42,27 +42,23 @@ const Index = () => {
         <VideoSection />
 
         {/* Features - stacked sections with peek effect */}
-        <section id="features" className="py-12 relative">
+        <section id="features" className="py-20 relative">
           <FeatureSection />
         </section>
 
-        {/* About */}
-        <section id="about" className="py-12 relative">
-          {/* Top gradient */}
-          <div className="absolute top-0 left-0 right-0 h-24 bg-gradient-to-b from-background to-transparent pointer-events-none" />
-          <AboutSection />
+        {/* Pricing */}
+        <section id="pricing" className="py-20 relative">
+          <PricingSection />
         </section>
 
         {/* FAQ */}
-        <section id="faq" className="py-12 relative">
+        <section id="faq" className="py-20 relative">
           <FAQSection />
         </section>
 
-        {/* Pricing */}
-        <section id="pricing" className="py-12 relative">
-          {/* Top gradient */}
-          <div className="absolute top-0 left-0 right-0 h-24 bg-gradient-to-b from-background to-transparent pointer-events-none" />
-          <PricingSection />
+        {/* About */}
+        <section id="about" className="py-20 relative">
+          <AboutSection />
         </section>
       </main>
       <Footer />

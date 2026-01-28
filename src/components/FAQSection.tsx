@@ -46,7 +46,7 @@ const faqs = [
 
 const FAQSection = () => {
   return (
-    <div className="max-w-3xl mx-auto py-12 px-6">
+    <div className="max-w-4xl mx-auto py-12 sm:py-16 md:py-20 px-4 sm:px-6 md:px-8">
       {/* Section Label */}
       <motion.div
         initial={{ opacity: 0 }}

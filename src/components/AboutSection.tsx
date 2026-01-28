@@ -9,7 +9,7 @@ const trustSignals = [
 
 const AboutSection = () => {
   return (
-    <div className="max-w-4xl mx-auto py-12 px-6">
+    <div className="max-w-4xl mx-auto py-12 sm:py-16 md:py-20 px-4 sm:px-6 md:px-8">
       {/* Section Label */}
       <motion.div
         initial={{ opacity: 0 }}
@@ -75,7 +75,7 @@ const AboutSection = () => {
         <h3 className="text-xl font-semibold text-center mb-8 uppercase tracking-wide">
           Trusted By
         </h3>
-        <ul className="grid grid-cols-1 md:grid-cols-2 gap-4">
+        <ul className="grid grid-cols-1 sm:grid-cols-2 gap-4 sm:gap-4">
           {trustSignals.map((signal, index) => (
             <li
               key={index}

@@ -114,7 +114,7 @@ const HeroSection = () => {
   return (
     <section
       ref={sectionRef}
-      className="relative flex flex-col items-center justify-center px-6 py-4 min-h-[calc(100vh-200px)] overflow-hidden"
+      className="relative flex flex-col items-center justify-center px-4 sm:px-6 py-4 min-h-[calc(100vh-200px)] overflow-hidden"
     >
       {/* Particle constellation effect */}
       <Particles />
@@ -170,7 +170,7 @@ const HeroSection = () => {
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.6 }}
-          className="text-foreground text-xs md:text-sm uppercase tracking-[0.25em] mb-4"
+          className="text-foreground text-xs md:text-sm uppercase tracking-[0.25em] mb-4 mt-4 sm:mt-0"
         >
           Introducing from HASTE.NYC
         </motion.p>
@@ -234,11 +234,11 @@ const HeroSection = () => {
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.6, delay: 0.5 }}
-          className="pt-6"
+          className="pt-8 sm:pt-6"
         >
           <button
             onClick={scrollToPricing}
-            className="bg-white text-gray-900 font-medium text-base px-8 py-3 rounded-full hover:bg-gray-100 transition-colors"
+            className="bg-white text-gray-900 font-medium text-sm sm:text-base px-6 sm:px-8 py-2.5 sm:py-3 rounded-full hover:bg-gray-100 transition-colors"
           >
             Start Free Trial
           </button>

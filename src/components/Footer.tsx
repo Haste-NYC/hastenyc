@@ -21,7 +21,7 @@ const HasteLogo = () => (
 
 const Footer = () => {
   return (
-    <footer className="relative py-24 px-6 overflow-hidden">
+    <footer className="relative py-10 sm:py-12 px-4 sm:px-6 md:px-12 lg:px-20 overflow-hidden">
       {/* Warm gradient background (x.ai inspired) */}
       <div
         className="absolute inset-0 pointer-events-none"
@@ -38,7 +38,7 @@ const Footer = () => {
           `,
         }}
       />
-      <div className="max-w-4xl mx-auto text-center space-y-6 relative z-10">
+      <div className="max-w-4xl mx-auto text-center space-y-8 relative z-10">
         {/* Haste Logo */}
         <div className="flex justify-center mb-4">
           <HasteLogo />
@@ -50,7 +50,7 @@ const Footer = () => {
         </p>
         
         {/* Footer Links */}
-        <nav className="flex flex-col items-center gap-3">
+        <nav className="flex flex-col items-center gap-4 sm:gap-3">
           <a 
             href="https://www.haste.studio" 
             target="_blank" 

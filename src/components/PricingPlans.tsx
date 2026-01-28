@@ -143,7 +143,7 @@ const PricingPlans = ({ onSelectPlan, selectedPriceId, onScheduleCall }: Pricing
       </div>
 
       {/* Pricing Cards */}
-      <div className="grid md:grid-cols-3 gap-6">
+      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-6">
         {tiers.map((tier) => (
           <motion.div
             key={tier.name}
@@ -179,7 +179,7 @@ const PricingPlans = ({ onSelectPlan, selectedPriceId, onScheduleCall }: Pricing
               <div className="mt-4">
                 {tier.monthlyPrice !== null ? (
                   <>
-                    <span className="text-4xl font-bold text-white">
+                    <span className="text-3xl sm:text-4xl font-bold text-white">
                       ${isYearly && tier.yearlyPrice ? Math.round(tier.yearlyPrice / 12) : tier.monthlyPrice}
                     </span>
                     <span className="text-gray-400 ml-2">
