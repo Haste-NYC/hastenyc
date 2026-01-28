@@ -1,8 +1,10 @@
-import React, { useEffect, useRef, useCallback } from 'react';
+import React, { useEffect, useRef, useCallback, useState } from 'react';
 
 interface LoadingAnimationProps {
   /** URL to the sprite sheet image */
   spriteSheet: string;
+  /** URL to static image for mobile (optional - will extract first frame if not provided) */
+  staticImage?: string;
   /** Number of frames in the animation */
   frameCount?: number;
   /** Frames per second */
@@ -27,6 +29,7 @@ interface LoadingAnimationProps {
 
 export const LoadingAnimation: React.FC<LoadingAnimationProps> = ({
   spriteSheet,
+  staticImage,
   frameCount = 298,
   fps = 60,
   frameWidth = 604,
@@ -44,6 +47,14 @@ export const LoadingAnimation: React.FC<LoadingAnimationProps> = ({
   const animationRef = useRef<number>(0);
   const lastFrameTimeRef = useRef(0);
   const dprRef = useRef(1);
+  const [isMobile, setIsMobile] = useState(false);
+
+  // Check for mobile on mount
+  useEffect(() => {
+    const checkMobile = () => setIsMobile(window.innerWidth < 768);
+    checkMobile();
+    // Don't add resize listener - we want to keep the initial state to avoid loading sprite on resize
+  }, []);
 
   // Setup canvas for high-DPI displays
   useEffect(() => {
@@ -147,6 +158,45 @@ export const LoadingAnimation: React.FC<LoadingAnimationProps> = ({
       }
     };
   }, [playing, animate]);
+
+  // On mobile, show static first frame from sprite (no animation)
+  // Still loads sprite but only renders once - no animation loop overhead
+  useEffect(() => {
+    if (!isMobile) return;
+
+    const canvas = canvasRef.current;
+    if (!canvas) return;
+
+    const ctx = canvas.getContext('2d');
+    if (!ctx) return;
+
+    const img = new Image();
+    img.src = spriteSheet;
+    img.onload = () => {
+      // Draw just the first frame (top-left of sprite sheet)
+      ctx.clearRect(0, 0, size, size);
+      ctx.drawImage(
+        img,
+        0, 0, frameWidth, frameHeight,  // Source: first frame
+        0, 0, size, size                 // Destination: full canvas
+      );
+    };
+  }, [isMobile, spriteSheet, frameWidth, frameHeight, size]);
+
+  // On mobile, render canvas but don't animate
+  if (isMobile) {
+    return (
+      <canvas
+        ref={canvasRef}
+        className={className}
+        style={{
+          width: size,
+          height: size,
+          ...style,
+        }}
+      />
+    );
+  }
 
   return (
     <canvas

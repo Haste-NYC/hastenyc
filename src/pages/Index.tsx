@@ -1,13 +1,23 @@
+import { lazy, Suspense } from "react";
 import Header from "@/components/Header";
 import HeroSection from "@/components/HeroSection";
 import TrustBadgeBar from "@/components/TrustBadgeBar";
-import VideoSection from "@/components/VideoSection";
-import FeatureSection from "@/components/FeatureSection";
-import AboutSection from "@/components/AboutSection";
-import FAQSection from "@/components/FAQSection";
-import PricingSection from "@/components/PricingSection";
-import Footer from "@/components/Footer";
 import SEO from "@/components/SEO";
+
+// Lazy load below-fold components for better initial load performance
+const VideoSection = lazy(() => import("@/components/VideoSection"));
+const FeatureSection = lazy(() => import("@/components/FeatureSection"));
+const AboutSection = lazy(() => import("@/components/AboutSection"));
+const FAQSection = lazy(() => import("@/components/FAQSection"));
+const PricingSection = lazy(() => import("@/components/PricingSection"));
+const Footer = lazy(() => import("@/components/Footer"));
+
+// Minimal loading placeholder
+const SectionLoader = () => (
+  <div className="min-h-[200px] flex items-center justify-center">
+    <div className="w-8 h-8 border-2 border-white/20 border-t-white/60 rounded-full animate-spin" />
+  </div>
+);
 
 const Index = () => {
   return (
@@ -28,44 +38,52 @@ const Index = () => {
       />
       <Header />
       <main>
-        {/* Hero - full height minus header */}
-        <section id="hero" className="pt-10 relative snap-section">
+        {/* Hero - full viewport height on mobile */}
+        <section id="hero" className="pt-10 relative snap-section-full">
           <HeroSection />
           {/* Gradient fade to next section */}
           <div className="absolute bottom-0 left-0 right-0 h-32 bg-gradient-to-t from-background to-transparent pointer-events-none" />
         </section>
 
-        {/* Trust Badge Bar - Partner logos */}
-        <div className="snap-section">
+        {/* Trust Badge Bar - combined with Video for better mobile flow */}
+        <div className="snap-section-full">
           <TrustBadgeBar />
+          <Suspense fallback={<SectionLoader />}>
+            <VideoSection />
+          </Suspense>
         </div>
 
-        {/* Video Demo */}
-        <div className="snap-section">
-          <VideoSection />
-        </div>
-
-        {/* Features - stacked sections with peek effect */}
-        <section id="features" className="py-20 relative snap-section">
-          <FeatureSection />
+        {/* Features - scrollable content, each feature snaps */}
+        <section id="features" className="py-12 sm:py-20 relative">
+          <Suspense fallback={<SectionLoader />}>
+            <FeatureSection />
+          </Suspense>
         </section>
 
-        {/* Pricing */}
-        <section id="pricing" className="py-20 relative snap-section">
-          <PricingSection />
+        {/* Pricing - full viewport on mobile */}
+        <section id="pricing" className="py-12 sm:py-20 relative snap-section-full">
+          <Suspense fallback={<SectionLoader />}>
+            <PricingSection />
+          </Suspense>
         </section>
 
-        {/* FAQ */}
-        <section id="faq" className="py-20 relative snap-section">
-          <FAQSection />
+        {/* FAQ - scrollable content */}
+        <section id="faq" className="py-12 sm:py-20 relative">
+          <Suspense fallback={<SectionLoader />}>
+            <FAQSection />
+          </Suspense>
         </section>
 
         {/* About */}
-        <section id="about" className="py-20 relative snap-section">
-          <AboutSection />
+        <section id="about" className="py-12 sm:py-20 relative">
+          <Suspense fallback={<SectionLoader />}>
+            <AboutSection />
+          </Suspense>
         </section>
       </main>
-      <Footer />
+      <Suspense fallback={null}>
+        <Footer />
+      </Suspense>
     </div>
   );
 };
