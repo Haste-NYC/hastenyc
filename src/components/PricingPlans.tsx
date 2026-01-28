@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useRef, useEffect } from "react";
 import { motion } from "framer-motion";
 import { Card, CardContent, CardFooter, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
@@ -93,6 +93,41 @@ const tiers: PricingTier[] = [
 
 const PricingPlans = ({ onSelectPlan, selectedPriceId, onScheduleCall }: PricingPlansProps) => {
   const [isYearly, setIsYearly] = useState(true);
+  const [activeCardIndex, setActiveCardIndex] = useState(0);
+  const scrollContainerRef = useRef<HTMLDivElement>(null);
+  const cardRefs = useRef<(HTMLDivElement | null)[]>([]);
+
+  // Track which card is most visible using Intersection Observer
+  useEffect(() => {
+    const container = scrollContainerRef.current;
+    if (!container) return;
+
+    // Only run on mobile (< 640px)
+    if (window.innerWidth >= 640) return;
+
+    const observer = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting && entry.intersectionRatio > 0.5) {
+            const index = cardRefs.current.indexOf(entry.target as HTMLDivElement);
+            if (index !== -1) {
+              setActiveCardIndex(index);
+            }
+          }
+        });
+      },
+      {
+        root: container,
+        threshold: 0.5,
+      }
+    );
+
+    cardRefs.current.forEach((card) => {
+      if (card) observer.observe(card);
+    });
+
+    return () => observer.disconnect();
+  }, []);
 
   const handleSelectPlan = (tier: PricingTier) => {
     if (tier.isEnterprise) {
@@ -143,29 +178,36 @@ const PricingPlans = ({ onSelectPlan, selectedPriceId, onScheduleCall }: Pricing
       </div>
 
       {/* Pricing Cards - Horizontal scroll on mobile, grid on larger screens */}
-      <div className="
-        flex overflow-x-auto snap-x snap-mandatory gap-4 pb-4 -mx-4 px-4 items-stretch
-        sm:grid sm:grid-cols-2 sm:overflow-visible sm:snap-none sm:mx-0 sm:px-0 sm:pb-0
-        lg:grid-cols-3 sm:gap-6
-        [&::-webkit-scrollbar]:hidden [-ms-overflow-style:none] [scrollbar-width:none]
-      ">
-        {tiers.map((tier) => (
+      <div
+        ref={scrollContainerRef}
+        className="
+          flex overflow-x-auto snap-x snap-mandatory gap-4 pb-4 -mx-4 px-4
+          sm:grid sm:grid-cols-2 sm:overflow-visible sm:snap-none sm:mx-0 sm:px-0 sm:pb-0
+          lg:grid-cols-3 sm:gap-6
+          [&::-webkit-scrollbar]:hidden [-ms-overflow-style:none] [scrollbar-width:none]
+        "
+      >
+        {tiers.map((tier, index) => (
           <motion.div
             key={tier.name}
+            ref={(el) => (cardRefs.current[index] = el)}
             whileHover={{ y: -4, transition: { duration: 0.2 } }}
-            className="flex-shrink-0 w-[85vw] sm:w-auto snap-center min-h-[520px] sm:min-h-0 sm:h-full"
+            className="flex-shrink-0 w-[85vw] sm:w-auto snap-center"
           >
             <Card
-              className={`bg-transparent border transition-all duration-300 relative h-full flex flex-col ${
+              className={`bg-transparent border transition-all duration-300 relative h-[580px] sm:h-full flex flex-col ${
                 isSelected(tier)
                   ? "border-white"
+                  : index === activeCardIndex
+                  ? "border-white/60 sm:border-white/10 sm:hover:border-white/20"
                   : tier.popular
-                  ? "border-white/40 hover:border-white/60"
+                  ? "sm:border-white/40 sm:hover:border-white/60 border-white/10"
                   : "border-white/10 hover:border-white/20"
               }`}
             >
+            {/* Most Popular badge - hidden on mobile to prevent cutoff */}
             {tier.popular && (
-              <div className="absolute -top-3 left-1/2 -translate-x-1/2">
+              <div className="absolute -top-3 left-1/2 -translate-x-1/2 hidden sm:block">
                 <Badge className="bg-white text-gray-900 border-0 px-3">
                   Most Popular
                 </Badge>
@@ -236,6 +278,32 @@ const PricingPlans = ({ onSelectPlan, selectedPriceId, onScheduleCall }: Pricing
             </CardFooter>
             </Card>
           </motion.div>
+        ))}
+      </div>
+
+      {/* Carousel indicator dots - mobile only */}
+      <div className="flex justify-center gap-2 sm:hidden">
+        {tiers.map((_, index) => (
+          <button
+            key={index}
+            onClick={() => {
+              const container = scrollContainerRef.current;
+              if (container) {
+                const cardWidth = container.offsetWidth * 0.85;
+                const gap = 16;
+                container.scrollTo({
+                  left: index * (cardWidth + gap),
+                  behavior: "smooth",
+                });
+              }
+            }}
+            className={`w-2 h-2 rounded-full transition-all duration-300 ${
+              index === activeCardIndex
+                ? "bg-white w-4"
+                : "bg-white/30"
+            }`}
+            aria-label={`Go to pricing card ${index + 1}`}
+          />
         ))}
       </div>
     </div>
