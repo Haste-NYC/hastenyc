@@ -11,7 +11,7 @@ import SEO from "@/components/SEO";
 
 const Index = () => {
   return (
-    <div className="min-h-screen bg-background">
+    <div className="min-h-screen bg-background snap-sections">
       <SEO
         title="Haste Conform Studio - Premiere to Resolve"
         description="Instant project migration from Adobe Premiere to Davinci Resolve. Haste Conform Studio uses AI to automate post-production. 300X faster timeline conform for film and TV. Built for studios, secure, and scalable."
@@ -29,35 +29,39 @@ const Index = () => {
       <Header />
       <main>
         {/* Hero - full height minus header */}
-        <section id="hero" className="pt-10 relative">
+        <section id="hero" className="pt-10 relative snap-section">
           <HeroSection />
           {/* Gradient fade to next section */}
           <div className="absolute bottom-0 left-0 right-0 h-32 bg-gradient-to-t from-background to-transparent pointer-events-none" />
         </section>
 
         {/* Trust Badge Bar - Partner logos */}
-        <TrustBadgeBar />
+        <div className="snap-section">
+          <TrustBadgeBar />
+        </div>
 
         {/* Video Demo */}
-        <VideoSection />
+        <div className="snap-section">
+          <VideoSection />
+        </div>
 
         {/* Features - stacked sections with peek effect */}
-        <section id="features" className="py-20 relative">
+        <section id="features" className="py-20 relative snap-section">
           <FeatureSection />
         </section>
 
         {/* Pricing */}
-        <section id="pricing" className="py-20 relative">
+        <section id="pricing" className="py-20 relative snap-section">
           <PricingSection />
         </section>
 
         {/* FAQ */}
-        <section id="faq" className="py-20 relative">
+        <section id="faq" className="py-20 relative snap-section">
           <FAQSection />
         </section>
 
         {/* About */}
-        <section id="about" className="py-20 relative">
+        <section id="about" className="py-20 relative snap-section">
           <AboutSection />
         </section>
       </main>

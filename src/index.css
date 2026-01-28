@@ -77,6 +77,18 @@
     scroll-behavior: smooth;
   }
 
+  /* Mobile snap scrolling for app-like section navigation */
+  @media (max-width: 639px) {
+    .snap-sections {
+      scroll-snap-type: y proximity;
+    }
+
+    .snap-section {
+      scroll-snap-align: start;
+      scroll-snap-stop: normal;
+    }
+  }
+
   body {
     @apply bg-background text-foreground antialiased;
     font-family: 'Inter', sans-serif;
