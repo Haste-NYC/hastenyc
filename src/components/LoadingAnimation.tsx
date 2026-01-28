@@ -159,43 +159,10 @@ export const LoadingAnimation: React.FC<LoadingAnimationProps> = ({
     };
   }, [playing, animate]);
 
-  // On mobile, show static first frame from sprite (no animation)
-  // Still loads sprite but only renders once - no animation loop overhead
-  useEffect(() => {
-    if (!isMobile) return;
-
-    const canvas = canvasRef.current;
-    if (!canvas) return;
-
-    const ctx = canvas.getContext('2d');
-    if (!ctx) return;
-
-    const img = new Image();
-    img.src = spriteSheet;
-    img.onload = () => {
-      // Draw just the first frame (top-left of sprite sheet)
-      ctx.clearRect(0, 0, size, size);
-      ctx.drawImage(
-        img,
-        0, 0, frameWidth, frameHeight,  // Source: first frame
-        0, 0, size, size                 // Destination: full canvas
-      );
-    };
-  }, [isMobile, spriteSheet, frameWidth, frameHeight, size]);
-
-  // On mobile, render canvas but don't animate
+  // On mobile, skip the heavy sprite animation entirely for performance
+  // The animation is decorative and the hero section works without it
   if (isMobile) {
-    return (
-      <canvas
-        ref={canvasRef}
-        className={className}
-        style={{
-          width: size,
-          height: size,
-          ...style,
-        }}
-      />
-    );
+    return null;
   }
 
   return (

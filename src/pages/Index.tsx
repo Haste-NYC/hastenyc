@@ -54,28 +54,28 @@ const Index = () => {
         </div>
 
         {/* Features - scrollable content, each feature snaps */}
-        <section id="features" className="py-12 sm:py-20 relative">
+        <section id="features" className="py-10 sm:py-20 relative">
           <Suspense fallback={<SectionLoader />}>
             <FeatureSection />
           </Suspense>
         </section>
 
         {/* Pricing - full viewport on mobile */}
-        <section id="pricing" className="py-12 sm:py-20 relative snap-section-full">
+        <section id="pricing" className="py-10 sm:py-20 relative snap-section-full">
           <Suspense fallback={<SectionLoader />}>
             <PricingSection />
           </Suspense>
         </section>
 
         {/* FAQ - scrollable content */}
-        <section id="faq" className="py-12 sm:py-20 relative">
+        <section id="faq" className="py-10 sm:py-20 relative">
           <Suspense fallback={<SectionLoader />}>
             <FAQSection />
           </Suspense>
         </section>
 
         {/* About */}
-        <section id="about" className="py-12 sm:py-20 relative">
+        <section id="about" className="py-10 sm:py-20 relative">
           <Suspense fallback={<SectionLoader />}>
             <AboutSection />
           </Suspense>

@@ -76,7 +76,7 @@ const TrustBadgeBar = () => {
   const duplicatedPartners = [...partners, ...partners];
 
   return (
-    <section className="py-12 md:py-12 relative overflow-hidden">
+    <section className="py-6 sm:py-12 relative overflow-hidden">
       {/* Label */}
       <motion.p
         initial={{ opacity: 0 }}

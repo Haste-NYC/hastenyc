@@ -10,7 +10,7 @@ const PricingSection = () => {
   };
 
   return (
-    <div className="py-20 px-6 md:px-20">
+    <div className="px-4 sm:px-6 md:px-20">
       <div className="max-w-7xl mx-auto">
         {/* Section Label */}
         <motion.div
