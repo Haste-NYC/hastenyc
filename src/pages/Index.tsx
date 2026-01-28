@@ -10,6 +10,7 @@ const FeatureSection = lazy(() => import("@/components/FeatureSection"));
 const AboutSection = lazy(() => import("@/components/AboutSection"));
 const FAQSection = lazy(() => import("@/components/FAQSection"));
 const PricingSection = lazy(() => import("@/components/PricingSection"));
+const Conform3DVisualization = lazy(() => import("@/components/Conform3DVisualization"));
 const Footer = lazy(() => import("@/components/Footer"));
 
 // Minimal loading placeholder
@@ -58,6 +59,15 @@ const Index = () => {
           <Suspense fallback={<SectionLoader />}>
             <FeatureSection />
           </Suspense>
+        </section>
+
+        {/* 3D Visualization - Interactive conform data visualization */}
+        <section className="py-10 sm:py-20 px-4 sm:px-6 md:px-12 lg:px-20">
+          <div className="max-w-7xl mx-auto">
+            <Suspense fallback={<SectionLoader />}>
+              <Conform3DVisualization />
+            </Suspense>
+          </div>
         </section>
 
         {/* Pricing - full viewport on mobile */}

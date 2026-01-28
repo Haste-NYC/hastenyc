@@ -9,14 +9,7 @@ import { LoadingAnimation } from "@/components/LoadingAnimation";
 const Particles = () => {
   const [isMobile, setIsMobile] = useState(true); // Default to mobile to prevent flash
 
-  useEffect(() => {
-    // Check once on mount - no resize listener needed
-    setIsMobile(window.innerWidth < 768);
-  }, []);
-
-  // Skip particles entirely on mobile for maximum performance
-  if (isMobile) return null;
-
+  // Generate particles once - must be called unconditionally (React hooks rule)
   const particles = useMemo(() => {
     return Array.from({ length: 30 }, (_, i) => ({
       id: i,
@@ -27,6 +20,14 @@ const Particles = () => {
       duration: Math.random() * 3 + 5,
     }));
   }, []);
+
+  useEffect(() => {
+    // Check once on mount - no resize listener needed
+    setIsMobile(window.innerWidth < 768);
+  }, []);
+
+  // Skip particles entirely on mobile for maximum performance
+  if (isMobile) return null;
 
   return (
     <div className="absolute inset-0 overflow-hidden pointer-events-none">
