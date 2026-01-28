@@ -11,7 +11,7 @@ import SEO from "@/components/SEO";
 
 const Index = () => {
   return (
-    <div className="min-h-screen bg-background snap-sections">
+    <div className="min-h-screen bg-background snap-sections overflow-x-hidden">
       <SEO
         title="Haste Conform Studio - Premiere to Resolve"
         description="Instant project migration from Adobe Premiere to Davinci Resolve. Haste Conform Studio uses AI to automate post-production. 300X faster timeline conform for film and TV. Built for studios, secure, and scalable."

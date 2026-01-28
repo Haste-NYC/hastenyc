@@ -7,8 +7,19 @@ import { LoadingAnimation } from "@/components/LoadingAnimation";
 
 // Particle component for constellation effect
 const Particles = () => {
+  const [isMobile, setIsMobile] = useState(false);
+
+  useEffect(() => {
+    const checkMobile = () => setIsMobile(window.innerWidth < 768);
+    checkMobile();
+    window.addEventListener("resize", checkMobile);
+    return () => window.removeEventListener("resize", checkMobile);
+  }, []);
+
   const particles = useMemo(() => {
-    return Array.from({ length: 30 }, (_, i) => ({
+    // Reduce particles on mobile for better performance
+    const count = isMobile ? 10 : 30;
+    return Array.from({ length: count }, (_, i) => ({
       id: i,
       x: Math.random() * 100,
       y: Math.random() * 100,
@@ -16,7 +27,10 @@ const Particles = () => {
       delay: Math.random() * 5,
       duration: Math.random() * 3 + 5,
     }));
-  }, []);
+  }, [isMobile]);
+
+  // Skip connection lines on mobile for performance
+  const lineCount = isMobile ? 0 : 10;
 
   return (
     <div className="absolute inset-0 overflow-hidden pointer-events-none">
@@ -43,38 +57,40 @@ const Particles = () => {
           }}
         />
       ))}
-      {/* Connection lines between some particles */}
-      <svg className="absolute inset-0 w-full h-full">
-        <defs>
-          <linearGradient id="lineGradient" x1="0%" y1="0%" x2="100%" y2="0%">
-            <stop offset="0%" stopColor="rgba(255,255,255,0)" />
-            <stop offset="50%" stopColor="rgba(255,255,255,0.1)" />
-            <stop offset="100%" stopColor="rgba(255,255,255,0)" />
-          </linearGradient>
-        </defs>
-        {particles.slice(0, 10).map((p, i) => {
-          const next = particles[(i + 3) % particles.length];
-          return (
-            <motion.line
-              key={`line-${i}`}
-              x1={`${p.x}%`}
-              y1={`${p.y}%`}
-              x2={`${next.x}%`}
-              y2={`${next.y}%`}
-              stroke="url(#lineGradient)"
-              strokeWidth="1"
-              initial={{ pathLength: 0, opacity: 0 }}
-              animate={{ pathLength: 1, opacity: [0, 0.3, 0] }}
-              transition={{
-                duration: 8,
-                delay: i * 0.5,
-                repeat: Infinity,
-                ease: "easeInOut",
-              }}
-            />
-          );
-        })}
-      </svg>
+      {/* Connection lines between some particles - desktop only */}
+      {lineCount > 0 && (
+        <svg className="absolute inset-0 w-full h-full">
+          <defs>
+            <linearGradient id="lineGradient" x1="0%" y1="0%" x2="100%" y2="0%">
+              <stop offset="0%" stopColor="rgba(255,255,255,0)" />
+              <stop offset="50%" stopColor="rgba(255,255,255,0.1)" />
+              <stop offset="100%" stopColor="rgba(255,255,255,0)" />
+            </linearGradient>
+          </defs>
+          {particles.slice(0, lineCount).map((p, i) => {
+            const next = particles[(i + 3) % particles.length];
+            return (
+              <motion.line
+                key={`line-${i}`}
+                x1={`${p.x}%`}
+                y1={`${p.y}%`}
+                x2={`${next.x}%`}
+                y2={`${next.y}%`}
+                stroke="url(#lineGradient)"
+                strokeWidth="1"
+                initial={{ pathLength: 0, opacity: 0 }}
+                animate={{ pathLength: 1, opacity: [0, 0.3, 0] }}
+                transition={{
+                  duration: 8,
+                  delay: i * 0.5,
+                  repeat: Infinity,
+                  ease: "easeInOut",
+                }}
+              />
+            );
+          })}
+        </svg>
+      )}
     </div>
   );
 };
@@ -114,7 +130,7 @@ const HeroSection = () => {
   return (
     <section
       ref={sectionRef}
-      className="relative flex flex-col items-center justify-center px-4 sm:px-6 py-4 min-h-[calc(100vh-200px)] overflow-hidden"
+      className="relative flex flex-col items-center justify-center px-4 sm:px-6 py-4 min-h-[calc(100vh-200px)] overflow-hidden max-w-[100vw]"
     >
       {/* Particle constellation effect */}
       <Particles />

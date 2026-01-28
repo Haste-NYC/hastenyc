@@ -144,7 +144,7 @@ const PricingPlans = ({ onSelectPlan, selectedPriceId, onScheduleCall }: Pricing
 
       {/* Pricing Cards - Horizontal scroll on mobile, grid on larger screens */}
       <div className="
-        flex overflow-x-auto snap-x snap-mandatory gap-4 pb-4 -mx-4 px-4
+        flex overflow-x-auto snap-x snap-mandatory gap-4 pb-4 -mx-4 px-4 items-stretch
         sm:grid sm:grid-cols-2 sm:overflow-visible sm:snap-none sm:mx-0 sm:px-0 sm:pb-0
         lg:grid-cols-3 sm:gap-6
         [&::-webkit-scrollbar]:hidden [-ms-overflow-style:none] [scrollbar-width:none]
@@ -153,7 +153,7 @@ const PricingPlans = ({ onSelectPlan, selectedPriceId, onScheduleCall }: Pricing
           <motion.div
             key={tier.name}
             whileHover={{ y: -4, transition: { duration: 0.2 } }}
-            className="h-full flex-shrink-0 w-[85vw] sm:w-auto snap-center"
+            className="flex-shrink-0 w-[85vw] sm:w-auto snap-center min-h-[520px] sm:min-h-0 sm:h-full"
           >
             <Card
               className={`bg-transparent border transition-all duration-300 relative h-full flex flex-col ${
