@@ -105,7 +105,8 @@ const Header = () => {
                     Conform Studio
                   </a>
                   <a
-                    href="/products/premiere-rewind"
+                    href="#"
+                    onClick={(e) => e.preventDefault()}
                     className="block px-4 py-2 text-xs text-foreground/70 hover:text-foreground hover:bg-white/5 transition-colors"
                   >
                     Premiere Rewind
@@ -208,7 +209,8 @@ const Header = () => {
                     Conform Studio
                   </a>
                   <a
-                    href="/products/premiere-rewind"
+                    href="#"
+                    onClick={(e) => e.preventDefault()}
                     className="block text-sm text-foreground/60 hover:text-foreground transition-colors"
                   >
                     Premiere Rewind

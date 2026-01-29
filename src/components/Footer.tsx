@@ -35,9 +35,9 @@ const Footer = () => {
       <div className="flex flex-wrap justify-center items-center gap-x-2 gap-y-1.5 mt-6 px-4 max-w-sm sm:max-w-none sm:gap-x-0">
         {['E-MAIL', 'TELEPHONE', 'INSTAGRAM', 'YOUTUBE', 'TIKTOK', 'FACEBOOK', 'LINKEDIN', 'TWITTER'].map((link, i, arr) => (
           <span key={link} className="inline-flex items-center">
-            <a
-              href="#"
-              className="text-white/50 hover:text-white no-underline transition-colors duration-200"
+            <button
+              type="button"
+              className="text-white/50 hover:text-white no-underline transition-colors duration-200 bg-transparent border-none cursor-pointer p-0"
               style={{
                 fontSize: '9px',
                 letterSpacing: '0.15em',
@@ -45,7 +45,7 @@ const Footer = () => {
               }}
             >
               {link}
-            </a>
+            </button>
             {i < arr.length - 1 && (
               <span className="text-white/20 mx-2.5 text-[7px] select-none hidden sm:inline">&middot;</span>
             )}
