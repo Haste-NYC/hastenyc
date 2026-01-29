@@ -25,9 +25,9 @@ const HasteLogo = () => (
 );
 
 const navLinks = [
-  { label: "About", id: "about" },
-  { label: "FAQ", id: "faq" },
   { label: "Pricing", id: "pricing" },
+  { label: "FAQ", id: "faq" },
+  { label: "About", id: "about" },
 ];
 
 const featureItems = [
@@ -39,7 +39,9 @@ const featureItems = [
 
 const Header = () => {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
+  const [productsOpen, setProductsOpen] = useState(false);
   const [featuresOpen, setFeaturesOpen] = useState(false);
+  const productsRef = useRef<HTMLDivElement>(null);
   const featuresRef = useRef<HTMLDivElement>(null);
   const lenis = useLenis();
   const activeSection = useActiveSection();
@@ -47,6 +49,9 @@ const Header = () => {
   // Close dropdown when clicking outside
   useEffect(() => {
     const handleClickOutside = (event: MouseEvent) => {
+      if (productsRef.current && !productsRef.current.contains(event.target as Node)) {
+        setProductsOpen(false);
+      }
       if (featuresRef.current && !featuresRef.current.contains(event.target as Node)) {
         setFeaturesOpen(false);
       }
@@ -64,6 +69,7 @@ const Header = () => {
     });
 
     setMobileMenuOpen(false);
+    setProductsOpen(false);
     setFeaturesOpen(false);
   };
 
@@ -80,6 +86,34 @@ const Header = () => {
 
           {/* Desktop Navigation Links */}
           <div className="hidden md:flex items-center gap-6">
+            {/* Products Dropdown */}
+            <div ref={productsRef} className="relative">
+              <button
+                onClick={() => setProductsOpen(!productsOpen)}
+                className="relative flex items-center gap-1 text-xs uppercase tracking-wider transition-colors text-foreground/60 hover:text-foreground"
+              >
+                Products
+                <ChevronDown className={`w-3 h-3 transition-transform ${productsOpen ? "rotate-180" : ""}`} />
+              </button>
+
+              {productsOpen && (
+                <div className="absolute top-full left-0 mt-2 py-2 w-48 bg-background/95 backdrop-blur-sm border border-border/40 rounded-lg shadow-xl">
+                  <a
+                    href="/"
+                    className="block px-4 py-2 text-xs text-foreground/70 hover:text-foreground hover:bg-white/5 transition-colors"
+                  >
+                    Conform Studio
+                  </a>
+                  <a
+                    href="/products/premiere-rewind"
+                    className="block px-4 py-2 text-xs text-foreground/70 hover:text-foreground hover:bg-white/5 transition-colors"
+                  >
+                    Premiere Rewind
+                  </a>
+                </div>
+              )}
+            </div>
+
             {/* Features Dropdown */}
             <div ref={featuresRef} className="relative">
               <button
@@ -134,7 +168,11 @@ const Header = () => {
         {/* Right side: Buttons */}
         <div className="hidden md:flex items-center gap-4">
           <a
-            href="/contact"
+            href="#contact"
+            onClick={(e) => {
+              e.preventDefault();
+              scrollToSection("contact");
+            }}
             className="text-foreground/60 hover:text-foreground text-xs uppercase tracking-wider transition-colors"
           >
             Contact Us
@@ -157,6 +195,27 @@ const Header = () => {
           </SheetTrigger>
           <SheetContent side="right" className="w-[300px]">
             <div className="flex flex-col gap-6 mt-8">
+              {/* Products with sub-items for mobile */}
+              <div className="space-y-3">
+                <span className="text-lg uppercase tracking-wider text-foreground font-medium">
+                  Products
+                </span>
+                <div className="pl-4 space-y-2">
+                  <a
+                    href="/"
+                    className="block text-sm text-foreground/60 hover:text-foreground transition-colors"
+                  >
+                    Conform Studio
+                  </a>
+                  <a
+                    href="/products/premiere-rewind"
+                    className="block text-sm text-foreground/60 hover:text-foreground transition-colors"
+                  >
+                    Premiere Rewind
+                  </a>
+                </div>
+              </div>
+
               {/* Features with sub-items for mobile */}
               <div className="space-y-3">
                 <span className="text-lg uppercase tracking-wider text-foreground font-medium">
@@ -193,7 +252,11 @@ const Header = () => {
                 </a>
               ))}
               <a
-                href="/contact"
+                href="#contact"
+                onClick={(e) => {
+                  e.preventDefault();
+                  scrollToSection("contact");
+                }}
                 className="text-foreground/60 text-lg uppercase tracking-wider"
               >
                 Contact Us

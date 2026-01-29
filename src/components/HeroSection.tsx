@@ -183,7 +183,7 @@ const HeroSection = () => {
           transition={{ duration: 0.6 }}
           className="text-foreground text-xs md:text-sm uppercase tracking-[0.25em] mb-4 mt-4 sm:mt-0"
         >
-          Introducing from HASTE.NYC
+          Introducing from HASTE
         </motion.p>
 
         {/* Main logo with 3D glow effect */}
@@ -235,8 +235,9 @@ const HeroSection = () => {
           transition={{ duration: 0.6, delay: 0.35 }}
           className="text-xs md:text-sm max-w-3xl mx-auto leading-relaxed uppercase tracking-[0.06em] pt-6"
         >
-          <span className="text-foreground/60">Timeline conversion that once took days</span>{" "}
-          <span className="text-foreground">now takes seconds.</span>{" "}
+          <span className="text-foreground/60">Project migration that once took days</span>{" "}
+          <span className="text-foreground">now takes seconds.</span>
+          <br />
           <span className="text-foreground/90">100% frame-accurate, TPN+ compliant, trusted by major studios.</span>
         </motion.p>
 

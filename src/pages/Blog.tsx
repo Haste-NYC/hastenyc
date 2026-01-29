@@ -10,7 +10,7 @@ const Blog = () => {
     <div className="min-h-screen bg-background">
       <SEO
         title="Blog - Creative Technology Insights"
-        description="Explore the latest insights on AI-powered creative tools, design systems, and post-production automation from HASTE.NYC."
+        description="Explore the latest insights on AI-powered creative tools, design systems, and post-production automation from HASTE."
         canonical="/blog"
       />
       <Header />

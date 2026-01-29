@@ -24,7 +24,7 @@ interface SEOProps {
 }
 
 const BASE_URL = "https://www.haste.nyc";
-const DEFAULT_TITLE = "HASTE.NYC - AI-Powered Creative Technology";
+const DEFAULT_TITLE = "HASTE - AI-Powered Creative Technology";
 const DEFAULT_DESCRIPTION = "Instant project migration from Adobe Premiere to Davinci Resolve. Haste Conform Studio uses AI to automate post-production. 300X faster timeline conform for film and TV. Built for studios, secure, and scalable.";
 const DEFAULT_IMAGE = `${BASE_URL}/og-image.png`;
 
@@ -37,7 +37,7 @@ const SEO = ({
   article,
   video,
 }: SEOProps) => {
-  const fullTitle = title ? `${title} | HASTE.NYC` : DEFAULT_TITLE;
+  const fullTitle = title ? `${title} | HASTE` : DEFAULT_TITLE;
   const fullCanonical = canonical ? `${BASE_URL}${canonical}` : BASE_URL;
   const fullImage = image.startsWith("http") ? image : `${BASE_URL}${image}`;
 
@@ -51,12 +51,12 @@ const SEO = ({
     "datePublished": article.publishedTime,
     "dateModified": article.modifiedTime || article.publishedTime,
     "author": {
-      "@type": article.author === "HASTE.NYC" ? "Organization" : "Person",
-      "name": article.author || "HASTE.NYC",
+      "@type": article.author === "HASTE" ? "Organization" : "Person",
+      "name": article.author || "HASTE",
     },
     "publisher": {
       "@type": "Organization",
-      "name": "HASTE.NYC",
+      "name": "HASTE",
       "url": BASE_URL,
       "logo": {
         "@type": "ImageObject",
@@ -82,7 +82,7 @@ const SEO = ({
     "duration": video.duration,
     "publisher": {
       "@type": "Organization",
-      "name": "HASTE.NYC",
+      "name": "HASTE",
       "url": BASE_URL,
       "logo": {
         "@type": "ImageObject",
@@ -103,7 +103,7 @@ const SEO = ({
       <meta property="og:description" content={description} />
       <meta property="og:url" content={fullCanonical} />
       <meta property="og:image" content={fullImage} />
-      <meta property="og:site_name" content="HASTE.NYC" />
+      <meta property="og:site_name" content="HASTE" />
 
       {/* Twitter Card */}
       <meta name="twitter:card" content="summary_large_image" />

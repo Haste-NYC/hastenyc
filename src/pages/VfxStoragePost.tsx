@@ -16,7 +16,7 @@ const VfxStoragePost = () => {
         article={{
           publishedTime: "2025-01-05",
           section: "Industry Analysis",
-          author: "HASTE.NYC",
+          author: "HASTE",
         }}
       />
       <Header />

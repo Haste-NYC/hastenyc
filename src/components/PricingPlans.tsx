@@ -33,13 +33,10 @@ const tiers: PricingTier[] = [
     description: "Perfect for independent creators",
     monthlyPrice: 49,
     yearlyPrice: 468,
-    seats: "1 seat / device license",
+    seats: "1 user / device license",
     icon: <Users className="w-5 h-5" />,
     features: [
-      "1 seat / device license",
-      "Unlimited projects",
-      "All conform tools",
-      "Standard export formats",
+      "1 user / device license",
       "Email support",
       "7-day free trial",
     ],
@@ -51,16 +48,11 @@ const tiers: PricingTier[] = [
     description: "For small teams and studios",
     monthlyPrice: 129,
     yearlyPrice: 1188,
-    seats: "3 seats / device licenses",
+    seats: "3 users / device licenses",
     icon: <Building2 className="w-5 h-5" />,
     features: [
-      "3 seats / device licenses",
-      "Unlimited projects",
-      "All conform tools",
-      "All export formats",
+      "3 users / device licenses",
       "Priority support",
-      "Team collaboration",
-      "Advanced analytics",
       "7-day free trial",
     ],
     popular: true,
@@ -76,16 +68,11 @@ const tiers: PricingTier[] = [
     seats: "Unlimited seats",
     icon: <Calendar className="w-5 h-5" />,
     features: [
-      "Unlimited seats / devices",
-      "Unlimited projects",
-      "All conform tools",
-      "All export formats",
-      "Dedicated account manager",
-      "24/7 priority support",
+      "Unlimited seats / devices / projects",
+      "Priority support and training",
       "Custom integrations",
       "SLA guarantee",
       "On-premise deployment option",
-      "Custom training",
     ],
     isEnterprise: true,
   },
@@ -158,32 +145,43 @@ const PricingPlans = ({ onSelectPlan, selectedPriceId, onScheduleCall }: Pricing
   return (
     <div className="w-full space-y-8">
       {/* Billing Toggle */}
-      <div className="flex items-center justify-center gap-4">
-        <span className={`text-sm ${!isYearly ? "text-white font-medium" : "text-gray-400"}`}>
-          Monthly
-        </span>
-        <Switch
-          checked={isYearly}
-          onCheckedChange={setIsYearly}
-          className="data-[state=checked]:bg-white data-[state=unchecked]:bg-gray-700"
-        />
-        <span className={`text-sm ${isYearly ? "text-white font-medium" : "text-gray-400"}`}>
-          Yearly
-        </span>
-        {isYearly && (
-          <Badge className="bg-white/10 text-white border border-white/20">
-            Save {yearlySavings}%
-          </Badge>
-        )}
+      <div className="flex items-center justify-center">
+        <div className="relative flex items-center gap-4">
+          <span className={`text-sm ${!isYearly ? "text-white font-medium" : "text-gray-400"}`}>
+            Monthly
+          </span>
+          <Switch
+            checked={isYearly}
+            onCheckedChange={setIsYearly}
+            className="data-[state=checked]:bg-white data-[state=unchecked]:bg-gray-700"
+          />
+          <span className={`text-sm ${isYearly ? "text-white font-medium" : "text-gray-400"}`}>
+            Yearly
+          </span>
+          <motion.div
+            className="absolute left-full ml-4"
+            initial={false}
+            animate={{
+              opacity: isYearly ? 1 : 0,
+              x: isYearly ? 0 : -8,
+            }}
+            transition={{ duration: 0.2 }}
+          >
+            <Badge className="bg-white/10 text-white border border-white/20 whitespace-nowrap">
+              Save {yearlySavings}%
+            </Badge>
+          </motion.div>
+        </div>
       </div>
 
-      {/* Pricing Cards - Horizontal scroll on mobile, grid on larger screens */}
+      {/* Pricing Cards - Horizontal scroll on mobile, grid on md+ */}
       <div
         ref={scrollContainerRef}
         className="
           flex overflow-x-auto snap-x snap-mandatory gap-4 pb-4 -mx-4 px-4
-          sm:grid sm:grid-cols-2 sm:overflow-visible sm:snap-none sm:mx-0 sm:px-0 sm:pb-0
-          lg:grid-cols-3 sm:gap-6
+          md:grid md:grid-cols-2 md:overflow-visible md:snap-none md:mx-0 md:px-0 md:pb-0
+          md:gap-6
+          lg:grid-cols-3
           [&::-webkit-scrollbar]:hidden [-ms-overflow-style:none] [scrollbar-width:none]
         "
       >
@@ -191,23 +189,23 @@ const PricingPlans = ({ onSelectPlan, selectedPriceId, onScheduleCall }: Pricing
           <motion.div
             key={tier.name}
             ref={(el) => (cardRefs.current[index] = el)}
-            whileHover={{ y: -4, transition: { duration: 0.2 } }}
-            className="flex-shrink-0 w-[85vw] sm:w-auto snap-center"
+            className={`flex-shrink-0 w-[85vw] md:w-auto snap-center ${
+              tier.isEnterprise ? "md:col-span-2 lg:col-span-1" : ""
+            }`}
           >
             <Card
-              className={`bg-transparent border transition-all duration-300 relative h-[580px] sm:h-full flex flex-col ${
+              className={`bg-transparent border transition-all duration-300 relative h-full flex flex-col ${
                 isSelected(tier)
                   ? "border-white"
                   : index === activeCardIndex
-                  ? "border-white/60 sm:border-white/10 sm:hover:border-white/20"
+                  ? "border-white/60 md:border-white/10 md:hover:border-white/20"
                   : tier.popular
-                  ? "sm:border-white/40 sm:hover:border-white/60 border-white/10"
+                  ? "md:border-white/40 md:hover:border-white/60 border-white/10"
                   : "border-white/10 hover:border-white/20"
               }`}
             >
-            {/* Most Popular badge - hidden on mobile to prevent cutoff */}
             {tier.popular && (
-              <div className="absolute -top-3 left-1/2 -translate-x-1/2 hidden sm:block">
+              <div className="absolute -top-3 left-1/2 -translate-x-1/2">
                 <Badge className="bg-white text-gray-900 border-0 px-3">
                   Most Popular
                 </Badge>
@@ -222,31 +220,31 @@ const PricingPlans = ({ onSelectPlan, selectedPriceId, onScheduleCall }: Pricing
               </div>
               <CardTitle className="text-white text-xl uppercase tracking-wider">{tier.name}</CardTitle>
               <p className="text-gray-400 text-xs uppercase tracking-wider">{tier.description}</p>
-
-              <div className="mt-4">
-                {tier.monthlyPrice !== null ? (
-                  <>
-                    <span className="text-3xl sm:text-4xl font-bold text-white">
-                      ${isYearly && tier.yearlyPrice ? Math.round(tier.yearlyPrice / 12) : tier.monthlyPrice}
-                    </span>
-                    <span className="text-gray-400 ml-2">
-                      /month
-                    </span>
-                    {isYearly && tier.yearlyPrice && (
-                      <p className="text-sm text-gray-400 mt-1">
-                        billed yearly
-                      </p>
-                    )}
-                  </>
-                ) : (
-                  <span className="text-3xl font-bold text-white">Custom Pricing</span>
-                )}
-              </div>
-
             </CardHeader>
 
-            <CardContent className="space-y-4 flex-grow">
-              <ul className="space-y-2">
+            <CardContent className={`flex-grow flex flex-col ${
+              tier.isEnterprise ? "lg:justify-center" : ""
+            }`}>
+              {tier.monthlyPrice !== null && (
+                <>
+                  <div className="hidden md:block md:flex-grow" />
+                  <div className="text-center mb-8">
+                    <span className="text-3xl sm:text-4xl font-bold text-white">
+                      ${isYearly && tier.yearlyPrice ? Math.round(tier.yearlyPrice / 12) : tier.monthlyPrice}
+                      <span className="text-sm font-normal text-gray-400 ml-1">/mo</span>
+                    </span>
+                    <p className="text-sm text-gray-400 mt-1">
+                      {isYearly ? "billed yearly" : "billed monthly"}
+                    </p>
+                  </div>
+                  <div className="hidden md:block md:flex-grow" />
+                </>
+              )}
+              <ul className={`space-y-2 ${
+                tier.isEnterprise
+                  ? "md:grid md:grid-cols-2 md:gap-x-8 md:gap-y-2 md:space-y-0 lg:block lg:space-y-2"
+                  : ""
+              }`}>
                 {tier.features.map((feature, index) => (
                   <li key={index} className="flex items-center gap-3">
                     <div className="flex-shrink-0 w-4 h-4 rounded-full bg-white/20 flex items-center justify-center">
@@ -281,8 +279,8 @@ const PricingPlans = ({ onSelectPlan, selectedPriceId, onScheduleCall }: Pricing
         ))}
       </div>
 
-      {/* Carousel indicator dots - mobile only */}
-      <div className="flex justify-center gap-2 sm:hidden">
+      {/* Carousel indicator dots - mobile/tablet only */}
+      <div className="flex justify-center gap-2 md:hidden">
         {tiers.map((_, index) => (
           <button
             key={index}

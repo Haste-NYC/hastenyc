@@ -4,13 +4,14 @@ import HasteASCIIFooter from "./HasteASCIIFooter";
 const Footer = () => {
   return (
     <footer
+      id="contact"
       style={{
-        background: '#000',
+        background: 'transparent',
         display: 'flex',
         flexDirection: 'column',
         alignItems: 'center',
         justifyContent: 'center',
-        padding: '40px 20px 32px',
+        padding: '0 20px 32px',
         overflow: 'hidden',
       }}
     >
@@ -30,53 +31,30 @@ const Footer = () => {
         Software for Filmmakers
       </p>
 
-      {/* Social & Contact Links — single row with middot separators */}
-      <div style={{
-        display: 'flex',
-        flexWrap: 'wrap',
-        justifyContent: 'center',
-        alignItems: 'center',
-        gap: '0',
-        marginTop: '24px'
-      }}>
+      {/* Social & Contact Links */}
+      <div className="flex flex-wrap justify-center items-center gap-x-2 gap-y-1.5 mt-6 px-4 max-w-sm sm:max-w-none sm:gap-x-0">
         {['E-MAIL', 'TELEPHONE', 'INSTAGRAM', 'YOUTUBE', 'TIKTOK', 'FACEBOOK', 'LINKEDIN', 'TWITTER'].map((link, i, arr) => (
-          <span key={link} style={{ display: 'inline-flex', alignItems: 'center' }}>
+          <span key={link} className="inline-flex items-center">
             <a
               href="#"
+              className="text-white/50 hover:text-white no-underline transition-colors duration-200"
               style={{
-                color: 'rgba(255,255,255,0.5)',
-                textDecoration: 'none',
                 fontSize: '9px',
                 letterSpacing: '0.15em',
                 fontFamily: '-apple-system, BlinkMacSystemFont, sans-serif',
-                transition: 'color 0.2s ease'
               }}
-              onMouseEnter={(e) => (e.target as HTMLElement).style.color = '#fff'}
-              onMouseLeave={(e) => (e.target as HTMLElement).style.color = 'rgba(255,255,255,0.5)'}
             >
               {link}
             </a>
             {i < arr.length - 1 && (
-              <span style={{
-                color: 'rgba(255,255,255,0.2)',
-                margin: '0 10px',
-                fontSize: '7px',
-                userSelect: 'none'
-              }}>&middot;</span>
+              <span className="text-white/20 mx-2.5 text-[7px] select-none hidden sm:inline">&middot;</span>
             )}
           </span>
         ))}
       </div>
 
       {/* Navigation Links */}
-      <nav style={{
-        display: 'flex',
-        flexWrap: 'wrap',
-        justifyContent: 'center',
-        alignItems: 'center',
-        gap: '0',
-        marginTop: '16px'
-      }}>
+      <nav className="flex flex-wrap justify-center items-center gap-x-2 gap-y-1.5 mt-4 px-4 max-w-xs sm:max-w-none sm:gap-x-0">
         {[
           { label: 'Production Company', href: 'https://www.haste.studio', external: true },
           { label: 'Terms of Service', to: '/terms' },
@@ -84,51 +62,36 @@ const Footer = () => {
           { label: 'Refund Policy', to: '/refund' },
           { label: 'Blog', to: '/blog' },
         ].map((item, i, arr) => (
-          <span key={item.label} style={{ display: 'inline-flex', alignItems: 'center' }}>
+          <span key={item.label} className="inline-flex items-center">
             {item.external ? (
               <a
                 href={item.href}
                 target="_blank"
                 rel="noopener noreferrer"
+                className="text-white/30 hover:text-white/70 no-underline transition-colors duration-200 uppercase"
                 style={{
-                  color: 'rgba(255,255,255,0.3)',
-                  textDecoration: 'none',
                   fontSize: '9px',
                   letterSpacing: '0.12em',
-                  textTransform: 'uppercase',
                   fontFamily: '-apple-system, BlinkMacSystemFont, sans-serif',
-                  transition: 'color 0.2s ease'
                 }}
-                onMouseEnter={(e) => (e.target as HTMLElement).style.color = 'rgba(255,255,255,0.7)'}
-                onMouseLeave={(e) => (e.target as HTMLElement).style.color = 'rgba(255,255,255,0.3)'}
               >
                 {item.label}
               </a>
             ) : (
               <Link
                 to={item.to!}
+                className="text-white/30 hover:text-white/70 no-underline transition-colors duration-200 uppercase"
                 style={{
-                  color: 'rgba(255,255,255,0.3)',
-                  textDecoration: 'none',
                   fontSize: '9px',
                   letterSpacing: '0.12em',
-                  textTransform: 'uppercase',
                   fontFamily: '-apple-system, BlinkMacSystemFont, sans-serif',
-                  transition: 'color 0.2s ease'
                 }}
-                onMouseEnter={(e) => (e.target as HTMLElement).style.color = 'rgba(255,255,255,0.7)'}
-                onMouseLeave={(e) => (e.target as HTMLElement).style.color = 'rgba(255,255,255,0.3)'}
               >
                 {item.label}
               </Link>
             )}
             {i < arr.length - 1 && (
-              <span style={{
-                color: 'rgba(255,255,255,0.15)',
-                margin: '0 10px',
-                fontSize: '7px',
-                userSelect: 'none'
-              }}>&middot;</span>
+              <span className="text-white/15 mx-2.5 text-[7px] select-none hidden sm:inline">&middot;</span>
             )}
           </span>
         ))}
@@ -141,7 +104,7 @@ const Footer = () => {
         marginTop: '20px',
         letterSpacing: '0.15em'
       }}>
-        &copy; 2026 HASTE.NYC
+        &copy; 2026 HASTE
       </p>
     </footer>
   );

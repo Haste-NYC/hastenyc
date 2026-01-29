@@ -25,7 +25,7 @@ const faqs = [
   {
     question: "Do you offer a free trial?",
     answer:
-      "Yes! We offer a 7-day free trial for all new users. No credit card required to start.",
+      "Yes! We offer a 7-day free trial for all new users.",
   },
   {
     question: "What happens to my existing projects?",

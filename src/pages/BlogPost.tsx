@@ -21,7 +21,7 @@ const BlogPost = () => {
         article={{
           publishedTime: "2025-11-03",
           section: "AI / Creative Tools",
-          author: "HASTE.NYC",
+          author: "HASTE",
         }}
       />
       <Header />

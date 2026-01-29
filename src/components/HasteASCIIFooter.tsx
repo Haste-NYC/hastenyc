@@ -10,9 +10,25 @@ const CHAR_HEIGHT = 6.65;
 
 export default function HasteASCIIFooter() {
   const containerRef = useRef<HTMLDivElement>(null);
+  const wrapperRef = useRef<HTMLDivElement>(null);
   const mousePosRef = useRef({ x: -1000, y: -1000 });
   const [time, setTime] = useState(0);
   const [grid, setGrid] = useState<number[][]>([]);
+  const [scale, setScale] = useState(1);
+
+  // Scale ASCII grid to fit container width
+  useEffect(() => {
+    const nativeWidth = COLS * CHAR_WIDTH; // 840px
+    const updateScale = () => {
+      if (wrapperRef.current) {
+        const available = wrapperRef.current.clientWidth;
+        setScale(available < nativeWidth ? available / nativeWidth : 1);
+      }
+    };
+    updateScale();
+    window.addEventListener('resize', updateScale);
+    return () => window.removeEventListener('resize', updateScale);
+  }, []);
 
   // 2D wave simulation: height + velocity for water-like ripple propagation
   const waveHeight = useRef(new Float32Array(COLS * ROWS));
@@ -241,44 +257,59 @@ export default function HasteASCIIFooter() {
     return { opacity: 0.5 + breath, char: CHARS_BY_DENSITY[charIndex] };
   }, [time]);
 
+  const nativeHeight = ROWS * CHAR_HEIGHT;
+
   return (
     <div
-      ref={containerRef}
-      onMouseMove={handleMouseMove}
-      onMouseLeave={handleMouseLeave}
+      ref={wrapperRef}
       style={{
-        fontFamily: '"SF Mono", "Monaco", "Consolas", monospace',
-        fontSize: '10px',
-        lineHeight: `${CHAR_HEIGHT}px`,
-        cursor: 'default',
-        userSelect: 'none',
-        letterSpacing: '-1px'
+        width: '100%',
+        height: nativeHeight * scale,
+        overflow: 'hidden',
+        display: 'flex',
+        justifyContent: 'center',
       }}
     >
-      {grid.map((row, y) => (
-        <div key={y} style={{ display: 'flex', height: CHAR_HEIGHT }}>
-          {row.map((cell, x) => {
-            if (!cell) {
-              return <span key={x} style={{ width: CHAR_WIDTH }}>&nbsp;</span>;
-            }
+      <div
+        ref={containerRef}
+        onMouseMove={handleMouseMove}
+        onMouseLeave={handleMouseLeave}
+        style={{
+          fontFamily: '"SF Mono", "Monaco", "Consolas", monospace',
+          fontSize: '10px',
+          lineHeight: `${CHAR_HEIGHT}px`,
+          cursor: 'default',
+          userSelect: 'none',
+          letterSpacing: '-1px',
+          transformOrigin: 'top center',
+          transform: `scale(${scale})`,
+        }}
+      >
+        {grid.map((row, y) => (
+          <div key={y} style={{ display: 'flex', height: CHAR_HEIGHT }}>
+            {row.map((cell, x) => {
+              if (!cell) {
+                return <span key={x} style={{ width: CHAR_WIDTH }}>&nbsp;</span>;
+              }
 
-            const info = getCharInfo(x, y);
+              const info = getCharInfo(x, y);
 
-            return (
-              <span
-                key={x}
-                style={{
-                  width: CHAR_WIDTH,
-                  display: 'inline-block',
-                  color: `rgba(255, 255, 255, ${info.opacity})`,
-                }}
-              >
-                {info.char}
-              </span>
-            );
-          })}
-        </div>
-      ))}
+              return (
+                <span
+                  key={x}
+                  style={{
+                    width: CHAR_WIDTH,
+                    display: 'inline-block',
+                    color: `rgba(255, 255, 255, ${info.opacity})`,
+                  }}
+                >
+                  {info.char}
+                </span>
+              );
+            })}
+          </div>
+        ))}
+      </div>
     </div>
   );
 }

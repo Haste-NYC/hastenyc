@@ -56,13 +56,14 @@ export default function Conform3DVisualization() {
     const height = container.clientHeight;
 
     const scene = new THREE.Scene();
-    scene.background = new THREE.Color(0x0a0a0a);
+    // Transparent background - page background shows through
+    scene.background = null;
 
     const camera = new THREE.PerspectiveCamera(45, width / height, 0.1, 2000);
     camera.position.set(0, 0, 380);
     camera.lookAt(0, 0, 0);
 
-    const renderer = new THREE.WebGLRenderer({ antialias: true });
+    const renderer = new THREE.WebGLRenderer({ antialias: true, alpha: true });
     renderer.setSize(width, height);
     renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
     container.appendChild(renderer.domElement);
@@ -183,7 +184,6 @@ export default function Conform3DVisualization() {
     let cameraVertical = 0;
     let targetAngle = 0;
     let targetVertical = 0;
-    let cameraDistance = 380;
     let isDragging = false;
     let lastMouseX = 0;
     let lastMouseY = 0;
@@ -215,9 +215,8 @@ export default function Conform3DVisualization() {
       setTimeout(() => { isInteractingRef.current = false; }, 1500);
     };
 
-    const onWheel = (e: WheelEvent) => {
-      cameraDistance = Math.max(250, Math.min(550, cameraDistance + e.deltaY * 0.3));
-    };
+    // Scroll zoom disabled - fixed camera distance
+    const cameraDistanceFixed = 380;
 
     const onTouchStart = (e: TouchEvent) => {
       isDragging = true;
@@ -241,7 +240,6 @@ export default function Conform3DVisualization() {
     renderer.domElement.addEventListener('mousemove', onMouseMove);
     renderer.domElement.addEventListener('mouseup', onMouseUp);
     renderer.domElement.addEventListener('mouseleave', onMouseUp);
-    renderer.domElement.addEventListener('wheel', onWheel);
     renderer.domElement.addEventListener('touchstart', onTouchStart);
     renderer.domElement.addEventListener('touchmove', onTouchMove);
     renderer.domElement.addEventListener('touchend', onMouseUp);
@@ -256,9 +254,9 @@ export default function Conform3DVisualization() {
       cameraAngle += (targetAngle - cameraAngle) * 0.03;
       cameraVertical += (targetVertical - cameraVertical) * 0.03;
 
-      camera.position.x = Math.sin(cameraAngle) * Math.cos(cameraVertical) * cameraDistance;
-      camera.position.z = Math.cos(cameraAngle) * Math.cos(cameraVertical) * cameraDistance;
-      camera.position.y = Math.sin(cameraVertical) * cameraDistance;
+      camera.position.x = Math.sin(cameraAngle) * Math.cos(cameraVertical) * cameraDistanceFixed;
+      camera.position.z = Math.cos(cameraAngle) * Math.cos(cameraVertical) * cameraDistanceFixed;
+      camera.position.y = Math.sin(cameraVertical) * cameraDistanceFixed;
       camera.lookAt(0, 0, 0);
 
       // Gentle cube rotation
@@ -324,7 +322,6 @@ export default function Conform3DVisualization() {
       renderer.domElement.removeEventListener('mousemove', onMouseMove);
       renderer.domElement.removeEventListener('mouseup', onMouseUp);
       renderer.domElement.removeEventListener('mouseleave', onMouseUp);
-      renderer.domElement.removeEventListener('wheel', onWheel);
       renderer.domElement.removeEventListener('touchstart', onTouchStart);
       renderer.domElement.removeEventListener('touchmove', onTouchMove);
       renderer.domElement.removeEventListener('touchend', onMouseUp);
@@ -371,7 +368,7 @@ export default function Conform3DVisualization() {
   }
 
   return (
-    <div className="relative w-full h-[600px] bg-[#0a0a0a] rounded-xl overflow-hidden">
+    <div className="relative w-full h-[600px] overflow-hidden">
       <div ref={containerRef} className="w-full h-full" />
 
       {/* Header */}
@@ -415,16 +412,6 @@ export default function Conform3DVisualization() {
         </div>
       )}
 
-      {/* Instruction hint */}
-      <div
-        className="absolute bottom-6 left-1/2 -translate-x-1/2 text-xs text-white/30 pointer-events-none"
-        style={{
-          opacity: mounted ? 1 : 0,
-          transition: 'opacity 0.8s ease 1s'
-        }}
-      >
-        Drag to rotate • Scroll to zoom • Hover nodes for details
-      </div>
     </div>
   );
 }

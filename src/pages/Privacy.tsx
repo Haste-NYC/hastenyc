@@ -7,7 +7,7 @@ const Privacy = () => {
     <div className="min-h-screen bg-background">
       <SEO
         title="Privacy Notice"
-        description="Privacy Notice for HASTE.NYC and Haste Conform Studio. Learn how we collect, use, and protect your information."
+        description="Privacy Notice for Haste Conform Studio. Learn how we collect, use, and protect your information."
         canonical="/privacy"
       />
       <Header />

@@ -2,16 +2,16 @@ import { lazy, Suspense } from "react";
 import Header from "@/components/Header";
 import HeroSection from "@/components/HeroSection";
 import TrustBadgeBar from "@/components/TrustBadgeBar";
+import VideoSection from "@/components/VideoSection";
+import FeatureSection from "@/components/FeatureSection";
+import PricingSection from "@/components/PricingSection";
+import FAQSection from "@/components/FAQSection";
+import AboutSection from "@/components/AboutSection";
+import Footer from "@/components/Footer";
 import SEO from "@/components/SEO";
 
-// Lazy load below-fold components for better initial load performance
-const VideoSection = lazy(() => import("@/components/VideoSection"));
-const FeatureSection = lazy(() => import("@/components/FeatureSection"));
-const AboutSection = lazy(() => import("@/components/AboutSection"));
-const FAQSection = lazy(() => import("@/components/FAQSection"));
-const PricingSection = lazy(() => import("@/components/PricingSection"));
+// Only lazy load the heavy Three.js component
 const Conform3DVisualization = lazy(() => import("@/components/Conform3DVisualization"));
-const Footer = lazy(() => import("@/components/Footer"));
 
 // Minimal loading placeholder
 const SectionLoader = () => (
@@ -47,18 +47,14 @@ const Index = () => {
         </section>
 
         {/* Trust Badge Bar - combined with Video for better mobile flow */}
-        <div className="snap-section-full">
+        <div className="snap-section-full relative">
           <TrustBadgeBar />
-          <Suspense fallback={<SectionLoader />}>
-            <VideoSection />
-          </Suspense>
+          <VideoSection />
         </div>
 
         {/* Features - scrollable content, each feature snaps */}
         <section id="features" className="py-10 sm:py-20 relative">
-          <Suspense fallback={<SectionLoader />}>
-            <FeatureSection />
-          </Suspense>
+          <FeatureSection />
         </section>
 
         {/* 3D Visualization - Interactive conform data visualization */}
@@ -72,28 +68,24 @@ const Index = () => {
 
         {/* Pricing - full viewport on mobile */}
         <section id="pricing" className="py-10 sm:py-20 relative snap-section-full">
-          <Suspense fallback={<SectionLoader />}>
-            <PricingSection />
-          </Suspense>
+          <PricingSection />
         </section>
 
         {/* FAQ - scrollable content */}
         <section id="faq" className="py-10 sm:py-20 relative">
-          <Suspense fallback={<SectionLoader />}>
-            <FAQSection />
-          </Suspense>
+          <FAQSection />
         </section>
 
-        {/* About */}
-        <section id="about" className="py-10 sm:py-20 relative">
-          <Suspense fallback={<SectionLoader />}>
-            <AboutSection />
-          </Suspense>
+        {/* About + Footer — single gradient background for seamless blend */}
+        <section
+          id="about"
+          className="relative"
+          style={{ background: 'linear-gradient(to bottom, hsl(220, 15%, 5%) 0%, #000 60%)' }}
+        >
+          <AboutSection />
+          <Footer />
         </section>
       </main>
-      <Suspense fallback={null}>
-        <Footer />
-      </Suspense>
     </div>
   );
 };
