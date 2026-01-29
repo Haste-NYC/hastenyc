@@ -85,35 +85,61 @@ const PricingPlans = ({ onSelectPlan, selectedPriceId, onScheduleCall }: Pricing
   const cardRefs = useRef<(HTMLDivElement | null)[]>([]);
 
   // Track which card is most visible using Intersection Observer
+  // Responds to viewport changes (e.g. device rotation) via matchMedia
   useEffect(() => {
     const container = scrollContainerRef.current;
     if (!container) return;
 
-    // Only run on mobile (< 640px)
-    if (window.innerWidth >= 640) return;
+    const mql = window.matchMedia("(max-width: 639px)");
+    let observer: IntersectionObserver | null = null;
 
-    const observer = new IntersectionObserver(
-      (entries) => {
-        entries.forEach((entry) => {
-          if (entry.isIntersecting && entry.intersectionRatio > 0.5) {
-            const index = cardRefs.current.indexOf(entry.target as HTMLDivElement);
-            if (index !== -1) {
-              setActiveCardIndex(index);
+    const setupObserver = () => {
+      observer = new IntersectionObserver(
+        (entries) => {
+          entries.forEach((entry) => {
+            if (entry.isIntersecting && entry.intersectionRatio > 0.5) {
+              const index = cardRefs.current.indexOf(entry.target as HTMLDivElement);
+              if (index !== -1) {
+                setActiveCardIndex(index);
+              }
             }
-          }
-        });
-      },
-      {
-        root: container,
-        threshold: 0.5,
+          });
+        },
+        {
+          root: container,
+          threshold: 0.5,
+        }
+      );
+
+      cardRefs.current.forEach((card) => {
+        if (card) observer!.observe(card);
+      });
+    };
+
+    const teardownObserver = () => {
+      if (observer) {
+        observer.disconnect();
+        observer = null;
       }
-    );
+    };
 
-    cardRefs.current.forEach((card) => {
-      if (card) observer.observe(card);
-    });
+    const handleChange = (e: MediaQueryListEvent | MediaQueryList) => {
+      teardownObserver();
+      if (e.matches) {
+        setupObserver();
+      }
+    };
 
-    return () => observer.disconnect();
+    // Initialize based on current viewport
+    handleChange(mql);
+
+    // Listen for viewport changes (e.g. device rotation)
+    mql.addEventListener("change", handleChange);
+
+    return () => {
+      mql.removeEventListener("change", handleChange);
+      teardownObserver();
+    };
   }, []);
 
   const handleSelectPlan = (tier: PricingTier) => {
