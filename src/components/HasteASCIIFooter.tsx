@@ -34,6 +34,7 @@ export default function HasteASCIIFooter() {
   const waveHeight = useRef(new Float32Array(COLS * ROWS));
   const waveVelocity = useRef(new Float32Array(COLS * ROWS));
   const prevCursorCell = useRef({ x: -1, y: -1 });
+  const frameCounter = useRef(0);
 
   useEffect(() => {
     const canvas = document.createElement('canvas');
@@ -208,7 +209,12 @@ export default function HasteASCIIFooter() {
         }
       }
 
-      setTime(t => t + 0.012);
+      // Throttle React re-renders to every 3rd frame (~20fps) to avoid
+      // re-rendering 5,400 span elements at 60fps
+      frameCounter.current++;
+      if (frameCounter.current % 3 === 0) {
+        setTime(t => t + 0.036);
+      }
       animationId = requestAnimationFrame(animate);
     };
     animationId = requestAnimationFrame(animate);
@@ -228,7 +234,7 @@ export default function HasteASCIIFooter() {
     mousePosRef.current = { x: -1000, y: -1000 };
   }, []);
 
-  const getCharInfo = useCallback((x: number, y: number) => {
+  const getCharInfo = (x: number, y: number) => {
     // Organic swirl field
     const nx = x * 0.04;
     const ny = y * 0.06;
@@ -255,7 +261,7 @@ export default function HasteASCIIFooter() {
     const charIndex = Math.round(position * maxIdx);
 
     return { opacity: 0.5 + breath, char: CHARS_BY_DENSITY[charIndex] };
-  }, [time]);
+  };
 
   const nativeHeight = ROWS * CHAR_HEIGHT;
 
