@@ -28,5 +28,8 @@ dist-ssr
 # Ralph autonomous agent loop
 .ralph/
 
+# Subtask agent state
+.subtask/
+
 # GSD planning intel (local, regenerated)
 .planning/intel/

@@ -102,67 +102,49 @@ export async function convertPrprojFile(
     if (decompressedData[0] === 0xFF && decompressedData[1] === 0xFE) {
       // UTF-16 Little Endian
       originalEncoding = 'utf-16le';
-      console.log('[prprojConverter] Detected UTF-16 LE encoding');
       const decoder = new TextDecoder('utf-16le');
       xmlContent = decoder.decode(decompressedData);
     } else if (decompressedData[0] === 0xFE && decompressedData[1] === 0xFF) {
       // UTF-16 Big Endian
       originalEncoding = 'utf-16be';
-      console.log('[prprojConverter] Detected UTF-16 BE encoding');
       const decoder = new TextDecoder('utf-16be');
       xmlContent = decoder.decode(decompressedData);
     } else {
       // UTF-8 (with or without BOM)
       originalEncoding = 'utf-8';
-      console.log('[prprojConverter] Using UTF-8 encoding');
       const decoder = new TextDecoder('utf-8');
       xmlContent = decoder.decode(decompressedData);
     }
-    
-    console.log('[prprojConverter] XML length:', xmlContent.length);
-    console.log('[prprojConverter] First 500 chars:', xmlContent.substring(0, 500));
+
+    // Strip BOM if present to avoid double-BOM on re-encode
+    if (xmlContent.charCodeAt(0) === 0xFEFF) {
+      xmlContent = xmlContent.slice(1);
+    }
 
     // Find and replace the Project Version attribute
     // Pattern matches: <Project ... Version="XX" ...>
     const projectVersionRegex = /(<Project[^>]*\sVersion=")(\d+)(")/g;
     
     const projectMatch = xmlContent.match(projectVersionRegex);
-    console.log('[prprojConverter] Project Version matches found:', projectMatch);
-    
+
     if (!projectMatch) {
-      // Log first 2000 chars of XML to debug
-      console.log('[prprojConverter] XML start (first 2000 chars):', xmlContent.substring(0, 2000));
       throw new Error('Could not find Project Version in the file. This may not be a valid Premiere Pro project file.');
     }
     
     // Extract the original version before replacing
     let originalPremiereVersion: string | undefined;
     
-    // Replace ALL Project Version attributes with "1" using a function to avoid ambiguity
-    const originalXml = xmlContent;
-    let replacementCount = 0;
+    // Replace ALL Project Version attributes with "1"
     xmlContent = xmlContent.replace(projectVersionRegex, (match, prefix, version, suffix) => {
-      console.log('[prprojConverter] Replacing Project Version:', version, '-> 1');
-      console.log('[prprojConverter] Full match:', match);
       if (!originalPremiereVersion) {
         originalPremiereVersion = version;
       }
-      replacementCount++;
       return prefix + '1' + suffix;
     });
-    
-    console.log('[prprojConverter] Total replacements made:', replacementCount);
-    console.log('[prprojConverter] XML changed:', originalXml !== xmlContent);
-    
-    // Verify the replacement worked
-    if (originalXml === xmlContent) {
-      console.error('[prprojConverter] WARNING: XML content was not modified!');
-    }
 
     // Also modify the PremiereData Version if present
     const premiereDataRegex = /(<PremiereData[^>]*\sVersion=")(\d+)(")/g;
-    xmlContent = xmlContent.replace(premiereDataRegex, (match, prefix, version, suffix) => {
-      console.log('[prprojConverter] Replacing PremiereData Version:', version, '-> 1');
+    xmlContent = xmlContent.replace(premiereDataRegex, (_match, prefix, _version, suffix) => {
       return prefix + '1' + suffix;
     });
 
@@ -172,18 +154,12 @@ export async function convertPrprojFile(
     let modifiedData: Uint8Array;
     
     if (originalEncoding === 'utf-16le') {
-      // Re-encode as UTF-16 LE with BOM
       modifiedData = encodeUtf16LE(xmlContent);
-      console.log('[prprojConverter] Re-encoding as UTF-16 LE');
     } else if (originalEncoding === 'utf-16be') {
-      // Re-encode as UTF-16 BE with BOM
       modifiedData = encodeUtf16BE(xmlContent);
-      console.log('[prprojConverter] Re-encoding as UTF-16 BE');
     } else {
-      // UTF-8
       const encoder = new TextEncoder();
       modifiedData = encoder.encode(xmlContent);
-      console.log('[prprojConverter] Re-encoding as UTF-8');
     }
     
     onProgress?.({ fileName, stage: 'compressing', progress: 85 });

@@ -39,12 +39,20 @@ export default function Conform3DVisualization() {
   const containerSizeRef = useRef({ width: 0, height: 0 });
   const isVisibleRef = useRef(false);
 
-  // Check for mobile on mount
+  // Check for mobile on mount (debounced to avoid scene teardown on transient resizes)
   useEffect(() => {
-    const checkMobile = () => setIsMobile(window.innerWidth < 768);
-    checkMobile();
+    let timeout: ReturnType<typeof setTimeout>;
+    const checkMobile = () => {
+      clearTimeout(timeout);
+      timeout = setTimeout(() => setIsMobile(window.innerWidth < 768), 300);
+    };
+    // Set initial value immediately (no debounce)
+    setIsMobile(window.innerWidth < 768);
     window.addEventListener('resize', checkMobile);
-    return () => window.removeEventListener('resize', checkMobile);
+    return () => {
+      clearTimeout(timeout);
+      window.removeEventListener('resize', checkMobile);
+    };
   }, []);
 
   // Pause render loop when off-screen to save GPU/battery

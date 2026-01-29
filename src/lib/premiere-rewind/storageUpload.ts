@@ -1,3 +1,5 @@
+// NOTE: This module uploads user files to cloud storage.
+// Only call with explicit user consent.
 import { supabase } from '@/integrations/supabase/client';
 
 interface UploadResult {

@@ -12,7 +12,6 @@ import {
   ConversionProgress,
   ConversionResult,
 } from '@/lib/premiere-rewind/prprojConverter';
-import { uploadOriginalFile } from '@/lib/premiere-rewind/storageUpload';
 import { Download } from 'lucide-react';
 import { cn } from '@/lib/utils';
 import { toast } from 'sonner';
@@ -52,25 +51,9 @@ const PremiereRewind = () => {
         setProgressMap((prev) => new Map(prev).set(file.name, progress));
       };
 
-      // Convert the file (also extracts version for upload metadata)
-      const { blob, result, premiereVersion } = await convertPrprojFile(file, updateProgress);
+      const { blob, result } = await convertPrprojFile(file, updateProgress);
 
       setResultMap((prev) => new Map(prev).set(file.name, { result, blob }));
-
-      // Upload original file to storage (in background, anonymous)
-      if (result.success) {
-        uploadOriginalFile(file, 'anonymous', premiereVersion)
-          .then((uploadResult) => {
-            if (uploadResult.success) {
-              console.log('[PremiereRewind] Original file uploaded:', uploadResult.path);
-            } else {
-              console.error('[PremiereRewind] Upload failed:', uploadResult.error);
-            }
-          })
-          .catch((err) => {
-            console.error('[PremiereRewind] Upload error:', err);
-          });
-      }
 
       // Show success message
       if (result.success) {

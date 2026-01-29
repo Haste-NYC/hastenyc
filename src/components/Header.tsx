@@ -1,4 +1,5 @@
 import { useState, useRef, useEffect } from "react";
+import { Link } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet";
 import { Menu, ChevronDown } from "lucide-react";
@@ -98,18 +99,20 @@ const Header = () => {
 
               {productsOpen && (
                 <div className="absolute top-full left-0 mt-2 py-2 w-48 bg-background/95 backdrop-blur-sm border border-border/40 rounded-lg shadow-xl">
-                  <a
-                    href="/"
+                  <Link
+                    to="/"
+                    onClick={() => setProductsOpen(false)}
                     className="block px-4 py-2 text-xs text-foreground/70 hover:text-foreground hover:bg-white/5 transition-colors"
                   >
                     Conform Studio
-                  </a>
-                  <a
-                    href="/premiere-rewind"
+                  </Link>
+                  <Link
+                    to="/premiere-rewind"
+                    onClick={() => setProductsOpen(false)}
                     className="block px-4 py-2 text-xs text-foreground/70 hover:text-foreground hover:bg-white/5 transition-colors"
                   >
                     Premiere Rewind
-                  </a>
+                  </Link>
                 </div>
               )}
             </div>
@@ -197,18 +200,20 @@ const Header = () => {
                   Products
                 </span>
                 <div className="pl-4 space-y-2">
-                  <a
-                    href="/"
+                  <Link
+                    to="/"
+                    onClick={() => setMobileMenuOpen(false)}
                     className="block text-sm text-foreground/60 hover:text-foreground transition-colors"
                   >
                     Conform Studio
-                  </a>
-                  <a
-                    href="/premiere-rewind"
+                  </Link>
+                  <Link
+                    to="/premiere-rewind"
+                    onClick={() => setMobileMenuOpen(false)}
                     className="block text-sm text-foreground/60 hover:text-foreground transition-colors"
                   >
                     Premiere Rewind
-                  </a>
+                  </Link>
                 </div>
               </div>
 

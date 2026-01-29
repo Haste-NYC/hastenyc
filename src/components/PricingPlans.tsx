@@ -92,6 +92,7 @@ const PricingPlans = ({ onSelectPlan, selectedPriceId, onScheduleCall }: Pricing
 
     const mql = window.matchMedia("(max-width: 639px)");
     let observer: IntersectionObserver | null = null;
+    let rafId: number | null = null;
 
     const setupObserver = () => {
       observer = new IntersectionObserver(
@@ -125,8 +126,12 @@ const PricingPlans = ({ onSelectPlan, selectedPriceId, onScheduleCall }: Pricing
 
     const handleChange = (e: MediaQueryListEvent | MediaQueryList) => {
       teardownObserver();
+      if (rafId !== null) cancelAnimationFrame(rafId);
       if (e.matches) {
-        setupObserver();
+        // Wait for next paint to ensure container has final dimensions
+        rafId = requestAnimationFrame(() => {
+          setupObserver();
+        });
       }
     };
 
@@ -138,6 +143,7 @@ const PricingPlans = ({ onSelectPlan, selectedPriceId, onScheduleCall }: Pricing
 
     return () => {
       mql.removeEventListener("change", handleChange);
+      if (rafId !== null) cancelAnimationFrame(rafId);
       teardownObserver();
     };
   }, []);
