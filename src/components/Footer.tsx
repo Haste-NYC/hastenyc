@@ -33,19 +33,29 @@ const Footer = () => {
 
       {/* Social & Contact Links */}
       <div className="flex flex-wrap justify-center items-center gap-x-2 gap-y-1.5 mt-6 px-4 max-w-sm sm:max-w-none sm:gap-x-0">
-        {['E-MAIL', 'TELEPHONE', 'INSTAGRAM', 'YOUTUBE', 'TIKTOK', 'FACEBOOK', 'LINKEDIN', 'TWITTER'].map((link, i, arr) => (
-          <span key={link} className="inline-flex items-center">
-            <button
-              type="button"
-              className="text-white/50 hover:text-white no-underline transition-colors duration-200 bg-transparent border-none cursor-pointer p-0"
+        {[
+          { label: 'E-MAIL', href: 'mailto:info@haste.nyc' },
+          { label: 'INSTAGRAM', href: 'https://instagram.com/haste.nyc' },
+          { label: 'YOUTUBE', href: 'https://www.youtube.com/channel/UCXtE1RONg-_D5EUI9-sxB_g' },
+          { label: 'TIKTOK', href: 'https://www.tiktok.com/@haste.nyc' },
+          { label: 'FACEBOOK', href: 'https://facebook.com/313745985146389' },
+          { label: 'LINKEDIN', href: 'https://linkedin.com/company/98756314' },
+          { label: 'TWITTER', href: 'https://twitter.com/@haste_nyc' },
+        ].map((link, i, arr) => (
+          <span key={link.label} className="inline-flex items-center">
+            <a
+              href={link.href}
+              target={link.href.startsWith('mailto:') || link.href.startsWith('tel:') ? undefined : '_blank'}
+              rel={link.href.startsWith('mailto:') || link.href.startsWith('tel:') ? undefined : 'noopener noreferrer'}
+              className="text-white/50 hover:text-white no-underline transition-colors duration-200"
               style={{
                 fontSize: '9px',
                 letterSpacing: '0.15em',
                 fontFamily: '-apple-system, BlinkMacSystemFont, sans-serif',
               }}
             >
-              {link}
-            </button>
+              {link.label}
+            </a>
             {i < arr.length - 1 && (
               <span className="text-white/20 mx-2.5 text-[7px] select-none hidden sm:inline">&middot;</span>
             )}

@@ -105,8 +105,7 @@ const Header = () => {
                     Conform Studio
                   </a>
                   <a
-                    href="#"
-                    onClick={(e) => e.preventDefault()}
+                    href="/premiere-rewind"
                     className="block px-4 py-2 text-xs text-foreground/70 hover:text-foreground hover:bg-white/5 transition-colors"
                   >
                     Premiere Rewind
@@ -169,11 +168,7 @@ const Header = () => {
         {/* Right side: Buttons */}
         <div className="hidden md:flex items-center gap-4">
           <a
-            href="#contact"
-            onClick={(e) => {
-              e.preventDefault();
-              scrollToSection("contact");
-            }}
+            href="mailto:info@haste.nyc"
             className="text-foreground/60 hover:text-foreground text-xs uppercase tracking-wider transition-colors"
           >
             Contact Us
@@ -209,8 +204,7 @@ const Header = () => {
                     Conform Studio
                   </a>
                   <a
-                    href="#"
-                    onClick={(e) => e.preventDefault()}
+                    href="/premiere-rewind"
                     className="block text-sm text-foreground/60 hover:text-foreground transition-colors"
                   >
                     Premiere Rewind
@@ -254,11 +248,7 @@ const Header = () => {
                 </a>
               ))}
               <a
-                href="#contact"
-                onClick={(e) => {
-                  e.preventDefault();
-                  scrollToSection("contact");
-                }}
+                href="mailto:info@haste.nyc"
                 className="text-foreground/60 text-lg uppercase tracking-wider"
               >
                 Contact Us

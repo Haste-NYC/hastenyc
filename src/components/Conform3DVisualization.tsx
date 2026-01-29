@@ -37,6 +37,7 @@ export default function Conform3DVisualization() {
   const isInteractingRef = useRef(false);
   const rafIdRef = useRef<number>(0);
   const containerSizeRef = useRef({ width: 0, height: 0 });
+  const isVisibleRef = useRef(false);
 
   // Check for mobile on mount
   useEffect(() => {
@@ -46,12 +47,23 @@ export default function Conform3DVisualization() {
     return () => window.removeEventListener('resize', checkMobile);
   }, []);
 
+  // Pause render loop when off-screen to save GPU/battery
+  useEffect(() => {
+    if (!containerRef.current) return;
+    const observer = new IntersectionObserver(
+      ([entry]) => { isVisibleRef.current = entry.isIntersecting; },
+      { threshold: 0 }
+    );
+    observer.observe(containerRef.current);
+    return () => observer.disconnect();
+  }, []);
+
   useEffect(() => {
     // Skip 3D rendering on mobile for performance
     if (isMobile) return;
 
-    setMounted(true);
     if (!containerRef.current) return;
+    setMounted(true);
 
     const container = containerRef.current;
     const width = container.clientWidth;
@@ -257,6 +269,9 @@ export default function Conform3DVisualization() {
     const animate = () => {
       rafIdRef.current = requestAnimationFrame(animate);
 
+      // Skip rendering when off-screen
+      if (!isVisibleRef.current) return;
+
       if (!isInteractingRef.current) {
         targetAngle += 0.0005;
       }
@@ -349,6 +364,13 @@ export default function Conform3DVisualization() {
       renderer.domElement.removeEventListener('touchstart', onTouchStart);
       renderer.domElement.removeEventListener('touchmove', onTouchMove);
       renderer.domElement.removeEventListener('touchend', onMouseUp);
+      // Dispose GPU resources to prevent memory leaks on remount
+      scene.traverse((obj) => {
+        if (obj instanceof THREE.Mesh || obj instanceof THREE.Line) {
+          obj.geometry.dispose();
+          (obj.material as THREE.Material).dispose();
+        }
+      });
       if (container && renderer.domElement) {
         container.removeChild(renderer.domElement);
       }

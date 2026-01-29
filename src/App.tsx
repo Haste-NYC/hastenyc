@@ -16,6 +16,7 @@ import EntertainmentShakeupPost from "./pages/EntertainmentShakeupPost";
 import VfxStoragePost from "./pages/VfxStoragePost";
 import FinalCutProPost from "./pages/FinalCutProPost";
 import StyleGuide from "./pages/StyleGuide";
+import PremiereRewind from "./pages/PremiereRewind";
 
 // Auth pages
 import SignIn from "./pages/SignIn";
@@ -58,6 +59,7 @@ const App = () => (
             <Route path="/blog/global-storage-post" element={<VfxStoragePost />} />
             <Route path="/blog/final-cut-pro" element={<FinalCutProPost />} />
             <Route path="/style-guide" element={<StyleGuide />} />
+            <Route path="/premiere-rewind" element={<PremiereRewind />} />
 
             {/* Auth pages */}
             <Route path="/signin" element={<SignIn />} />

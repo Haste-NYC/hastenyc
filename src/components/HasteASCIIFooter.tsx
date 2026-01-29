@@ -152,9 +152,27 @@ export default function HasteASCIIFooter() {
     setGrid(newGrid);
   }, []);
 
+  // Pause animation when footer is not visible to save CPU/battery
+  const isVisibleRef = useRef(false);
+
+  useEffect(() => {
+    if (!wrapperRef.current) return;
+    const observer = new IntersectionObserver(
+      ([entry]) => { isVisibleRef.current = entry.isIntersecting; },
+      { threshold: 0 }
+    );
+    observer.observe(wrapperRef.current);
+    return () => observer.disconnect();
+  }, []);
+
   useEffect(() => {
     let animationId: number;
     const animate = () => {
+      animationId = requestAnimationFrame(animate);
+
+      // Skip simulation when off-screen
+      if (!isVisibleRef.current) return;
+
       const height = waveHeight.current;
       const vel = waveVelocity.current;
       const mx = mousePosRef.current.x;
@@ -215,7 +233,6 @@ export default function HasteASCIIFooter() {
       if (frameCounter.current % 3 === 0) {
         setTime(t => t + 0.036);
       }
-      animationId = requestAnimationFrame(animate);
     };
     animationId = requestAnimationFrame(animate);
     return () => cancelAnimationFrame(animationId);
