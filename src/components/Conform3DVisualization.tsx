@@ -35,6 +35,8 @@ export default function Conform3DVisualization() {
   const mouseRef = useRef({ x: 0, y: 0 });
   const raycasterRef = useRef(new THREE.Raycaster());
   const isInteractingRef = useRef(false);
+  const rafIdRef = useRef<number>(0);
+  const containerSizeRef = useRef({ width: 0, height: 0 });
 
   // Check for mobile on mount
   useEffect(() => {
@@ -54,6 +56,7 @@ export default function Conform3DVisualization() {
     const container = containerRef.current;
     const width = container.clientWidth;
     const height = container.clientHeight;
+    containerSizeRef.current = { width, height };
 
     const scene = new THREE.Scene();
     // Transparent background - page background shows through
@@ -95,6 +98,7 @@ export default function Conform3DVisualization() {
     // Decorative nodes with their lines
     const decorativeCount = 30;
     const decorativePoints = generateSpherePoints(decorativeCount, sphereRadius);
+    const allCubes: THREE.Mesh[] = [];
 
     decorativePoints.forEach((point) => {
       const size = 2.5 + Math.random() * 1.5;
@@ -109,6 +113,7 @@ export default function Conform3DVisualization() {
       cube.position.set(point.x, point.y, point.z);
       cube.rotation.set(Math.random() * Math.PI, Math.random() * Math.PI, 0);
       mainGroup.add(cube);
+      allCubes.push(cube);
 
       // Each node gets its own connection line
       const lineGeometry = new THREE.BufferGeometry().setFromPoints([
@@ -150,6 +155,7 @@ export default function Conform3DVisualization() {
       cube.userData = { ...data, originalColor: color };
       mainGroup.add(cube);
       dataNodes.push(cube);
+      allCubes.push(cube);
 
       // Connection line for this data node
       const lineGeometry = new THREE.BufferGeometry().setFromPoints([
@@ -197,8 +203,8 @@ export default function Conform3DVisualization() {
 
     const onMouseMove = (e: MouseEvent) => {
       const rect = container.getBoundingClientRect();
-      mouseRef.current.x = ((e.clientX - rect.left) / width) * 2 - 1;
-      mouseRef.current.y = -((e.clientY - rect.top) / height) * 2 + 1;
+      mouseRef.current.x = ((e.clientX - rect.left) / rect.width) * 2 - 1;
+      mouseRef.current.y = -((e.clientY - rect.top) / rect.height) * 2 + 1;
 
       if (isDragging) {
         const deltaX = e.clientX - lastMouseX;
@@ -244,8 +250,12 @@ export default function Conform3DVisualization() {
     renderer.domElement.addEventListener('touchmove', onTouchMove);
     renderer.domElement.addEventListener('touchend', onMouseUp);
 
+    let prevHoveredKey: string | null = null;
+    let prevTooltipX = 0;
+    let prevTooltipY = 0;
+
     const animate = () => {
-      requestAnimationFrame(animate);
+      rafIdRef.current = requestAnimationFrame(animate);
 
       if (!isInteractingRef.current) {
         targetAngle += 0.0005;
@@ -259,13 +269,11 @@ export default function Conform3DVisualization() {
       camera.position.y = Math.sin(cameraVertical) * cameraDistanceFixed;
       camera.lookAt(0, 0, 0);
 
-      // Gentle cube rotation
-      mainGroup.children.forEach((child) => {
-        if (child.type === 'Mesh' && (child as THREE.Mesh).geometry.type === 'BoxGeometry') {
-          child.rotation.x += 0.004;
-          child.rotation.y += 0.004;
-        }
-      });
+      // Gentle cube rotation (Issue 10: use pre-built array instead of scene traversal)
+      for (let i = 0; i < allCubes.length; i++) {
+        allCubes[i].rotation.x += 0.004;
+        allCubes[i].rotation.y += 0.004;
+      }
 
       // Raycasting for data nodes
       raycasterRef.current.setFromCamera(mouseRef.current, camera);
@@ -292,24 +300,39 @@ export default function Conform3DVisualization() {
 
         const vec = hovered.position.clone();
         vec.project(camera);
-        const rect = container.getBoundingClientRect();
-        setTooltipPos({
-          x: (vec.x * 0.5 + 0.5) * width,
-          y: -(vec.y * 0.5 - 0.5) * height - 70
-        });
-        setHoveredNode(hovered.userData as HoveredNode);
+        // Issue 2: Use containerSizeRef for current dimensions after resize
+        const { width: curW, height: curH } = containerSizeRef.current;
+        const newX = (vec.x * 0.5 + 0.5) * curW;
+        const newY = -(vec.y * 0.5 - 0.5) * curH - 70;
+
+        // Issue 3: Only update state when values actually change
+        const hoveredData = hovered.userData as HoveredNode;
+        const hoveredKey = hoveredData.label;
+        if (hoveredKey !== prevHoveredKey) {
+          prevHoveredKey = hoveredKey;
+          setHoveredNode(hoveredData);
+        }
+        if (newX !== prevTooltipX || newY !== prevTooltipY) {
+          prevTooltipX = newX;
+          prevTooltipY = newY;
+          setTooltipPos({ x: newX, y: newY });
+        }
       } else {
-        setHoveredNode(null);
+        if (prevHoveredKey !== null) {
+          prevHoveredKey = null;
+          setHoveredNode(null);
+        }
       }
 
       renderer.render(scene, camera);
     };
 
-    animate();
+    rafIdRef.current = requestAnimationFrame(animate);
 
     const handleResize = () => {
       const newWidth = container.clientWidth;
       const newHeight = container.clientHeight;
+      containerSizeRef.current = { width: newWidth, height: newHeight };
       camera.aspect = newWidth / newHeight;
       camera.updateProjectionMatrix();
       renderer.setSize(newWidth, newHeight);
@@ -317,6 +340,7 @@ export default function Conform3DVisualization() {
     window.addEventListener('resize', handleResize);
 
     return () => {
+      cancelAnimationFrame(rafIdRef.current);
       window.removeEventListener('resize', handleResize);
       renderer.domElement.removeEventListener('mousedown', onMouseDown);
       renderer.domElement.removeEventListener('mousemove', onMouseMove);
