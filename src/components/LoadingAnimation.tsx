@@ -1,8 +1,10 @@
-import React, { useEffect, useRef, useCallback } from 'react';
+import React, { useEffect, useRef, useCallback, useState } from 'react';
 
 interface LoadingAnimationProps {
   /** URL to the sprite sheet image */
   spriteSheet: string;
+  /** URL to static image for mobile (optional - will extract first frame if not provided) */
+  staticImage?: string;
   /** Number of frames in the animation */
   frameCount?: number;
   /** Frames per second */
@@ -27,6 +29,7 @@ interface LoadingAnimationProps {
 
 export const LoadingAnimation: React.FC<LoadingAnimationProps> = ({
   spriteSheet,
+  staticImage,
   frameCount = 298,
   fps = 60,
   frameWidth = 604,
@@ -44,6 +47,14 @@ export const LoadingAnimation: React.FC<LoadingAnimationProps> = ({
   const animationRef = useRef<number>(0);
   const lastFrameTimeRef = useRef(0);
   const dprRef = useRef(1);
+  const [isMobile, setIsMobile] = useState(false);
+
+  // Check for mobile on mount
+  useEffect(() => {
+    const checkMobile = () => setIsMobile(window.innerWidth < 768);
+    checkMobile();
+    // Don't add resize listener - we want to keep the initial state to avoid loading sprite on resize
+  }, []);
 
   // Setup canvas for high-DPI displays
   useEffect(() => {
@@ -147,6 +158,12 @@ export const LoadingAnimation: React.FC<LoadingAnimationProps> = ({
       }
     };
   }, [playing, animate]);
+
+  // On mobile, skip the heavy sprite animation entirely for performance
+  // The animation is decorative and the hero section works without it
+  if (isMobile) {
+    return null;
+  }
 
   return (
     <canvas

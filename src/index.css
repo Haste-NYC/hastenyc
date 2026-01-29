@@ -4,7 +4,7 @@
 
 @layer base {
   :root {
-    --background: 220 15% 5%;
+    --background: 0 0% 0%;
     --foreground: 0 0% 100%;
 
     --card: 220 15% 8%;
@@ -52,6 +52,9 @@
     --brand-blue: 200 100% 55%;
     --brand-green: 145 100% 45%;
 
+    --success: 142 76% 45%;
+    --success-foreground: 0 0% 100%;
+
     --sidebar-background: 220 15% 5%;
     --sidebar-foreground: 0 0% 100%;
     --sidebar-primary: 0 0% 100%;
@@ -63,7 +66,7 @@
   }
 
   .dark {
-    --background: 220 15% 5%;
+    --background: 0 0% 0%;
     --foreground: 0 0% 100%;
   }
 }
@@ -77,9 +80,33 @@
     scroll-behavior: smooth;
   }
 
+  /* Mobile snap scrolling for app-like section navigation */
+  @media (max-width: 639px) {
+    .snap-sections {
+      scroll-snap-type: y proximity;
+    }
+
+    /* Full-height snap sections for key screens */
+    .snap-section-full {
+      scroll-snap-align: start;
+      scroll-snap-stop: always;
+      min-height: 100vh;
+      min-height: 100dvh; /* Dynamic viewport height for mobile browsers */
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+    }
+
+    /* Regular sections that scroll normally */
+    .snap-section {
+      scroll-snap-align: start;
+    }
+  }
+
   body {
     @apply bg-background text-foreground antialiased;
     font-family: 'Inter', sans-serif;
+    overflow-x: hidden;
   }
 
   h1, h2, h3, h4, h5, h6 {
@@ -211,6 +238,35 @@
 
   .gradient-button {
     background: var(--gradient-button);
+  }
+
+  /* Premiere Rewind - DropZone utilities */
+  .gradient-border {
+    position: relative;
+    background: hsl(var(--card));
+    border-radius: var(--radius);
+  }
+
+  .gradient-border::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    padding: 1px;
+    border-radius: inherit;
+    background: linear-gradient(135deg, hsl(var(--primary)) 0%, hsl(var(--accent)) 100%);
+    -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+    -webkit-mask-composite: xor;
+    mask-composite: exclude;
+    pointer-events: none;
+  }
+
+  .glow {
+    box-shadow: 0 0 60px hsl(var(--primary) / 0.3);
+  }
+
+  .drop-zone-active {
+    background: hsl(var(--primary) / 0.1);
+    border-color: hsl(var(--primary));
   }
 }
 

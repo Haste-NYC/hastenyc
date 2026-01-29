@@ -1,17 +1,28 @@
+import { lazy, Suspense } from "react";
 import Header from "@/components/Header";
 import HeroSection from "@/components/HeroSection";
 import TrustBadgeBar from "@/components/TrustBadgeBar";
 import VideoSection from "@/components/VideoSection";
 import FeatureSection from "@/components/FeatureSection";
-import AboutSection from "@/components/AboutSection";
-import FAQSection from "@/components/FAQSection";
 import PricingSection from "@/components/PricingSection";
+import FAQSection from "@/components/FAQSection";
+import AboutSection from "@/components/AboutSection";
 import Footer from "@/components/Footer";
 import SEO from "@/components/SEO";
 
+// Only lazy load the heavy Three.js component
+const Conform3DVisualization = lazy(() => import("@/components/Conform3DVisualization"));
+
+// Minimal loading placeholder
+const SectionLoader = () => (
+  <div className="min-h-[200px] flex items-center justify-center">
+    <div className="w-8 h-8 border-2 border-white/20 border-t-white/60 rounded-full animate-spin" />
+  </div>
+);
+
 const Index = () => {
   return (
-    <div className="min-h-screen bg-background">
+    <div className="min-h-screen bg-background snap-sections overflow-x-hidden">
       <SEO
         title="Haste Conform Studio - Premiere to Resolve"
         description="Instant project migration from Adobe Premiere to Davinci Resolve. Haste Conform Studio uses AI to automate post-production. 300X faster timeline conform for film and TV. Built for studios, secure, and scalable."
@@ -28,41 +39,49 @@ const Index = () => {
       />
       <Header />
       <main>
-        {/* Hero - full height minus header */}
-        <section id="hero" className="pt-10 relative">
+        {/* Hero - full viewport height on mobile */}
+        <section id="hero" className="pt-10 relative snap-section-full">
           <HeroSection />
           {/* Gradient fade to next section */}
           <div className="absolute bottom-0 left-0 right-0 h-32 bg-gradient-to-t from-background to-transparent pointer-events-none" />
         </section>
 
-        {/* Trust Badge Bar - Partner logos */}
-        <TrustBadgeBar />
+        {/* Trust Badge Bar - combined with Video for better mobile flow */}
+        <div className="snap-section-full relative">
+          <TrustBadgeBar />
+          <VideoSection />
+        </div>
 
-        {/* Video Demo */}
-        <VideoSection />
-
-        {/* Features - stacked sections with peek effect */}
-        <section id="features" className="py-12 relative">
+        {/* Features - scrollable content, each feature snaps */}
+        <section id="features" className="py-10 sm:py-20 relative">
           <FeatureSection />
         </section>
 
-        {/* About */}
-        <section id="about" className="py-12 relative">
-          {/* Top gradient */}
-          <div className="absolute top-0 left-0 right-0 h-24 bg-gradient-to-b from-background to-transparent pointer-events-none" />
-          <AboutSection />
+        {/* 3D Visualization - Interactive conform data visualization */}
+        <section className="py-10 sm:py-20 px-4 sm:px-6 md:px-12 lg:px-20">
+          <div className="max-w-7xl mx-auto">
+            <Suspense fallback={<SectionLoader />}>
+              <Conform3DVisualization />
+            </Suspense>
+          </div>
         </section>
 
-        {/* FAQ */}
-        <section id="faq" className="py-12 relative">
+        {/* Pricing - full viewport on mobile */}
+        <section id="pricing" className="py-10 sm:py-20 relative snap-section-full">
+          <PricingSection />
+        </section>
+
+        {/* FAQ - scrollable content */}
+        <section id="faq" className="py-10 sm:py-20 relative">
           <FAQSection />
         </section>
 
-        {/* Pricing */}
-        <section id="pricing" className="py-12 relative">
-          {/* Top gradient */}
-          <div className="absolute top-0 left-0 right-0 h-24 bg-gradient-to-b from-background to-transparent pointer-events-none" />
-          <PricingSection />
+        {/* About */}
+        <section
+          id="about"
+          className="relative"
+        >
+          <AboutSection />
         </section>
       </main>
       <Footer />

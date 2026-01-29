@@ -14,9 +14,9 @@ const NotFound = () => {
   return (
     <div className="min-h-screen bg-background flex flex-col">
       <Helmet>
-        <title>Page Not Found | HASTE.NYC</title>
+        <title>Page Not Found | HASTE</title>
         <meta name="robots" content="noindex, nofollow" />
-        <meta name="description" content="The page you're looking for doesn't exist. Return to HASTE.NYC homepage or explore our blog." />
+        <meta name="description" content="The page you're looking for doesn't exist. Return to HASTE homepage or explore our blog." />
       </Helmet>
 
       <Header />

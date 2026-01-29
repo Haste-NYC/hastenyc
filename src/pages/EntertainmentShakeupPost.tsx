@@ -23,7 +23,7 @@ const EntertainmentShakeupPost = () => {
         article={{
           publishedTime: "2024-12-19",
           section: "Breaking News",
-          author: "HASTE.NYC",
+          author: "HASTE",
         }}
       />
       <Header />

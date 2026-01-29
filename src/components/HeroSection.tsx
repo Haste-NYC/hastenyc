@@ -5,8 +5,11 @@ import { useLenis } from "lenis/react";
 import conformLogo from "@/assets/conform-studio-logo.png";
 import { LoadingAnimation } from "@/components/LoadingAnimation";
 
-// Particle component for constellation effect
+// Particle component for constellation effect - desktop only for performance
 const Particles = () => {
+  const [isMobile, setIsMobile] = useState(true); // Default to mobile to prevent flash
+
+  // Generate particles once - must be called unconditionally (React hooks rule)
   const particles = useMemo(() => {
     return Array.from({ length: 30 }, (_, i) => ({
       id: i,
@@ -17,6 +20,14 @@ const Particles = () => {
       duration: Math.random() * 3 + 5,
     }));
   }, []);
+
+  useEffect(() => {
+    // Check once on mount - no resize listener needed
+    setIsMobile(window.innerWidth < 768);
+  }, []);
+
+  // Skip particles entirely on mobile for maximum performance
+  if (isMobile) return null;
 
   return (
     <div className="absolute inset-0 overflow-hidden pointer-events-none">
@@ -43,7 +54,7 @@ const Particles = () => {
           }}
         />
       ))}
-      {/* Connection lines between some particles */}
+      {/* Connection lines between particles */}
       <svg className="absolute inset-0 w-full h-full">
         <defs>
           <linearGradient id="lineGradient" x1="0%" y1="0%" x2="100%" y2="0%">
@@ -114,7 +125,7 @@ const HeroSection = () => {
   return (
     <section
       ref={sectionRef}
-      className="relative flex flex-col items-center justify-center px-6 py-4 min-h-[calc(100vh-200px)] overflow-hidden"
+      className="relative flex flex-col items-center justify-center px-4 sm:px-6 py-4 min-h-[calc(100vh-200px)] overflow-x-hidden max-w-[100vw]"
     >
       {/* Particle constellation effect */}
       <Particles />
@@ -170,9 +181,9 @@ const HeroSection = () => {
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.6 }}
-          className="text-foreground text-xs md:text-sm uppercase tracking-[0.25em] mb-4"
+          className="text-foreground text-xs md:text-sm uppercase tracking-[0.25em] mb-4 mt-4 sm:mt-0"
         >
-          Introducing from HASTE.NYC
+          Introducing from HASTE
         </motion.p>
 
         {/* Main logo with 3D glow effect */}
@@ -224,8 +235,9 @@ const HeroSection = () => {
           transition={{ duration: 0.6, delay: 0.35 }}
           className="text-xs md:text-sm max-w-3xl mx-auto leading-relaxed uppercase tracking-[0.06em] pt-6"
         >
-          <span className="text-foreground/60">Timeline conversion that once took days</span>{" "}
-          <span className="text-foreground">now takes seconds.</span>{" "}
+          <span className="text-foreground/60">Project migration that once took days</span>{" "}
+          <span className="text-foreground">now takes seconds.</span>
+          <br />
           <span className="text-foreground/90">100% frame-accurate, TPN+ compliant, trusted by major studios.</span>
         </motion.p>
 
@@ -234,11 +246,11 @@ const HeroSection = () => {
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.6, delay: 0.5 }}
-          className="pt-6"
+          className="pt-8 sm:pt-6"
         >
           <button
             onClick={scrollToPricing}
-            className="bg-white text-gray-900 font-medium text-base px-8 py-3 rounded-full hover:bg-gray-100 transition-colors"
+            className="bg-white text-gray-900 font-medium text-sm sm:text-base px-6 sm:px-8 py-2.5 sm:py-3 rounded-full hover:bg-gray-100 transition-colors"
           >
             Start Free Trial
           </button>

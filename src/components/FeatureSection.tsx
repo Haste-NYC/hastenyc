@@ -258,7 +258,7 @@ const FeatureSectionItem = ({
   const imageY = useTransform(scrollYProgress, [0, 1], ["5%", "-5%"]);
 
   return (
-    <div id={feature.id} className="min-h-[85vh] flex items-center py-16 px-6">
+    <div id={feature.id} className="flex items-center py-0 px-4 sm:px-6 md:px-12 lg:px-20">
       <motion.div
         className="max-w-7xl mx-auto w-full"
         variants={containerVariants}
@@ -267,7 +267,7 @@ const FeatureSectionItem = ({
         viewport={{ once: true, margin: "-100px" }}
       >
         <div
-          className={`grid grid-cols-1 md:grid-cols-2 gap-12 md:gap-16 items-center ${
+          className={`grid grid-cols-1 md:grid-cols-2 gap-8 sm:gap-10 md:gap-12 lg:gap-16 items-center ${
             isReversed ? "md:[&>*:first-child]:order-2" : ""
           }`}
         >
@@ -276,7 +276,7 @@ const FeatureSectionItem = ({
             {/* Statistic with citation */}
             <motion.div variants={itemVariants} className="space-y-1">
               <span
-                className={`block text-6xl md:text-8xl font-bold tracking-tight ${
+                className={`block text-5xl sm:text-6xl md:text-7xl lg:text-8xl font-bold tracking-tight ${
                   feature.useGradientStat
                     ? "bg-gradient-to-r from-pink-500 to-purple-500 bg-clip-text text-transparent"
                     : "text-foreground"
@@ -340,7 +340,7 @@ const FeatureSectionItem = ({
 
 const FeatureSection = () => {
   return (
-    <section className="relative">
+    <section className="relative space-y-16 sm:space-y-20 md:space-y-24 lg:space-y-[120px]">
       {features.map((feature, index) => (
         <FeatureSectionItem
           key={index}

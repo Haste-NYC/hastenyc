@@ -7,7 +7,7 @@ const Terms = () => {
     <div className="min-h-screen bg-background">
       <SEO
         title="Terms of Service"
-        description="Terms of Service for HASTE.NYC and Haste Conform Studio. Review our service agreement and usage policies."
+        description="Terms of Service for Haste Conform Studio. Review our service agreement and usage policies."
         canonical="/terms"
       />
       <Header />

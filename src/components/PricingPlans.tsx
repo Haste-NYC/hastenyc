@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useRef, useEffect } from "react";
 import { motion } from "framer-motion";
 import { Card, CardContent, CardFooter, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
@@ -33,13 +33,10 @@ const tiers: PricingTier[] = [
     description: "Perfect for independent creators",
     monthlyPrice: 49,
     yearlyPrice: 468,
-    seats: "1 seat / device license",
+    seats: "1 user / device license",
     icon: <Users className="w-5 h-5" />,
     features: [
-      "1 seat / device license",
-      "Unlimited projects",
-      "All conform tools",
-      "Standard export formats",
+      "1 user / device license",
       "Email support",
       "7-day free trial",
     ],
@@ -51,16 +48,11 @@ const tiers: PricingTier[] = [
     description: "For small teams and studios",
     monthlyPrice: 129,
     yearlyPrice: 1188,
-    seats: "3 seats / device licenses",
+    seats: "3 users / device licenses",
     icon: <Building2 className="w-5 h-5" />,
     features: [
-      "3 seats / device licenses",
-      "Unlimited projects",
-      "All conform tools",
-      "All export formats",
+      "3 users / device licenses",
       "Priority support",
-      "Team collaboration",
-      "Advanced analytics",
       "7-day free trial",
     ],
     popular: true,
@@ -76,16 +68,11 @@ const tiers: PricingTier[] = [
     seats: "Unlimited seats",
     icon: <Calendar className="w-5 h-5" />,
     features: [
-      "Unlimited seats / devices",
-      "Unlimited projects",
-      "All conform tools",
-      "All export formats",
-      "Dedicated account manager",
-      "24/7 priority support",
+      "Unlimited seats / devices / projects",
+      "Priority support and training",
       "Custom integrations",
       "SLA guarantee",
       "On-premise deployment option",
-      "Custom training",
     ],
     isEnterprise: true,
   },
@@ -93,6 +80,73 @@ const tiers: PricingTier[] = [
 
 const PricingPlans = ({ onSelectPlan, selectedPriceId, onScheduleCall }: PricingPlansProps) => {
   const [isYearly, setIsYearly] = useState(true);
+  const [activeCardIndex, setActiveCardIndex] = useState(0);
+  const scrollContainerRef = useRef<HTMLDivElement>(null);
+  const cardRefs = useRef<(HTMLDivElement | null)[]>([]);
+
+  // Track which card is most visible using Intersection Observer
+  // Responds to viewport changes (e.g. device rotation) via matchMedia
+  useEffect(() => {
+    const container = scrollContainerRef.current;
+    if (!container) return;
+
+    const mql = window.matchMedia("(max-width: 639px)");
+    let observer: IntersectionObserver | null = null;
+    let rafId: number | null = null;
+
+    const setupObserver = () => {
+      observer = new IntersectionObserver(
+        (entries) => {
+          entries.forEach((entry) => {
+            if (entry.isIntersecting && entry.intersectionRatio > 0.5) {
+              const index = cardRefs.current.indexOf(entry.target as HTMLDivElement);
+              if (index !== -1) {
+                setActiveCardIndex(index);
+              }
+            }
+          });
+        },
+        {
+          root: container,
+          threshold: 0.5,
+        }
+      );
+
+      cardRefs.current.forEach((card) => {
+        if (card) observer!.observe(card);
+      });
+    };
+
+    const teardownObserver = () => {
+      if (observer) {
+        observer.disconnect();
+        observer = null;
+      }
+    };
+
+    const handleChange = (e: MediaQueryListEvent | MediaQueryList) => {
+      teardownObserver();
+      if (rafId !== null) cancelAnimationFrame(rafId);
+      if (e.matches) {
+        // Wait for next paint to ensure container has final dimensions
+        rafId = requestAnimationFrame(() => {
+          setupObserver();
+        });
+      }
+    };
+
+    // Initialize based on current viewport
+    handleChange(mql);
+
+    // Listen for viewport changes (e.g. device rotation)
+    mql.addEventListener("change", handleChange);
+
+    return () => {
+      mql.removeEventListener("change", handleChange);
+      if (rafId !== null) cancelAnimationFrame(rafId);
+      teardownObserver();
+    };
+  }, []);
 
   const handleSelectPlan = (tier: PricingTier) => {
     if (tier.isEnterprise) {
@@ -123,39 +177,62 @@ const PricingPlans = ({ onSelectPlan, selectedPriceId, onScheduleCall }: Pricing
   return (
     <div className="w-full space-y-8">
       {/* Billing Toggle */}
-      <div className="flex items-center justify-center gap-4">
-        <span className={`text-sm ${!isYearly ? "text-white font-medium" : "text-gray-400"}`}>
-          Monthly
-        </span>
-        <Switch
-          checked={isYearly}
-          onCheckedChange={setIsYearly}
-          className="data-[state=checked]:bg-white data-[state=unchecked]:bg-gray-700"
-        />
-        <span className={`text-sm ${isYearly ? "text-white font-medium" : "text-gray-400"}`}>
-          Yearly
-        </span>
-        {isYearly && (
-          <Badge className="bg-white/10 text-white border border-white/20">
-            Save {yearlySavings}%
-          </Badge>
-        )}
+      <div className="flex items-center justify-center">
+        <div className="relative flex items-center gap-4">
+          <span className={`text-sm ${!isYearly ? "text-white font-medium" : "text-gray-400"}`}>
+            Monthly
+          </span>
+          <Switch
+            checked={isYearly}
+            onCheckedChange={setIsYearly}
+            className="data-[state=checked]:bg-white data-[state=unchecked]:bg-gray-700"
+          />
+          <span className={`text-sm ${isYearly ? "text-white font-medium" : "text-gray-400"}`}>
+            Yearly
+          </span>
+          <motion.div
+            className="absolute left-full ml-4"
+            initial={false}
+            animate={{
+              opacity: isYearly ? 1 : 0,
+              x: isYearly ? 0 : -8,
+            }}
+            transition={{ duration: 0.2 }}
+          >
+            <Badge className="bg-white/10 text-white border border-white/20 whitespace-nowrap">
+              Save {yearlySavings}%
+            </Badge>
+          </motion.div>
+        </div>
       </div>
 
-      {/* Pricing Cards */}
-      <div className="grid md:grid-cols-3 gap-6">
-        {tiers.map((tier) => (
+      {/* Pricing Cards - Horizontal scroll on mobile, grid on md+ */}
+      <div
+        ref={scrollContainerRef}
+        className="
+          flex overflow-x-auto snap-x snap-mandatory gap-4 pb-4 -mx-4 px-4
+          md:grid md:grid-cols-2 md:overflow-visible md:snap-none md:mx-0 md:px-0 md:pb-0
+          md:gap-6
+          lg:grid-cols-3
+          [&::-webkit-scrollbar]:hidden [-ms-overflow-style:none] [scrollbar-width:none]
+        "
+      >
+        {tiers.map((tier, index) => (
           <motion.div
             key={tier.name}
-            whileHover={{ y: -4, transition: { duration: 0.2 } }}
-            className="h-full"
+            ref={(el) => (cardRefs.current[index] = el)}
+            className={`flex-shrink-0 w-[85vw] md:w-auto snap-center ${
+              tier.isEnterprise ? "md:col-span-2 lg:col-span-1" : ""
+            }`}
           >
             <Card
               className={`bg-transparent border transition-all duration-300 relative h-full flex flex-col ${
                 isSelected(tier)
                   ? "border-white"
+                  : index === activeCardIndex
+                  ? "border-white/60 md:border-white/10 md:hover:border-white/20"
                   : tier.popular
-                  ? "border-white/40 hover:border-white/60"
+                  ? "md:border-white/40 md:hover:border-white/60 border-white/10"
                   : "border-white/10 hover:border-white/20"
               }`}
             >
@@ -175,31 +252,31 @@ const PricingPlans = ({ onSelectPlan, selectedPriceId, onScheduleCall }: Pricing
               </div>
               <CardTitle className="text-white text-xl uppercase tracking-wider">{tier.name}</CardTitle>
               <p className="text-gray-400 text-xs uppercase tracking-wider">{tier.description}</p>
-
-              <div className="mt-4">
-                {tier.monthlyPrice !== null ? (
-                  <>
-                    <span className="text-4xl font-bold text-white">
-                      ${isYearly && tier.yearlyPrice ? Math.round(tier.yearlyPrice / 12) : tier.monthlyPrice}
-                    </span>
-                    <span className="text-gray-400 ml-2">
-                      /month
-                    </span>
-                    {isYearly && tier.yearlyPrice && (
-                      <p className="text-sm text-gray-400 mt-1">
-                        billed yearly
-                      </p>
-                    )}
-                  </>
-                ) : (
-                  <span className="text-3xl font-bold text-white">Custom Pricing</span>
-                )}
-              </div>
-
             </CardHeader>
 
-            <CardContent className="space-y-4 flex-grow">
-              <ul className="space-y-2">
+            <CardContent className={`flex-grow flex flex-col ${
+              tier.isEnterprise ? "lg:justify-center" : ""
+            }`}>
+              {tier.monthlyPrice !== null && (
+                <>
+                  <div className="hidden md:block md:flex-grow" />
+                  <div className="text-center mb-8">
+                    <span className="text-3xl sm:text-4xl font-bold text-white">
+                      ${isYearly && tier.yearlyPrice ? Math.round(tier.yearlyPrice / 12) : tier.monthlyPrice}
+                      <span className="text-sm font-normal text-gray-400 ml-1">/mo</span>
+                    </span>
+                    <p className="text-sm text-gray-400 mt-1">
+                      {isYearly ? "billed yearly" : "billed monthly"}
+                    </p>
+                  </div>
+                  <div className="hidden md:block md:flex-grow" />
+                </>
+              )}
+              <ul className={`space-y-2 ${
+                tier.isEnterprise
+                  ? "md:grid md:grid-cols-2 md:gap-x-8 md:gap-y-2 md:space-y-0 lg:block lg:space-y-2"
+                  : ""
+              }`}>
                 {tier.features.map((feature, index) => (
                   <li key={index} className="flex items-center gap-3">
                     <div className="flex-shrink-0 w-4 h-4 rounded-full bg-white/20 flex items-center justify-center">
@@ -231,6 +308,32 @@ const PricingPlans = ({ onSelectPlan, selectedPriceId, onScheduleCall }: Pricing
             </CardFooter>
             </Card>
           </motion.div>
+        ))}
+      </div>
+
+      {/* Carousel indicator dots - mobile/tablet only */}
+      <div className="flex justify-center gap-2 md:hidden">
+        {tiers.map((_, index) => (
+          <button
+            key={index}
+            onClick={() => {
+              const container = scrollContainerRef.current;
+              if (container) {
+                const cardWidth = container.offsetWidth * 0.85;
+                const gap = 16;
+                container.scrollTo({
+                  left: index * (cardWidth + gap),
+                  behavior: "smooth",
+                });
+              }
+            }}
+            className={`w-2 h-2 rounded-full transition-all duration-300 ${
+              index === activeCardIndex
+                ? "bg-white w-4"
+                : "bg-white/30"
+            }`}
+            aria-label={`Go to pricing card ${index + 1}`}
+          />
         ))}
       </div>
     </div>
