@@ -125,7 +125,7 @@ const HeroSection = () => {
   return (
     <section
       ref={sectionRef}
-      className="relative flex flex-col items-center justify-center px-4 sm:px-6 py-4 min-h-[calc(100vh-200px)] overflow-hidden max-w-[100vw]"
+      className="relative flex flex-col items-center justify-center px-4 sm:px-6 py-4 min-h-[calc(100vh-200px)] overflow-x-hidden max-w-[100vw]"
     >
       {/* Particle constellation effect */}
       <Particles />

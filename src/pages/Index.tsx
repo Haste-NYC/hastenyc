@@ -80,7 +80,6 @@ const Index = () => {
         <section
           id="about"
           className="relative"
-          style={{ background: 'linear-gradient(to bottom, hsl(220, 15%, 5%) 0%, #000 60%)' }}
         >
           <AboutSection />
         </section>

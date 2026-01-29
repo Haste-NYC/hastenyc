@@ -6,7 +6,7 @@ const Footer = () => {
     <footer
       id="contact"
       style={{
-        background: 'transparent',
+        background: '#000000',
         display: 'flex',
         flexDirection: 'column',
         alignItems: 'center',
@@ -114,7 +114,7 @@ const Footer = () => {
         marginTop: '20px',
         letterSpacing: '0.15em'
       }}>
-        &copy; 2026 HASTE
+        &copy; 2026 Haste NYC LLC
       </p>
     </footer>
   );

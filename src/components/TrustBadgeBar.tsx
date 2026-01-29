@@ -76,7 +76,7 @@ const TrustBadgeBar = () => {
   const duplicatedPartners = [...partners, ...partners];
 
   return (
-    <section className="py-6 sm:py-12 relative overflow-hidden">
+    <section className="py-6 sm:py-12 relative" style={{ background: 'transparent' }}>
       {/* Label */}
       <motion.p
         initial={{ opacity: 0 }}
@@ -91,8 +91,8 @@ const TrustBadgeBar = () => {
       {/* Scrolling container */}
       <div className="relative w-full overflow-hidden">
         {/* Fade edges */}
-        <div className="absolute left-0 top-0 bottom-0 w-32 bg-gradient-to-r from-background to-transparent z-10 pointer-events-none" />
-        <div className="absolute right-0 top-0 bottom-0 w-32 bg-gradient-to-l from-background to-transparent z-10 pointer-events-none" />
+        <div className="absolute left-0 top-0 bottom-0 w-32 bg-gradient-to-r from-black to-transparent z-10 pointer-events-none" />
+        <div className="absolute right-0 top-0 bottom-0 w-32 bg-gradient-to-l from-black to-transparent z-10 pointer-events-none" />
 
         {/* Scrolling logos - two sets for seamless loop */}
         <div className="flex animate-scroll-right-to-left items-center w-max">

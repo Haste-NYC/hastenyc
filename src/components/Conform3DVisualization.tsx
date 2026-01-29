@@ -55,23 +55,19 @@ export default function Conform3DVisualization() {
     };
   }, []);
 
-  // Pause render loop when off-screen to save GPU/battery
-  useEffect(() => {
-    if (!containerRef.current) return;
-    const observer = new IntersectionObserver(
-      ([entry]) => { isVisibleRef.current = entry.isIntersecting; },
-      { threshold: 0 }
-    );
-    observer.observe(containerRef.current);
-    return () => observer.disconnect();
-  }, []);
-
   useEffect(() => {
     // Skip 3D rendering on mobile for performance
     if (isMobile) return;
 
     if (!containerRef.current) return;
     setMounted(true);
+
+    // Pause render loop when off-screen to save GPU/battery
+    const observer = new IntersectionObserver(
+      ([entry]) => { isVisibleRef.current = entry.isIntersecting; },
+      { threshold: 0 }
+    );
+    observer.observe(containerRef.current);
 
     const container = containerRef.current;
     const width = container.clientWidth;
@@ -363,6 +359,7 @@ export default function Conform3DVisualization() {
     window.addEventListener('resize', handleResize);
 
     return () => {
+      observer.disconnect();
       cancelAnimationFrame(rafIdRef.current);
       window.removeEventListener('resize', handleResize);
       renderer.domElement.removeEventListener('mousedown', onMouseDown);
