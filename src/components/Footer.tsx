@@ -19,11 +19,10 @@ const Footer = () => {
       <HasteASCIIFooter />
 
       {/* Tagline */}
-      <p style={{
+      <p className="mt-6 sm:mt-8" style={{
         color: 'rgba(255,255,255,0.45)',
         letterSpacing: '0.35em',
         fontSize: '10px',
-        marginTop: '28px',
         textTransform: 'uppercase',
         fontFamily: '-apple-system, BlinkMacSystemFont, sans-serif',
         fontWeight: 300
@@ -32,7 +31,7 @@ const Footer = () => {
       </p>
 
       {/* Social & Contact Links */}
-      <div className="flex flex-wrap justify-center items-center gap-x-2 gap-y-1.5 mt-6 px-4 max-w-sm sm:max-w-none sm:gap-x-0">
+      <div className="flex flex-wrap justify-center items-center gap-x-2 gap-y-1.5 mt-6 sm:mt-8 px-4 max-w-sm sm:max-w-none sm:gap-x-0">
         {[
           { label: 'E-MAIL', href: 'mailto:info@haste.nyc' },
           { label: 'INSTAGRAM', href: 'https://instagram.com/haste.nyc' },

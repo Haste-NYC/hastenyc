@@ -314,6 +314,9 @@ export default function HasteASCIIFooter() {
         style={{
           cursor: 'default',
           transformOrigin: 'top center',
+          width: COLS * CHAR_WIDTH,
+          height: ROWS * CHAR_HEIGHT,
+          flexShrink: 0,
         }}
       />
     </div>

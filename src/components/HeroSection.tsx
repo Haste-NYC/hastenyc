@@ -125,7 +125,7 @@ const HeroSection = () => {
   return (
     <section
       ref={sectionRef}
-      className="relative flex flex-col items-center justify-center px-4 sm:px-6 py-4 min-h-[calc(100vh-200px)] overflow-x-hidden max-w-[100vw]"
+      className="relative flex flex-col items-center justify-center px-4 sm:px-6 py-4 min-h-[calc(100vh-200px)] overflow-visible"
     >
       {/* Particle constellation effect */}
       <Particles />
@@ -135,7 +135,7 @@ const HeroSection = () => {
         <LoadingAnimation
           spriteSheet="/loading_sprite_604.png"
           size={900}
-          className="opacity-50"
+          className="opacity-30"
         />
       </div>
 
