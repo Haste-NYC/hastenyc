@@ -2,7 +2,7 @@ import { motion } from "framer-motion";
 
 const AboutSection = () => {
   return (
-    <div className="max-w-4xl mx-auto px-4 sm:px-6 md:px-8 pb-10 sm:pb-20">
+    <div className="max-w-4xl mx-auto px-4 sm:px-6 md:px-8 pb-6 sm:pb-8">
       {/* Section Label */}
       <motion.div
         initial={{ opacity: 0 }}
