@@ -150,8 +150,8 @@ const HeroSection = () => {
           width: "200vw",
           height: "200vh",
           background: `
-            radial-gradient(ellipse 40% 30% at 50% 40%, rgba(255, 255, 255, 0.08) 0%, transparent 50%),
-            radial-gradient(ellipse 60% 50% at 50% 50%, rgba(100, 150, 255, 0.2) 0%, rgba(150, 100, 255, 0.12) 25%, rgba(200, 100, 255, 0.06) 40%, transparent 60%)
+            radial-gradient(ellipse 40% 30% at 50% 40%, rgba(255, 255, 255, 0.04) 0%, transparent 50%),
+            radial-gradient(ellipse 60% 50% at 50% 50%, rgba(100, 150, 255, 0.08) 0%, rgba(150, 100, 255, 0.04) 25%, rgba(200, 100, 255, 0.02) 40%, transparent 60%)
           `,
         }}
       />
@@ -170,7 +170,7 @@ const HeroSection = () => {
           width: "100vw",
           height: "60vh",
           background:
-            "radial-gradient(ellipse 50% 40% at 50% 50%, rgba(200, 180, 255, 0.1) 0%, transparent 60%)",
+            "radial-gradient(ellipse 50% 40% at 50% 50%, rgba(200, 180, 255, 0.04) 0%, transparent 60%)",
           filter: "blur(60px)",
         }}
       />
