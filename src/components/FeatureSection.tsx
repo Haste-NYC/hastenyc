@@ -55,7 +55,7 @@ const features: FeatureData[] = [
     description:
       "What once took days now takes seconds. Migrate timelines from Adobe Premiere to DaVinci Resolve with AI-powered automation that preserves every edit, every effect, every frame.",
     citation: "Internal Performance Testing",
-    useGradientStat: true,
+    useGradientStat: false,
     mockupType: "timeline",
   },
   {
@@ -68,7 +68,7 @@ const features: FeatureData[] = [
     description:
       "Multi-track timelines, complex effects, speed ramps, bezier curves—all preserved perfectly. No manual fixes, no frame offsets, no lost work.",
     citation: "Verified Frame Analysis",
-    useGradientStat: true,
+    useGradientStat: false,
     mockupType: "accuracy",
   },
   {
@@ -183,7 +183,7 @@ const UIMockup = ({ type }: { type: string }) => {
                 <div className="flex items-center gap-2">
                   <div className="w-16 h-1.5 bg-white/10 rounded-full overflow-hidden">
                     <div
-                      className="h-full bg-gradient-to-r from-pink-500 to-purple-500 rounded-full"
+                      className="h-full bg-gradient-to-r from-blue-500 to-purple-500 rounded-full"
                       style={{ width: `${70 + Math.random() * 30}%` }}
                     />
                   </div>

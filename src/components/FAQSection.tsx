@@ -81,8 +81,10 @@ const FAQSection = () => {
             <AccordionItem
               key={index}
               value={`item-${index}`}
-              className="glass-card rounded-lg px-4 transition-all duration-300 hover:border-white/15"
+              className="glass-card rounded-lg px-4 transition-all duration-300 hover:border-white/15 relative overflow-hidden group"
             >
+              {/* Gradient top-edge accent on hover */}
+              <div className="absolute top-0 left-0 right-0 h-[1px] bg-gradient-to-r from-purple-500/0 via-blue-500/30 to-purple-500/0 opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
               <AccordionTrigger className="text-left text-base md:text-lg font-medium hover:no-underline py-5">
                 {faq.question}
               </AccordionTrigger>

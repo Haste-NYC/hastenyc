@@ -89,11 +89,13 @@ const TrustBadgeBar = () => {
       </motion.p>
 
       {/* Scrolling container */}
-      <div className="relative w-full overflow-hidden">
-        {/* Fade edges */}
-        <div className="absolute left-0 top-0 bottom-0 w-32 bg-gradient-to-r from-black to-transparent z-10 pointer-events-none" />
-        <div className="absolute right-0 top-0 bottom-0 w-32 bg-gradient-to-l from-black to-transparent z-10 pointer-events-none" />
-
+      <div
+        className="relative w-full overflow-hidden"
+        style={{
+          maskImage: "linear-gradient(to right, transparent, black 128px, black calc(100% - 128px), transparent)",
+          WebkitMaskImage: "linear-gradient(to right, transparent, black 128px, black calc(100% - 128px), transparent)",
+        }}
+      >
         {/* Scrolling logos - two sets for seamless loop */}
         <div className="flex animate-scroll-right-to-left items-center w-max">
           {duplicatedPartners.map((partner, index) => (
