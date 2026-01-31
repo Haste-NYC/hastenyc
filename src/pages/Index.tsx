@@ -82,7 +82,7 @@ const Vignette = () => (
 
 const Index = () => {
   return (
-    <div className="min-h-screen bg-background snap-sections overflow-x-hidden">
+    <div className="min-h-screen bg-background overflow-x-hidden">
       <SEO
         title="Haste Conform Studio - Premiere to Resolve"
         description="Instant project migration from Adobe Premiere to Davinci Resolve. Haste Conform Studio uses AI to automate post-production. 300X faster timeline conform for film and TV. Built for studios, secure, and scalable."
@@ -102,13 +102,12 @@ const Index = () => {
       <Header />
       <main>
         {/* Hero - full viewport height on mobile */}
-        <section id="hero" className="pt-10 relative snap-section-full overflow-visible">
+        <section id="hero" className="pt-10 relative overflow-visible">
           <HeroSection />
         </section>
 
         {/* Trust Badge Bar - combined with Video for better mobile flow */}
-        <div className="snap-section-full relative overflow-visible">
-          <SectionGradient position="top-center" color="purple" />
+        <div className="relative overflow-visible">
           <TrustBadgeBar />
           <VideoSection />
         </div>
@@ -130,7 +129,7 @@ const Index = () => {
         </section>
 
         {/* Pricing - full viewport on mobile */}
-        <section id="pricing" className="py-10 sm:py-20 relative snap-section-full overflow-visible">
+        <section id="pricing" className="py-10 sm:py-20 relative overflow-visible">
           <SectionGradient position="top-right" color="purple" />
           <PricingSection />
         </section>
@@ -144,7 +143,7 @@ const Index = () => {
         {/* About */}
         <section
           id="about"
-          className="relative overflow-visible"
+          className="relative overflow-visible py-24 sm:py-32"
         >
           <SectionGradient position="bottom-left" color="mixed" />
           <AboutSection />
