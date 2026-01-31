@@ -41,15 +41,15 @@ const SectionGradient = ({
   };
 
   const colorMap = {
-    blue: "rgba(30, 60, 160, 0.12)",
-    purple: "rgba(70, 40, 150, 0.10)",
-    mixed: "rgba(50, 50, 160, 0.11)",
+    blue: "rgba(30, 60, 160, 0.02)",
+    purple: "rgba(70, 40, 150, 0.015)",
+    mixed: "rgba(50, 50, 160, 0.018)",
   };
 
   const colorOuter = {
-    blue: "rgba(25, 50, 130, 0.05)",
-    purple: "rgba(55, 35, 120, 0.04)",
-    mixed: "rgba(40, 40, 140, 0.045)",
+    blue: "rgba(25, 50, 130, 0.008)",
+    purple: "rgba(55, 35, 120, 0.006)",
+    mixed: "rgba(40, 40, 140, 0.007)",
   };
 
   return (
@@ -120,7 +120,6 @@ const Index = () => {
 
         {/* 3D Visualization - Interactive conform data visualization */}
         <section className="py-10 sm:py-20 px-4 sm:px-6 md:px-12 lg:px-20 relative overflow-visible">
-          <SectionGradient position="bottom-right" color="mixed" />
           <div className="max-w-7xl mx-auto">
             <Suspense fallback={<SectionLoader />}>
               <Conform3DVisualization />
@@ -130,7 +129,6 @@ const Index = () => {
 
         {/* Pricing - full viewport on mobile */}
         <section id="pricing" className="py-10 sm:py-20 relative overflow-visible">
-          <SectionGradient position="top-right" color="purple" />
           <PricingSection />
         </section>
 
@@ -145,7 +143,6 @@ const Index = () => {
           id="about"
           className="relative overflow-visible py-24 sm:py-32"
         >
-          <SectionGradient position="bottom-left" color="mixed" />
           <AboutSection />
           {/* Fade to pure black before footer */}
           <div className="absolute bottom-0 left-0 right-0 h-32 bg-gradient-to-t from-black to-transparent pointer-events-none" />

@@ -12,7 +12,7 @@ const VideoSection = () => {
           transform: "translate(-50%, -50%)",
           width: "200vw",
           height: "250vh",
-          background: "radial-gradient(ellipse 50% 60% at 50% 55%, rgba(30, 120, 255, 0.4) 0%, rgba(59, 130, 246, 0.2) 18%, rgba(59, 130, 246, 0.06) 30%, rgba(59, 130, 246, 0.02) 45%, transparent 65%)",
+          background: "radial-gradient(ellipse 50% 60% at 50% 55%, rgba(30, 120, 255, 0.12) 0%, rgba(59, 130, 246, 0.06) 18%, rgba(59, 130, 246, 0.02) 30%, rgba(59, 130, 246, 0.005) 45%, transparent 65%)",
         }}
       />
 
