@@ -55,7 +55,7 @@ const features: FeatureData[] = [
     description:
       "What once took days now takes seconds. Migrate timelines from Adobe Premiere to DaVinci Resolve with AI-powered automation that preserves every edit, every effect, every frame.",
     citation: "Internal Performance Testing",
-    useGradientStat: true,
+    useGradientStat: false,
     mockupType: "timeline",
   },
   {
@@ -68,7 +68,7 @@ const features: FeatureData[] = [
     description:
       "Multi-track timelines, complex effects, speed ramps, bezier curves—all preserved perfectly. No manual fixes, no frame offsets, no lost work.",
     citation: "Verified Frame Analysis",
-    useGradientStat: true,
+    useGradientStat: false,
     mockupType: "accuracy",
   },
   {
