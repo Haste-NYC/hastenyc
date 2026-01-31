@@ -80,28 +80,6 @@
     scroll-behavior: smooth;
   }
 
-  /* Mobile snap scrolling for app-like section navigation */
-  @media (max-width: 639px) {
-    .snap-sections {
-      scroll-snap-type: y proximity;
-    }
-
-    /* Full-height snap sections for key screens */
-    .snap-section-full {
-      scroll-snap-align: start;
-      scroll-snap-stop: always;
-      min-height: 100vh;
-      min-height: 100dvh; /* Dynamic viewport height for mobile browsers */
-      display: flex;
-      flex-direction: column;
-      justify-content: center;
-    }
-
-    /* Regular sections that scroll normally */
-    .snap-section {
-      scroll-snap-align: start;
-    }
-  }
 
   body {
     @apply bg-background text-foreground antialiased;

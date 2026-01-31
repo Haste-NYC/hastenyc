@@ -172,7 +172,6 @@ const PricingPlans = ({ onSelectPlan, selectedPriceId, onScheduleCall }: Pricing
     return selectedPriceId === priceId;
   };
 
-  const yearlySavings = Math.round(((49 * 12 - 468) / (49 * 12)) * 100);
 
   return (
     <div className="w-full space-y-8">
@@ -190,19 +189,6 @@ const PricingPlans = ({ onSelectPlan, selectedPriceId, onScheduleCall }: Pricing
           <span className={`text-sm ${isYearly ? "text-white font-medium" : "text-gray-400"}`}>
             Yearly
           </span>
-          <motion.div
-            className="absolute left-full ml-4"
-            initial={false}
-            animate={{
-              opacity: isYearly ? 1 : 0,
-              x: isYearly ? 0 : -8,
-            }}
-            transition={{ duration: 0.2 }}
-          >
-            <Badge className="bg-white/10 text-white border border-white/20 whitespace-nowrap">
-              Save {yearlySavings}%
-            </Badge>
-          </motion.div>
         </div>
       </div>
 
@@ -236,13 +222,6 @@ const PricingPlans = ({ onSelectPlan, selectedPriceId, onScheduleCall }: Pricing
                   : "border-white/10 hover:border-white/20"
               }`}
             >
-            {tier.popular && (
-              <div className="absolute -top-3 left-1/2 -translate-x-1/2">
-                <Badge className="bg-white text-gray-900 border-0 px-3">
-                  Most Popular
-                </Badge>
-              </div>
-            )}
 
             <CardHeader className="text-center pb-2 pt-6">
               <div className="flex items-center justify-center gap-2 mb-2">
