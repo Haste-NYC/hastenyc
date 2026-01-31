@@ -119,7 +119,7 @@ const Index = () => {
         {/* About */}
         <section
           id="about"
-          className="relative overflow-visible py-24 sm:py-32"
+          className="relative overflow-visible pt-10 sm:pt-16 pb-24 sm:pb-32"
         >
           <AboutSection />
         </section>
