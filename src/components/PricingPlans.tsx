@@ -212,7 +212,7 @@ const PricingPlans = ({ onSelectPlan, selectedPriceId, onScheduleCall }: Pricing
             }`}
           >
             <Card
-              className={`bg-transparent border transition-all duration-300 relative h-full flex flex-col ${
+              className={`bg-transparent border transition-all duration-300 relative h-full flex flex-col overflow-hidden ${
                 isSelected(tier)
                   ? "border-white"
                   : index === activeCardIndex
@@ -222,6 +222,10 @@ const PricingPlans = ({ onSelectPlan, selectedPriceId, onScheduleCall }: Pricing
                   : "border-white/10 hover:border-white/20"
               }`}
             >
+              {/* Gradient top accent for popular card */}
+              {tier.popular && (
+                <div className="absolute top-0 left-0 right-0 h-[1px] bg-gradient-to-r from-purple-500/40 via-blue-500/30 to-purple-500/40" />
+              )}
 
             <CardHeader className="text-center pb-2 pt-6">
               <div className="flex items-center justify-center gap-2 mb-2">

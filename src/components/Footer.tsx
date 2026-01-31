@@ -6,7 +6,6 @@ const Footer = () => {
     <footer
       id="contact"
       style={{
-        background: '#000000',
         display: 'flex',
         flexDirection: 'column',
         alignItems: 'center',

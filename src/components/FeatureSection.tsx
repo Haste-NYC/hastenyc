@@ -183,7 +183,7 @@ const UIMockup = ({ type }: { type: string }) => {
                 <div className="flex items-center gap-2">
                   <div className="w-16 h-1.5 bg-white/10 rounded-full overflow-hidden">
                     <div
-                      className="h-full bg-gradient-to-r from-pink-500 to-purple-500 rounded-full"
+                      className="h-full bg-gradient-to-r from-blue-500 to-purple-500 rounded-full"
                       style={{ width: `${70 + Math.random() * 30}%` }}
                     />
                   </div>

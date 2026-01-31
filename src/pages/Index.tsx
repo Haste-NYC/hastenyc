@@ -20,53 +20,31 @@ const SectionLoader = () => (
   </div>
 );
 
-// Subtle section gradient overlay - frame.io inspired
-// Each section gets a radial glow from a unique direction
-const SectionGradient = ({
-  position,
-  color = "blue",
-}: {
-  position: "top-left" | "top-right" | "bottom-left" | "bottom-right" | "center-left" | "center-right" | "top-center" | "bottom-center";
-  color?: "blue" | "purple" | "mixed";
-}) => {
-  const positionMap = {
-    "top-left": "15% 20%",
-    "top-right": "85% 20%",
-    "bottom-left": "15% 80%",
-    "bottom-right": "85% 80%",
-    "center-left": "5% 50%",
-    "center-right": "95% 50%",
-    "top-center": "50% 10%",
-    "bottom-center": "50% 90%",
-  };
+// Continuous page atmosphere - large diffuse gradient blobs
+// Wide, tall, low-opacity blobs that create an ambient wash without localized hotspots
+const atmosphereBlobs = [
+  { top: "-200px",  at: "15% 50%",  color: "80, 130, 255" },
+  { top: "1400px",  at: "85% 45%",  color: "120, 80, 220" },
+  { top: "3200px",  at: "20% 55%",  color: "70, 110, 245" },
+  { top: "5000px",  at: "80% 50%",  color: "90, 100, 240" },
+  { top: "6800px",  at: "30% 50%",  color: "80, 120, 255" },
+];
 
-  const colorMap = {
-    blue: "rgba(30, 60, 160, 0.02)",
-    purple: "rgba(70, 40, 150, 0.015)",
-    mixed: "rgba(50, 50, 160, 0.018)",
-  };
-
-  const colorOuter = {
-    blue: "rgba(25, 50, 130, 0.008)",
-    purple: "rgba(55, 35, 120, 0.006)",
-    mixed: "rgba(40, 40, 140, 0.007)",
-  };
-
-  return (
-    <div
-      className="absolute pointer-events-none left-0 right-0"
-      style={{
-        // Bleed 200px beyond section bounds so gradients overlap
-        // into adjacent sections, eliminating hard transition lines
-        top: "-200px",
-        bottom: "-200px",
-        background: `
-          radial-gradient(ellipse 80% 50% at ${positionMap[position]}, ${colorMap[color]} 0%, ${colorOuter[color]} 40%, transparent 70%)
-        `,
-      }}
-    />
-  );
-};
+const PageAtmosphere = () => (
+  <>
+    {atmosphereBlobs.map((blob, i) => (
+      <div
+        key={i}
+        className="absolute left-0 right-0 pointer-events-none z-0"
+        style={{
+          top: blob.top,
+          height: "2400px",
+          background: `radial-gradient(ellipse 120% 70% at ${blob.at}, rgba(${blob.color}, 0.09) 0%, rgba(${blob.color}, 0.025) 30%, transparent 60%)`,
+        }}
+      />
+    ))}
+  </>
+);
 
 // Window vignette - subtle darkening around viewport edges
 const Vignette = () => (
@@ -82,7 +60,7 @@ const Vignette = () => (
 
 const Index = () => {
   return (
-    <div className="min-h-screen bg-background overflow-x-hidden">
+    <div className="min-h-screen bg-background overflow-x-hidden relative">
       <SEO
         title="Haste Conform Studio - Premiere to Resolve"
         description="Instant project migration from Adobe Premiere to Davinci Resolve. Haste Conform Studio uses AI to automate post-production. 300X faster timeline conform for film and TV. Built for studios, secure, and scalable."
@@ -99,6 +77,8 @@ const Index = () => {
       />
       {/* Persistent vignette overlay */}
       <Vignette />
+      {/* Continuous atmospheric gradients across all sections including footer */}
+      <PageAtmosphere />
       <Header />
       <main>
         {/* Hero - full viewport height on mobile */}
@@ -114,7 +94,6 @@ const Index = () => {
 
         {/* Features - scrollable content, each feature snaps */}
         <section id="features" className="py-10 sm:py-20 relative overflow-visible">
-          <SectionGradient position="center-left" color="blue" />
           <FeatureSection />
         </section>
 
@@ -134,7 +113,6 @@ const Index = () => {
 
         {/* FAQ - scrollable content */}
         <section id="faq" className="py-10 sm:py-20 relative overflow-visible">
-          <SectionGradient position="center-right" color="blue" />
           <FAQSection />
         </section>
 
@@ -144,8 +122,6 @@ const Index = () => {
           className="relative overflow-visible py-24 sm:py-32"
         >
           <AboutSection />
-          {/* Fade to pure black before footer */}
-          <div className="absolute bottom-0 left-0 right-0 h-32 bg-gradient-to-t from-black to-transparent pointer-events-none" />
         </section>
       </main>
       <Footer />
