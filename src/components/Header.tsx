@@ -170,12 +170,12 @@ const Header = () => {
 
         {/* Right side: Buttons */}
         <div className="hidden md:flex items-center gap-4">
-          <a
-            href="mailto:info@haste.nyc"
+          <Link
+            to="/schedule"
             className="text-foreground/60 hover:text-foreground text-xs uppercase tracking-wider transition-colors"
           >
             Contact Us
-          </a>
+          </Link>
 
           <a
             href="/download"
@@ -252,12 +252,13 @@ const Header = () => {
                   {link.label}
                 </a>
               ))}
-              <a
-                href="mailto:info@haste.nyc"
+              <Link
+                to="/schedule"
                 className="text-foreground/60 text-lg uppercase tracking-wider"
+                onClick={() => setMobileMenuOpen(false)}
               >
                 Contact Us
-              </a>
+              </Link>
               <a
                 href="/download"
                 className="text-foreground/80 text-center text-lg uppercase tracking-wider"
