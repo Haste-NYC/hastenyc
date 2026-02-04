@@ -1,3 +1,4 @@
+import { Link } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import { motion } from "framer-motion";
 
@@ -26,11 +27,11 @@ const CTASection = () => {
           transition={{ duration: 0.5, delay: 0.3 }}
           className="pt-4"
         >
-          <a href="https://calendar.app.google/NCawKSixwhy3DA5r9" target="_blank" rel="noopener noreferrer">
+          <Link to="/schedule">
             <Button variant="hero" size="xl">
               Schedule a Demo
             </Button>
-          </a>
+          </Link>
         </motion.div>
       </motion.div>
     </section>

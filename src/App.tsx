@@ -17,6 +17,7 @@ import VfxStoragePost from "./pages/VfxStoragePost";
 import FinalCutProPost from "./pages/FinalCutProPost";
 import StyleGuide from "./pages/StyleGuide";
 import PremiereRewind from "./pages/PremiereRewind";
+import Schedule from "./pages/Schedule";
 
 // Auth pages
 import SignIn from "./pages/SignIn";
@@ -60,6 +61,7 @@ const App = () => (
             <Route path="/blog/final-cut-pro" element={<FinalCutProPost />} />
             <Route path="/style-guide" element={<StyleGuide />} />
             <Route path="/premiere-rewind" element={<PremiereRewind />} />
+            <Route path="/schedule" element={<Schedule />} />
 
             {/* Auth pages */}
             <Route path="/signin" element={<SignIn />} />

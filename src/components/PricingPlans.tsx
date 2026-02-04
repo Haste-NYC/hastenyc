@@ -1,4 +1,5 @@
 import { useState, useRef, useEffect } from "react";
+import { useNavigate } from "react-router-dom";
 import { motion } from "framer-motion";
 import { Card, CardContent, CardFooter, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
@@ -79,6 +80,7 @@ const tiers: PricingTier[] = [
 ];
 
 const PricingPlans = ({ onSelectPlan, selectedPriceId, onScheduleCall }: PricingPlansProps) => {
+  const navigate = useNavigate();
   const [isYearly, setIsYearly] = useState(true);
   const [activeCardIndex, setActiveCardIndex] = useState(0);
   const scrollContainerRef = useRef<HTMLDivElement>(null);
@@ -153,7 +155,7 @@ const PricingPlans = ({ onSelectPlan, selectedPriceId, onScheduleCall }: Pricing
       if (onScheduleCall) {
         onScheduleCall();
       } else {
-        window.open("https://calendar.app.google/BBFibVC74CU2MQY37", "_blank");
+        navigate("/schedule");
       }
       return;
     }
