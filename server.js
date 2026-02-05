@@ -73,11 +73,15 @@ app.post('/api/create-checkout-session', async (req, res) => {
 let calendarClient = null;
 let workCalendarId = null;
 
-const SCHEDULE_TIMEZONE = 'America/Chicago'; // CST/CDT
+const SCHEDULE_TIMEZONE = 'America/New_York'; // ET (Eastern Time)
 const SLOT_DURATION_MIN = 30;
-const DAY_START_HOUR = 10; // 10:00 AM CST
-const DAY_END_HOUR = 16;   // 4:00 PM CST (last slot at 3:30)
-const BLOCKED_DAYS = [0]; // Sunday = 0
+const DAY_START_HOUR = 11; // 11:00 AM ET
+const DAY_END_HOUR = 18;   // 6:00 PM ET (last slot at 5:30)
+const BLOCKED_DAYS = [0, 6]; // Sunday = 0, Saturday = 6
+const BUFFER_MINUTES = 30; // 30-min buffer between appointments
+const MAX_BOOKINGS_PER_DAY = 5;
+const MAX_ADVANCE_DAYS = 30; // scheduling window: 30 days in advance
+const MIN_LEAD_MINUTES = 60; // must book at least 1 hour before
 
 async function initGoogleCalendar() {
   const keyPath = process.env.GOOGLE_SERVICE_ACCOUNT_KEY_PATH;
@@ -133,7 +137,7 @@ function generateSlots(dateStr) {
   return slots;
 }
 
-// Helper: get current date/time parts in CST without fragile Date parsing
+// Helper: get current date/time parts in the schedule timezone
 function nowInCST() {
   const now = new Date();
   const parts = new Intl.DateTimeFormat('en-CA', {
@@ -149,20 +153,19 @@ function nowInCST() {
   };
 }
 
-// Helper: convert a CST slot time to a UTC Date for comparison with busy periods
+// Helper: convert a schedule-timezone slot time to a UTC Date for comparison with busy periods
 function slotToUTC(dateStr, slotTime) {
-  // Build an ISO string with explicit CST offset
-  // CST is UTC-6, CDT is UTC-5. Use Intl to find the real offset.
+  // Build an ISO string with the correct offset for the schedule timezone
   const probe = new Date(`${dateStr}T${slotTime}:00`);
   // Get the actual offset for this date in the schedule timezone
   const tzStr = probe.toLocaleString('en-US', { timeZone: SCHEDULE_TIMEZONE, timeZoneName: 'shortOffset' });
   const offsetMatch = tzStr.match(/GMT([+-]\d+)/);
-  const offsetHours = offsetMatch ? parseInt(offsetMatch[1]) : -6;
+  const offsetHours = offsetMatch ? parseInt(offsetMatch[1]) : -5;
   const offsetStr = `${offsetHours >= 0 ? '+' : '-'}${String(Math.abs(offsetHours)).padStart(2, '0')}:00`;
   return new Date(`${dateStr}T${slotTime}:00${offsetStr}`);
 }
 
-// Helper: check if a slot overlaps with any busy period
+// Helper: check if a slot overlaps with any busy period (including buffer)
 function isSlotBusy(dateStr, slotTime, busyPeriods) {
   const slotStart = slotToUTC(dateStr, slotTime);
   const slotEnd = new Date(slotStart.getTime() + SLOT_DURATION_MIN * 60 * 1000);
@@ -170,7 +173,11 @@ function isSlotBusy(dateStr, slotTime, busyPeriods) {
   return busyPeriods.some((busy) => {
     const busyStart = new Date(busy.start);
     const busyEnd = new Date(busy.end);
-    return slotStart < busyEnd && slotEnd > busyStart;
+    // Add buffer: slot must not start until BUFFER_MINUTES after a busy period ends,
+    // and must end BUFFER_MINUTES before the next busy period starts
+    const bufferedBusyStart = new Date(busyStart.getTime() - BUFFER_MINUTES * 60 * 1000);
+    const bufferedBusyEnd = new Date(busyEnd.getTime() + BUFFER_MINUTES * 60 * 1000);
+    return slotStart < bufferedBusyEnd && slotEnd > bufferedBusyStart;
   });
 }
 
@@ -186,9 +193,23 @@ app.get('/api/schedule/availability', async (req, res) => {
       return res.status(400).json({ error: 'startDate and endDate required' });
     }
 
-    // Build time range using dynamic timezone offset (handles CST/CDT)
-    const timeMinISO = slotToUTC(startDate, '00:00').toISOString();
-    const timeMaxISO = slotToUTC(endDate, '23:59').toISOString();
+    // Clamp the query range to the scheduling window (max MAX_ADVANCE_DAYS ahead)
+    const now = nowInCST();
+    const todayDate = new Date(`${now.date}T12:00:00`);
+    const maxDate = new Date(todayDate);
+    maxDate.setDate(maxDate.getDate() + MAX_ADVANCE_DAYS);
+    const maxDateStr = maxDate.toLocaleDateString('en-CA', { timeZone: SCHEDULE_TIMEZONE });
+
+    const effectiveStart = startDate < now.date ? now.date : startDate;
+    const effectiveEnd = endDate > maxDateStr ? maxDateStr : endDate;
+
+    if (effectiveStart > effectiveEnd) {
+      return res.json({ days: [] });
+    }
+
+    // Build time range using dynamic timezone offset
+    const timeMinISO = slotToUTC(effectiveStart, '00:00').toISOString();
+    const timeMaxISO = slotToUTC(effectiveEnd, '23:59').toISOString();
 
     // Fetch busy times via FreeBusy API
     const freeBusy = await calendarClient.freebusy.query({
@@ -202,27 +223,61 @@ app.get('/api/schedule/availability', async (req, res) => {
 
     const busyPeriods = freeBusy.data.calendars?.[workCalendarId]?.busy || [];
 
+    // Count existing bookings per day by checking events
+    let existingEvents = [];
+    try {
+      const eventsList = await calendarClient.events.list({
+        calendarId: workCalendarId,
+        timeMin: timeMinISO,
+        timeMax: timeMaxISO,
+        singleEvents: true,
+        orderBy: 'startTime',
+        q: 'Conform Studio | Demo',
+      });
+      existingEvents = eventsList.data.items || [];
+    } catch (_) {
+      // If event listing fails, skip the per-day cap
+    }
+
+    // Build a map of booking counts per date
+    const bookingsPerDay = {};
+    for (const evt of existingEvents) {
+      const evtDate = evt.start?.dateTime
+        ? new Date(evt.start.dateTime).toLocaleDateString('en-CA', { timeZone: SCHEDULE_TIMEZONE })
+        : null;
+      if (evtDate) {
+        bookingsPerDay[evtDate] = (bookingsPerDay[evtDate] || 0) + 1;
+      }
+    }
+
     // Generate available slots for each day in range
     const days = [];
-    const current = new Date(`${startDate}T12:00:00`); // noon to avoid DST edge
-    const end = new Date(`${endDate}T12:00:00`);
-    const now = nowInCST();
+    const current = new Date(`${effectiveStart}T12:00:00`); // noon to avoid DST edge
+    const end = new Date(`${effectiveEnd}T12:00:00`);
 
     while (current <= end) {
       const dayOfWeek = current.getDay();
-      // Use toLocaleDateString with en-CA for YYYY-MM-DD format in CST
       const dateStr = current.toLocaleDateString('en-CA', { timeZone: SCHEDULE_TIMEZONE });
 
       if (!BLOCKED_DAYS.includes(dayOfWeek)) {
+        // Skip if this day already hit the max bookings
+        if ((bookingsPerDay[dateStr] || 0) >= MAX_BOOKINGS_PER_DAY) {
+          current.setDate(current.getDate() + 1);
+          continue;
+        }
+
         const allSlots = generateSlots(dateStr);
 
-        // Filter out busy slots and past slots (if today)
-        const isTodayCST = dateStr === now.date;
+        // Filter out busy slots, past slots, and slots within minimum lead time
+        const isTodayET = dateStr === now.date;
         const available = allSlots.filter((slot) => {
           if (isSlotBusy(dateStr, slot, busyPeriods)) return false;
-          if (isTodayCST) {
+          if (isTodayET) {
             const [h, m] = slot.split(':').map(Number);
-            if (h < now.hour || (h === now.hour && m <= now.minute)) return false;
+            const slotMinutes = h * 60 + m;
+            const nowMinutes = now.hour * 60 + now.minute;
+            // Must be at least MIN_LEAD_MINUTES (1 hour) in the future
+            if (slotMinutes < nowMinutes + MIN_LEAD_MINUTES) return false;
           }
           return true;
         });
@@ -266,11 +321,43 @@ app.post('/api/schedule/book', async (req, res) => {
     const endTime = `${String(endHour).padStart(2, '0')}:${String(endMin).padStart(2, '0')}`;
     const endDateTime = `${date}T${endTime}:00`;
 
-    // Re-verify slot is free (race condition guard)
+    // Enforce minimum lead time
+    const now = nowInCST();
+    const isTodayET = date === now.date;
+    if (isTodayET) {
+      const [slotH, slotM] = time.split(':').map(Number);
+      const slotMinutes = slotH * 60 + slotM;
+      const nowMinutes = now.hour * 60 + now.minute;
+      if (slotMinutes < nowMinutes + MIN_LEAD_MINUTES) {
+        return res.status(400).json({ error: 'Must book at least 1 hour in advance' });
+      }
+    }
+
+    // Enforce max bookings per day
+    try {
+      const dayStart = slotToUTC(date, `${String(DAY_START_HOUR).padStart(2, '0')}:00`).toISOString();
+      const dayEnd = slotToUTC(date, `${String(DAY_END_HOUR).padStart(2, '0')}:00`).toISOString();
+      const dayEvents = await calendarClient.events.list({
+        calendarId: workCalendarId,
+        timeMin: dayStart,
+        timeMax: dayEnd,
+        singleEvents: true,
+        q: 'Conform Studio | Demo',
+      });
+      if ((dayEvents.data.items || []).length >= MAX_BOOKINGS_PER_DAY) {
+        return res.status(409).json({ error: 'Maximum bookings reached for this day' });
+      }
+    } catch (_) {
+      // If check fails, continue with booking
+    }
+
+    // Re-verify slot is free (race condition guard, includes buffer)
+    const bufferStart = new Date(slotToUTC(date, time).getTime() - BUFFER_MINUTES * 60 * 1000);
+    const bufferEnd = new Date(slotToUTC(date, endTime).getTime() + BUFFER_MINUTES * 60 * 1000);
     const freeBusy = await calendarClient.freebusy.query({
       requestBody: {
-        timeMin: slotToUTC(date, time).toISOString(),
-        timeMax: slotToUTC(date, endTime).toISOString(),
+        timeMin: bufferStart.toISOString(),
+        timeMax: bufferEnd.toISOString(),
         timeZone: SCHEDULE_TIMEZONE,
         items: [{ id: workCalendarId }],
       },
