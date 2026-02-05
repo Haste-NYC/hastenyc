@@ -8,6 +8,7 @@ import { Label } from "@/components/ui/label";
 import { ArrowLeft, Loader2, Calendar, Clock, Video } from "lucide-react";
 import { format } from "date-fns";
 import { motion } from "framer-motion";
+import { convertSlotToLocal, getUserTimezoneAbbr } from "@/lib/timezone";
 
 const bookingSchema = z.object({
   name: z.string().min(1, "Name is required"),
@@ -41,11 +42,10 @@ const BookingForm = ({
     resolver: zodResolver(bookingSchema),
   });
 
-  // Format time for display
-  const [h, m] = selectedTime.split(":").map(Number);
-  const period = h >= 12 ? "PM" : "AM";
-  const displayH = h > 12 ? h - 12 : h === 0 ? 12 : h;
-  const displayTime = `${displayH}:${String(m).padStart(2, "0")} ${period}`;
+  // Format time for display in user's local timezone
+  const dateStr = format(selectedDate, "yyyy-MM-dd");
+  const displayTime = convertSlotToLocal(dateStr, selectedTime);
+  const tzAbbr = getUserTimezoneAbbr();
 
   return (
     <motion.div
@@ -63,7 +63,7 @@ const BookingForm = ({
         </div>
         <div className="flex items-center gap-2 text-white/60 text-sm">
           <Clock className="w-4 h-4" />
-          <span>{displayTime} CST</span>
+          <span>{displayTime} {tzAbbr}</span>
         </div>
         <div className="flex items-center gap-2 text-white/60 text-sm">
           <Video className="w-4 h-4" />

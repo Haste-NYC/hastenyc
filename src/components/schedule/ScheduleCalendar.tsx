@@ -1,8 +1,9 @@
 import { useState, useEffect, useRef } from "react";
 import { Calendar } from "@/components/ui/calendar";
 import { Skeleton } from "@/components/ui/skeleton";
-import { format, startOfMonth, endOfMonth, isSunday, isBefore, startOfDay, isToday, parseISO } from "date-fns";
+import { format, startOfMonth, endOfMonth, isSunday, isSaturday, isBefore, startOfDay, isToday, parseISO } from "date-fns";
 import type { DayAvailability } from "@/hooks/useSchedule";
+import { convertSlotToLocal } from "@/lib/timezone";
 
 interface ScheduleCalendarProps {
   availability: DayAvailability[];
@@ -25,6 +26,19 @@ const ScheduleCalendar = ({
 }: ScheduleCalendarProps) => {
   const [currentMonth, setCurrentMonth] = useState(new Date());
   const hasAutoSelected = useRef(false);
+  const calendarRef = useRef<HTMLDivElement>(null);
+  const [slotsMaxH, setSlotsMaxH] = useState<number | undefined>();
+
+  // Match time slots height to calendar height so the card never grows
+  useEffect(() => {
+    const el = calendarRef.current;
+    if (!el) return;
+    const observer = new ResizeObserver((entries) => {
+      setSlotsMaxH(entries[0].contentRect.height);
+    });
+    observer.observe(el);
+    return () => observer.disconnect();
+  }, []);
 
   // Fetch availability when month changes
   useEffect(() => {
@@ -58,14 +72,14 @@ const ScheduleCalendar = ({
     <div className="glass-card rounded-2xl p-6 md:p-8">
       <div className="flex flex-col md:flex-row gap-8">
         {/* Calendar */}
-        <div className="flex-shrink-0">
+        <div ref={calendarRef} className="flex-shrink-0">
           <Calendar
             mode="single"
             selected={selectedDate}
             onSelect={(date) => date && onDateSelect(date)}
             onMonthChange={setCurrentMonth}
             disabled={(date) =>
-              isBefore(date, today) || isSunday(date)
+              isBefore(date, today) || isSunday(date) || isSaturday(date)
             }
             classNames={{
               months: "flex flex-col sm:flex-row space-y-4 sm:space-x-4 sm:space-y-0",
@@ -97,7 +111,11 @@ const ScheduleCalendar = ({
         </div>
 
         {/* Time Slots */}
-        <div className="flex-1 min-w-0">
+        <div
+          data-lenis-prevent
+          className="flex-1 min-w-0 min-h-0 overflow-y-auto schedule-scrollbar"
+          style={slotsMaxH ? { maxHeight: slotsMaxH } : undefined}
+        >
           {!selectedDate ? (
             <div className="flex items-center justify-center h-full text-white/40 text-sm uppercase tracking-wider">
               Select a date
@@ -120,14 +138,12 @@ const ScheduleCalendar = ({
               <p className="text-white/40 text-xs uppercase tracking-wider mb-4">
                 {dayData?.dayLabel}, {selectedDate && format(selectedDate, "MMMM d")}
               </p>
-              <div className="grid grid-cols-2 gap-2 max-h-[280px] overflow-y-auto pr-1 scrollbar-thin">
+              <div className="grid grid-cols-2 gap-2">
                 {slots.map((slot) => {
                   const isActive = selectedTime === slot;
-                  // Format for display: "10:00" -> "10:00 AM"
-                  const [h, m] = slot.split(":").map(Number);
-                  const period = h >= 12 ? "PM" : "AM";
-                  const displayH = h > 12 ? h - 12 : h === 0 ? 12 : h;
-                  const displayTime = `${displayH}:${String(m).padStart(2, "0")} ${period}`;
+                  const displayTime = selectedDateStr
+                    ? convertSlotToLocal(selectedDateStr, slot)
+                    : slot;
 
                   return (
                     <button

@@ -4,6 +4,7 @@ import { CheckCircle2, Calendar, Clock, Video, User, ArrowRight, Download } from
 import { Separator } from "@/components/ui/separator";
 import { format, parseISO } from "date-fns";
 import { motion } from "framer-motion";
+import { convertSlotToLocal, getUserTimezoneAbbr } from "@/lib/timezone";
 import type { BookingConfirmation } from "@/hooks/useSchedule";
 
 interface ConfirmationViewProps {
@@ -65,11 +66,10 @@ const ConfirmationView = ({
     URL.revokeObjectURL(url);
   };
 
-  // Format time for display
-  const [h, m] = bookedTime.split(":").map(Number);
-  const period = h >= 12 ? "PM" : "AM";
-  const displayH = h > 12 ? h - 12 : h === 0 ? 12 : h;
-  const displayTime = `${displayH}:${String(m).padStart(2, "0")} ${period}`;
+  // Format time for display in user's local timezone
+  const dateStr = format(bookedDate, "yyyy-MM-dd");
+  const displayTime = convertSlotToLocal(dateStr, bookedTime);
+  const tzAbbr = getUserTimezoneAbbr();
 
   return (
     <motion.div
@@ -102,7 +102,7 @@ const ConfirmationView = ({
         <div className="flex items-center gap-3">
           <Clock className="w-4 h-4 text-white/40" />
           <span className="text-white/60 text-sm">Time</span>
-          <span className="ml-auto text-white font-medium text-sm">{displayTime} CST (30 min)</span>
+          <span className="ml-auto text-white font-medium text-sm">{displayTime} {tzAbbr} (30 min)</span>
         </div>
         <Separator className="bg-white/10" />
         <div className="flex items-center gap-3">

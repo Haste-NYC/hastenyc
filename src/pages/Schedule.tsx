@@ -1,6 +1,7 @@
 import { useState, useCallback } from "react";
 import { AnimatePresence, motion } from "framer-motion";
 import { Clock, Video, Globe } from "lucide-react";
+import { getUserTimezoneName } from "@/lib/timezone";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
 import SEO from "@/components/SEO";
@@ -117,7 +118,7 @@ const Schedule = () => {
               </span>
               <span className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-white/5 border border-white/10 text-white/50 text-xs">
                 <Globe className="w-3.5 h-3.5" />
-                Central Time
+                {getUserTimezoneName()}
               </span>
             </div>
           </motion.div>

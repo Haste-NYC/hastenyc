@@ -597,3 +597,27 @@
 .btn-with-arrow:hover svg {
   transform: translateX(4px);
 }
+
+/* Custom scrollbar for schedule time slots */
+.schedule-scrollbar::-webkit-scrollbar {
+  width: 6px;
+}
+
+.schedule-scrollbar::-webkit-scrollbar-track {
+  background: rgba(255, 255, 255, 0.05);
+  border-radius: 3px;
+}
+
+.schedule-scrollbar::-webkit-scrollbar-thumb {
+  background: rgba(255, 255, 255, 0.15);
+  border-radius: 3px;
+}
+
+.schedule-scrollbar::-webkit-scrollbar-thumb:hover {
+  background: rgba(255, 255, 255, 0.25);
+}
+
+.schedule-scrollbar {
+  scrollbar-width: thin;
+  scrollbar-color: rgba(255, 255, 255, 0.15) rgba(255, 255, 255, 0.05);
+}
