@@ -38,7 +38,7 @@ const featureItems = [
   { label: "TPN+ Certified", id: "feature-security" },
 ];
 
-const Header = () => {
+const Header = ({ minimal = false }: { minimal?: boolean }) => {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [productsOpen, setProductsOpen] = useState(false);
   const [featuresOpen, setFeaturesOpen] = useState(false);
@@ -78,7 +78,7 @@ const Header = () => {
 
   return (
     <header className="fixed top-0 w-full z-50 py-2 px-6 bg-background/95 backdrop-blur-sm border-b border-border/40">
-      <nav className="flex items-center justify-between max-w-7xl mx-auto">
+      <nav className="flex items-center justify-between h-8">
         {/* Left side: Logo + Nav Links */}
         <div className="flex items-center gap-8">
           <a href="/" className="hover:opacity-80 transition-opacity">
@@ -117,38 +117,40 @@ const Header = () => {
               )}
             </div>
 
-            {/* Features Dropdown */}
-            <div ref={featuresRef} className="relative">
-              <button
-                onClick={() => setFeaturesOpen(!featuresOpen)}
-                className={`relative flex items-center gap-1 text-xs uppercase tracking-wider transition-colors ${
-                  activeSection === "features"
-                    ? "text-foreground font-medium"
-                    : "text-foreground/60 hover:text-foreground"
-                }`}
-              >
-                Features
-                <ChevronDown className={`w-3 h-3 transition-transform ${featuresOpen ? "rotate-180" : ""}`} />
-              </button>
+            {/* Features Dropdown - Conform Studio only */}
+            {!minimal && (
+              <div ref={featuresRef} className="relative">
+                <button
+                  onClick={() => setFeaturesOpen(!featuresOpen)}
+                  className={`relative flex items-center gap-1 text-xs uppercase tracking-wider transition-colors ${
+                    activeSection === "features"
+                      ? "text-foreground font-medium"
+                      : "text-foreground/60 hover:text-foreground"
+                  }`}
+                >
+                  Features
+                  <ChevronDown className={`w-3 h-3 transition-transform ${featuresOpen ? "rotate-180" : ""}`} />
+                </button>
 
-              {/* Dropdown Menu */}
-              {featuresOpen && (
-                <div className="absolute top-full left-0 mt-2 py-2 w-48 bg-background/95 backdrop-blur-sm border border-border/40 rounded-lg shadow-xl">
-                  {featureItems.map((item) => (
-                    <button
-                      key={item.id}
-                      onClick={() => scrollToSection(item.id)}
-                      className="w-full text-left px-4 py-2 text-xs text-foreground/70 hover:text-foreground hover:bg-white/5 transition-colors"
-                    >
-                      {item.label}
-                    </button>
-                  ))}
-                </div>
-              )}
-            </div>
+                {/* Dropdown Menu */}
+                {featuresOpen && (
+                  <div className="absolute top-full left-0 mt-2 py-2 w-48 bg-background/95 backdrop-blur-sm border border-border/40 rounded-lg shadow-xl">
+                    {featureItems.map((item) => (
+                      <button
+                        key={item.id}
+                        onClick={() => scrollToSection(item.id)}
+                        className="w-full text-left px-4 py-2 text-xs text-foreground/70 hover:text-foreground hover:bg-white/5 transition-colors"
+                      >
+                        {item.label}
+                      </button>
+                    ))}
+                  </div>
+                )}
+              </div>
+            )}
 
-            {/* Other Nav Links */}
-            {navLinks.map(link => (
+            {/* Other Nav Links - Conform Studio only */}
+            {!minimal && navLinks.map(link => (
               <a
                 key={link.id}
                 href={`#${link.id}`}
@@ -165,6 +167,16 @@ const Header = () => {
                 {link.label}
               </a>
             ))}
+
+            {/* About link - minimal (product) pages */}
+            {minimal && (
+              <Link
+                to="/#about"
+                className="text-xs uppercase tracking-wider transition-colors text-foreground/60 hover:text-foreground"
+              >
+                About
+              </Link>
+            )}
           </div>
         </div>
 
@@ -177,12 +189,14 @@ const Header = () => {
             Contact Us
           </Link>
 
-          <a
-            href="/download"
-            className="text-foreground/80 hover:text-foreground hover:bg-white/5 text-xs uppercase tracking-wider transition-all px-3 py-1.5 rounded-full border border-white/20 hover:border-white/40"
-          >
-            Download
-          </a>
+          {!minimal && (
+            <a
+              href="/download"
+              className="text-foreground/80 hover:text-foreground hover:bg-white/5 text-xs uppercase tracking-wider transition-all px-3 py-1.5 rounded-full border border-white/20 hover:border-white/40"
+            >
+              Download
+            </a>
+          )}
         </div>
 
         {/* Mobile Menu */}
@@ -217,25 +231,27 @@ const Header = () => {
                 </div>
               </div>
 
-              {/* Features with sub-items for mobile */}
-              <div className="space-y-3">
-                <span className="text-lg uppercase tracking-wider text-foreground font-medium">
-                  Features
-                </span>
-                <div className="pl-4 space-y-2">
-                  {featureItems.map((item) => (
-                    <button
-                      key={item.id}
-                      onClick={() => scrollToSection(item.id)}
-                      className="block text-sm text-foreground/60 hover:text-foreground transition-colors"
-                    >
-                      {item.label}
-                    </button>
-                  ))}
+              {/* Features with sub-items for mobile - Conform Studio only */}
+              {!minimal && (
+                <div className="space-y-3">
+                  <span className="text-lg uppercase tracking-wider text-foreground font-medium">
+                    Features
+                  </span>
+                  <div className="pl-4 space-y-2">
+                    {featureItems.map((item) => (
+                      <button
+                        key={item.id}
+                        onClick={() => scrollToSection(item.id)}
+                        className="block text-sm text-foreground/60 hover:text-foreground transition-colors"
+                      >
+                        {item.label}
+                      </button>
+                    ))}
+                  </div>
                 </div>
-              </div>
+              )}
 
-              {navLinks.map(link => (
+              {!minimal && navLinks.map(link => (
                 <a
                   key={link.id}
                   href={`#${link.id}`}
@@ -252,6 +268,15 @@ const Header = () => {
                   {link.label}
                 </a>
               ))}
+              {minimal && (
+                <Link
+                  to="/#about"
+                  className="text-foreground/60 text-lg uppercase tracking-wider"
+                  onClick={() => setMobileMenuOpen(false)}
+                >
+                  About
+                </Link>
+              )}
               <Link
                 to="/schedule"
                 className="text-foreground/60 text-lg uppercase tracking-wider"
@@ -259,12 +284,14 @@ const Header = () => {
               >
                 Contact Us
               </Link>
-              <a
-                href="/download"
-                className="text-foreground/80 text-center text-lg uppercase tracking-wider"
-              >
-                Download
-              </a>
+              {!minimal && (
+                <a
+                  href="/download"
+                  className="text-foreground/80 text-center text-lg uppercase tracking-wider"
+                >
+                  Download
+                </a>
+              )}
             </div>
           </SheetContent>
         </Sheet>

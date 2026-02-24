@@ -77,8 +77,10 @@ const Index = () => {
       />
       {/* Persistent vignette overlay */}
       <Vignette />
-      {/* Continuous atmospheric gradients across all sections including footer */}
-      <PageAtmosphere />
+      {/* Continuous atmospheric gradients - clipped to prevent extending scroll area */}
+      <div className="absolute inset-0 overflow-hidden pointer-events-none z-0">
+        <PageAtmosphere />
+      </div>
       <Header />
       <main>
         {/* Hero - full viewport height on mobile */}
@@ -108,6 +110,18 @@ const Index = () => {
 
         {/* Pricing - full viewport on mobile */}
         <section id="pricing" className="py-10 sm:py-20 relative overflow-visible">
+          {/* Blue gradient blob - matches video section */}
+          <div
+            className="absolute pointer-events-none z-0"
+            style={{
+              top: "50%",
+              left: "50%",
+              transform: "translate(-50%, -50%)",
+              width: "200vw",
+              height: "250vh",
+              background: "radial-gradient(ellipse 50% 60% at 50% 55%, rgba(30, 120, 255, 0.12) 0%, rgba(59, 130, 246, 0.06) 18%, rgba(59, 130, 246, 0.02) 30%, rgba(59, 130, 246, 0.005) 45%, transparent 65%)",
+            }}
+          />
           <PricingSection />
         </section>
 
@@ -124,7 +138,21 @@ const Index = () => {
           <AboutSection />
         </section>
       </main>
-      <Footer />
+      <div className="relative overflow-visible">
+        {/* Blue gradient blob behind footer ASCII logo */}
+        <div
+          className="absolute pointer-events-none z-0"
+          style={{
+            top: "50%",
+            left: "50%",
+            transform: "translate(-50%, -50%)",
+            width: "200vw",
+            height: "250vh",
+            background: "radial-gradient(ellipse 50% 60% at 50% 55%, rgba(30, 120, 255, 0.042) 0%, rgba(59, 130, 246, 0.021) 18%, rgba(59, 130, 246, 0.007) 30%, rgba(59, 130, 246, 0.002) 45%, transparent 65%)",
+          }}
+        />
+        <Footer />
+      </div>
     </div>
   );
 };

@@ -18,7 +18,7 @@ function FileItem({ file, progress, result, onDownload }: FileItemProps) {
       return <XCircle className="w-5 h-5 text-destructive" />;
     }
     if (progress && progress.stage !== 'complete' && progress.stage !== 'error') {
-      return <Loader2 className="w-5 h-5 text-primary animate-spin" />;
+      return <Loader2 className="w-5 h-5 text-amber-400 animate-spin" />;
     }
     return <FileVideo className="w-5 h-5 text-muted-foreground" />;
   };
@@ -76,7 +76,7 @@ function FileItem({ file, progress, result, onDownload }: FileItemProps) {
       {progress && progress.stage !== 'complete' && progress.stage !== 'error' && (
         <div className="w-24 h-2 bg-muted rounded-full overflow-hidden">
           <div
-            className="h-full bg-gradient-to-r from-primary to-accent transition-all duration-300"
+            className="h-full bg-gradient-to-r from-amber-500 to-orange-400 transition-all duration-300"
             style={{ width: `${progress.progress}%` }}
           />
         </div>
@@ -87,9 +87,9 @@ function FileItem({ file, progress, result, onDownload }: FileItemProps) {
           onClick={onDownload}
           className={cn(
             'flex items-center gap-2 px-4 py-2 rounded-lg',
-            'bg-gradient-to-r from-primary to-accent',
-            'text-primary-foreground text-sm font-medium',
-            'hover:opacity-90 transition-opacity'
+            'bg-amber-500/90 hover:bg-amber-500',
+            'text-black text-sm font-medium',
+            'transition-all'
           )}
         >
           <Download className="w-4 h-4" />
