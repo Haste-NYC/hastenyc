@@ -72,8 +72,8 @@ const partners = [
 ];
 
 const TrustBadgeBar = () => {
-  // Duplicate partners for seamless loop
-  const duplicatedPartners = [...partners, ...partners];
+  // Quadruple partners so logos always fill the viewport, even on ultrawide screens
+  const duplicatedPartners = [...partners, ...partners, ...partners, ...partners];
 
   return (
     <section className="py-6 sm:py-12 relative" style={{ background: 'transparent' }}>

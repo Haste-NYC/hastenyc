@@ -16,6 +16,39 @@ import { Download } from 'lucide-react';
 import { cn } from '@/lib/utils';
 import { toast } from 'sonner';
 
+// Warm amber atmosphere blobs - mirrors Conform Studio's blue blobs
+const atmosphereBlobs = [
+  { top: "-100px",  at: "30% 50%",  color: "255, 160, 60" },
+  { top: "600px",   at: "70% 45%",  color: "255, 120, 40" },
+  { top: "1400px",  at: "25% 55%",  color: "255, 140, 50" },
+];
+
+const PageAtmosphere = () => (
+  <>
+    {atmosphereBlobs.map((blob, i) => (
+      <div
+        key={i}
+        className="absolute left-0 right-0 pointer-events-none z-0"
+        style={{
+          top: blob.top,
+          height: "1600px",
+          background: `radial-gradient(ellipse 120% 70% at ${blob.at}, rgba(${blob.color}, 0.12) 0%, rgba(${blob.color}, 0.035) 30%, transparent 60%)`,
+        }}
+      />
+    ))}
+  </>
+);
+
+// Shared vignette for brand cohesion with Conform Studio
+const Vignette = () => (
+  <div
+    className="fixed inset-0 pointer-events-none z-50"
+    style={{
+      background: `radial-gradient(ellipse 85% 80% at 50% 50%, transparent 50%, rgba(0, 0, 0, 0.35) 100%)`,
+    }}
+  />
+);
+
 const PremiereRewind = () => {
   const [files, setFiles] = useState<File[]>([]);
   const [isProcessing, setIsProcessing] = useState(false);
@@ -142,27 +175,33 @@ const PremiereRewind = () => {
     : 'your files';
 
   return (
-    <div className="min-h-screen flex flex-col bg-background">
+    <div className="min-h-screen flex flex-col bg-background overflow-x-hidden relative">
       <SEO
         title="Premiere Rewind - Version Rollback for .prproj Files"
         description="Open newer Premiere Pro projects in older versions. Drag and drop your .prproj files for instant version rollback. Free, fast, and secure."
         canonical="/premiere-rewind"
       />
-      <Header />
+      <Vignette />
+      <div className="absolute inset-0 overflow-hidden pointer-events-none z-0">
+        <PageAtmosphere />
+      </div>
+      <Header minimal />
 
-      <main className="flex-grow flex flex-col items-center justify-center px-4 sm:px-8 py-12">
+      <main className="flex-grow flex flex-col items-center justify-center px-4 sm:px-8 pt-14 pb-12 relative z-10">
         <div className="text-center mb-12 max-w-3xl">
           <p className="text-sm uppercase tracking-[0.25em] text-muted-foreground mb-4">
             Premiere Pro Project Tool
           </p>
-          <h1 className="text-4xl md:text-5xl lg:text-6xl mb-2 font-bold">
-            <span className="gradient-text">Premiere Rewind</span>
+          <h1 className="text-4xl md:text-5xl lg:text-6xl mb-2" style={{ fontFamily: "'Raleway', sans-serif" }}>
+            <span className="text-white font-light">Premiere </span>
+            <span className="pr-gradient-text font-bold">Rewind</span>
           </h1>
           <p className="text-lg md:text-xl text-foreground mb-6">
             version rollback for .prproj files
           </p>
           <p className="text-muted-foreground text-lg max-w-xl mx-auto leading-relaxed">
             Open newer Premiere Pro projects in older versions.
+            <br />
             Simply drag and drop your .prproj files and we'll handle the rest.
           </p>
         </div>
@@ -186,8 +225,8 @@ const PremiereRewind = () => {
             className={cn(
               'mt-6 flex items-center gap-2 px-6 py-3',
               'rounded-lg font-medium',
-              'bg-secondary text-secondary-foreground',
-              'hover:bg-secondary/80 transition-colors'
+              'bg-amber-500/90 hover:bg-amber-500 text-black',
+              'transition-all'
             )}
           >
             <Download className="w-4 h-4" />
@@ -200,24 +239,24 @@ const PremiereRewind = () => {
             How It Works
           </h3>
           <div className="grid grid-cols-1 md:grid-cols-3 gap-6 text-sm">
-            <div className="p-4 rounded-lg bg-card/30">
-              <div className="w-8 h-8 rounded-full bg-primary/20 text-primary flex items-center justify-center mx-auto mb-3 font-semibold">
+            <div className="p-4 rounded-lg bg-white/[0.03] border border-white/[0.06]">
+              <div className="w-8 h-8 rounded-full bg-amber-500/15 text-amber-400 flex items-center justify-center mx-auto mb-3 font-semibold">
                 1
               </div>
               <p className="text-muted-foreground">
                 Analyzes your project
               </p>
             </div>
-            <div className="p-4 rounded-lg bg-card/30">
-              <div className="w-8 h-8 rounded-full bg-primary/20 text-primary flex items-center justify-center mx-auto mb-3 font-semibold">
+            <div className="p-4 rounded-lg bg-white/[0.03] border border-white/[0.06]">
+              <div className="w-8 h-8 rounded-full bg-amber-500/15 text-amber-400 flex items-center justify-center mx-auto mb-3 font-semibold">
                 2
               </div>
               <p className="text-muted-foreground">
                 Makes it compatible with older versions
               </p>
             </div>
-            <div className="p-4 rounded-lg bg-card/30">
-              <div className="w-8 h-8 rounded-full bg-primary/20 text-primary flex items-center justify-center mx-auto mb-3 font-semibold">
+            <div className="p-4 rounded-lg bg-white/[0.03] border border-white/[0.06]">
+              <div className="w-8 h-8 rounded-full bg-amber-500/15 text-amber-400 flex items-center justify-center mx-auto mb-3 font-semibold">
                 3
               </div>
               <p className="text-muted-foreground">
@@ -228,7 +267,7 @@ const PremiereRewind = () => {
         </div>
       </main>
 
-      <Footer />
+      <Footer hideAsciiLogo />
 
       <EmailGateDialog
         open={emailDialogOpen}

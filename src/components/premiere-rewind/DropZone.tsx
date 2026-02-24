@@ -78,9 +78,10 @@ export function DropZone({ onFilesSelected, onOversizedFiles, isProcessing }: Dr
     <div
       className={cn(
         'relative w-full max-w-2xl mx-auto',
-        'gradient-border cursor-pointer',
+        'cursor-pointer rounded-lg',
+        'border border-white/[0.08] hover:border-amber-500/30',
         'transition-all duration-300 ease-out',
-        isDragActive && 'drop-zone-active scale-[1.02]',
+        isDragActive && 'border-amber-500/50 scale-[1.02]',
         isProcessing && 'opacity-50 cursor-not-allowed'
       )}
       onDragEnter={handleDrag}
@@ -93,7 +94,7 @@ export function DropZone({ onFilesSelected, onOversizedFiles, isProcessing }: Dr
         className={cn(
           'flex flex-col items-center justify-center',
           'py-16 px-8 rounded-lg',
-          'bg-card/50 backdrop-blur-sm',
+          'bg-white/[0.02] backdrop-blur-sm',
           'transition-all duration-300'
         )}
       >
@@ -101,15 +102,15 @@ export function DropZone({ onFilesSelected, onOversizedFiles, isProcessing }: Dr
           className={cn(
             'w-20 h-20 rounded-full',
             'flex items-center justify-center',
-            'bg-gradient-to-br from-primary/20 to-accent/20',
+            'bg-amber-500/10',
             'mb-6 transition-transform duration-300',
-            isDragActive && 'scale-110 animate-pulse-glow'
+            isDragActive && 'scale-110 bg-amber-500/20'
           )}
         >
           {isDragActive ? (
-            <FileVideo className="w-10 h-10 text-primary" />
+            <FileVideo className="w-10 h-10 text-amber-400" />
           ) : (
-            <Upload className="w-10 h-10 text-primary" />
+            <Upload className="w-10 h-10 text-amber-400" />
           )}
         </div>
 
@@ -129,11 +130,10 @@ export function DropZone({ onFilesSelected, onOversizedFiles, isProcessing }: Dr
           className={cn(
             'flex items-center gap-2 px-6 py-3',
             'rounded-lg font-medium text-sm',
-            'bg-gradient-to-r from-primary to-accent',
-            'text-primary-foreground',
-            'hover:opacity-90 transition-opacity',
+            'bg-amber-500/90 hover:bg-amber-500',
+            'text-black',
+            'transition-all',
             'disabled:opacity-50 disabled:cursor-not-allowed',
-            'glow'
           )}
           onClick={(e) => {
             e.stopPropagation();

@@ -77,14 +77,14 @@
   }
 
   html {
-    scroll-behavior: smooth;
+    overscroll-behavior: none;
   }
-
 
   body {
     @apply bg-background text-foreground antialiased;
     font-family: 'Inter', sans-serif;
     overflow-x: hidden;
+    overscroll-behavior: none;
   }
 
   h1, h2, h3, h4, h5, h6 {
@@ -98,6 +98,18 @@
       hsl(var(--brand-pink)) 33%,
       hsl(var(--brand-blue)) 66%,
       hsl(var(--brand-orange)) 100%
+    );
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+  }
+
+  /* Premiere Rewind warm amber gradient */
+  .pr-gradient-text {
+    background: linear-gradient(90deg,
+      hsl(35 100% 60%) 0%,
+      hsl(25 100% 55%) 50%,
+      hsl(15 90% 58%) 100%
     );
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
@@ -453,7 +465,7 @@
     transform: translateX(0);
   }
   to {
-    transform: translateX(-50%);
+    transform: translateX(-25%);
   }
 }
 
