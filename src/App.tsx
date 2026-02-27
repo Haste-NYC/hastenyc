@@ -8,6 +8,7 @@ import SmoothScrollProvider from "@/components/SmoothScrollProvider";
 import Index from "./pages/Index";
 import Terms from "./pages/Terms";
 import Privacy from "./pages/Privacy";
+import Eula from "./pages/Eula";
 import Refund from "./pages/Refund";
 import Blog from "./pages/Blog";
 import BlogPost from "./pages/BlogPost";
@@ -52,6 +53,7 @@ const App = () => (
             <Route path="/" element={<Index />} />
             <Route path="/terms" element={<Terms />} />
             <Route path="/privacy" element={<Privacy />} />
+            <Route path="/eula" element={<Eula />} />
             <Route path="/refund" element={<Refund />} />
             <Route path="/blog" element={<Blog />} />
             <Route path="/blog/adobe-max-2025" element={<BlogPost />} />

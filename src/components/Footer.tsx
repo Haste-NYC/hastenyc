@@ -84,6 +84,7 @@ const Footer = ({ hideAsciiLogo = false }: { hideAsciiLogo?: boolean }) => {
           { label: 'Production Company', href: 'https://www.haste.studio', external: true },
           { label: 'Terms of Service', to: '/terms' },
           { label: 'Privacy Notice', to: '/privacy' },
+          { label: 'License Agreement', to: '/eula' },
           { label: 'Refund Policy', to: '/refund' },
           { label: 'Blog', to: '/blog' },
         ].map((item, i, arr) => (
