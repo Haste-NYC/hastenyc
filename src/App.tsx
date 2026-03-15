@@ -19,6 +19,9 @@ import FinalCutProPost from "./pages/FinalCutProPost";
 import StyleGuide from "./pages/StyleGuide";
 import PremiereRewind from "./pages/PremiereRewind";
 import Schedule from "./pages/Schedule";
+import Download from "./pages/Download";
+import About from "./pages/About";
+import LavaLampExperiments from "./pages/LavaLampExperiments";
 
 // Auth pages
 import SignIn from "./pages/SignIn";
@@ -64,6 +67,9 @@ const App = () => (
             <Route path="/style-guide" element={<StyleGuide />} />
             <Route path="/premiere-rewind" element={<PremiereRewind />} />
             <Route path="/schedule" element={<Schedule />} />
+            <Route path="/download" element={<Download />} />
+            <Route path="/about" element={<About />} />
+            <Route path="/experiments/lava-lamp" element={<LavaLampExperiments />} />
 
             {/* Auth pages */}
             <Route path="/signin" element={<SignIn />} />

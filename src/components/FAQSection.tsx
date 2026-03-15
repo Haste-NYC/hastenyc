@@ -28,11 +28,6 @@ const faqs = [
       "Yes! We offer a 7-day free trial for all new users.",
   },
   {
-    question: "What happens to my existing projects?",
-    answer:
-      "All your project files remain exactly where they are. Haste Conform Studio creates new Resolve timelines while preserving your original Premiere projects.",
-  },
-  {
     question: "Can I cancel anytime?",
     answer:
       "Yes, you can cancel your subscription at any time. No long-term contracts or cancellation fees.",

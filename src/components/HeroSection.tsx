@@ -3,7 +3,7 @@ import { Button } from "@/components/ui/button";
 import { motion, useScroll, useTransform } from "framer-motion";
 import { useLenis } from "lenis/react";
 import conformLogo from "@/assets/conform-studio-logo.png";
-import { LoadingAnimation } from "@/components/LoadingAnimation";
+
 
 // Particle component for constellation effect - desktop only for performance
 const Particles = () => {
@@ -30,7 +30,7 @@ const Particles = () => {
   if (isMobile) return null;
 
   return (
-    <div className="absolute inset-0 overflow-hidden pointer-events-none">
+    <div className="absolute inset-0 overflow-hidden pointer-events-none z-[2]">
       {particles.map((particle) => (
         <motion.div
           key={particle.id}
@@ -130,48 +130,23 @@ const HeroSection = () => {
       {/* Particle constellation effect */}
       <Particles />
 
-      {/* Loading Animation - spinning logo animation */}
-      <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 pointer-events-none z-[1]">
-        <LoadingAnimation
-          spriteSheet="/loading_sprite_604.png"
-          size={900}
-          className="opacity-30"
-        />
-      </div>
-
-      {/* Atmospheric glow - x.ai inspired with blue/white light emanation */}
-      <motion.div
-        className="absolute pointer-events-none z-0"
+      {/* Atmospheric glow - centered blue/purple light emanation */}
+      <div
+        className="absolute inset-0 pointer-events-none z-[2]"
         style={{
-          top: "30%",
-          left: "50%",
-          x: "-50%",
-          y: isDesktop ? backgroundY : "-50%",
-          width: "200vw",
-          height: "200vh",
           background: `
-            radial-gradient(ellipse 40% 30% at 50% 40%, rgba(255, 255, 255, 0.04) 0%, transparent 50%),
-            radial-gradient(ellipse 60% 50% at 50% 50%, rgba(100, 150, 255, 0.08) 0%, rgba(150, 100, 255, 0.04) 25%, rgba(200, 100, 255, 0.02) 40%, transparent 60%)
+            radial-gradient(ellipse 80% 70% at 50% 45%, rgba(80, 120, 255, 0.35) 0%, rgba(100, 80, 220, 0.15) 25%, rgba(120, 60, 200, 0.06) 45%, transparent 70%)
           `,
         }}
       />
 
-      {/* Secondary glow for depth */}
-      <motion.div
-        className="absolute pointer-events-none z-0"
-        initial={{ opacity: 0 }}
-        animate={{ opacity: 1 }}
-        transition={{ duration: 2 }}
+      {/* Secondary glow for depth - white core */}
+      <div
+        className="absolute inset-0 pointer-events-none z-[2]"
         style={{
-          top: "25%",
-          left: "50%",
-          x: "-50%",
-          y: "-50%",
-          width: "100vw",
-          height: "60vh",
           background:
-            "radial-gradient(ellipse 50% 40% at 50% 50%, rgba(200, 180, 255, 0.04) 0%, transparent 60%)",
-          filter: "blur(60px)",
+            "radial-gradient(ellipse 50% 45% at 50% 40%, rgba(160, 180, 255, 0.2) 0%, rgba(80, 120, 255, 0.08) 35%, transparent 60%)",
+          filter: "blur(40px)",
         }}
       />
 

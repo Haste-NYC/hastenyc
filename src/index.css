@@ -76,7 +76,7 @@
     @apply border-border;
   }
 
-  html {
+  html, body {
     overscroll-behavior: none;
   }
 
@@ -84,7 +84,14 @@
     @apply bg-background text-foreground antialiased;
     font-family: 'Inter', sans-serif;
     overflow-x: hidden;
-    overscroll-behavior: none;
+  }
+
+  /* On mobile, lock body scroll so only the snap container scrolls */
+  @media (max-width: 767px) {
+    html, body {
+      overflow: hidden;
+      height: var(--vh, 100dvh);
+    }
   }
 
   h1, h2, h3, h4, h5, h6 {
@@ -179,6 +186,38 @@
 }
 
 @layer utilities {
+  /* Mobile scroll-snap: explicit scroll container + snap children */
+  @media (max-width: 767px) {
+    .snap-scroll-container {
+      height: var(--vh, 100dvh);
+      overflow-y: auto;
+      overflow-x: hidden;
+      scroll-snap-type: y mandatory;
+      -webkit-overflow-scrolling: touch;
+      overscroll-behavior: none;
+    }
+    .snap-section {
+      scroll-snap-align: start;
+      scroll-snap-stop: always;
+      height: var(--vh, 100dvh);
+      padding-top: 52px;
+      box-sizing: border-box;
+    }
+    .snap-section-center {
+      scroll-snap-align: start;
+      scroll-snap-stop: always;
+      height: var(--vh, 100dvh);
+      padding-top: 52px;
+      box-sizing: border-box;
+    }
+    .snap-section-auto {
+      scroll-snap-align: start;
+      scroll-snap-stop: always;
+      padding-top: 52px;
+      box-sizing: border-box;
+    }
+  }
+
   .font-display {
     font-family: 'Inter', sans-serif;
   }
@@ -332,12 +371,17 @@
     0 0 20px rgba(255, 255, 255, 0.15);
 }
 
-/* Glass morphism */
+/* Glass morphism -- backdrop-filter disabled on mobile for scroll performance */
 .glass-card {
   background: rgba(255, 255, 255, 0.03);
-  backdrop-filter: blur(12px);
-  -webkit-backdrop-filter: blur(12px);
   border: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+@media (min-width: 768px) {
+  .glass-card {
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+  }
 }
 
 .glass-card-hover:hover {
@@ -522,14 +566,19 @@
   content: ' ]';
 }
 
-/* Enhanced glass card with glow */
+/* Enhanced glass card with glow -- backdrop-filter disabled on mobile for scroll performance */
 .glass-card-glow {
   background: rgba(255, 255, 255, 0.03);
-  backdrop-filter: blur(12px);
-  -webkit-backdrop-filter: blur(12px);
   border: 1px solid rgba(255, 255, 255, 0.08);
   box-shadow: 0 0 40px rgba(255, 255, 255, 0.05);
   transition: all 0.3s ease;
+}
+
+@media (min-width: 768px) {
+  .glass-card-glow {
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+  }
 }
 
 .glass-card-glow:hover {

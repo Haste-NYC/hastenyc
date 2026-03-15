@@ -3,7 +3,7 @@ import HeroSection from "@/components/HeroSection";
 import VideoSection from "@/components/VideoSection";
 import FeatureSection from "@/components/FeatureSection";
 import CTASection from "@/components/CTASection";
-import Footer from "@/components/Footer";
+
 import SEO from "@/components/SEO";
 
 const Index = () => {
@@ -30,7 +30,7 @@ const Index = () => {
         <FeatureSection />
         <CTASection />
       </main>
-      <Footer />
+
     </div>
   );
 };

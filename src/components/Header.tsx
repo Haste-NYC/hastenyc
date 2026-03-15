@@ -28,7 +28,6 @@ const HasteLogo = () => (
 const navLinks = [
   { label: "Pricing", id: "pricing" },
   { label: "FAQ", id: "faq" },
-  { label: "About", id: "about" },
 ];
 
 const featureItems = [
@@ -168,15 +167,13 @@ const Header = ({ minimal = false }: { minimal?: boolean }) => {
               </a>
             ))}
 
-            {/* About link - minimal (product) pages */}
-            {minimal && (
-              <Link
-                to="/#about"
-                className="text-xs uppercase tracking-wider transition-colors text-foreground/60 hover:text-foreground"
-              >
-                About
-              </Link>
-            )}
+            {/* About link */}
+            <Link
+              to="/about"
+              className="text-xs uppercase tracking-wider transition-colors text-foreground/60 hover:text-foreground"
+            >
+              About
+            </Link>
           </div>
         </div>
 
@@ -190,12 +187,12 @@ const Header = ({ minimal = false }: { minimal?: boolean }) => {
           </Link>
 
           {!minimal && (
-            <a
-              href="/download"
+            <Link
+              to="/download"
               className="text-foreground/80 hover:text-foreground hover:bg-white/5 text-xs uppercase tracking-wider transition-all px-3 py-1.5 rounded-full border border-white/20 hover:border-white/40"
             >
               Download
-            </a>
+            </Link>
           )}
         </div>
 
@@ -268,15 +265,13 @@ const Header = ({ minimal = false }: { minimal?: boolean }) => {
                   {link.label}
                 </a>
               ))}
-              {minimal && (
-                <Link
-                  to="/#about"
-                  className="text-foreground/60 text-lg uppercase tracking-wider"
-                  onClick={() => setMobileMenuOpen(false)}
-                >
-                  About
-                </Link>
-              )}
+              <Link
+                to="/about"
+                className="text-foreground/60 text-lg uppercase tracking-wider"
+                onClick={() => setMobileMenuOpen(false)}
+              >
+                About
+              </Link>
               <Link
                 to="/schedule"
                 className="text-foreground/60 text-lg uppercase tracking-wider"
@@ -285,12 +280,13 @@ const Header = ({ minimal = false }: { minimal?: boolean }) => {
                 Contact Us
               </Link>
               {!minimal && (
-                <a
-                  href="/download"
+                <Link
+                  to="/download"
+                  onClick={() => setMobileMenuOpen(false)}
                   className="text-foreground/80 text-center text-lg uppercase tracking-wider"
                 >
                   Download
-                </a>
+                </Link>
               )}
             </div>
           </SheetContent>

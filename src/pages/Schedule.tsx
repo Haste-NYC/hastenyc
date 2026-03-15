@@ -3,7 +3,7 @@ import { AnimatePresence, motion } from "framer-motion";
 import { Clock, Video, Globe } from "lucide-react";
 import { getUserTimezoneName } from "@/lib/timezone";
 import Header from "@/components/Header";
-import Footer from "@/components/Footer";
+
 import SEO from "@/components/SEO";
 import ScheduleCalendar from "@/components/schedule/ScheduleCalendar";
 import BookingForm from "@/components/schedule/BookingForm";
@@ -199,7 +199,7 @@ const Schedule = () => {
         </div>
       </main>
 
-      <Footer />
+
     </div>
   );
 };

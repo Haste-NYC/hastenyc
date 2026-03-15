@@ -2,7 +2,7 @@ import { motion } from "framer-motion";
 
 const VideoSection = () => {
   return (
-    <section id="video" className="py-12 sm:py-16 px-4 sm:px-6 md:px-12 lg:px-24 relative">
+    <section id="video" className="py-12 sm:py-16 px-4 sm:px-6 md:px-12 lg:px-24 relative w-full">
       {/* Blue gradient background - extends beyond section boundaries */}
       <div
         className="absolute pointer-events-none z-0"

@@ -1,4 +1,4 @@
-import { useRef, useState, useEffect } from "react";
+import { useRef } from "react";
 import { motion, Variants, useScroll, useTransform } from "framer-motion";
 
 // Animation variants for staggered reveal
@@ -233,29 +233,23 @@ interface FeatureSectionItemProps {
   isReversed: boolean;
 }
 
+// Synchronous mobile check -- avoids creating scroll listeners on mobile
+const isMobileDevice = typeof window !== 'undefined' && window.innerWidth < 768;
+
 const FeatureSectionItem = ({
   feature,
   index,
   isReversed,
 }: FeatureSectionItemProps) => {
   const imageRef = useRef<HTMLDivElement>(null);
-  const [isDesktop, setIsDesktop] = useState(false);
 
-  useEffect(() => {
-    const checkDesktop = () => {
-      setIsDesktop(window.matchMedia("(min-width: 768px)").matches);
-    };
-    checkDesktop();
-    window.addEventListener("resize", checkDesktop);
-    return () => window.removeEventListener("resize", checkDesktop);
-  }, []);
-
+  // Only create scroll-linked parallax on desktop
   const { scrollYProgress } = useScroll({
-    target: imageRef,
+    target: isMobileDevice ? undefined : imageRef,
     offset: ["start end", "end start"],
   });
 
-  const imageY = useTransform(scrollYProgress, [0, 1], ["5%", "-5%"]);
+  const imageY = useTransform(scrollYProgress, [0, 1], isMobileDevice ? ["0%", "0%"] : ["5%", "-5%"]);
 
   return (
     <div id={feature.id} className="flex items-center py-0 px-4 sm:px-6 md:px-12 lg:px-20">
@@ -327,7 +321,7 @@ const FeatureSectionItem = ({
             variants={imageVariants}
             className="group"
             style={{
-              y: isDesktop ? imageY : 0,
+              y: imageY,
             }}
           >
             <UIMockup type={feature.mockupType} />
@@ -337,6 +331,8 @@ const FeatureSectionItem = ({
     </div>
   );
 };
+
+export { features, FeatureSectionItem };
 
 const FeatureSection = () => {
   return (

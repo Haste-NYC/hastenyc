@@ -1,5 +1,5 @@
 import Header from "@/components/Header";
-import Footer from "@/components/Footer";
+
 import SEO from "@/components/SEO";
 import Breadcrumbs from "@/components/Breadcrumbs";
 import RelatedArticles from "@/components/RelatedArticles";
@@ -326,7 +326,7 @@ const FinalCutProPost = () => {
 
       <RelatedArticles currentSlug="/blog/final-cut-pro-comeback" />
 
-      <Footer />
+
     </div>
   );
 };
