@@ -1,6 +1,6 @@
 import { Link } from "react-router-dom";
 import Header from "@/components/Header";
-import Footer from "@/components/Footer";
+
 import SEO from "@/components/SEO";
 import Breadcrumbs from "@/components/Breadcrumbs";
 import RelatedArticles from "@/components/RelatedArticles";
@@ -289,7 +289,7 @@ const FigmaSchemaPost = () => {
 
       <RelatedArticles currentSlug="/blog/figma-schema-2025" />
 
-      <Footer />
+
     </div>
   );
 };

@@ -19,6 +19,10 @@ import FinalCutProPost from "./pages/FinalCutProPost";
 import StyleGuide from "./pages/StyleGuide";
 import PremiereRewind from "./pages/PremiereRewind";
 import Schedule from "./pages/Schedule";
+import Download from "./pages/Download";
+import About from "./pages/About";
+import LavaLampExperiments from "./pages/LavaLampExperiments";
+import HeroMockup from "./pages/HeroMockup";
 
 // Auth pages
 import SignIn from "./pages/SignIn";
@@ -47,7 +51,7 @@ const App = () => (
       <TooltipProvider>
         <Toaster />
         <Sonner />
-        <BrowserRouter>
+        <BrowserRouter basename={import.meta.env.BASE_URL}>
           <ScrollToTop />
           <Routes>
             <Route path="/" element={<Index />} />
@@ -64,6 +68,10 @@ const App = () => (
             <Route path="/style-guide" element={<StyleGuide />} />
             <Route path="/premiere-rewind" element={<PremiereRewind />} />
             <Route path="/schedule" element={<Schedule />} />
+            <Route path="/download" element={<Download />} />
+            <Route path="/about" element={<About />} />
+            <Route path="/experiments/lava-lamp" element={<LavaLampExperiments />} />
+            <Route path="/experiments/hero-mockup" element={<HeroMockup />} />
 
             {/* Auth pages */}
             <Route path="/signin" element={<SignIn />} />

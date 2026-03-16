@@ -2,7 +2,7 @@ import { Button } from "@/components/ui/button";
 import { Link } from "react-router-dom";
 import appleCreatorStudio from "@/assets/apple-creator-studio.webp";
 import Header from "@/components/Header";
-import Footer from "@/components/Footer";
+
 import SEO from "@/components/SEO";
 
 const Blog = () => {
@@ -265,7 +265,7 @@ const Blog = () => {
         </div>
       </section>
 
-      <Footer />
+
     </div>
   );
 };

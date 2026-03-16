@@ -1,4 +1,4 @@
-import React, { useEffect, useRef, useCallback, useState } from 'react';
+import React, { useEffect, useRef, useCallback } from 'react';
 
 interface LoadingAnimationProps {
   /** URL to the sprite sheet image */
@@ -47,14 +47,9 @@ export const LoadingAnimation: React.FC<LoadingAnimationProps> = ({
   const animationRef = useRef<number>(0);
   const lastFrameTimeRef = useRef(0);
   const dprRef = useRef(1);
-  const [isMobile, setIsMobile] = useState(false);
-
-  // Check for mobile on mount
-  useEffect(() => {
-    const checkMobile = () => setIsMobile(window.innerWidth < 768);
-    checkMobile();
-    // Don't add resize listener - we want to keep the initial state to avoid loading sprite on resize
-  }, []);
+  // Synchronous check so the first render already knows — avoids fetching
+  // the 28 MB sprite sheet before a useEffect can flip the flag.
+  const isMobile = typeof window !== 'undefined' && window.innerWidth < 768;
 
   // Setup canvas for high-DPI displays
   useEffect(() => {
@@ -126,6 +121,9 @@ export const LoadingAnimation: React.FC<LoadingAnimationProps> = ({
   }, [fps, frameCount, loop, playing, drawFrame]);
 
   useEffect(() => {
+    // Skip loading the sprite sheet entirely on mobile
+    if (isMobile) return;
+
     const img = new Image();
     img.src = spriteSheet;
     img.onload = () => {
@@ -143,7 +141,7 @@ export const LoadingAnimation: React.FC<LoadingAnimationProps> = ({
         cancelAnimationFrame(animationRef.current);
       }
     };
-  }, [spriteSheet, playing, animate]);
+  }, [spriteSheet, playing, animate, isMobile]);
 
   useEffect(() => {
     if (playing && imageRef.current) {

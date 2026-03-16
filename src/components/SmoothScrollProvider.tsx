@@ -6,7 +6,14 @@ interface SmoothScrollProviderProps {
   children: ReactNode;
 }
 
+const isMobile = typeof window !== "undefined" && window.innerWidth < 768;
+
 const SmoothScrollProvider = ({ children }: SmoothScrollProviderProps) => {
+  // Skip Lenis entirely on mobile -- native scroll + CSS scroll-snap handles everything
+  if (isMobile) {
+    return <MotionConfig reducedMotion="user">{children}</MotionConfig>;
+  }
+
   return (
     <MotionConfig reducedMotion="user">
       <ReactLenis
@@ -15,7 +22,7 @@ const SmoothScrollProvider = ({ children }: SmoothScrollProviderProps) => {
           lerp: 0.1,
           duration: 1.2,
           smoothWheel: true,
-          syncTouch: false,
+          overscroll: false,
         }}
       >
         {children}

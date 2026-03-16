@@ -1,6 +1,6 @@
 import { useState, useCallback } from 'react';
 import Header from '@/components/Header';
-import Footer from '@/components/Footer';
+
 import SEO from '@/components/SEO';
 import { DropZone } from '@/components/premiere-rewind/DropZone';
 import { FileList } from '@/components/premiere-rewind/FileList';
@@ -267,7 +267,7 @@ const PremiereRewind = () => {
         </div>
       </main>
 
-      <Footer hideAsciiLogo />
+
 
       <EmailGateDialog
         open={emailDialogOpen}

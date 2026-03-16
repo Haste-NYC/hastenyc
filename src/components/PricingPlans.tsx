@@ -82,9 +82,20 @@ const tiers: PricingTier[] = [
 const PricingPlans = ({ onSelectPlan, selectedPriceId, onScheduleCall }: PricingPlansProps) => {
   const navigate = useNavigate();
   const [isYearly, setIsYearly] = useState(true);
-  const [activeCardIndex, setActiveCardIndex] = useState(0);
+  const [activeCardIndex, setActiveCardIndex] = useState(1);
   const scrollContainerRef = useRef<HTMLDivElement>(null);
   const cardRefs = useRef<(HTMLDivElement | null)[]>([]);
+
+  // Scroll to Studio card (index 1) on mount for mobile
+  useEffect(() => {
+    const container = scrollContainerRef.current;
+    if (!container || window.innerWidth >= 640) return;
+    requestAnimationFrame(() => {
+      const cardWidth = container.offsetWidth * 0.85;
+      const gap = 16;
+      container.scrollTo({ left: cardWidth + gap, behavior: "instant" });
+    });
+  }, []);
 
   // Track which card is most visible using Intersection Observer
   // Responds to viewport changes (e.g. device rotation) via matchMedia
