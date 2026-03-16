@@ -22,6 +22,7 @@ const SmoothScrollProvider = ({ children }: SmoothScrollProviderProps) => {
           lerp: 0.1,
           duration: 1.2,
           smoothWheel: true,
+          overscroll: false,
         }}
       >
         {children}

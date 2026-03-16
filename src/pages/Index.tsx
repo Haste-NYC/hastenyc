@@ -97,7 +97,7 @@ const Index = () => {
   // On desktop, it's a regular min-h-screen wrapper.
   const containerClass = isMobile
     ? "bg-background relative select-none snap-scroll-container"
-    : "min-h-screen bg-background overflow-x-hidden relative select-none";
+    : "min-h-screen bg-background overflow-x-hidden relative select-none overscroll-none";
 
   return (
     <div className={containerClass}>
@@ -123,7 +123,9 @@ const Index = () => {
         visibilityRef={heroRef}
       />
       {/* Continuous atmospheric gradients across all sections including footer */}
-      <PageAtmosphere />
+      <div className="absolute inset-0 overflow-hidden pointer-events-none z-0">
+        <PageAtmosphere />
+      </div>
       <Header />
       <main>
         {/* Hero - full viewport height on mobile */}
@@ -150,14 +152,18 @@ const Index = () => {
           /* Desktop: wrapped section with spacing and atmosphere */
           <section id="features" className="py-10 sm:py-20 relative overflow-hidden bg-background">
             <div
-              className="absolute inset-0 pointer-events-none z-0"
+              className="absolute left-0 right-0 pointer-events-none z-0"
               style={{
+                top: "80px",
+                bottom: "80px",
                 background: "radial-gradient(ellipse 120% 90% at 85% 30%, rgba(120, 80, 220, 0.14) 0%, rgba(120, 80, 220, 0.04) 35%, transparent 60%)",
               }}
             />
             <div
-              className="absolute inset-0 pointer-events-none z-0"
+              className="absolute left-0 right-0 pointer-events-none z-0"
               style={{
+                top: "80px",
+                bottom: "80px",
                 background: "radial-gradient(ellipse 120% 90% at 20% 70%, rgba(70, 110, 245, 0.14) 0%, rgba(70, 110, 245, 0.04) 35%, transparent 60%)",
               }}
             />
@@ -168,12 +174,14 @@ const Index = () => {
         {/* 3D Visualization - Interactive conform data visualization */}
         <section className="py-10 sm:py-20 px-4 sm:px-6 md:px-12 lg:px-20 relative overflow-visible bg-background snap-section-center flex flex-col justify-center">
           <div
-            className="absolute inset-0 pointer-events-none z-0"
+            className="absolute left-0 right-0 pointer-events-none z-0"
             style={{
-              background: "radial-gradient(ellipse 120% 90% at 25% 50%, rgba(70, 110, 245, 0.14) 0%, rgba(70, 110, 245, 0.04) 35%, transparent 60%)",
+              top: "0",
+              bottom: "0",
+              background: "radial-gradient(ellipse 160% 140% at 50% 50%, rgba(70, 110, 245, 0.12) 0%, rgba(70, 110, 245, 0.04) 30%, transparent 55%)",
             }}
           />
-          <div className="max-w-7xl mx-auto">
+          <div className="max-w-7xl mx-auto w-full">
             <LazyOnView>
               <Suspense fallback={<SectionLoader />}>
                 <Conform3DVisualization />
@@ -185,14 +193,18 @@ const Index = () => {
         {/* Pricing - full viewport on mobile */}
         <section id="pricing" className="py-10 sm:py-20 relative overflow-visible bg-background snap-section-center flex flex-col justify-center">
           <div
-            className="absolute inset-0 pointer-events-none z-0"
+            className="absolute left-0 right-0 pointer-events-none z-0"
             style={{
+              top: "80px",
+              bottom: "80px",
               background: "radial-gradient(ellipse 120% 90% at 80% 35%, rgba(90, 100, 240, 0.14) 0%, rgba(90, 100, 240, 0.04) 35%, transparent 60%)",
             }}
           />
           <div
-            className="absolute inset-0 pointer-events-none z-0"
+            className="absolute left-0 right-0 pointer-events-none z-0"
             style={{
+              top: "80px",
+              bottom: "80px",
               background: "radial-gradient(ellipse 120% 90% at 15% 65%, rgba(80, 130, 255, 0.14) 0%, rgba(80, 130, 255, 0.04) 35%, transparent 60%)",
             }}
           />
@@ -202,8 +214,10 @@ const Index = () => {
         {/* FAQ - scrollable content */}
         <section id="faq" className="py-10 sm:py-20 relative overflow-visible bg-background snap-section-center flex flex-col justify-center">
           <div
-            className="absolute inset-0 pointer-events-none z-0"
+            className="absolute left-0 right-0 pointer-events-none z-0"
             style={{
+              top: "80px",
+              bottom: "80px",
               background: "radial-gradient(ellipse 120% 90% at 70% 40%, rgba(80, 120, 255, 0.14) 0%, rgba(80, 120, 255, 0.04) 35%, transparent 60%)",
             }}
           />
@@ -214,9 +228,10 @@ const Index = () => {
       <div className="relative overflow-hidden bg-background snap-section flex flex-col justify-center">
         {/* Blue gradient blob behind footer ASCII logo */}
         <div
-          className="absolute pointer-events-none z-0"
+          className="absolute left-0 right-0 pointer-events-none z-0"
           style={{
-            inset: 0,
+            top: "80px",
+            bottom: 0,
             background: "radial-gradient(ellipse 80% 80% at 50% 55%, rgba(30, 120, 255, 0.10) 0%, rgba(59, 130, 246, 0.04) 25%, transparent 55%)",
           }}
         />

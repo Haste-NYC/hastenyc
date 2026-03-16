@@ -17,6 +17,8 @@ const FRAGMENT_SHADER = `
   uniform vec3 uClick0;  // xy = UV position, z = shader time of click
   uniform vec3 uClick1;
   uniform vec3 uClick2;
+  uniform vec3 uBgColor;
+  uniform vec3 uBaseColor;
 
   #define MAX_STEPS 80
   #define MAX_DIST 40.0
@@ -221,7 +223,7 @@ const FRAGMENT_SHADER = `
   void main() {
     vec2 uv = (gl_FragCoord.xy - uResolution.xy * 0.5) / uResolution.y;
 
-    vec3 bgColor = vec3(0.75, 0.75, 0.75);
+    vec3 bgColor = uBgColor;
 
     vec3 ro = vec3(0.0, 0.0, 6.0);
     vec3 rd = normalize(vec3(uv, -1.5));
@@ -264,7 +266,7 @@ const FRAGMENT_SHADER = `
     vec3 reflDir = reflect(-viewDir, n);
     float envRefl = smoothstep(-0.2, 0.8, reflDir.y) * 0.15;
 
-    vec3 baseColor = vec3(0.96, 0.95, 0.94);
+    vec3 baseColor = uBaseColor;
 
     vec3 color = vec3(0.0);
     color += baseColor * diff1 * shadow * 0.75;
@@ -290,9 +292,15 @@ const FRAGMENT_SHADER = `
 
 interface FluidMetaballsProps {
   className?: string;
+  bgColor?: [number, number, number];
+  baseColor?: [number, number, number];
 }
 
-const FluidMetaballs = ({ className = "" }: FluidMetaballsProps) => {
+const FluidMetaballs = ({
+  className = "",
+  bgColor = [0.75, 0.75, 0.75],
+  baseColor = [0.96, 0.95, 0.94],
+}: FluidMetaballsProps) => {
   const containerRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
@@ -331,6 +339,8 @@ const FluidMetaballs = ({ className = "" }: FluidMetaballsProps) => {
         uClick0: { value: new THREE.Vector3(0, 0, 0) },
         uClick1: { value: new THREE.Vector3(0, 0, 0) },
         uClick2: { value: new THREE.Vector3(0, 0, 0) },
+        uBgColor: { value: new THREE.Vector3(...bgColor) },
+        uBaseColor: { value: new THREE.Vector3(...baseColor) },
       },
     });
 
@@ -473,7 +483,9 @@ const FluidMetaballs = ({ className = "" }: FluidMetaballsProps) => {
     <div
       ref={containerRef}
       className={`w-full h-full ${className}`}
-      style={{ background: "#BFBFBF" }}
+      style={{
+        background: `rgb(${Math.round(bgColor[0] * 255)}, ${Math.round(bgColor[1] * 255)}, ${Math.round(bgColor[2] * 255)})`,
+      }}
     />
   );
 };
