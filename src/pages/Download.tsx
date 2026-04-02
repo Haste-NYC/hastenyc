@@ -1,7 +1,8 @@
 import { useState } from "react";
+import { useSearchParams } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import { Checkbox } from "@/components/ui/checkbox";
-import { Download as DownloadIcon } from "lucide-react";
+import { Download as DownloadIcon, CheckCircle2 } from "lucide-react";
 import { TermsOfService } from "@/components/download/TermsOfService";
 import { toast } from "sonner";
 import conformStudioLogo from "@/assets/conform-studio-logo.svg";
@@ -9,6 +10,8 @@ import Header from "@/components/Header";
 
 
 const Download = () => {
+  const [searchParams] = useSearchParams();
+  const sessionId = searchParams.get("session_id");
   const [hasScrolledToBottom, setHasScrolledToBottom] = useState(false);
   const [agreedToTerms, setAgreedToTerms] = useState(false);
 
@@ -22,6 +25,20 @@ const Download = () => {
   return (
     <div className="min-h-screen bg-background">
       <Header minimal />
+
+      {/* Payment Success Banner */}
+      {sessionId && (
+        <div className="pt-20 pb-0">
+          <div className="container mx-auto px-4">
+            <div className="max-w-3xl mx-auto flex items-center justify-center gap-3 py-4 px-6 rounded-lg border border-green-500/20 bg-green-500/5">
+              <CheckCircle2 className="w-5 h-5 text-green-500 flex-shrink-0" />
+              <p className="text-sm text-green-400">
+                Payment successful -- your subscription is now active. Agree to the terms below to download.
+              </p>
+            </div>
+          </div>
+        </div>
+      )}
 
       {/* Hero Section */}
       <section className="relative overflow-hidden pt-20 pb-20">

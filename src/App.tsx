@@ -24,7 +24,6 @@ import About from "./pages/About";
 import LavaLampExperiments from "./pages/LavaLampExperiments";
 import HeroMockup from "./pages/HeroMockup";
 
-import CheckoutSuccess from "./pages/CheckoutSuccess";
 import NotFound from "./pages/NotFound";
 
 const queryClient = new QueryClient();
@@ -67,7 +66,6 @@ const App = () => (
             <Route path="/experiments/lava-lamp" element={<LavaLampExperiments />} />
             <Route path="/experiments/hero-mockup" element={<HeroMockup />} />
 
-            <Route path="/checkout/success" element={<CheckoutSuccess />} />
             {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
             <Route path="*" element={<NotFound />} />
           </Routes>
