@@ -181,9 +181,9 @@ const Index = () => {
               background: "radial-gradient(ellipse 160% 140% at 50% 50%, rgba(70, 110, 245, 0.12) 0%, rgba(70, 110, 245, 0.04) 30%, transparent 55%)",
             }}
           />
-          <div className="max-w-7xl mx-auto w-full">
+          <div className="max-w-7xl mx-auto w-full min-h-[600px]">
             <LazyOnView>
-              <Suspense fallback={<SectionLoader />}>
+              <Suspense fallback={<div className="h-[600px] flex items-center justify-center"><div className="w-8 h-8 border-2 border-white/20 border-t-white/60 rounded-full animate-spin" /></div>}>
                 <Conform3DVisualization />
               </Suspense>
             </LazyOnView>
