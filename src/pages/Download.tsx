@@ -114,15 +114,14 @@ const Download = () => {
                 </label>
               </div>
 
-              <Button
-                size="lg"
-                className="h-14 px-10 text-base font-bold tracking-wide transition-all hover:scale-105 rounded-full"
+              <button
+                className="h-9 px-5 rounded-md border border-white/[0.12] bg-white/[0.06] text-[11px] font-normal tracking-[0.15px] text-white/70 transition-all hover:border-white/[0.18] hover:bg-white/[0.09] hover:text-white/90 disabled:opacity-40 disabled:pointer-events-none inline-flex items-center justify-center gap-2"
                 disabled={!agreedToTerms}
                 onClick={handleDownload}
               >
-                <DownloadIcon className="w-5 h-5 mr-2" />
-                DOWNLOAD NOW
-              </Button>
+                <DownloadIcon className="w-3.5 h-3.5" />
+                Download
+              </button>
 
               {!hasScrolledToBottom && (
                 <p className="text-sm text-muted-foreground animate-pulse">
