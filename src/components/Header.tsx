@@ -157,7 +157,7 @@ const Header = ({ minimal = false }: { minimal?: boolean }) => {
                   e.preventDefault();
                   scrollToSection(link.id);
                 }}
-                className={`relative text-xs uppercase tracking-wider transition-colors after:absolute after:bottom-0 after:left-0 after:w-full after:h-0.5 after:bg-gradient-to-r after:from-pink-500 after:to-purple-500 after:scale-x-0 after:transition-transform after:duration-300 ${
+                className={`relative text-xs uppercase tracking-wider transition-colors after:absolute after:bottom-0 after:left-0 after:w-full after:h-0.5 after:bg-white after:scale-x-0 after:transition-transform after:duration-300 ${
                   activeSection === link.id
                     ? "text-foreground font-medium after:scale-x-100"
                     : "text-foreground/60 hover:text-foreground"

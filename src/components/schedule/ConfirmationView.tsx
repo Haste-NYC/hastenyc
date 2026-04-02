@@ -140,7 +140,7 @@ const ConfirmationView = ({
           Add to Calendar
         </Button>
         <Link to="/" className="block">
-          <Button className="w-full bg-gradient-to-r from-pink-500 to-purple-500 hover:from-pink-600 hover:to-purple-600 text-white font-semibold py-5">
+          <Button className="w-full bg-white text-black hover:bg-white/90 font-semibold py-5">
             Back to Home
             <ArrowRight className="w-4 h-4 ml-2" />
           </Button>

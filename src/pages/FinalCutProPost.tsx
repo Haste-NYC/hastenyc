@@ -40,9 +40,9 @@ const FinalCutProPost = () => {
             <h1 className="text-6xl md:text-8xl font-bold uppercase leading-none mb-6">
               IS FINAL CUT PRO
               <br />
-              <span className="bg-gradient-to-r from-brand-orange via-brand-pink to-brand-blue bg-clip-text text-transparent">MAKING A</span>
+              <span className="text-foreground/90">MAKING A</span>
               <br />
-              <span className="bg-gradient-to-r from-brand-orange via-brand-pink to-brand-blue bg-clip-text text-transparent">COMEBACK?</span>
+              <span className="text-foreground/90">COMEBACK?</span>
             </h1>
             <p className="text-xl text-foreground/80 max-w-2xl">
               Apple's Creator Studio bundle and the M5 Max suggest the company is finally serious about winning back professional editors. Whether that's enough is another question entirely.
@@ -91,7 +91,7 @@ const FinalCutProPost = () => {
             <h2 className="text-4xl md:text-5xl font-bold uppercase mb-8">
               THE SUBSCRIPTION THAT
               <br />
-              <span className="bg-gradient-to-r from-brand-orange via-brand-pink to-brand-blue bg-clip-text text-transparent">UNDERCUTS EVERYONE</span>
+              <span className="text-foreground/90">UNDERCUTS EVERYONE</span>
             </h2>
             <div className="max-w-4xl">
               <p className="text-lg leading-relaxed mb-6">
@@ -115,7 +115,7 @@ const FinalCutProPost = () => {
             <h2 className="text-4xl md:text-5xl font-bold uppercase mb-8">
               THE M5 MAX IS WHERE
               <br />
-              <span className="bg-gradient-to-r from-brand-orange via-brand-pink to-brand-blue bg-clip-text text-transparent">THIS GETS INTERESTING</span>
+              <span className="text-foreground/90">THIS GETS INTERESTING</span>
             </h2>
             <div className="max-w-4xl">
               <p className="text-lg leading-relaxed mb-6">
@@ -178,7 +178,7 @@ const FinalCutProPost = () => {
             <h2 className="text-4xl md:text-5xl font-bold uppercase mb-8">
               THE AI FEATURES MIGHT
               <br />
-              <span className="bg-gradient-to-r from-brand-orange via-brand-pink to-brand-blue bg-clip-text text-transparent">ACTUALLY BE USEFUL</span>
+              <span className="text-foreground/90">ACTUALLY BE USEFUL</span>
             </h2>
             <div className="max-w-4xl">
               <p className="text-lg leading-relaxed mb-6">
@@ -205,7 +205,7 @@ const FinalCutProPost = () => {
             <h2 className="text-4xl md:text-5xl font-bold uppercase mb-8">
               THE ELEPHANT IN THE ROOM:
               <br />
-              <span className="bg-gradient-to-r from-brand-orange via-brand-pink to-brand-blue bg-clip-text text-transparent">ECOSYSTEM LOCK-IN</span>
+              <span className="text-foreground/90">ECOSYSTEM LOCK-IN</span>
             </h2>
             <div className="max-w-4xl">
               <p className="text-lg leading-relaxed mb-6">
@@ -251,7 +251,7 @@ const FinalCutProPost = () => {
             <h2 className="text-4xl md:text-5xl font-bold uppercase mb-8">
               WHO THIS IS
               <br />
-              <span className="bg-gradient-to-r from-brand-orange via-brand-pink to-brand-blue bg-clip-text text-transparent">ACTUALLY FOR</span>
+              <span className="text-foreground/90">ACTUALLY FOR</span>
             </h2>
             <div className="max-w-4xl">
               <p className="text-lg leading-relaxed mb-6">
@@ -278,7 +278,7 @@ const FinalCutProPost = () => {
             <h2 className="text-4xl md:text-5xl font-bold uppercase mb-8">
               THE VERDICT
               <br />
-              <span className="bg-gradient-to-r from-brand-orange via-brand-pink to-brand-blue bg-clip-text text-transparent">(FOR NOW)</span>
+              <span className="text-foreground/90">(FOR NOW)</span>
             </h2>
             <div className="max-w-4xl">
               <p className="text-lg leading-relaxed mb-6">
@@ -306,7 +306,7 @@ const FinalCutProPost = () => {
               <h2 className="text-4xl md:text-5xl font-bold uppercase">
                 THAT'S NOT NOSTALGIA.
                 <br />
-                <span className="bg-gradient-to-r from-brand-orange via-brand-pink to-brand-blue bg-clip-text text-transparent">THAT'S MOMENTUM.</span>
+                <span className="text-foreground/90">THAT'S MOMENTUM.</span>
               </h2>
               <div className="max-w-4xl">
                 <p className="text-lg leading-relaxed mb-6">

@@ -1,6 +1,7 @@
 import { useCallback, useRef, useState } from 'react';
 import { Upload, FileVideo, FolderOpen } from 'lucide-react';
 import { cn } from '@/lib/utils';
+import { premiereRewindButtonClassName } from '@/components/premiere-rewind/buttonStyles';
 
 // Maximum file size: 100MB
 const MAX_FILE_SIZE = 100 * 1024 * 1024;
@@ -130,8 +131,7 @@ export function DropZone({ onFilesSelected, onOversizedFiles, isProcessing }: Dr
           className={cn(
             'flex items-center gap-2 px-6 py-3',
             'rounded-lg font-medium text-sm',
-            'bg-amber-500/90 hover:bg-amber-500',
-            'text-black',
+            premiereRewindButtonClassName,
             'transition-all',
             'disabled:opacity-50 disabled:cursor-not-allowed',
           )}

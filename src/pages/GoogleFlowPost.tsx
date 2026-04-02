@@ -41,9 +41,9 @@ const GoogleFlowPost = () => {
             <h1 className="text-6xl md:text-8xl font-bold uppercase leading-none mb-6">
               GOOGLE'S WORKSPACE
               <br />
-              <span className="bg-gradient-to-r from-brand-orange via-brand-pink to-brand-blue bg-clip-text text-transparent">NUKE ON AFTER</span>
+              <span className="text-foreground/90">NUKE ON AFTER</span>
               <br />
-              <span className="bg-gradient-to-r from-brand-orange via-brand-pink to-brand-blue bg-clip-text text-transparent">EFFECTS WORKFLOWS</span>
+              <span className="text-foreground/90">EFFECTS WORKFLOWS</span>
             </h1>
             <p className="text-xl text-foreground/80 max-w-2xl">
               Google's Flow is the AI video editor we've been waiting for—and it's about to torch the old guard.
@@ -86,7 +86,7 @@ const GoogleFlowPost = () => {
             <h2 className="text-4xl md:text-5xl font-bold uppercase mb-8">
               FLOW'S ARSENAL:
               <br />
-              <span className="bg-gradient-to-r from-brand-orange via-brand-pink to-brand-blue bg-clip-text text-transparent">EVERY FEATURE, DISSECTED</span>
+              <span className="text-foreground/90">EVERY FEATURE, DISSECTED</span>
             </h2>
             <p className="text-lg leading-relaxed mb-8">
               Flow isn't just slapping AI on top of a basic editor; it's a ground-up rethink powered by Google's latest models. Here's the full kit, straight from Workspace and my dives into the tech:
@@ -150,7 +150,7 @@ const GoogleFlowPost = () => {
             <h2 className="text-4xl md:text-5xl font-bold uppercase mb-8">
               WHAT THIS MEANS FOR
               <br />
-              <span className="bg-gradient-to-r from-brand-orange via-brand-pink to-brand-blue bg-clip-text text-transparent">CREATORS AND EDITORS</span>
+              <span className="text-foreground/90">CREATORS AND EDITORS</span>
             </h2>
             <p className="text-lg leading-relaxed mb-6">
               For creators like you hustling Reels and TikToks, Flow is jet fuel. That viral idea? Prompt it, generate Veo clips, avatar-narrate, and post in under 10 minutes. No DaVinci Resolve license, no stock footage sub.
@@ -186,7 +186,7 @@ const GoogleFlowPost = () => {
             <h2 className="text-4xl md:text-5xl font-bold uppercase mb-8">
               THE CAVEATS:
               <br />
-              <span className="bg-gradient-to-r from-brand-orange via-brand-pink to-brand-blue bg-clip-text text-transparent">WHAT TO WATCH FOR</span>
+              <span className="text-foreground/90">WHAT TO WATCH FOR</span>
             </h2>
             <p className="text-lg leading-relaxed mb-6">
               Quality caps at "impressive demo," not cinematic masterpiece—Veo struggles with complex crowd scenes or hyper-specific styles without fine-tuning. Authenticity flags loom: watermarking is mandatory, but deepfake regs (EU AI Act vibes) could snag enterprise use.
@@ -205,7 +205,7 @@ const GoogleFlowPost = () => {
             <h2 className="text-4xl md:text-5xl font-bold uppercase mb-8">
               THE BIGGER SHIFT:
               <br />
-              <span className="bg-gradient-to-r from-brand-orange via-brand-pink to-brand-blue bg-clip-text text-transparent">VIDEO BECOMES AS EASY AS TYPING</span>
+              <span className="text-foreground/90">VIDEO BECOMES AS EASY AS TYPING</span>
             </h2>
             <p className="text-lg leading-relaxed mb-6">
               Flow isn't reinventing the wheel; it's making it spin itself. Video's always ruled attention (Reels prove it), but production gated the masses—timeline transfers, conform errors, the works.

@@ -152,7 +152,7 @@ const Schedule = () => {
                   >
                     <button
                       onClick={handleContinue}
-                      className="px-8 py-3 rounded-lg bg-gradient-to-r from-pink-500 to-purple-500 hover:from-pink-600 hover:to-purple-600 text-white font-semibold text-sm transition-all"
+                      className="px-8 py-3 rounded-lg bg-white text-black hover:bg-white/90 font-semibold text-sm transition-all"
                     >
                       Continue
                     </button>

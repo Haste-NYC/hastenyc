@@ -130,23 +130,13 @@ const HeroSection = () => {
       {/* Particle constellation effect */}
       <Particles />
 
-      {/* Atmospheric glow - centered blue/purple light emanation */}
+      {/* Subtle atmospheric glow - restrained white light */}
       <div
         className="absolute inset-0 pointer-events-none z-[2]"
         style={{
           background: `
-            radial-gradient(ellipse 80% 70% at 50% 45%, rgba(80, 120, 255, 0.35) 0%, rgba(100, 80, 220, 0.15) 25%, rgba(120, 60, 200, 0.06) 45%, transparent 70%)
+            radial-gradient(ellipse 60% 50% at 50% 45%, rgba(255, 255, 255, 0.06) 0%, rgba(255, 255, 255, 0.02) 40%, transparent 70%)
           `,
-        }}
-      />
-
-      {/* Secondary glow for depth - white core */}
-      <div
-        className="absolute inset-0 pointer-events-none z-[2]"
-        style={{
-          background:
-            "radial-gradient(ellipse 50% 45% at 50% 40%, rgba(160, 180, 255, 0.2) 0%, rgba(80, 120, 255, 0.08) 35%, transparent 60%)",
-          filter: "blur(40px)",
         }}
       />
 

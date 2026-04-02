@@ -15,6 +15,7 @@ import {
 import { Download } from 'lucide-react';
 import { cn } from '@/lib/utils';
 import { toast } from 'sonner';
+import { premiereRewindButtonClassName } from '@/components/premiere-rewind/buttonStyles';
 
 // Warm amber atmosphere blobs - mirrors Conform Studio's blue blobs
 const atmosphereBlobs = [
@@ -194,7 +195,7 @@ const PremiereRewind = () => {
           </p>
           <h1 className="text-4xl md:text-5xl lg:text-6xl mb-2" style={{ fontFamily: "'Raleway', sans-serif" }}>
             <span className="text-white font-light">Premiere </span>
-            <span className="pr-gradient-text font-bold">Rewind</span>
+            <span className="text-white/90 font-bold">Rewind</span>
           </h1>
           <p className="text-lg md:text-xl text-foreground mb-6">
             version rollback for .prproj files
@@ -225,7 +226,7 @@ const PremiereRewind = () => {
             className={cn(
               'mt-6 flex items-center gap-2 px-6 py-3',
               'rounded-lg font-medium',
-              'bg-amber-500/90 hover:bg-amber-500 text-black',
+              premiereRewindButtonClassName,
               'transition-all'
             )}
           >

@@ -4,13 +4,13 @@ import { motion } from "framer-motion";
 import { Card, CardContent, CardFooter, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Switch } from "@/components/ui/switch";
-import { Badge } from "@/components/ui/badge";
-import { Check, Users, Building2, Calendar } from "lucide-react";
+import { Check, User, UsersRound, Building2, Loader2 } from "lucide-react";
 import { stripeConfig } from "@/config/stripe";
 
 interface PricingPlansProps {
-  onSelectPlan?: (priceId: string, planType: "monthly" | "yearly", tierName: string) => void;
+  onSelectPlan?: (priceId: string, planType: "monthly" | "yearly", tierName: string) => void | Promise<void>;
   selectedPriceId?: string;
+  isCheckoutLoading?: boolean;
   onScheduleCall?: () => void;
 }
 
@@ -31,11 +31,11 @@ interface PricingTier {
 const tiers: PricingTier[] = [
   {
     name: "Freelancer",
-    description: "Perfect for independent creators",
+    description: "For individuals",
     monthlyPrice: 49,
     yearlyPrice: 468,
     seats: "1 user / device license",
-    icon: <Users className="w-5 h-5" />,
+    icon: <User className="w-5 h-5" />,
     features: [
       "1 user / device license",
       "Email support",
@@ -45,12 +45,12 @@ const tiers: PricingTier[] = [
     priceIdYearly: stripeConfig.priceYearly,
   },
   {
-    name: "Studio",
-    description: "For small teams and studios",
+    name: "Team",
+    description: "For small teams",
     monthlyPrice: 129,
     yearlyPrice: 1188,
     seats: "3 users / device licenses",
-    icon: <Building2 className="w-5 h-5" />,
+    icon: <UsersRound className="w-5 h-5" />,
     features: [
       "3 users / device licenses",
       "Priority support",
@@ -62,23 +62,26 @@ const tiers: PricingTier[] = [
   },
   {
     name: "Enterprise",
-    description: "For large organizations",
+    description: "For companies of 5 or more",
     monthlyPrice: null,
     yearlyPrice: null,
     seats: "Unlimited seats",
-    icon: <Calendar className="w-5 h-5" />,
+    icon: <Building2 className="w-5 h-5" />,
     features: [
-      "Unlimited seats / devices / projects",
       "Priority support and training",
       "Custom integrations",
       "SLA guarantee",
-      "On-premise deployment option",
     ],
     isEnterprise: true,
   },
 ];
 
-const PricingPlans = ({ onSelectPlan, selectedPriceId, onScheduleCall }: PricingPlansProps) => {
+const PricingPlans = ({
+  onSelectPlan,
+  selectedPriceId,
+  isCheckoutLoading = false,
+  onScheduleCall,
+}: PricingPlansProps) => {
   const navigate = useNavigate();
   const [isYearly, setIsYearly] = useState(true);
   const [activeCardIndex, setActiveCardIndex] = useState(1);
@@ -184,6 +187,12 @@ const PricingPlans = ({ onSelectPlan, selectedPriceId, onScheduleCall }: Pricing
     return selectedPriceId === priceId;
   };
 
+  const isRedirecting = (tier: PricingTier) => {
+    if (tier.isEnterprise) return false;
+    const priceId = isYearly ? tier.priceIdYearly : tier.priceIdMonthly;
+    return isCheckoutLoading && selectedPriceId === priceId;
+  };
+
 
   return (
     <div className="w-full space-y-8">
@@ -196,6 +205,7 @@ const PricingPlans = ({ onSelectPlan, selectedPriceId, onScheduleCall }: Pricing
           <Switch
             checked={isYearly}
             onCheckedChange={setIsYearly}
+            disabled={isCheckoutLoading}
             className="data-[state=checked]:bg-white data-[state=unchecked]:bg-gray-700"
           />
           <span className={`text-sm ${isYearly ? "text-white font-medium" : "text-gray-400"}`}>
@@ -236,7 +246,7 @@ const PricingPlans = ({ onSelectPlan, selectedPriceId, onScheduleCall }: Pricing
             >
               {/* Gradient top accent for popular card */}
               {tier.popular && (
-                <div className="absolute top-0 left-0 right-0 h-[1px] bg-gradient-to-r from-purple-500/40 via-blue-500/30 to-purple-500/40" />
+                <div className="absolute top-0 left-0 right-0 h-[1px] bg-white/20" />
               )}
 
             <CardHeader className="text-center pb-2 pt-6">
@@ -249,10 +259,8 @@ const PricingPlans = ({ onSelectPlan, selectedPriceId, onScheduleCall }: Pricing
               <p className="text-gray-400 text-xs uppercase tracking-wider">{tier.description}</p>
             </CardHeader>
 
-            <CardContent className={`flex-grow flex flex-col ${
-              tier.isEnterprise ? "lg:justify-center" : ""
-            }`}>
-              {tier.monthlyPrice !== null && (
+            <CardContent className="flex-grow flex flex-col">
+              {tier.monthlyPrice !== null ? (
                 <>
                   <div className="hidden md:block md:flex-grow" />
                   <div className="text-center mb-8">
@@ -262,6 +270,19 @@ const PricingPlans = ({ onSelectPlan, selectedPriceId, onScheduleCall }: Pricing
                     </span>
                     <p className="text-sm text-gray-400 mt-1">
                       {isYearly ? "billed yearly" : "billed monthly"}
+                    </p>
+                  </div>
+                  <div className="hidden md:block md:flex-grow" />
+                </>
+              ) : (
+                <>
+                  <div className="hidden md:block md:flex-grow" />
+                  <div className="text-center mb-8 mt-8">
+                    <span className="text-3xl sm:text-4xl font-bold text-white">
+                      Contact
+                    </span>
+                    <p className="text-sm text-gray-400 mt-1">
+                      for pricing
                     </p>
                   </div>
                   <div className="hidden md:block md:flex-grow" />
@@ -286,19 +307,27 @@ const PricingPlans = ({ onSelectPlan, selectedPriceId, onScheduleCall }: Pricing
             <CardFooter className="mt-auto">
               <Button
                 onClick={() => handleSelectPlan(tier)}
+                disabled={isCheckoutLoading}
                 className={`w-full font-semibold py-5 btn-with-arrow group ${
-                  isSelected(tier)
+                  isRedirecting(tier) || isSelected(tier)
                     ? "bg-white hover:bg-gray-100 text-gray-900"
                     : tier.popular
                     ? "bg-white hover:bg-gray-100 text-gray-900"
                     : "bg-white/10 hover:bg-white/20 text-white border border-white/20"
                 }`}
               >
-                {tier.isEnterprise
-                  ? "Schedule a Call"
-                  : isSelected(tier)
-                  ? "Selected"
-                  : "Select Plan"}
+                {isRedirecting(tier) ? (
+                  <>
+                    <Loader2 className="w-4 h-4 animate-spin" />
+                    Redirecting...
+                  </>
+                ) : tier.isEnterprise ? (
+                  "Schedule a Call"
+                ) : isSelected(tier) ? (
+                  "Selected"
+                ) : (
+                  "Select Plan"
+                )}
               </Button>
             </CardFooter>
             </Card>

@@ -12,7 +12,7 @@ const CTASection = () => {
         transition={{ duration: 0.7 }}
         className="max-w-4xl mx-auto text-center space-y-6"
       >
-        <h2 className="font-display text-2xl md:text-4xl font-normal uppercase tracking-wide bg-gradient-to-r from-[hsl(340,60%,65%)] via-[hsl(20,80%,65%)] to-[hsl(45,80%,60%)] bg-clip-text text-transparent">
+        <h2 className="font-display text-2xl md:text-4xl font-normal uppercase tracking-wide text-foreground/90">
           Help Shape the Future of Post
         </h2>
         

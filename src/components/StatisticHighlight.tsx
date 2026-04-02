@@ -70,7 +70,7 @@ const StatisticHighlight = ({
       <span
         className={`block text-6xl md:text-8xl font-bold tracking-tight ${
           useGradient
-            ? "bg-gradient-to-r from-pink-500 to-purple-500 bg-clip-text text-transparent"
+            ? "text-foreground"
             : "text-foreground"
         }`}
       >

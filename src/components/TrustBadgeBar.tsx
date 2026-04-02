@@ -79,7 +79,7 @@ const TrustBadgeBar = () => {
         transition={{ duration: 0.6 }}
         className="text-center text-xs uppercase tracking-[0.25em] text-foreground/40 mb-8"
       >
-        Built for Leading Production Companies
+        Built for Leading Post Houses
       </motion.p>
 
       {/* Scrolling container */}

@@ -1,6 +1,7 @@
 import { CheckCircle2, XCircle, Loader2, FileVideo, Download } from 'lucide-react';
 import { cn } from '@/lib/utils';
 import { ConversionProgress, ConversionResult, formatFileSize } from '@/lib/premiere-rewind/prprojConverter';
+import { premiereRewindButtonClassName } from '@/components/premiere-rewind/buttonStyles';
 
 interface FileItemProps {
   file: File;
@@ -76,7 +77,7 @@ function FileItem({ file, progress, result, onDownload }: FileItemProps) {
       {progress && progress.stage !== 'complete' && progress.stage !== 'error' && (
         <div className="w-24 h-2 bg-muted rounded-full overflow-hidden">
           <div
-            className="h-full bg-gradient-to-r from-amber-500 to-orange-400 transition-all duration-300"
+            className="h-full bg-white/40 transition-all duration-300"
             style={{ width: `${progress.progress}%` }}
           />
         </div>
@@ -87,8 +88,8 @@ function FileItem({ file, progress, result, onDownload }: FileItemProps) {
           onClick={onDownload}
           className={cn(
             'flex items-center gap-2 px-4 py-2 rounded-lg',
-            'bg-amber-500/90 hover:bg-amber-500',
-            'text-black text-sm font-medium',
+            premiereRewindButtonClassName,
+            'text-sm font-medium',
             'transition-all'
           )}
         >
