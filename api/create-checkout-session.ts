@@ -25,18 +25,24 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
   try {
     const { priceId, customerEmail } = req.body;
 
-    if (!priceId || !customerEmail) {
-      return res.status(400).json({ error: 'Missing priceId or customerEmail' });
+    if (!priceId) {
+      return res.status(400).json({ error: 'Missing priceId' });
     }
 
-    const session = await stripe.checkout.sessions.create({
+    const sessionParams: any = {
       mode: 'subscription',
       payment_method_types: ['card'],
       line_items: [{ price: priceId, quantity: 1 }],
-      customer_email: customerEmail,
       success_url: `${process.env.FRONTEND_URL || 'http://localhost:5173'}/checkout/success?session_id={CHECKOUT_SESSION_ID}`,
-      cancel_url: `${process.env.FRONTEND_URL || 'http://localhost:5173'}/checkout`,
-    });
+      cancel_url: `${process.env.FRONTEND_URL || 'http://localhost:5173'}/#pricing`,
+    };
+
+    // Only pre-fill email if provided; otherwise Stripe collects it
+    if (customerEmail) {
+      sessionParams.customer_email = customerEmail;
+    }
+
+    const session = await stripe.checkout.sessions.create(sessionParams);
 
     res.status(200).json({ url: session.url });
   } catch (error) {

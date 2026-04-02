@@ -6,7 +6,7 @@ const PricingSection = () => {
   const { isLoading, startCheckout } = useCheckout();
 
   const handleSelectPlan = (priceId: string) => {
-    startCheckout({ priceId, customerEmail: "guest@checkout.com" });
+    startCheckout({ priceId, customerEmail: "" });
   };
 
   return (
