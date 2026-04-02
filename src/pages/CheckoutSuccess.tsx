@@ -22,11 +22,11 @@ const CheckoutSuccess = () => {
         color: "#ffffff",
       }}
     >
-      <div style={{ textAlign: "center", maxWidth: 320, width: "90%" }}>
+      <div style={{ textAlign: "center", width: "90%", maxWidth: 480 }}>
         <img
           src={LOGO_URL}
           alt="Conform Studio"
-          style={{ height: 14, width: "auto", opacity: 0.7, marginBottom: 48 }}
+          style={{ height: 14, width: "auto", opacity: 0.7, marginBottom: 48, display: "block", margin: "0 auto 48px" }}
         />
 
         <p
