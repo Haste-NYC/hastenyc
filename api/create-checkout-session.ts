@@ -1,60 +1,50 @@
+import type { VercelRequest, VercelResponse } from '@vercel/node';
 import Stripe from 'stripe';
 
-// Initialize Stripe with secret key from environment
 const stripe = new Stripe(process.env.STRIPE_SECRET_KEY || '', {
-  apiVersion: '2025-05-28.basil',
+  apiVersion: '2025-12-15.clover',
 });
 
-interface CheckoutSessionRequest {
-  priceId: string;
-  customerEmail: string;
+function setCorsHeaders(res: VercelResponse) {
+  res.setHeader('Access-Control-Allow-Origin', process.env.FRONTEND_URL || '*');
+  res.setHeader('Access-Control-Allow-Methods', 'POST, OPTIONS');
+  res.setHeader('Access-Control-Allow-Headers', 'Content-Type');
 }
 
-interface CheckoutSessionResponse {
-  url: string | null;
-}
+export default async function handler(req: VercelRequest, res: VercelResponse) {
+  setCorsHeaders(res);
 
-export async function createCheckoutSession(
-  priceId: string,
-  customerEmail: string
-): Promise<CheckoutSessionResponse> {
-  const session = await stripe.checkout.sessions.create({
-    mode: 'subscription',
-    payment_method_types: ['card'],
-    line_items: [
-      {
-        price: priceId,
-        quantity: 1,
-      },
-    ],
-    customer_email: customerEmail,
-    success_url: `${process.env.FRONTEND_URL || 'http://localhost:5173'}/checkout/success?session_id={CHECKOUT_SESSION_ID}`,
-    cancel_url: `${process.env.FRONTEND_URL || 'http://localhost:5173'}/checkout`,
-  });
+  if (req.method === 'OPTIONS') {
+    return res.status(200).end();
+  }
 
-  return { url: session.url };
-}
-
-// Express handler for use in server.js
-export default async function handler(
-  req: { method: string; body: CheckoutSessionRequest },
-  res: { status: (code: number) => { json: (data: object) => void } }
-) {
   if (req.method !== 'POST') {
-    res.status(405).json({ error: 'Method not allowed' });
-    return;
+    return res.status(405).json({ error: 'Method not allowed' });
   }
 
   try {
-    const { priceId, customerEmail } = req.body as CheckoutSessionRequest;
+    const { priceId, customerEmail } = req.body;
 
-    if (!priceId || !customerEmail) {
-      res.status(400).json({ error: 'Missing priceId or customerEmail' });
-      return;
+    if (!priceId) {
+      return res.status(400).json({ error: 'Missing priceId' });
     }
 
-    const result = await createCheckoutSession(priceId, customerEmail);
-    res.status(200).json(result);
+    const sessionParams: any = {
+      mode: 'subscription',
+      payment_method_types: ['card'],
+      line_items: [{ price: priceId, quantity: 1 }],
+      success_url: `${process.env.FRONTEND_URL || 'http://localhost:5173'}/download?session_id={CHECKOUT_SESSION_ID}`,
+      cancel_url: `${process.env.FRONTEND_URL || 'http://localhost:5173'}/#pricing`,
+    };
+
+    // Only pre-fill email if provided; otherwise Stripe collects it
+    if (customerEmail) {
+      sessionParams.customer_email = customerEmail;
+    }
+
+    const session = await stripe.checkout.sessions.create(sessionParams);
+
+    res.status(200).json({ url: session.url });
   } catch (error) {
     console.error('Error creating checkout session:', error);
     res.status(500).json({

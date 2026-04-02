@@ -3,7 +3,7 @@ import { toast } from 'sonner';
 
 interface CheckoutParams {
   priceId: string;
-  customerEmail: string;
+  customerEmail?: string;
 }
 
 interface UseCheckoutReturn {
@@ -12,7 +12,9 @@ interface UseCheckoutReturn {
   startCheckout: (params: CheckoutParams) => Promise<void>;
 }
 
-const API_URL = import.meta.env.VITE_API_URL || 'http://localhost:3001';
+const API_URL = import.meta.env.PROD
+  ? (import.meta.env.VITE_API_URL || '')
+  : '';
 
 export function useCheckout(): UseCheckoutReturn {
   const [isLoading, setIsLoading] = useState(false);
@@ -28,7 +30,7 @@ export function useCheckout(): UseCheckoutReturn {
         headers: {
           'Content-Type': 'application/json',
         },
-        body: JSON.stringify({ priceId, customerEmail }),
+        body: JSON.stringify({ priceId, ...(customerEmail ? { customerEmail } : {}) }),
       });
 
       if (!response.ok) {

@@ -24,13 +24,6 @@ import About from "./pages/About";
 import LavaLampExperiments from "./pages/LavaLampExperiments";
 import HeroMockup from "./pages/HeroMockup";
 
-// Auth pages
-import SignIn from "./pages/SignIn";
-import SignUp from "./pages/SignUp";
-import Checkout from "./pages/Checkout";
-import CheckoutSuccess from "./pages/CheckoutSuccess";
-import Account from "./pages/Account";
-import { ProtectedRoute } from "./components/ProtectedRoute";
 import NotFound from "./pages/NotFound";
 
 const queryClient = new QueryClient();
@@ -73,12 +66,6 @@ const App = () => (
             <Route path="/experiments/lava-lamp" element={<LavaLampExperiments />} />
             <Route path="/experiments/hero-mockup" element={<HeroMockup />} />
 
-            {/* Auth pages */}
-            <Route path="/signin" element={<SignIn />} />
-            <Route path="/signup" element={<SignUp />} />
-            <Route path="/checkout" element={<ProtectedRoute><Checkout /></ProtectedRoute>} />
-            <Route path="/checkout/success" element={<CheckoutSuccess />} />
-            <Route path="/account" element={<ProtectedRoute><Account /></ProtectedRoute>} />
             {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
             <Route path="*" element={<NotFound />} />
           </Routes>

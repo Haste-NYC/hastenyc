@@ -13,7 +13,7 @@ const PORT = process.env.API_PORT || 3001;
 
 // Initialize Stripe
 const stripe = new Stripe(process.env.STRIPE_SECRET_KEY || '', {
-  apiVersion: '2025-05-28.basil',
+  apiVersion: '2025-12-15.clover',
 });
 
 // Middleware
@@ -56,7 +56,7 @@ app.post('/api/create-checkout-session', async (req, res) => {
         },
       ],
       customer_email: customerEmail,
-      success_url: `${process.env.FRONTEND_URL || 'http://localhost:5173'}/checkout/success?session_id={CHECKOUT_SESSION_ID}`,
+      success_url: `${process.env.FRONTEND_URL || 'http://localhost:5173'}/download?session_id={CHECKOUT_SESSION_ID}`,
       cancel_url: `${process.env.FRONTEND_URL || 'http://localhost:5173'}/checkout`,
     });
 
