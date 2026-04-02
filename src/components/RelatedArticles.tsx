@@ -11,6 +11,13 @@ interface Article {
 
 const allArticles: Article[] = [
   {
+    slug: "/blog/google-flow-workspace",
+    date: "JANUARY 27, 2026",
+    category: "AI / CREATIVE TOOLS",
+    title: ["GOOGLE'S WORKSPACE", "NUKE ON AFTER", "EFFECTS WORKFLOWS"],
+    description: "Google's Flow is the AI video editor we've been waiting for\u2014and it's about to torch the old guard.",
+  },
+  {
     slug: "/blog/final-cut-pro",
     date: "JANUARY 14, 2026",
     category: "POST-PRODUCTION",
