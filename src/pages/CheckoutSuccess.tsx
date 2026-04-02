@@ -1,35 +1,12 @@
-import { useEffect, useState } from "react";
 import { Link, useSearchParams } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Separator } from "@/components/ui/separator";
-import { CheckCircle2, CreditCard, Calendar, ArrowRight } from "lucide-react";
-import { useAuth } from "@/contexts/AuthContext";
+import { CheckCircle2, CreditCard, ArrowRight, Download } from "lucide-react";
 
 const CheckoutSuccess = () => {
   const [searchParams] = useSearchParams();
   const sessionId = searchParams.get("session_id");
-  const { user, updateSubscriptionStatus } = useAuth();
-  const [subscriptionUpdated, setSubscriptionUpdated] = useState(false);
-
-  // Update subscription status on mount
-  useEffect(() => {
-    if (!subscriptionUpdated && sessionId) {
-      updateSubscriptionStatus("active");
-      setSubscriptionUpdated(true);
-    }
-  }, [sessionId, subscriptionUpdated, updateSubscriptionStatus]);
-
-  // Calculate next billing date (placeholder - 1 month from now)
-  const getNextBillingDate = () => {
-    const date = new Date();
-    date.setMonth(date.getMonth() + 1);
-    return date.toLocaleDateString("en-US", {
-      year: "numeric",
-      month: "long",
-      day: "numeric",
-    });
-  };
 
   return (
     <div className="min-h-screen bg-black text-white flex items-center justify-center px-4 py-12">
@@ -55,24 +32,11 @@ const CheckoutSuccess = () => {
           </CardHeader>
           <CardContent className="space-y-4">
             <div className="flex justify-between items-center">
-              <span className="text-gray-400">Plan</span>
-              <span className="text-white font-medium">Conform Studio Pro</span>
-            </div>
-            <Separator className="bg-gray-700" />
-            <div className="flex justify-between items-center">
               <span className="text-gray-400">Status</span>
               <span className="inline-flex items-center gap-1.5 text-green-400 font-medium">
                 <span className="w-2 h-2 rounded-full bg-green-400"></span>
                 Active
               </span>
-            </div>
-            <Separator className="bg-gray-700" />
-            <div className="flex justify-between items-center">
-              <span className="text-gray-400 flex items-center gap-1.5">
-                <Calendar className="w-4 h-4" />
-                Next billing date
-              </span>
-              <span className="text-white">{getNextBillingDate()}</span>
             </div>
             {sessionId && (
               <>
@@ -88,26 +52,19 @@ const CheckoutSuccess = () => {
           </CardContent>
         </Card>
 
-        {/* Account Info */}
-        {user && (
-          <div className="text-center text-gray-400 text-sm">
-            Subscription activated for <span className="text-white">{user.email}</span>
-          </div>
-        )}
-
         {/* Action Buttons */}
         <div className="space-y-3">
-          <Link to="/account" className="block">
+          <Link to="/download" className="block">
+            <Button className="w-full bg-gradient-to-r from-pink-500 to-purple-500 hover:from-pink-600 hover:to-purple-600 text-white font-semibold py-6">
+              <Download className="mr-2 h-4 w-4" />
+              Download Conform Studio
+            </Button>
+          </Link>
+          <Link to="/" className="block">
             <Button
               variant="outline"
               className="w-full bg-transparent border-gray-600 text-white hover:bg-gray-800 font-semibold py-6"
             >
-              <CreditCard className="mr-2 h-4 w-4" />
-              Manage Subscription
-            </Button>
-          </Link>
-          <Link to="/" className="block">
-            <Button className="w-full bg-gradient-to-r from-pink-500 to-purple-500 hover:from-pink-600 hover:to-purple-600 text-white font-semibold py-6">
               Go to Home
               <ArrowRight className="ml-2 h-4 w-4" />
             </Button>
