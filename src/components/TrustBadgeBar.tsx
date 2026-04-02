@@ -1,74 +1,68 @@
 import { motion } from "framer-motion";
+import nipcLogo from "@/assets/nipc-logo.png";
+import wavelengthLogo from "@/assets/wavelength-logo.png";
+import roastnpostLogo from "@/assets/roastnpost-logo.png";
+import tabuLogo from "@/assets/tabu-logo.png";
+import raremediumLogo from "@/assets/raremedium-logo.svg";
+import dungeonbeachLogo from "@/assets/dungeonbeach-logo.png";
+import niceshoesLogo from "@/assets/niceshoes-logo.png";
+import panupLogo from "@/assets/panup-logo.png";
 
-// SVG logos styled like Frame.io's trust banner
-const FoxSportsLogo = () => (
-  <svg viewBox="0 0 120 50" className="h-7 sm:h-8 md:h-10 w-auto fill-current">
-    <text x="5" y="20" fontSize="14" fontWeight="900" fontFamily="Arial, sans-serif" letterSpacing="-0.5">(FOX)</text>
-    <text x="5" y="38" fontSize="12" fontWeight="700" fontFamily="Arial, sans-serif" letterSpacing="2">SPORTS</text>
+// Shared classes for consistent logo sizing
+const svgClass = "h-7 sm:h-8 md:h-10 w-auto fill-current";
+
+const RareMediumLogo = () => (
+  <img src={raremediumLogo} alt="Rare Medium" className="h-7 sm:h-8 md:h-10 w-auto opacity-40" />
+);
+
+
+const DungeonBeachLogo = () => (
+  <img src={dungeonbeachLogo} alt="Dungeon Beach" className="h-5 sm:h-6 md:h-7 w-auto brightness-0 invert opacity-40" />
+);
+
+const NiceShoesLogo = () => (
+  <img src={niceshoesLogo} alt="Nice Shoes" className="h-8 sm:h-10 md:h-12 w-auto opacity-40" />
+);
+
+const TransientLogo = () => (
+  <svg viewBox="0 0 130 30" className="h-6 sm:h-7 md:h-8 w-auto fill-current">
+    <text x="0" y="22" fontSize="18" fontWeight="300" fontFamily="'Helvetica Neue', Helvetica, Arial, sans-serif" letterSpacing="4">TRANSIENT</text>
   </svg>
 );
 
-const NatGeoLogo = () => (
-  <svg viewBox="0 0 160 50" className="h-7 sm:h-8 md:h-10 w-auto fill-current">
-    <rect x="0" y="5" width="30" height="40" fill="none" stroke="currentColor" strokeWidth="3"/>
-    <text x="40" y="22" fontSize="11" fontWeight="400" fontFamily="Georgia, serif" letterSpacing="0.5">NATIONAL</text>
-    <text x="40" y="35" fontSize="11" fontWeight="400" fontFamily="Georgia, serif" letterSpacing="0.5">GEOGRAPHIC</text>
-    <text x="40" y="48" fontSize="9" fontWeight="400" fontFamily="Georgia, serif" letterSpacing="1">SOCIETY</text>
-  </svg>
+// Image-based logos: brightness-0 invert turns dark logos white; opacity-40 matches SVG text-white/40
+const imgClass = "h-7 sm:h-8 md:h-10 w-auto opacity-40";
+
+const TabuLogo = () => (
+  <img src={tabuLogo} alt="Tabu Productions" className="h-4 sm:h-5 md:h-6 w-auto opacity-40" />
 );
 
-const MediaMonksLogo = () => (
-  <svg viewBox="0 0 100 50" className="h-7 sm:h-8 md:h-10 w-auto fill-current">
-    <text x="0" y="25" fontSize="16" fontWeight="800" fontFamily="Arial, sans-serif" letterSpacing="1">MEDIA</text>
-    <text x="0" y="44" fontSize="16" fontWeight="800" fontFamily="Arial, sans-serif" letterSpacing="1">MONKS</text>
-  </svg>
+const WavelengthLogo = () => (
+  <img src={wavelengthLogo} alt="Wavelength Productions" className="h-auto max-w-[100px] sm:max-w-[120px] md:max-w-[140px] opacity-40" />
 );
 
-const TurnerLogo = () => (
-  <svg viewBox="0 0 100 35" className="h-7 sm:h-8 md:h-10 w-auto fill-current">
-    <text x="0" y="26" fontSize="22" fontWeight="400" fontFamily="Arial, sans-serif" fontStyle="italic" letterSpacing="1">Turner</text>
-  </svg>
+const NIPCLogo = () => (
+  <img src={nipcLogo} alt="New International Picture Company" className="h-auto max-w-[90px] sm:max-w-[110px] md:max-w-[130px] brightness-0 invert opacity-40" />
 );
 
-const MasterclassLogo = () => (
-  <svg viewBox="0 0 40 50" className="h-7 sm:h-8 md:h-10 w-auto fill-current">
-    <path d="M20 5 L35 15 L35 35 L20 45 L5 35 L5 15 Z" fill="none" stroke="currentColor" strokeWidth="2"/>
-    <text x="13" y="30" fontSize="14" fontWeight="700" fontFamily="Arial, sans-serif">M</text>
-  </svg>
+const RoastNPostLogo = () => (
+  <img src={roastnpostLogo} alt="Roast N Post" className="h-10 sm:h-12 md:h-14 w-auto opacity-40" />
 );
 
-const GoogleLogo = () => (
-  <svg viewBox="0 0 90 35" className="h-7 sm:h-8 md:h-10 w-auto fill-current">
-    <text x="0" y="26" fontSize="24" fontWeight="400" fontFamily="Product Sans, Arial, sans-serif">Google</text>
-  </svg>
-);
-
-const NetflixLogo = () => (
-  <svg viewBox="0 0 110 35" className="h-7 sm:h-8 md:h-10 w-auto fill-current">
-    <text x="0" y="26" fontSize="20" fontWeight="700" fontFamily="Arial, sans-serif" letterSpacing="2">NETFLIX</text>
-  </svg>
-);
-
-const BBCLogo = () => (
-  <svg viewBox="0 0 80 35" className="h-7 sm:h-8 md:h-10 w-auto fill-current">
-    <rect x="0" y="5" width="24" height="24" rx="2"/>
-    <rect x="28" y="5" width="24" height="24" rx="2"/>
-    <rect x="56" y="5" width="24" height="24" rx="2"/>
-    <text x="6" y="22" fontSize="14" fontWeight="700" fill="black">B</text>
-    <text x="34" y="22" fontSize="14" fontWeight="700" fill="black">B</text>
-    <text x="62" y="22" fontSize="14" fontWeight="700" fill="black">C</text>
-  </svg>
+const PanUpLogo = () => (
+  <img src={panupLogo} alt="Pan Up" className="h-auto max-w-[80px] sm:max-w-[90px] md:max-w-[110px] opacity-40" />
 );
 
 const partners = [
-  { name: "Fox Sports", Logo: FoxSportsLogo },
-  { name: "National Geographic", Logo: NatGeoLogo },
-  { name: "Media Monks", Logo: MediaMonksLogo },
-  { name: "Turner", Logo: TurnerLogo },
-  { name: "Masterclass", Logo: MasterclassLogo },
-  { name: "Google", Logo: GoogleLogo },
-  { name: "Netflix", Logo: NetflixLogo },
-  { name: "BBC", Logo: BBCLogo },
+  { name: "Tabu Productions", Logo: TabuLogo },
+  { name: "Rare Medium", Logo: RareMediumLogo },
+  { name: "Dungeon Beach", Logo: DungeonBeachLogo },
+  { name: "Wavelength Productions", Logo: WavelengthLogo },
+  { name: "Roast N Post", Logo: RoastNPostLogo },
+  { name: "New International Picture Company", Logo: NIPCLogo },
+  { name: "Nice Shoes", Logo: NiceShoesLogo },
+  { name: "Transient Pictures", Logo: TransientLogo },
+  { name: "Pan Up", Logo: PanUpLogo },
 ];
 
 const TrustBadgeBar = () => {
@@ -85,7 +79,7 @@ const TrustBadgeBar = () => {
         transition={{ duration: 0.6 }}
         className="text-center text-xs uppercase tracking-[0.25em] text-foreground/40 mb-8"
       >
-        Trusted by Industry Leaders
+        Built for Leading Production Companies
       </motion.p>
 
       {/* Scrolling container */}
