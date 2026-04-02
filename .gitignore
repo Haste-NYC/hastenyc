@@ -33,3 +33,4 @@ dist-ssr
 
 # GSD planning intel (local, regenerated)
 .planning/intel/
+.vercel

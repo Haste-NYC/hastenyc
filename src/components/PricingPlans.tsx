@@ -57,9 +57,8 @@ const tiers: PricingTier[] = [
       "7-day free trial",
     ],
     popular: true,
-    // Placeholder - will be replaced with actual Stripe price IDs
-    priceIdMonthly: "price_studio_monthly_placeholder",
-    priceIdYearly: "price_studio_yearly_placeholder",
+    priceIdMonthly: stripeConfig.studioPriceMonthly,
+    priceIdYearly: stripeConfig.studioPriceYearly,
   },
   {
     name: "Enterprise",

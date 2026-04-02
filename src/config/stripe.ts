@@ -5,6 +5,8 @@ export const stripeConfig = {
   publishableKey: import.meta.env.VITE_STRIPE_PUBLISHABLE_KEY || '',
   priceMonthly: import.meta.env.VITE_STRIPE_PRICE_MONTHLY || '',
   priceYearly: import.meta.env.VITE_STRIPE_PRICE_YEARLY || '',
+  studioPriceMonthly: import.meta.env.VITE_STRIPE_STUDIO_PRICE_MONTHLY || '',
+  studioPriceYearly: import.meta.env.VITE_STRIPE_STUDIO_PRICE_YEARLY || '',
 } as const;
 
 // Validate that required config is present
