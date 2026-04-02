@@ -16,6 +16,7 @@ import FigmaSchemaPost from "./pages/FigmaSchemaPost";
 import EntertainmentShakeupPost from "./pages/EntertainmentShakeupPost";
 import VfxStoragePost from "./pages/VfxStoragePost";
 import FinalCutProPost from "./pages/FinalCutProPost";
+import GoogleFlowPost from "./pages/GoogleFlowPost";
 import StyleGuide from "./pages/StyleGuide";
 import PremiereRewind from "./pages/PremiereRewind";
 import Schedule from "./pages/Schedule";
@@ -58,6 +59,7 @@ const App = () => (
             <Route path="/blog/entertainment-shakeup" element={<EntertainmentShakeupPost />} />
             <Route path="/blog/global-storage-post" element={<VfxStoragePost />} />
             <Route path="/blog/final-cut-pro" element={<FinalCutProPost />} />
+            <Route path="/blog/google-flow-workspace" element={<GoogleFlowPost />} />
             <Route path="/style-guide" element={<StyleGuide />} />
             <Route path="/premiere-rewind" element={<PremiereRewind />} />
             <Route path="/schedule" element={<Schedule />} />

@@ -4,37 +4,13 @@
         xmlns:news="http://www.google.com/schemas/sitemap-news/0.9">
   <url>
     <loc>https://www.haste.nyc/</loc>
-    <lastmod>2026-04-01</lastmod>
+    <lastmod>2026-01-14</lastmod>
     <changefreq>weekly</changefreq>
     <priority>1.0</priority>
   </url>
   <url>
-    <loc>https://www.haste.nyc/about</loc>
-    <lastmod>2026-04-01</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.8</priority>
-  </url>
-  <url>
-    <loc>https://www.haste.nyc/premiere-rewind</loc>
-    <lastmod>2026-04-01</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.8</priority>
-  </url>
-  <url>
-    <loc>https://www.haste.nyc/schedule</loc>
-    <lastmod>2026-04-01</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.7</priority>
-  </url>
-  <url>
-    <loc>https://www.haste.nyc/download</loc>
-    <lastmod>2026-04-01</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.7</priority>
-  </url>
-  <url>
     <loc>https://www.haste.nyc/blog</loc>
-    <lastmod>2026-04-01</lastmod>
+    <lastmod>2026-01-14</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.9</priority>
   </url>
@@ -47,6 +23,17 @@
       <image:loc>https://www.haste.nyc/assets/apple-creator-studio.webp</image:loc>
       <image:title>Apple Creator Studio - Is Final Cut Pro Making a Comeback?</image:title>
       <image:caption>Apple Creator Studio bundle featuring Final Cut Pro, Logic Pro, Pixelmator Pro, and professional creative apps</image:caption>
+    </image:image>
+  </url>
+  <url>
+    <loc>https://www.haste.nyc/blog/google-flow-workspace</loc>
+    <lastmod>2026-01-27</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+    <image:image>
+      <image:loc>https://www.haste.nyc/assets/google-flow-hero.webp</image:loc>
+      <image:title>Google Flow AI Video Editor - Workspace Integration</image:title>
+      <image:caption>Google's Flow AI-powered video engine in Workspace via Gemini, featuring Veo 3 video generation</image:caption>
     </image:image>
   </url>
   <url>
@@ -68,7 +55,7 @@
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://www.haste.nyc/blog/global-storage-post</loc>
+    <loc>https://www.haste.nyc/blog/vfx-storage-ilm-weta</loc>
     <lastmod>2025-01-05</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
@@ -81,12 +68,6 @@
   </url>
   <url>
     <loc>https://www.haste.nyc/privacy</loc>
-    <lastmod>2025-01-01</lastmod>
-    <changefreq>yearly</changefreq>
-    <priority>0.3</priority>
-  </url>
-  <url>
-    <loc>https://www.haste.nyc/eula</loc>
     <lastmod>2025-01-01</lastmod>
     <changefreq>yearly</changefreq>
     <priority>0.3</priority>

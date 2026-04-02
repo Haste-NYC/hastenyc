@@ -2,7 +2,7 @@ import { Button } from "@/components/ui/button";
 import { Link } from "react-router-dom";
 import appleCreatorStudio from "@/assets/apple-creator-studio.webp";
 import Header from "@/components/Header";
-
+import Footer from "@/components/Footer";
 import SEO from "@/components/SEO";
 
 const Blog = () => {
@@ -10,7 +10,7 @@ const Blog = () => {
     <div className="min-h-screen bg-background">
       <SEO
         title="Blog - Creative Technology Insights"
-        description="Explore the latest insights on AI-powered creative tools, design systems, and post-production automation from HASTE."
+        description="Explore the latest insights on AI-powered creative tools, design systems, and post-production automation from HASTE.NYC."
         canonical="/blog"
       />
       <Header />
@@ -68,6 +68,41 @@ const Blog = () => {
             </div>
 
             <div className="grid gap-8 md:grid-cols-2 lg:grid-cols-3">
+              {/* Google Flow Post */}
+              <article className="border border-border bg-card hover:bg-card/80 transition-colors flex flex-col">
+                <div className="p-8 flex flex-col flex-grow">
+                  <div className="flex flex-wrap items-center gap-4 mb-6">
+                    <span className="text-xs text-brand-orange uppercase tracking-wider font-bold">
+                      JANUARY 27, 2026
+                    </span>
+                    <span className="text-xs text-muted-foreground uppercase tracking-wider">
+                      AI / CREATIVE TOOLS
+                    </span>
+                  </div>
+
+                  <h3 className="text-3xl md:text-4xl font-bold uppercase leading-tight mb-4">
+                    <span className="gradient-orange-pink">GOOGLE'S WORKSPACE</span>
+                    <br />
+                    <span className="gradient-pink-blue">NUKE ON AFTER</span>
+                    <br />
+                    <span className="gradient-blue-green">EFFECTS WORKFLOWS</span>
+                  </h3>
+
+                  <p className="text-lg text-foreground/80 mb-6 leading-relaxed flex-grow">
+                    Google's Flow is the AI video editor we've been waiting for—and it's about to torch the old guard.
+                  </p>
+
+                  <Button
+                    asChild
+                    variant="outline"
+                    size="lg"
+                    className="font-bold uppercase w-full mt-auto"
+                  >
+                    <Link to="/blog/google-flow-workspace">Read Article</Link>
+                  </Button>
+                </div>
+              </article>
+
               {/* Final Cut Pro Post */}
               <article className="border border-border bg-card hover:bg-card/80 transition-colors flex flex-col">
                 <div className="p-8 flex flex-col flex-grow">
@@ -265,7 +300,7 @@ const Blog = () => {
         </div>
       </section>
 
-
+      <Footer />
     </div>
   );
 };
