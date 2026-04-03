@@ -1,0 +1,490 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Feature Sections Audition</title>
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+
+    body {
+      background: #000;
+      color: #fff;
+      font-family: 'Helvetica Neue', -apple-system, Roboto, Helvetica, sans-serif;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    section {
+      padding: 80px 20px;
+      border-bottom: 1px solid rgba(255,255,255,0.05);
+    }
+
+    @media (min-width: 768px) {
+      section { padding: 120px 48px; }
+    }
+    @media (min-width: 1024px) {
+      section { padding: 140px 80px; }
+    }
+
+    .inner {
+      max-width: 1200px;
+      margin: 0 auto;
+    }
+
+    /* Shared typography */
+    .headline {
+      font-weight: 800;
+      text-transform: uppercase;
+      letter-spacing: -0.02em;
+      line-height: 0.95;
+    }
+
+    .headline-xl {
+      font-size: clamp(48px, 12vw, 150px);
+    }
+
+    .headline-lg {
+      font-size: clamp(36px, 9vw, 100px);
+    }
+
+    .subtitle {
+      font-size: 11px;
+      text-transform: uppercase;
+      letter-spacing: 0.15em;
+      color: rgba(255,255,255,0.4);
+      margin-bottom: 16px;
+    }
+
+    @media (min-width: 768px) {
+      .subtitle { font-size: 13px; }
+    }
+
+    .body-text {
+      font-size: 14px;
+      color: rgba(255,255,255,0.6);
+      line-height: 1.7;
+      max-width: 520px;
+    }
+
+    @media (min-width: 768px) {
+      .body-text { font-size: 16px; }
+    }
+
+    .footnote {
+      font-size: 11px;
+      text-transform: uppercase;
+      letter-spacing: 0.12em;
+      color: rgba(255,255,255,0.3);
+      margin-top: 12px;
+    }
+
+    /* Section label */
+    .section-label {
+      font-size: 9px;
+      letter-spacing: 0.3em;
+      text-transform: uppercase;
+      color: rgba(255,255,255,0.2);
+      text-align: center;
+      padding: 20px;
+    }
+
+    /* Split grid */
+    .split {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 32px;
+      align-items: center;
+    }
+
+    @media (min-width: 768px) {
+      .split { grid-template-columns: 1fr 1fr; gap: 64px; }
+    }
+
+    /* App screenshot */
+    .app-screenshot {
+      border-radius: 12px;
+      overflow: hidden;
+      border: 1px solid rgba(255,255,255,0.1);
+      background: rgba(255,255,255,0.03);
+    }
+
+    .app-screenshot img {
+      width: 100%;
+      height: auto;
+      display: block;
+    }
+
+    /* Bottom statement bar */
+    .statement {
+      margin-top: 48px;
+      font-size: 13px;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      text-align: center;
+    }
+
+    @media (min-width: 768px) {
+      .statement { margin-top: 64px; font-size: 16px; }
+    }
+
+    .statement .accent {
+      color: #e91e8c;
+    }
+
+    /* Availability columns */
+    .avail-grid {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 32px;
+      margin-top: 40px;
+    }
+
+    @media (min-width: 768px) {
+      .avail-grid {
+        grid-template-columns: 1.2fr 1fr;
+        gap: 64px;
+        margin-top: 56px;
+      }
+    }
+
+    .avail-subtitle {
+      font-size: 18px;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: -0.01em;
+      line-height: 1.3;
+      color: rgba(255,255,255,0.5);
+    }
+
+    @media (min-width: 768px) {
+      .avail-subtitle { font-size: 22px; }
+    }
+
+    .list-label {
+      font-size: 11px;
+      text-transform: uppercase;
+      letter-spacing: 0.15em;
+      color: rgba(255,255,255,0.4);
+      margin-bottom: 10px;
+    }
+
+    .list-items {
+      list-style: none;
+      padding: 0;
+    }
+
+    .list-items li {
+      font-size: 14px;
+      color: rgba(255,255,255,0.65);
+      padding: 4px 0;
+      display: flex;
+      gap: 8px;
+    }
+
+    .list-items li::before {
+      content: '\2022';
+      color: rgba(255,255,255,0.25);
+    }
+
+    /* Feature comparison (inline version for audition) */
+    .chart-container {
+      max-width: 480px;
+      margin: 0 auto;
+    }
+
+    @media (min-width: 768px) {
+      .chart-container { max-width: 720px; }
+    }
+
+    .chart-header, .chart-row {
+      display: grid;
+      grid-template-columns: 1fr repeat(4, 36px);
+      gap: 4px;
+      align-items: center;
+    }
+
+    @media (min-width: 480px) {
+      .chart-header, .chart-row {
+        grid-template-columns: 1fr repeat(4, 44px);
+      }
+    }
+
+    @media (min-width: 768px) {
+      .chart-header, .chart-row {
+        grid-template-columns: 1fr repeat(4, 80px);
+      }
+    }
+
+    .chart-header {
+      align-items: end;
+      padding-bottom: 12px;
+      margin-bottom: 4px;
+      border-bottom: 1px solid rgba(255,255,255,0.15);
+    }
+
+    .chart-col-label {
+      font-size: 8px;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      color: rgba(255,255,255,0.4);
+      text-align: center;
+      line-height: 1.2;
+    }
+
+    @media (min-width: 768px) {
+      .chart-col-label { font-size: 10px; }
+    }
+
+    .chart-col-label.highlight {
+      color: #4ade80;
+      font-size: 7px;
+      line-height: 1.3;
+    }
+
+    @media (min-width: 768px) {
+      .chart-col-label.highlight { font-size: 9px; }
+    }
+
+    .chart-row {
+      padding: 10px 0;
+      border-bottom: 1px solid rgba(255,255,255,0.04);
+    }
+
+    @media (min-width: 768px) {
+      .chart-row { padding: 12px 0; }
+    }
+
+    .chart-row:last-child { border-bottom: none; }
+
+    .chart-feature {
+      font-size: 11px;
+      font-weight: 500;
+      text-transform: uppercase;
+      letter-spacing: 0.06em;
+      color: rgba(255,255,255,0.7);
+    }
+
+    @media (min-width: 768px) {
+      .chart-feature { font-size: 14px; }
+    }
+
+    .chart-cell {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .check {
+      width: 16px;
+      height: 16px;
+      border-radius: 50%;
+      background: #4ade80;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .check::after {
+      content: '';
+      width: 8px;
+      height: 5px;
+      border-left: 1.5px solid #000;
+      border-bottom: 1.5px solid #000;
+      transform: rotate(-45deg) translateY(-1px);
+    }
+
+    .x-mark {
+      font-size: 12px;
+      color: rgba(255,255,255,0.12);
+    }
+
+    .chart-title {
+      font-size: 16px;
+      font-weight: 800;
+      text-transform: uppercase;
+      letter-spacing: 0.04em;
+      line-height: 1.1;
+    }
+
+    @media (min-width: 768px) {
+      .chart-title { font-size: 28px; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- ========== SECTION 1: 300x FASTER ========== -->
+  <div class="section-label">Section 1 of 6</div>
+  <section>
+    <div class="inner">
+      <h2 style="
+        font-weight: 900;
+        text-transform: uppercase;
+        letter-spacing: -0.03em;
+        line-height: 1;
+        font-size: clamp(72px, 21vw, 280px);
+        margin: 0;
+      ">300<span style="font-size:0.65em">&times;</span></h2>
+      <h2 style="
+        font-weight: 900;
+        text-transform: uppercase;
+        letter-spacing: -0.02em;
+        line-height: 1;
+        font-size: clamp(34px, 9.8vw, 130px);
+        margin: 26px 0 0 0;
+      ">Faster*and</h2>
+      <h2 style="
+        font-weight: 900;
+        text-transform: uppercase;
+        letter-spacing: -0.02em;
+        line-height: 1;
+        font-size: clamp(34px, 9.8vw, 130px);
+        margin: 0;
+      ">100% Accurate</h2>
+      <p style="
+        font-size: clamp(10px, 1.2vw, 16px);
+        text-transform: uppercase;
+        letter-spacing: 0.08em;
+        color: rgba(255,255,255,0.35);
+        margin-top: 70px;
+      ">*Than manual conform</p>
+    </div>
+  </section>
+
+  <!-- ========== SECTION 2: 40 HOURS IN 4 MINUTES ========== -->
+  <div class="section-label">Section 2 of 6</div>
+  <section>
+    <div class="inner">
+      <div class="split">
+        <div>
+          <h2 class="headline headline-lg">
+            40 Hours<br>
+            Completed<br>
+            in 4 Minutes*
+          </h2>
+          <p class="footnote">*Average time spent in conform labor on feature length film</p>
+        </div>
+        <div class="app-screenshot">
+          <img src="/app-screens/screen-progress.png" alt="Conform Studio - conforming in progress">
+        </div>
+      </div>
+      <p class="statement">
+        There is <span class="accent">no other tool in existence</span> to automate the conform process
+      </p>
+    </div>
+  </section>
+
+  <!-- ========== SECTION 3: VIEW COLOR IN CONTEXT ========== -->
+  <div class="section-label">Section 3 of 6</div>
+  <section>
+    <div class="inner">
+      <div class="split">
+        <div class="app-screenshot">
+          <img src="/app-screens/screen-configure.png" alt="Conform Studio - project configuration">
+        </div>
+        <div>
+          <p class="subtitle">The End of Roundtrip Workflows</p>
+          <h2 class="headline headline-lg">
+            View Color<br>
+            in Context
+          </h2>
+          <p class="body-text" style="margin-top:24px">
+            Getting rid of the need for roundtripping projects back and forth between editorial and color, clients can now review color versions in context.
+          </p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ========== SECTION 4: FEATURE COMPARISON ========== -->
+  <div class="section-label">Section 4 of 6</div>
+  <section>
+    <div class="inner">
+      <div class="chart-container">
+        <div class="chart-header">
+          <div class="chart-title">Feature<br>Comparison</div>
+          <div class="chart-col-label">EDL</div>
+          <div class="chart-col-label">FCP<br>XML</div>
+          <div class="chart-col-label">AAF</div>
+          <div class="chart-col-label highlight">Conform<br>Studio</div>
+        </div>
+
+        <div class="chart-row"><div class="chart-feature">Multiple Video Tracks</div><div class="chart-cell"><span class="x-mark">&times;</span></div><div class="chart-cell"><span class="check"></span></div><div class="chart-cell"><span class="check"></span></div><div class="chart-cell"><span class="check"></span></div></div>
+        <div class="chart-row"><div class="chart-feature">Clip Markers</div><div class="chart-cell"><span class="x-mark">&times;</span></div><div class="chart-cell"><span class="x-mark">&times;</span></div><div class="chart-cell"><span class="x-mark">&times;</span></div><div class="chart-cell"><span class="check"></span></div></div>
+        <div class="chart-row"><div class="chart-feature">Clip Label Colors</div><div class="chart-cell"><span class="x-mark">&times;</span></div><div class="chart-cell"><span class="x-mark">&times;</span></div><div class="chart-cell"><span class="x-mark">&times;</span></div><div class="chart-cell"><span class="check"></span></div></div>
+        <div class="chart-row"><div class="chart-feature">Nested Sequences</div><div class="chart-cell"><span class="x-mark">&times;</span></div><div class="chart-cell"><span class="check"></span></div><div class="chart-cell"><span class="x-mark">&times;</span></div><div class="chart-cell"><span class="check"></span></div></div>
+        <div class="chart-row"><div class="chart-feature">Image Sequences</div><div class="chart-cell"><span class="x-mark">&times;</span></div><div class="chart-cell"><span class="x-mark">&times;</span></div><div class="chart-cell"><span class="x-mark">&times;</span></div><div class="chart-cell"><span class="check"></span></div></div>
+        <div class="chart-row"><div class="chart-feature">Transitions</div><div class="chart-cell"><span class="x-mark">&times;</span></div><div class="chart-cell"><span class="check"></span></div><div class="chart-cell"><span class="x-mark">&times;</span></div><div class="chart-cell"><span class="check"></span></div></div>
+        <div class="chart-row"><div class="chart-feature">Audio/Video Effects</div><div class="chart-cell"><span class="x-mark">&times;</span></div><div class="chart-cell"><span class="x-mark">&times;</span></div><div class="chart-cell"><span class="x-mark">&times;</span></div><div class="chart-cell"><span class="check"></span></div></div>
+        <div class="chart-row"><div class="chart-feature">Linear Speed Effects</div><div class="chart-cell"><span class="check"></span></div><div class="chart-cell"><span class="x-mark">&times;</span></div><div class="chart-cell"><span class="x-mark">&times;</span></div><div class="chart-cell"><span class="check"></span></div></div>
+        <div class="chart-row"><div class="chart-feature">Complex Speed Effects</div><div class="chart-cell"><span class="x-mark">&times;</span></div><div class="chart-cell"><span class="x-mark">&times;</span></div><div class="chart-cell"><span class="x-mark">&times;</span></div><div class="chart-cell"><span class="check"></span></div></div>
+        <div class="chart-row"><div class="chart-feature">Time Interpolation Modes</div><div class="chart-cell"><span class="x-mark">&times;</span></div><div class="chart-cell"><span class="x-mark">&times;</span></div><div class="chart-cell"><span class="x-mark">&times;</span></div><div class="chart-cell"><span class="check"></span></div></div>
+        <div class="chart-row"><div class="chart-feature">Text / Generators</div><div class="chart-cell"><span class="x-mark">&times;</span></div><div class="chart-cell"><span class="x-mark">&times;</span></div><div class="chart-cell"><span class="x-mark">&times;</span></div><div class="chart-cell"><span class="check"></span></div></div>
+        <div class="chart-row"><div class="chart-feature">Multicam Clips</div><div class="chart-cell"><span class="x-mark">&times;</span></div><div class="chart-cell"><span class="x-mark">&times;</span></div><div class="chart-cell"><span class="x-mark">&times;</span></div><div class="chart-cell"><span class="check"></span></div></div>
+        <div class="chart-row"><div class="chart-feature">Opacity / Blending Modes</div><div class="chart-cell"><span class="x-mark">&times;</span></div><div class="chart-cell"><span class="x-mark">&times;</span></div><div class="chart-cell"><span class="x-mark">&times;</span></div><div class="chart-cell"><span class="check"></span></div></div>
+        <div class="chart-row"><div class="chart-feature">Crop Information</div><div class="chart-cell"><span class="x-mark">&times;</span></div><div class="chart-cell"><span class="x-mark">&times;</span></div><div class="chart-cell"><span class="x-mark">&times;</span></div><div class="chart-cell"><span class="check"></span></div></div>
+        <div class="chart-row"><div class="chart-feature">Bin Organization</div><div class="chart-cell"><span class="x-mark">&times;</span></div><div class="chart-cell"><span class="x-mark">&times;</span></div><div class="chart-cell"><span class="x-mark">&times;</span></div><div class="chart-cell"><span class="check"></span></div></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ========== SECTION 5: BUILT FOR STUDIOS ========== -->
+  <div class="section-label">Section 5 of 6</div>
+  <section>
+    <div class="inner">
+      <h2 class="headline headline-lg">
+        Built<br>
+        Specifically<br>
+        for Studios
+      </h2>
+
+      <div class="avail-grid">
+        <p class="avail-subtitle">
+          Conform Studio is available exclusively for qualifying post facilities
+        </p>
+
+        <div>
+          <div style="margin-bottom:32px">
+            <p class="list-label">Available Today:</p>
+            <ul class="list-items">
+              <li>Premiere to Resolve Adaptor</li>
+              <li>Quality Control Automation</li>
+            </ul>
+          </div>
+          <div>
+            <p class="list-label">Coming Soon:</p>
+            <ul class="list-items">
+              <li>Avid Media Composer &amp; Final Cut Support</li>
+              <li>Batch XML, EDL, AAF Support with Media Relinking</li>
+              <li>ProTools Support</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ========== SECTION 6: SECURE SCALABLE STUDIO-READY ========== -->
+  <div class="section-label">Section 6 of 6</div>
+  <section>
+    <div class="inner">
+      <h2 class="headline headline-lg">
+        Secure.<br>
+        Scalable.<br>
+        Studio-Ready.
+      </h2>
+      <p class="body-text" style="margin-top:24px">
+        Your media stays secure within your pipeline.<br>
+        Privacy-focused, TPN-compliant, Trusted by industry leaders.
+      </p>
+    </div>
+  </section>
+
+  <p style="text-align:center;font-size:11px;color:rgba(255,255,255,0.2);text-transform:uppercase;letter-spacing:0.1em;padding:40px">
+    Audition page -- not linked from site
+  </p>
+
+</body>
+</html>

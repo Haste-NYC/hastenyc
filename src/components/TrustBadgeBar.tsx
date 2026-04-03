@@ -65,10 +65,20 @@ const partners = [
   { name: "Pan Up", Logo: PanUpLogo },
 ];
 
-const TrustBadgeBar = () => {
-  // Quadruple partners so logos always fill the viewport, even on ultrawide screens
-  const duplicatedPartners = [...partners, ...partners, ...partners, ...partners];
+const LogoSet = () => (
+  <>
+    {partners.map((partner) => (
+      <div
+        key={partner.name}
+        className="flex-shrink-0 px-6 sm:px-8 md:px-12 flex items-center justify-center text-white/40 hover:text-white/60 transition-colors duration-300"
+      >
+        <partner.Logo />
+      </div>
+    ))}
+  </>
+);
 
+const TrustBadgeBar = () => {
   return (
     <section className="py-6 sm:py-12 relative" style={{ background: 'transparent' }}>
       {/* Label */}
@@ -79,7 +89,7 @@ const TrustBadgeBar = () => {
         transition={{ duration: 0.6 }}
         className="text-center text-xs uppercase tracking-[0.25em] text-foreground/40 mb-8"
       >
-        Built for Leading Post Houses
+        Built for Industry Leaders
       </motion.p>
 
       {/* Scrolling container */}
@@ -90,16 +100,14 @@ const TrustBadgeBar = () => {
           WebkitMaskImage: "linear-gradient(to right, transparent, black 128px, black calc(100% - 128px), transparent)",
         }}
       >
-        {/* Scrolling logos - two sets for seamless loop */}
-        <div className="flex animate-scroll-right-to-left items-center w-max">
-          {duplicatedPartners.map((partner, index) => (
-            <div
-              key={`${partner.name}-${index}`}
-              className="flex-shrink-0 px-6 sm:px-8 md:px-12 flex items-center justify-center text-white/40 hover:text-white/60 transition-colors duration-300"
-            >
-              <partner.Logo />
-            </div>
-          ))}
+        {/* Two identical flex rows side-by-side, each animating independently */}
+        <div className="flex w-max animate-scroll-right-to-left items-center">
+          <div className="flex items-center flex-shrink-0">
+            <LogoSet />
+          </div>
+          <div className="flex items-center flex-shrink-0" aria-hidden="true">
+            <LogoSet />
+          </div>
         </div>
       </div>
     </section>

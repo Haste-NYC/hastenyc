@@ -35,7 +35,7 @@ const Footer = ({ hideAsciiLogo = false }: { hideAsciiLogo?: boolean }) => {
       )}
 
       {/* Tagline */}
-      <p className="mt-6 sm:mt-8" style={{
+      <p className="mt-8 sm:mt-8" style={{
         color: 'rgba(255,255,255,0.45)',
         letterSpacing: '0.35em',
         fontSize: '10px',
@@ -47,15 +47,14 @@ const Footer = ({ hideAsciiLogo = false }: { hideAsciiLogo?: boolean }) => {
       </p>
 
       {/* Social & Contact Links */}
-      <div className="flex flex-wrap justify-center items-center gap-x-2 gap-y-1.5 mt-6 sm:mt-8 px-4 max-w-sm sm:max-w-none sm:gap-x-0">
+      <div className="flex flex-wrap justify-center items-center gap-x-4 gap-y-1.5 mt-7 sm:mt-8 px-4 sm:gap-x-0">
         {[
           { label: 'E-MAIL', href: 'mailto:info@haste.nyc' },
           { label: 'INSTAGRAM', href: 'https://instagram.com/haste.nyc' },
           { label: 'YOUTUBE', href: 'https://www.youtube.com/channel/UCXtE1RONg-_D5EUI9-sxB_g' },
           { label: 'TIKTOK', href: 'https://www.tiktok.com/@haste.nyc' },
-          { label: 'FACEBOOK', href: 'https://facebook.com/313745985146389' },
           { label: 'LINKEDIN', href: 'https://linkedin.com/company/98756314' },
-          { label: 'TWITTER', href: 'https://twitter.com/@haste_nyc' },
+          { label: 'X', href: 'https://twitter.com/@haste_nyc' },
         ].map((link, i, arr) => (
           <span key={link.label} className="inline-flex items-center">
             <a
@@ -72,52 +71,35 @@ const Footer = ({ hideAsciiLogo = false }: { hideAsciiLogo?: boolean }) => {
               {link.label}
             </a>
             {i < arr.length - 1 && (
-              <span className="text-white/20 mx-2.5 text-[7px] select-none hidden sm:inline">&middot;</span>
+              <span className="text-white/15 mx-2 text-[7px] select-none hidden sm:inline">&middot;</span>
             )}
           </span>
         ))}
       </div>
 
       {/* Navigation Links */}
-      <nav className="flex flex-wrap justify-center items-center gap-x-2 gap-y-1.5 mt-4 px-4 max-w-xs sm:max-w-none sm:gap-x-0">
+      <nav className="flex flex-wrap justify-center items-center gap-x-4 gap-y-1.5 mt-3.5 sm:mt-4 px-4 sm:gap-x-0">
         {[
-          { label: 'Production Company', href: 'https://www.haste.studio', external: true },
-          { label: 'Terms of Service', to: '/terms' },
-          { label: 'Privacy Notice', to: '/privacy' },
-          { label: 'License Agreement', to: '/eula' },
-          { label: 'Refund Policy', to: '/refund' },
+          { label: 'Terms', to: '/terms' },
+          { label: 'Privacy', to: '/privacy' },
+          { label: 'License', to: '/eula' },
+          { label: 'Refund', to: '/refund' },
           { label: 'Blog', to: '/blog' },
         ].map((item, i, arr) => (
           <span key={item.label} className="inline-flex items-center">
-            {item.external ? (
-              <a
-                href={item.href}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="text-white/30 hover:text-white/70 no-underline transition-colors duration-200 uppercase"
-                style={{
-                  fontSize: '9px',
-                  letterSpacing: '0.12em',
-                  fontFamily: '-apple-system, BlinkMacSystemFont, sans-serif',
-                }}
-              >
-                {item.label}
-              </a>
-            ) : (
-              <Link
-                to={item.to!}
-                className="text-white/30 hover:text-white/70 no-underline transition-colors duration-200 uppercase"
-                style={{
-                  fontSize: '9px',
-                  letterSpacing: '0.12em',
-                  fontFamily: '-apple-system, BlinkMacSystemFont, sans-serif',
-                }}
-              >
-                {item.label}
-              </Link>
-            )}
+            <Link
+              to={item.to}
+              className="text-white/30 hover:text-white/70 no-underline transition-colors duration-200 uppercase"
+              style={{
+                fontSize: '9px',
+                letterSpacing: '0.12em',
+                fontFamily: '-apple-system, BlinkMacSystemFont, sans-serif',
+              }}
+            >
+              {item.label}
+            </Link>
             {i < arr.length - 1 && (
-              <span className="text-white/15 mx-2.5 text-[7px] select-none hidden sm:inline">&middot;</span>
+              <span className="text-white/10 mx-2 text-[7px] select-none hidden sm:inline">&middot;</span>
             )}
           </span>
         ))}

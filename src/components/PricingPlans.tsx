@@ -277,7 +277,7 @@ const PricingPlans = ({
               ) : (
                 <>
                   <div className="hidden md:block md:flex-grow" />
-                  <div className="text-center mb-8 mt-8">
+                  <div className="text-center mb-8">
                     <span className="text-3xl sm:text-4xl font-bold text-white">
                       Contact
                     </span>

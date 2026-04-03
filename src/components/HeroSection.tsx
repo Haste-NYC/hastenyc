@@ -125,7 +125,7 @@ const HeroSection = () => {
   return (
     <section
       ref={sectionRef}
-      className="relative flex flex-col items-center justify-center px-4 sm:px-6 py-4 min-h-[calc(100vh-200px)] overflow-visible"
+      className="relative flex flex-col items-center justify-center px-4 sm:px-6 py-4 min-h-[calc(100vh-320px)] sm:min-h-[calc(100vh-200px)] overflow-visible"
     >
       {/* Particle constellation effect */}
       <Particles />
@@ -198,12 +198,12 @@ const HeroSection = () => {
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.6, delay: 0.35 }}
-          className="text-xs md:text-sm max-w-3xl mx-auto leading-relaxed uppercase tracking-[0.06em] pt-6"
+          className="text-xs md:text-sm max-w-[300px] md:max-w-3xl mx-auto leading-relaxed uppercase tracking-[0.06em] pt-6"
         >
           <span className="text-foreground/60">Project migration that once took days</span>{" "}
           <span className="text-foreground">now takes seconds.</span>
-          <br />
-          <span className="text-foreground/90">100% frame-accurate, TPN+ compliant, trusted by major studios.</span>
+          <br className="hidden md:block" />{" "}
+          <span className="text-foreground/90">Frame-accurate, TPN+ compliant, trusted by major studios.</span>
         </motion.p>
 
         {/* CTA Button - white pill style */}
@@ -215,7 +215,7 @@ const HeroSection = () => {
         >
           <button
             onClick={scrollToPricing}
-            className="bg-white text-gray-900 font-medium text-sm sm:text-base px-6 sm:px-8 py-2.5 sm:py-3 rounded-full hover:bg-gray-100 transition-colors"
+            className="bg-transparent text-white font-medium text-sm sm:text-base px-6 sm:px-8 py-2.5 sm:py-3 rounded-full border border-white/80 hover:bg-white/10 transition-colors"
           >
             Start Free Trial
           </button>

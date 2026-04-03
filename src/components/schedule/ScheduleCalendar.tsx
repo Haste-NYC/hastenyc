@@ -99,8 +99,8 @@ const ScheduleCalendar = ({
               day: "h-9 w-9 p-0 font-normal rounded-md hover:bg-white/10 inline-flex items-center justify-center text-white/70 aria-selected:opacity-100 transition-colors",
               day_range_end: "day-range-end",
               day_selected:
-                "bg-white text-black hover:bg-white/90",
-              day_today: "ring-1 ring-white/30 text-white",
+                "!bg-white/10 !border !border-white/40 !text-white",
+              day_today: "bg-white/8 text-white",
               day_outside: "text-white/20 opacity-50",
               day_disabled: "text-white/10 opacity-30 cursor-not-allowed hover:bg-transparent",
               day_range_middle: "",
@@ -151,7 +151,7 @@ const ScheduleCalendar = ({
                       onClick={() => onTimeSelect(slot)}
                       className={`px-4 py-2.5 rounded-lg text-sm font-medium transition-all duration-200 border ${
                         isActive
-                          ? "bg-white border-transparent text-black"
+                          ? "bg-white/10 border-white/40 text-white"
                           : "bg-white/5 border-white/10 text-white/70 hover:bg-white/10 hover:border-white/20"
                       }`}
                     >

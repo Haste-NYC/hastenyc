@@ -1,2 +1,2 @@
 export const premiereRewindButtonClassName =
-  'bg-white hover:bg-white/90 border-0 text-black';
+  'bg-transparent border border-white/25 text-white/80 hover:bg-white/5 hover:border-white/40 hover:text-white';

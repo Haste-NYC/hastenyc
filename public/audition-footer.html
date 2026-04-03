@@ -1,0 +1,300 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Footer Layout Audition - Mobile</title>
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body {
+      background: #000;
+      color: #fff;
+      font-family: -apple-system, BlinkMacSystemFont, sans-serif;
+      -webkit-font-smoothing: antialiased;
+      padding: 0 20px;
+    }
+
+    .option {
+      padding: 48px 0;
+      border-bottom: 1px solid rgba(255,255,255,0.08);
+    }
+
+    .option-label {
+      font-size: 10px;
+      letter-spacing: 0.3em;
+      text-transform: uppercase;
+      color: rgba(255,255,255,0.25);
+      margin-bottom: 32px;
+      text-align: center;
+    }
+
+    .tagline {
+      color: rgba(255,255,255,0.45);
+      letter-spacing: 0.35em;
+      font-size: 10px;
+      text-transform: uppercase;
+      font-weight: 300;
+      text-align: center;
+    }
+
+    .copyright {
+      color: rgba(255,255,255,0.2);
+      font-size: 9px;
+      letter-spacing: 0.15em;
+      text-align: center;
+    }
+
+    a {
+      text-decoration: none;
+      transition: color 0.2s;
+    }
+
+    a.social {
+      color: rgba(255,255,255,0.5);
+      font-size: 9px;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+    }
+
+    a.legal {
+      color: rgba(255,255,255,0.3);
+      font-size: 9px;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+    }
+
+    /* ===================== OPTION A ===================== */
+    /* 3 equal columns, all links mixed together, full width */
+    .opt-a-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 12px 0;
+      margin-top: 28px;
+    }
+    .opt-a-grid a {
+      color: rgba(255,255,255,0.45);
+      font-size: 9px;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+    }
+
+    /* ===================== OPTION B ===================== */
+    /* Stacked single column, centered, social group then legal group */
+    .opt-b-social, .opt-b-legal {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 10px;
+    }
+    .opt-b-social { margin-top: 28px; }
+    .opt-b-divider {
+      width: 40px;
+      height: 1px;
+      background: rgba(255,255,255,0.08);
+      margin: 20px auto;
+    }
+
+    /* ===================== OPTION C ===================== */
+    /* 3 columns, social on top row, legal on bottom row, full width */
+    .opt-c-section-label {
+      font-size: 8px;
+      letter-spacing: 0.25em;
+      text-transform: uppercase;
+      color: rgba(255,255,255,0.2);
+      margin-bottom: 12px;
+    }
+    .opt-c-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 10px 0;
+    }
+
+    /* ===================== OPTION D ===================== */
+    /* Two rows: social icons as a single wrapped line, legal as a single wrapped line */
+    .opt-d-row {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: 6px 16px;
+    }
+    .opt-d-row a {
+      white-space: nowrap;
+    }
+
+    /* ===================== OPTION E ===================== */
+    /* Left-aligned stacked list with subtle grouping */
+    .opt-e-group {
+      margin-top: 24px;
+    }
+    .opt-e-group-label {
+      font-size: 8px;
+      letter-spacing: 0.25em;
+      text-transform: uppercase;
+      color: rgba(255,255,255,0.15);
+      margin-bottom: 10px;
+    }
+    .opt-e-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 10px 0;
+    }
+  </style>
+</head>
+<body>
+
+  <!-- ==================== OPTION A ==================== -->
+  <div class="option">
+    <div class="option-label">Option A -- 3-Column Grid, All Links</div>
+    <p class="tagline">Software for Filmmakers</p>
+
+    <div class="opt-a-grid">
+      <a href="#">E-Mail</a>
+      <a href="#">Instagram</a>
+      <a href="#">YouTube</a>
+      <a href="#">TikTok</a>
+      <a href="#">Facebook</a>
+      <a href="#">LinkedIn</a>
+      <a href="#">Twitter</a>
+      <a href="#" style="color:rgba(255,255,255,0.3)">Terms</a>
+      <a href="#" style="color:rgba(255,255,255,0.3)">Privacy</a>
+      <a href="#" style="color:rgba(255,255,255,0.3)">License</a>
+      <a href="#" style="color:rgba(255,255,255,0.3)">Refund</a>
+      <a href="#" style="color:rgba(255,255,255,0.3)">Blog</a>
+    </div>
+
+    <p class="copyright" style="margin-top:24px">&copy; 2026 Haste NYC LLC</p>
+  </div>
+
+  <!-- ==================== OPTION B ==================== -->
+  <div class="option">
+    <div class="option-label">Option B -- Single Column, Centered</div>
+    <p class="tagline">Software for Filmmakers</p>
+
+    <div class="opt-b-social">
+      <a class="social" href="#">E-Mail</a>
+      <a class="social" href="#">Instagram</a>
+      <a class="social" href="#">YouTube</a>
+      <a class="social" href="#">TikTok</a>
+      <a class="social" href="#">Facebook</a>
+      <a class="social" href="#">LinkedIn</a>
+      <a class="social" href="#">Twitter</a>
+    </div>
+
+    <div class="opt-b-divider"></div>
+
+    <div class="opt-b-legal">
+      <a class="legal" href="#">Terms of Service</a>
+      <a class="legal" href="#">Privacy Notice</a>
+      <a class="legal" href="#">License Agreement</a>
+      <a class="legal" href="#">Refund Policy</a>
+      <a class="legal" href="#">Blog</a>
+    </div>
+
+    <p class="copyright" style="margin-top:24px">&copy; 2026 Haste NYC LLC</p>
+  </div>
+
+  <!-- ==================== OPTION C ==================== -->
+  <div class="option">
+    <div class="option-label">Option C -- 3-Column with Section Labels</div>
+    <p class="tagline">Software for Filmmakers</p>
+
+    <div style="margin-top:28px">
+      <div class="opt-c-section-label">Connect</div>
+      <div class="opt-c-grid">
+        <a class="social" href="#">E-Mail</a>
+        <a class="social" href="#">Instagram</a>
+        <a class="social" href="#">YouTube</a>
+        <a class="social" href="#">TikTok</a>
+        <a class="social" href="#">Facebook</a>
+        <a class="social" href="#">LinkedIn</a>
+        <a class="social" href="#">Twitter</a>
+      </div>
+    </div>
+
+    <div style="margin-top:20px">
+      <div class="opt-c-section-label">Legal</div>
+      <div class="opt-c-grid">
+        <a class="legal" href="#">Terms</a>
+        <a class="legal" href="#">Privacy</a>
+        <a class="legal" href="#">License</a>
+        <a class="legal" href="#">Refund</a>
+        <a class="legal" href="#">Blog</a>
+      </div>
+    </div>
+
+    <p class="copyright" style="margin-top:24px">&copy; 2026 Haste NYC LLC</p>
+  </div>
+
+  <!-- ==================== OPTION D ==================== -->
+  <div class="option">
+    <div class="option-label">Option D -- Centered Wrap, Dot Separators</div>
+    <p class="tagline">Software for Filmmakers</p>
+
+    <div class="opt-d-row" style="margin-top:28px">
+      <a class="social" href="#">E-Mail</a>
+      <span style="color:rgba(255,255,255,0.15);font-size:7px">&middot;</span>
+      <a class="social" href="#">Instagram</a>
+      <span style="color:rgba(255,255,255,0.15);font-size:7px">&middot;</span>
+      <a class="social" href="#">YouTube</a>
+      <span style="color:rgba(255,255,255,0.15);font-size:7px">&middot;</span>
+      <a class="social" href="#">TikTok</a>
+      <span style="color:rgba(255,255,255,0.15);font-size:7px">&middot;</span>
+      <a class="social" href="#">Facebook</a>
+      <span style="color:rgba(255,255,255,0.15);font-size:7px">&middot;</span>
+      <a class="social" href="#">LinkedIn</a>
+      <span style="color:rgba(255,255,255,0.15);font-size:7px">&middot;</span>
+      <a class="social" href="#">Twitter</a>
+    </div>
+
+    <div class="opt-d-row" style="margin-top:14px">
+      <a class="legal" href="#">Terms</a>
+      <span style="color:rgba(255,255,255,0.1);font-size:7px">&middot;</span>
+      <a class="legal" href="#">Privacy</a>
+      <span style="color:rgba(255,255,255,0.1);font-size:7px">&middot;</span>
+      <a class="legal" href="#">License</a>
+      <span style="color:rgba(255,255,255,0.1);font-size:7px">&middot;</span>
+      <a class="legal" href="#">Refund</a>
+      <span style="color:rgba(255,255,255,0.1);font-size:7px">&middot;</span>
+      <a class="legal" href="#">Blog</a>
+    </div>
+
+    <p class="copyright" style="margin-top:24px">&copy; 2026 Haste NYC LLC</p>
+  </div>
+
+  <!-- ==================== OPTION E ==================== -->
+  <div class="option">
+    <div class="option-label">Option E -- Left-Aligned 3-Column with Labels</div>
+    <p class="tagline">Software for Filmmakers</p>
+
+    <div class="opt-e-group">
+      <div class="opt-e-group-label">Follow</div>
+      <div class="opt-e-grid">
+        <a class="social" href="#">E-Mail</a>
+        <a class="social" href="#">Instagram</a>
+        <a class="social" href="#">YouTube</a>
+        <a class="social" href="#">TikTok</a>
+        <a class="social" href="#">Facebook</a>
+        <a class="social" href="#">LinkedIn</a>
+        <a class="social" href="#">Twitter</a>
+      </div>
+    </div>
+
+    <div class="opt-e-group">
+      <div class="opt-e-group-label">Company</div>
+      <div class="opt-e-grid">
+        <a class="legal" href="#">Haste Studio</a>
+        <a class="legal" href="#">Blog</a>
+        <a class="legal" href="#">Terms</a>
+        <a class="legal" href="#">Privacy</a>
+        <a class="legal" href="#">License</a>
+        <a class="legal" href="#">Refund</a>
+      </div>
+    </div>
+
+    <p class="copyright" style="margin-top:24px">&copy; 2026 Haste NYC LLC</p>
+  </div>
+
+  <div style="height:60px"></div>
+
+</body>
+</html>

@@ -78,9 +78,15 @@
   }
 
   body {
-    @apply bg-background text-foreground antialiased;
+    @apply bg-background text-foreground antialiased select-none;
     font-family: 'Inter', sans-serif;
     overflow-x: hidden;
+  }
+
+  /* Re-enable text selection for form inputs and textareas */
+  input, textarea, [contenteditable="true"] {
+    -webkit-user-select: text;
+    user-select: text;
   }
 
   input[data-email-gate="true"]:-webkit-autofill,
@@ -121,8 +127,18 @@
   }
 
   /* All gradient text classes replaced with solid white for restrained aesthetic */
+  .pr-gradient-text {
+    background: linear-gradient(90deg,
+      hsl(35 100% 60%) 0%,
+      hsl(25 100% 55%) 50%,
+      hsl(15 90% 58%) 100%
+    );
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+  }
+
   .gradient-text,
-  .pr-gradient-text,
   .gradient-orange,
   .gradient-orange-pink,
   .gradient-pink-blue,
@@ -214,7 +230,7 @@
   }
 
   .gradient-button {
-    background: white;
+    background: transparent;
   }
 
   /* Premiere Rewind - DropZone utilities */
@@ -451,16 +467,18 @@
 /* Right to left scrolling animation for trust badges */
 @keyframes scroll-right-to-left {
   from {
-    transform: translateX(0);
+    transform: translate3d(0, 0, 0);
   }
   to {
-    transform: translateX(-25%);
+    transform: translate3d(-50%, 0, 0);
   }
 }
 
 .animate-scroll-right-to-left {
-  animation: scroll-right-to-left 25s linear infinite;
+  animation: scroll-right-to-left 30s linear infinite;
   will-change: transform;
+  backface-visibility: hidden;
+  -webkit-backface-visibility: hidden;
 }
 
 /* Constellation line effect */

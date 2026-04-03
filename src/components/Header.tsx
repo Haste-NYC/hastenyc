@@ -183,7 +183,7 @@ const Header = ({ minimal = false }: { minimal?: boolean }) => {
             to="/schedule"
             className="text-foreground/60 hover:text-foreground text-xs uppercase tracking-wider transition-colors"
           >
-            Contact Us
+            Book a Demo
           </Link>
 
           {!minimal && (
@@ -277,7 +277,7 @@ const Header = ({ minimal = false }: { minimal?: boolean }) => {
                 className="text-foreground/60 text-lg uppercase tracking-wider"
                 onClick={() => setMobileMenuOpen(false)}
               >
-                Contact Us
+                Book a Demo
               </Link>
               {!minimal && (
                 <Link

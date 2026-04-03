@@ -143,7 +143,7 @@ const BookingForm = ({
           <Button
             type="submit"
             disabled={isSubmitting}
-            className="flex-1 bg-white text-black hover:bg-white/90 font-semibold"
+            className="flex-1 bg-transparent border border-white/25 text-white/80 hover:bg-white/5 hover:border-white/40 hover:text-white font-semibold"
           >
             {isSubmitting ? (
               <>

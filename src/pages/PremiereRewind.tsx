@@ -195,7 +195,7 @@ const PremiereRewind = () => {
           </p>
           <h1 className="text-4xl md:text-5xl lg:text-6xl mb-2" style={{ fontFamily: "'Raleway', sans-serif" }}>
             <span className="text-white font-light">Premiere </span>
-            <span className="text-white/90 font-bold">Rewind</span>
+            <span className="pr-gradient-text font-bold">Rewind</span>
           </h1>
           <p className="text-lg md:text-xl text-foreground mb-6">
             version rollback for .prproj files
