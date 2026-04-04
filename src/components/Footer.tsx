@@ -10,7 +10,7 @@ const Footer = ({ hideAsciiLogo = false }: { hideAsciiLogo?: boolean }) => {
         flexDirection: 'column',
         alignItems: 'center',
         justifyContent: 'center',
-        padding: '0 20px 32px',
+        padding: '0 20px 0',
         overflow: 'hidden',
       }}
     >
@@ -47,7 +47,7 @@ const Footer = ({ hideAsciiLogo = false }: { hideAsciiLogo?: boolean }) => {
       </p>
 
       {/* Social & Contact Links */}
-      <div className="flex flex-wrap justify-center items-center gap-x-4 gap-y-1.5 mt-7 sm:mt-8 px-4 sm:gap-x-0">
+      <div className="flex flex-wrap justify-center items-center gap-x-4 gap-y-1.5 mt-7 sm:mt-8 mb-28 px-4 sm:gap-x-0">
         {[
           { label: 'E-MAIL', href: 'mailto:info@haste.nyc' },
           { label: 'INSTAGRAM', href: 'https://instagram.com/haste.nyc' },
@@ -77,43 +77,43 @@ const Footer = ({ hideAsciiLogo = false }: { hideAsciiLogo?: boolean }) => {
         ))}
       </div>
 
-      {/* Navigation Links */}
-      <nav className="flex flex-wrap justify-center items-center gap-x-4 gap-y-1.5 mt-3.5 sm:mt-4 px-4 sm:gap-x-0">
-        {[
-          { label: 'Terms', to: '/terms' },
-          { label: 'Privacy', to: '/privacy' },
-          { label: 'License', to: '/eula' },
-          { label: 'Refund', to: '/refund' },
-          { label: 'Blog', to: '/blog' },
-        ].map((item, i, arr) => (
-          <span key={item.label} className="inline-flex items-center">
-            <Link
-              to={item.to}
-              className="text-white/30 hover:text-white/70 no-underline transition-colors duration-200 uppercase"
-              style={{
-                fontSize: '9px',
-                letterSpacing: '0.12em',
-                fontFamily: '-apple-system, BlinkMacSystemFont, sans-serif',
-              }}
-            >
-              {item.label}
-            </Link>
-            {i < arr.length - 1 && (
-              <span className="text-white/10 mx-2 text-[7px] select-none hidden sm:inline">&middot;</span>
-            )}
-          </span>
-        ))}
-      </nav>
+      {/* Bottom bar: Nav links left, Copyright right */}
+      <div className="w-full flex flex-col sm:flex-row sm:items-center sm:justify-between mt-6 pb-2 gap-2" style={{ margin: '0 -20px', width: 'calc(100% + 40px)', padding: '0 8px 6px' }}>
+        <nav className="flex flex-wrap items-center gap-x-4 gap-y-1.5 sm:gap-x-0">
+          {[
+            { label: 'Terms', to: '/terms' },
+            { label: 'Privacy', to: '/privacy' },
+            { label: 'Cookies', to: '/cookies' },
+            { label: 'License', to: '/eula' },
+            { label: 'Refund', to: '/refund' },
+            { label: 'Blog', to: '/blog' },
+          ].map((item, i, arr) => (
+            <span key={item.label} className="inline-flex items-center">
+              <Link
+                to={item.to}
+                className="text-white/30 hover:text-white/70 no-underline transition-colors duration-200 uppercase"
+                style={{
+                  fontSize: '9px',
+                  letterSpacing: '0.12em',
+                  fontFamily: '-apple-system, BlinkMacSystemFont, sans-serif',
+                }}
+              >
+                {item.label}
+              </Link>
+              {i < arr.length - 1 && (
+                <span className="text-white/10 mx-2 text-[7px] select-none hidden sm:inline">&middot;</span>
+              )}
+            </span>
+          ))}
+        </nav>
 
-      {/* Copyright */}
-      <p style={{
-        color: 'rgba(255,255,255,0.2)',
-        fontSize: '9px',
-        marginTop: '20px',
-        letterSpacing: '0.15em'
-      }}>
-        &copy; 2026 Haste NYC LLC
-      </p>
+        <p className="text-white/20 sm:text-right" style={{
+          fontSize: '9px',
+          letterSpacing: '0.15em',
+        }}>
+          &copy; 2026 Haste NYC LLC
+        </p>
+      </div>
     </footer>
   );
 };

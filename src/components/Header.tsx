@@ -26,23 +26,15 @@ const HasteLogo = () => (
 );
 
 const navLinks = [
+  { label: "Features", id: "features" },
   { label: "Pricing", id: "pricing" },
   { label: "FAQ", id: "faq" },
-];
-
-const featureItems = [
-  { label: "300X Faster", id: "feature-speed" },
-  { label: "100% Frame Accuracy", id: "feature-accuracy" },
-  { label: "Complex Effects", id: "feature-effects" },
-  { label: "TPN+ Certified", id: "feature-security" },
 ];
 
 const Header = ({ minimal = false }: { minimal?: boolean }) => {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [productsOpen, setProductsOpen] = useState(false);
-  const [featuresOpen, setFeaturesOpen] = useState(false);
   const productsRef = useRef<HTMLDivElement>(null);
-  const featuresRef = useRef<HTMLDivElement>(null);
   const lenis = useLenis();
   const activeSection = useActiveSection();
 
@@ -51,9 +43,6 @@ const Header = ({ minimal = false }: { minimal?: boolean }) => {
     const handleClickOutside = (event: MouseEvent) => {
       if (productsRef.current && !productsRef.current.contains(event.target as Node)) {
         setProductsOpen(false);
-      }
-      if (featuresRef.current && !featuresRef.current.contains(event.target as Node)) {
-        setFeaturesOpen(false);
       }
     };
 
@@ -70,7 +59,6 @@ const Header = ({ minimal = false }: { minimal?: boolean }) => {
 
     setMobileMenuOpen(false);
     setProductsOpen(false);
-    setFeaturesOpen(false);
   };
 
   const scrollToPricing = () => scrollToSection("pricing");
@@ -116,39 +104,7 @@ const Header = ({ minimal = false }: { minimal?: boolean }) => {
               )}
             </div>
 
-            {/* Features Dropdown - Conform Studio only */}
-            {!minimal && (
-              <div ref={featuresRef} className="relative">
-                <button
-                  onClick={() => setFeaturesOpen(!featuresOpen)}
-                  className={`relative flex items-center gap-1 text-xs uppercase tracking-wider transition-colors ${
-                    activeSection === "features"
-                      ? "text-foreground font-medium"
-                      : "text-foreground/60 hover:text-foreground"
-                  }`}
-                >
-                  Features
-                  <ChevronDown className={`w-3 h-3 transition-transform ${featuresOpen ? "rotate-180" : ""}`} />
-                </button>
-
-                {/* Dropdown Menu */}
-                {featuresOpen && (
-                  <div className="absolute top-full left-0 mt-2 py-2 w-48 bg-background/95 backdrop-blur-sm border border-border/40 rounded-lg shadow-xl">
-                    {featureItems.map((item) => (
-                      <button
-                        key={item.id}
-                        onClick={() => scrollToSection(item.id)}
-                        className="w-full text-left px-4 py-2 text-xs text-foreground/70 hover:text-foreground hover:bg-white/5 transition-colors"
-                      >
-                        {item.label}
-                      </button>
-                    ))}
-                  </div>
-                )}
-              </div>
-            )}
-
-            {/* Other Nav Links - Conform Studio only */}
+            {/* Nav Links - Conform Studio only */}
             {!minimal && navLinks.map(link => (
               <a
                 key={link.id}
@@ -157,9 +113,9 @@ const Header = ({ minimal = false }: { minimal?: boolean }) => {
                   e.preventDefault();
                   scrollToSection(link.id);
                 }}
-                className={`relative text-xs uppercase tracking-wider transition-colors after:absolute after:bottom-0 after:left-0 after:w-full after:h-0.5 after:bg-white after:scale-x-0 after:transition-transform after:duration-300 ${
+                className={`text-xs uppercase tracking-wider transition-colors ${
                   activeSection === link.id
-                    ? "text-foreground font-medium after:scale-x-100"
+                    ? "text-foreground font-medium"
                     : "text-foreground/60 hover:text-foreground"
                 }`}
               >
@@ -227,26 +183,6 @@ const Header = ({ minimal = false }: { minimal?: boolean }) => {
                   </Link>
                 </div>
               </div>
-
-              {/* Features with sub-items for mobile - Conform Studio only */}
-              {!minimal && (
-                <div className="space-y-3">
-                  <span className="text-lg uppercase tracking-wider text-foreground font-medium">
-                    Features
-                  </span>
-                  <div className="pl-4 space-y-2">
-                    {featureItems.map((item) => (
-                      <button
-                        key={item.id}
-                        onClick={() => scrollToSection(item.id)}
-                        className="block text-sm text-foreground/60 hover:text-foreground transition-colors"
-                      >
-                        {item.label}
-                      </button>
-                    ))}
-                  </div>
-                </div>
-              )}
 
               {!minimal && navLinks.map(link => (
                 <a

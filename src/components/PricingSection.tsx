@@ -35,7 +35,7 @@ const PricingSection = () => {
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
           transition={{ duration: 0.6, delay: 0.1 }}
-          className="text-3xl md:text-5xl font-bold text-center mb-4 uppercase tracking-wide"
+          className="text-3xl md:text-5xl font-bold text-center mb-4 tracking-wide"
         >
           Choose Your Plan
         </motion.h2>

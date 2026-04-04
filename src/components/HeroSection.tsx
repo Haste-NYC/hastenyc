@@ -200,10 +200,9 @@ const HeroSection = () => {
           transition={{ duration: 0.6, delay: 0.35 }}
           className="text-xs md:text-sm max-w-[300px] md:max-w-3xl mx-auto leading-relaxed uppercase tracking-[0.06em] pt-6"
         >
-          <span className="text-foreground/60">Project migration that once took days</span>{" "}
-          <span className="text-foreground">now takes seconds.</span>
+          <span className="text-foreground/60">We believe creatives should spend their time creating.</span>
           <br className="hidden md:block" />{" "}
-          <span className="text-foreground/90">Frame-accurate, TPN+ compliant, trusted by major studios.</span>
+          <span className="text-foreground">Frame-accurate, TPN+ compliant, built by filmmakers for filmmakers.</span>
         </motion.p>
 
         {/* CTA Button - white pill style */}
@@ -217,7 +216,7 @@ const HeroSection = () => {
             onClick={scrollToPricing}
             className="bg-transparent text-white font-medium text-sm sm:text-base px-6 sm:px-8 py-2.5 sm:py-3 rounded-full border border-white/80 hover:bg-white/10 transition-colors"
           >
-            Start Free Trial
+            Get Started
           </button>
         </motion.div>
       </div>

@@ -294,8 +294,6 @@
   }
 }
 
-/* x.ai-inspired design utilities */
-
 /* Atmospheric glow behind hero text */
 .hero-glow {
   position: relative;
@@ -408,7 +406,7 @@
   z-index: 1;
 }
 
-/* Bracketed section labels (x.ai style) */
+/* Bracketed section labels */
 .section-label {
   font-size: 0.75rem;
   text-transform: uppercase;
