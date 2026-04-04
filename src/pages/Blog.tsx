@@ -63,7 +63,7 @@ const Blog = () => {
               <h2 className="text-4xl md:text-5xl font-bold uppercase mb-4">
                 FEATURED
                 <br />
-                <span className="bg-gradient-to-r from-brand-orange to-brand-pink bg-clip-text text-transparent">ARTICLES</span>
+                <span className="text-foreground/80">ARTICLES</span>
               </h2>
             </div>
 
@@ -289,7 +289,7 @@ const Blog = () => {
             <h2 className="text-4xl md:text-5xl font-bold uppercase mb-6">
               BUILDING THE
               <br />
-              <span className="bg-gradient-to-r from-brand-orange to-brand-pink bg-clip-text text-transparent">NEXT GENERATION</span>
+              <span className="text-foreground/80">NEXT GENERATION</span>
             </h2>
             <p className="text-lg text-foreground/80 leading-relaxed">
               At <span className="font-bold">Haste Conform Studio</span>, we're dedicated to pushing the boundaries

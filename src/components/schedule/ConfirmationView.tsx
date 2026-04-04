@@ -78,12 +78,8 @@ const ConfirmationView = ({
       transition={{ duration: 0.4 }}
       className="max-w-lg mx-auto space-y-8"
     >
-      {/* Success Icon */}
       <div className="text-center space-y-4">
-        <div className="inline-flex items-center justify-center w-20 h-20 rounded-full bg-green-500/10 mb-2">
-          <CheckCircle2 className="w-12 h-12 text-green-500" />
-        </div>
-        <h2 className="text-2xl md:text-3xl font-bold text-white">Meeting Scheduled!</h2>
+        <h2 className="text-2xl md:text-3xl font-bold text-white">Meeting Scheduled</h2>
         <p className="text-white/50 text-sm">
           A calendar invite has been sent to your email with the Google Meet link.
         </p>
@@ -140,7 +136,7 @@ const ConfirmationView = ({
           Add to Calendar
         </Button>
         <Link to="/" className="block">
-          <Button className="w-full bg-gradient-to-r from-pink-500 to-purple-500 hover:from-pink-600 hover:to-purple-600 text-white font-semibold py-5">
+          <Button className="w-full bg-transparent border border-white/25 text-white/80 hover:bg-white/5 hover:border-white/40 hover:text-white font-semibold py-5">
             Back to Home
             <ArrowRight className="w-4 h-4 ml-2" />
           </Button>

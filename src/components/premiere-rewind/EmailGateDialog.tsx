@@ -6,6 +6,7 @@ import { Label } from '@/components/ui/label';
 import { Download, Loader2 } from 'lucide-react';
 import { supabase } from '@/integrations/supabase/client';
 import { toast } from 'sonner';
+import { premiereRewindButtonClassName } from '@/components/premiere-rewind/buttonStyles';
 
 interface EmailGateDialogProps {
   open: boolean;
@@ -73,11 +74,13 @@ export function EmailGateDialog({ open, onOpenChange, onEmailSubmitted, fileName
               placeholder="you@example.com"
               value={email}
               onChange={(e) => setEmail(e.target.value)}
+              data-email-gate="true"
+              className="focus:border-input focus:outline-none focus-visible:border-input focus-visible:ring-0 focus-visible:ring-offset-0"
               required
               autoFocus
             />
           </div>
-          <Button type="submit" className="w-full" disabled={isSubmitting}>
+          <Button type="submit" className={`w-full ${premiereRewindButtonClassName}`} disabled={isSubmitting}>
             {isSubmitting ? (
               <Loader2 className="w-4 h-4 mr-2 animate-spin" />
             ) : (

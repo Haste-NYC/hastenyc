@@ -117,7 +117,7 @@ const UIMockup = ({ type }: { type: string }) => {
           <div className="flex-1 flex flex-col gap-2">
             {[...Array(5)].map((_, i) => (
               <div key={i} className="h-8 bg-white/5 rounded flex items-center px-2 gap-1">
-                <div className="w-8 h-4 bg-purple-500/30 rounded text-[8px] text-white/60 flex items-center justify-center">V{i + 1}</div>
+                <div className="w-8 h-4 bg-white/20 rounded text-[8px] text-white/60 flex items-center justify-center">V{i + 1}</div>
                 <div className="flex-1 flex gap-1">
                   {[...Array(Math.floor(Math.random() * 4) + 2)].map((_, j) => (
                     <div
@@ -146,7 +146,7 @@ const UIMockup = ({ type }: { type: string }) => {
             {/* Source frame */}
             <div className="bg-white/5 rounded p-2 flex flex-col">
               <span className="text-[9px] text-white/40 uppercase tracking-wider mb-2">Source</span>
-              <div className="flex-1 bg-gradient-to-br from-purple-500/20 to-blue-500/20 rounded flex items-center justify-center">
+              <div className="flex-1 bg-white/10 rounded flex items-center justify-center">
                 <div className="w-12 h-12 border-2 border-green-400/60 rounded flex items-center justify-center">
                   <span className="text-green-400/80 text-xs">01:23:45:12</span>
                 </div>
@@ -155,7 +155,7 @@ const UIMockup = ({ type }: { type: string }) => {
             {/* Output frame */}
             <div className="bg-white/5 rounded p-2 flex flex-col">
               <span className="text-[9px] text-white/40 uppercase tracking-wider mb-2">Output</span>
-              <div className="flex-1 bg-gradient-to-br from-purple-500/20 to-blue-500/20 rounded flex items-center justify-center">
+              <div className="flex-1 bg-white/10 rounded flex items-center justify-center">
                 <div className="w-12 h-12 border-2 border-green-400/60 rounded flex items-center justify-center">
                   <span className="text-green-400/80 text-xs">01:23:45:12</span>
                 </div>
@@ -183,7 +183,7 @@ const UIMockup = ({ type }: { type: string }) => {
                 <div className="flex items-center gap-2">
                   <div className="w-16 h-1.5 bg-white/10 rounded-full overflow-hidden">
                     <div
-                      className="h-full bg-gradient-to-r from-blue-500 to-purple-500 rounded-full"
+                      className="h-full bg-white/40 rounded-full"
                       style={{ width: `${70 + Math.random() * 30}%` }}
                     />
                   </div>
@@ -200,7 +200,7 @@ const UIMockup = ({ type }: { type: string }) => {
         {/* Security mockup */}
         <div className="absolute inset-4 flex flex-col items-center justify-center">
           {/* Shield icon */}
-          <div className="w-20 h-20 rounded-full bg-gradient-to-br from-teal-500/20 to-purple-500/20 border border-white/10 flex items-center justify-center mb-4">
+          <div className="w-20 h-20 rounded-full bg-white/10 border border-white/10 flex items-center justify-center mb-4">
             <svg className="w-10 h-10 text-teal-400/80" fill="none" viewBox="0 0 24 24" stroke="currentColor">
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z" />
             </svg>
@@ -272,7 +272,7 @@ const FeatureSectionItem = ({
               <span
                 className={`block text-5xl sm:text-6xl md:text-7xl lg:text-8xl font-bold tracking-tight ${
                   feature.useGradientStat
-                    ? "bg-gradient-to-r from-pink-500 to-purple-500 bg-clip-text text-transparent"
+                    ? "text-foreground"
                     : "text-foreground"
                 }`}
               >

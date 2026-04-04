@@ -3,28 +3,24 @@ import Header from "@/components/Header";
 import HeroSection from "@/components/HeroSection";
 import TrustBadgeBar from "@/components/TrustBadgeBar";
 import VideoSection from "@/components/VideoSection";
-import FeatureSection, { features, FeatureSectionItem } from "@/components/FeatureSection";
+import ImpactStatement from "@/components/features/ImpactStatement";
+import HeroFeatures from "@/components/features/HeroFeatures";
+import FeatureGrid from "@/components/features/FeatureGrid";
+import CLISection from "@/components/features/CLISection";
 import PricingSection from "@/components/PricingSection";
 import FAQSection from "@/components/FAQSection";
 import Footer from "@/components/Footer";
 import SEO from "@/components/SEO";
 import LavaLampBackground from "@/components/LavaLampBackground";
-// Lazy load Three.js -- chunk is only fetched when the section enters the viewport
+import FeatureComparisonChart from "@/components/FeatureComparisonChart";
 const Conform3DVisualization = lazy(() => import("@/components/Conform3DVisualization"));
+import AppRoadmap from "@/components/AppRoadmap";
 
-// Minimal loading placeholder
-const SectionLoader = () => (
-  <div className="min-h-[200px] flex items-center justify-center">
-    <div className="w-8 h-8 border-2 border-white/20 border-t-white/60 rounded-full animate-spin" />
-  </div>
-);
 
-// Defers rendering children until the wrapper scrolls near the viewport.
-// This prevents React.lazy chunks from being fetched at mount time.
+// Defers rendering until the wrapper scrolls near the viewport
 const LazyOnView = ({ children, rootMargin = "200px" }: { children: React.ReactNode; rootMargin?: string }) => {
   const ref = useRef<HTMLDivElement>(null);
   const [inView, setInView] = useState(false);
-
   useEffect(() => {
     const el = ref.current;
     if (!el) return;
@@ -35,8 +31,7 @@ const LazyOnView = ({ children, rootMargin = "200px" }: { children: React.ReactN
     observer.observe(el);
     return () => observer.disconnect();
   }, [rootMargin]);
-
-  return <div ref={ref}>{inView ? children : <SectionLoader />}</div>;
+  return <div ref={ref}>{inView ? children : <div className="min-h-[200px]" />}</div>;
 };
 
 // Continuous page atmosphere - large diffuse gradient blobs
@@ -140,38 +135,20 @@ const Index = () => {
           <VideoSection />
         </div>
 
-        {/* Features */}
-        {isMobile ? (
-          /* Mobile: each feature is a direct child for scroll-snap */
-          features.map((feature, index) => (
-            <div key={feature.id} className="relative bg-background snap-section flex flex-col justify-center">
-              <FeatureSectionItem feature={feature} index={index} isReversed={index % 2 === 1} />
-            </div>
-          ))
-        ) : (
-          /* Desktop: wrapped section with spacing and atmosphere */
-          <section id="features" className="py-10 sm:py-20 relative overflow-hidden bg-background">
-            <div
-              className="absolute left-0 right-0 pointer-events-none z-0"
-              style={{
-                top: "80px",
-                bottom: "80px",
-                background: "radial-gradient(ellipse 120% 90% at 85% 30%, rgba(120, 80, 220, 0.14) 0%, rgba(120, 80, 220, 0.04) 35%, transparent 60%)",
-              }}
-            />
-            <div
-              className="absolute left-0 right-0 pointer-events-none z-0"
-              style={{
-                top: "80px",
-                bottom: "80px",
-                background: "radial-gradient(ellipse 120% 90% at 20% 70%, rgba(70, 110, 245, 0.14) 0%, rgba(70, 110, 245, 0.04) 35%, transparent 60%)",
-              }}
-            />
-            <FeatureSection />
-          </section>
-        )}
+        {/* Impact Statement */}
+        <section id="features" className="relative overflow-visible bg-background">
+          <div
+            className="absolute left-0 right-0 pointer-events-none z-0"
+            style={{
+              top: "-100px",
+              bottom: "-100px",
+              background: "radial-gradient(ellipse 120% 90% at 50% 40%, rgba(70, 110, 245, 0.12) 0%, rgba(70, 110, 245, 0.03) 35%, transparent 60%)",
+            }}
+          />
+          <ImpactStatement />
+        </section>
 
-        {/* 3D Visualization - Interactive conform data visualization */}
+        {/* 3D Visualization */}
         <section className="py-10 sm:py-20 px-4 sm:px-6 md:px-12 lg:px-20 relative overflow-visible bg-background snap-section-center flex flex-col justify-center">
           <div
             className="absolute left-0 right-0 pointer-events-none z-0"
@@ -188,6 +165,71 @@ const Index = () => {
               </Suspense>
             </LazyOnView>
           </div>
+        </section>
+
+        {/* Hero Features - top 3 */}
+        <section className="relative overflow-visible bg-background">
+          <div
+            className="absolute left-0 right-0 pointer-events-none z-0"
+            style={{
+              top: "0",
+              bottom: "0",
+              background: "radial-gradient(ellipse 120% 80% at 85% 25%, rgba(120, 80, 220, 0.12) 0%, rgba(120, 80, 220, 0.03) 35%, transparent 60%)",
+            }}
+          />
+          <div
+            className="absolute left-0 right-0 pointer-events-none z-0"
+            style={{
+              top: "0",
+              bottom: "0",
+              background: "radial-gradient(ellipse 120% 80% at 15% 75%, rgba(60, 100, 255, 0.12) 0%, rgba(60, 100, 255, 0.03) 35%, transparent 60%)",
+            }}
+          />
+          <HeroFeatures />
+        </section>
+
+        {/* App Roadmap */}
+        <section className="py-10 sm:py-14 relative overflow-visible bg-background">
+          <AppRoadmap />
+        </section>
+
+        {/* Feature Grid - detailed capabilities */}
+        <section className="py-12 md:py-20 relative overflow-visible bg-background">
+          <div
+            className="absolute left-0 right-0 pointer-events-none z-0"
+            style={{
+              top: "-80px",
+              bottom: "-80px",
+              background: "radial-gradient(ellipse 120% 90% at 30% 50%, rgba(80, 120, 255, 0.10) 0%, rgba(80, 120, 255, 0.03) 35%, transparent 60%)",
+            }}
+          />
+          <FeatureGrid />
+        </section>
+
+        {/* CLI / Pipeline Integration */}
+        <section className="py-12 md:py-20 relative overflow-visible bg-background">
+          <div
+            className="absolute left-0 right-0 pointer-events-none z-0"
+            style={{
+              top: "-80px",
+              bottom: "-80px",
+              background: "radial-gradient(ellipse 120% 90% at 70% 40%, rgba(100, 70, 230, 0.10) 0%, rgba(100, 70, 230, 0.03) 35%, transparent 60%)",
+            }}
+          />
+          <CLISection />
+        </section>
+
+        {/* Feature Comparison Chart */}
+        <section className="py-10 sm:py-20 relative overflow-visible bg-background snap-section-center flex flex-col justify-center">
+          <div
+            className="absolute left-0 right-0 pointer-events-none z-0"
+            style={{
+              top: "0",
+              bottom: "0",
+              background: "radial-gradient(ellipse 120% 90% at 50% 50%, rgba(70, 110, 245, 0.10) 0%, rgba(70, 110, 245, 0.03) 35%, transparent 60%)",
+            }}
+          />
+          <FeatureComparisonChart />
         </section>
 
         {/* Pricing - full viewport on mobile */}
