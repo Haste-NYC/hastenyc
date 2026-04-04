@@ -1,26 +1,25 @@
 import { useState, useRef, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { motion } from "framer-motion";
-import { Card, CardContent, CardFooter, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Switch } from "@/components/ui/switch";
-import { Badge } from "@/components/ui/badge";
-import { Check, Users, Building2, Calendar } from "lucide-react";
+import { Loader2 } from "lucide-react";
 import { stripeConfig } from "@/config/stripe";
 
 interface PricingPlansProps {
-  onSelectPlan?: (priceId: string, planType: "monthly" | "yearly", tierName: string) => void;
+  onSelectPlan?: (priceId: string, planType: "monthly" | "yearly", tierName: string) => void | Promise<void>;
   selectedPriceId?: string;
+  isCheckoutLoading?: boolean;
   onScheduleCall?: () => void;
 }
 
 interface PricingTier {
   name: string;
+  category: string;
   description: string;
   monthlyPrice: number | null;
   yearlyPrice: number | null;
   seats: string;
-  icon: React.ReactNode;
   features: string[];
   popular?: boolean;
   priceIdMonthly?: string;
@@ -31,11 +30,11 @@ interface PricingTier {
 const tiers: PricingTier[] = [
   {
     name: "Freelancer",
-    description: "Perfect for independent creators",
+    category: "FOR INDIVIDUALS",
+    description: "Everything you need to get started with professional conforming workflows.",
     monthlyPrice: 49,
     yearlyPrice: 468,
     seats: "1 user / device license",
-    icon: <Users className="w-5 h-5" />,
     features: [
       "1 user / device license",
       "Email support",
@@ -45,12 +44,12 @@ const tiers: PricingTier[] = [
     priceIdYearly: stripeConfig.priceYearly,
   },
   {
-    name: "Studio",
-    description: "For small teams and studios",
+    name: "Team",
+    category: "FOR SMALL TEAMS",
+    description: "Collaborate with your team on conforming projects with shared access and priority support.",
     monthlyPrice: 129,
     yearlyPrice: 1188,
     seats: "3 users / device licenses",
-    icon: <Building2 className="w-5 h-5" />,
     features: [
       "3 users / device licenses",
       "Priority support",
@@ -62,23 +61,26 @@ const tiers: PricingTier[] = [
   },
   {
     name: "Enterprise",
-    description: "For large organizations",
+    category: "FOR ORGANIZATIONS",
+    description: "Custom solutions for larger teams with dedicated support and full pipeline integration.",
     monthlyPrice: null,
     yearlyPrice: null,
     seats: "Unlimited seats",
-    icon: <Calendar className="w-5 h-5" />,
     features: [
-      "Unlimited seats / devices / projects",
+      "Full CLI for pipelines",
       "Priority support and training",
       "Custom integrations",
-      "SLA guarantee",
-      "On-premise deployment option",
     ],
     isEnterprise: true,
   },
 ];
 
-const PricingPlans = ({ onSelectPlan, selectedPriceId, onScheduleCall }: PricingPlansProps) => {
+const PricingPlans = ({
+  onSelectPlan,
+  selectedPriceId,
+  isCheckoutLoading = false,
+  onScheduleCall,
+}: PricingPlansProps) => {
   const navigate = useNavigate();
   const [isYearly, setIsYearly] = useState(true);
   const [activeCardIndex, setActiveCardIndex] = useState(1);
@@ -184,6 +186,12 @@ const PricingPlans = ({ onSelectPlan, selectedPriceId, onScheduleCall }: Pricing
     return selectedPriceId === priceId;
   };
 
+  const isRedirecting = (tier: PricingTier) => {
+    if (tier.isEnterprise) return false;
+    const priceId = isYearly ? tier.priceIdYearly : tier.priceIdMonthly;
+    return isCheckoutLoading && selectedPriceId === priceId;
+  };
+
 
   return (
     <div className="w-full space-y-8">
@@ -196,6 +204,7 @@ const PricingPlans = ({ onSelectPlan, selectedPriceId, onScheduleCall }: Pricing
           <Switch
             checked={isYearly}
             onCheckedChange={setIsYearly}
+            disabled={isCheckoutLoading}
             className="data-[state=checked]:bg-white data-[state=unchecked]:bg-gray-700"
           />
           <span className={`text-sm ${isYearly ? "text-white font-medium" : "text-gray-400"}`}>
@@ -223,85 +232,99 @@ const PricingPlans = ({ onSelectPlan, selectedPriceId, onScheduleCall }: Pricing
               tier.isEnterprise ? "md:col-span-2 lg:col-span-1" : ""
             }`}
           >
-            <Card
-              className={`bg-transparent border transition-all duration-300 relative h-full flex flex-col overflow-hidden ${
+            <div
+              className={`rounded-2xl border transition-all duration-300 relative h-full flex flex-col overflow-hidden ${
                 isSelected(tier)
-                  ? "border-white"
+                  ? "border-white bg-white/[0.03] backdrop-blur-xl"
                   : index === activeCardIndex
-                  ? "border-white/60 md:border-white/10 md:hover:border-white/20"
+                  ? "border-white/60 md:border-white/[0.08] md:hover:border-white/20 bg-white/[0.03] backdrop-blur-xl"
                   : tier.popular
-                  ? "md:border-white/40 md:hover:border-white/60 border-white/10"
-                  : "border-white/10 hover:border-white/20"
+                  ? "md:border-white/30 md:hover:border-white/50 border-white/[0.08] bg-white/[0.03] backdrop-blur-xl"
+                  : "border-white/[0.08] hover:border-white/20 bg-white/[0.03] backdrop-blur-xl"
               }`}
             >
-              {/* Gradient top accent for popular card */}
-              {tier.popular && (
-                <div className="absolute top-0 left-0 right-0 h-[1px] bg-gradient-to-r from-purple-500/40 via-blue-500/30 to-purple-500/40" />
-              )}
+              {/* Card content */}
+              <div className="p-6 sm:p-8 flex flex-col h-full">
+                {/* Category label */}
+                <span className="text-[11px] font-medium tracking-[0.15em] text-blue-400 uppercase mb-4">
+                  {tier.category}
+                </span>
 
-            <CardHeader className="text-center pb-2 pt-6">
-              <div className="flex items-center justify-center gap-2 mb-2">
-                <div className="p-2.5 rounded-lg bg-white/5 border border-white/10">
-                  {tier.icon}
+                {/* Plan name */}
+                <h3 className="text-2xl sm:text-3xl font-bold text-white leading-tight">
+                  {tier.name}
+                </h3>
+
+                {/* Price */}
+                <div className="mt-1 mb-4">
+                  {tier.monthlyPrice !== null ? (
+                    <span className="text-2xl sm:text-3xl font-bold text-gray-400">
+                      ${isYearly && tier.yearlyPrice ? Math.round(tier.yearlyPrice / 12) : tier.monthlyPrice}
+                      <span className="text-base font-normal text-gray-500 ml-0.5">/mo</span>
+                    </span>
+                  ) : (
+                    <span className="text-2xl sm:text-3xl font-bold text-gray-400">
+                      Custom
+                    </span>
+                  )}
+                </div>
+
+                {/* Description */}
+                <p className="text-sm text-gray-400 leading-relaxed mb-6">
+                  {tier.description}
+                  {tier.monthlyPrice !== null && (
+                    <span className="text-gray-500">
+                      {" "}{isYearly ? "Billed yearly." : "Billed monthly."}
+                    </span>
+                  )}
+                </p>
+
+                {/* Divider */}
+                <div className="border-t border-white/[0.08] mb-6" />
+
+                {/* Features header */}
+                <p className="text-[11px] font-semibold tracking-[0.15em] text-gray-300 uppercase mb-4">
+                  {tier.isEnterprise ? "Everything in Team, plus" : `${tier.name} plan includes`}
+                </p>
+
+                {/* Features list */}
+                <ul className="space-y-3 flex-grow">
+                  {tier.features.map((feature, i) => (
+                    <li key={i} className="text-sm text-gray-400">
+                      {feature}
+                    </li>
+                  ))}
+                </ul>
+
+                {/* CTA Button */}
+                <div className="mt-8">
+                  <Button
+                    onClick={() => handleSelectPlan(tier)}
+                    disabled={isCheckoutLoading}
+                    className={`w-full rounded-full py-5 text-sm font-medium transition-all duration-200 ${
+                      isRedirecting(tier) || isSelected(tier)
+                        ? "bg-white hover:bg-gray-100 text-gray-900"
+                        : tier.popular
+                        ? "bg-white hover:bg-gray-100 text-gray-900"
+                        : "bg-transparent hover:bg-white/5 text-white border border-white/20 hover:border-white/40"
+                    }`}
+                  >
+                    {isRedirecting(tier) ? (
+                      <>
+                        <Loader2 className="w-4 h-4 animate-spin mr-2" />
+                        Redirecting...
+                      </>
+                    ) : tier.isEnterprise ? (
+                      "Schedule a Call"
+                    ) : isSelected(tier) ? (
+                      "Selected"
+                    ) : (
+                      "Select Plan"
+                    )}
+                  </Button>
                 </div>
               </div>
-              <CardTitle className="text-white text-xl uppercase tracking-wider">{tier.name}</CardTitle>
-              <p className="text-gray-400 text-xs uppercase tracking-wider">{tier.description}</p>
-            </CardHeader>
-
-            <CardContent className={`flex-grow flex flex-col ${
-              tier.isEnterprise ? "lg:justify-center" : ""
-            }`}>
-              {tier.monthlyPrice !== null && (
-                <>
-                  <div className="hidden md:block md:flex-grow" />
-                  <div className="text-center mb-8">
-                    <span className="text-3xl sm:text-4xl font-bold text-white">
-                      ${isYearly && tier.yearlyPrice ? Math.round(tier.yearlyPrice / 12) : tier.monthlyPrice}
-                      <span className="text-sm font-normal text-gray-400 ml-1">/mo</span>
-                    </span>
-                    <p className="text-sm text-gray-400 mt-1">
-                      {isYearly ? "billed yearly" : "billed monthly"}
-                    </p>
-                  </div>
-                  <div className="hidden md:block md:flex-grow" />
-                </>
-              )}
-              <ul className={`space-y-2 ${
-                tier.isEnterprise
-                  ? "md:grid md:grid-cols-2 md:gap-x-8 md:gap-y-2 md:space-y-0 lg:block lg:space-y-2"
-                  : ""
-              }`}>
-                {tier.features.map((feature, index) => (
-                  <li key={index} className="flex items-center gap-3">
-                    <div className="flex-shrink-0 w-4 h-4 rounded-full bg-white/20 flex items-center justify-center">
-                      <Check className="w-2.5 h-2.5 text-white" />
-                    </div>
-                    <span className="text-gray-300 text-sm">{feature}</span>
-                  </li>
-                ))}
-              </ul>
-            </CardContent>
-
-            <CardFooter className="mt-auto">
-              <Button
-                onClick={() => handleSelectPlan(tier)}
-                className={`w-full font-semibold py-5 btn-with-arrow group ${
-                  isSelected(tier)
-                    ? "bg-white hover:bg-gray-100 text-gray-900"
-                    : tier.popular
-                    ? "bg-white hover:bg-gray-100 text-gray-900"
-                    : "bg-white/10 hover:bg-white/20 text-white border border-white/20"
-                }`}
-              >
-                {tier.isEnterprise
-                  ? "Schedule a Call"
-                  : isSelected(tier)
-                  ? "Selected"
-                  : "Select Plan"}
-              </Button>
-            </CardFooter>
-            </Card>
+            </div>
           </motion.div>
         ))}
       </div>

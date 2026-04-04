@@ -9,7 +9,7 @@ interface CheckoutParams {
 interface UseCheckoutReturn {
   isLoading: boolean;
   error: string | null;
-  startCheckout: (params: CheckoutParams) => Promise<void>;
+  startCheckout: (params: CheckoutParams) => Promise<boolean>;
 }
 
 const API_URL = import.meta.env.PROD
@@ -20,7 +20,7 @@ export function useCheckout(): UseCheckoutReturn {
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
 
-  const startCheckout = async ({ priceId, customerEmail }: CheckoutParams) => {
+  const startCheckout = async ({ priceId, customerEmail }: CheckoutParams): Promise<boolean> => {
     setIsLoading(true);
     setError(null);
 
@@ -43,6 +43,7 @@ export function useCheckout(): UseCheckoutReturn {
       if (url) {
         // Redirect to Stripe Checkout
         window.location.href = url;
+        return true;
       } else {
         throw new Error('No checkout URL returned');
       }
@@ -50,6 +51,7 @@ export function useCheckout(): UseCheckoutReturn {
       const errorMessage = err instanceof Error ? err.message : 'Checkout failed';
       setError(errorMessage);
       toast.error(errorMessage);
+      return false;
     } finally {
       setIsLoading(false);
     }

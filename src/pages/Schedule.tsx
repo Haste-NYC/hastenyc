@@ -143,6 +143,17 @@ const Schedule = () => {
                   onMonthChange={handleMonthChange}
                 />
 
+                {/* Email fallback */}
+                <p className="text-center text-white/40 text-sm mt-6">
+                  or{" "}
+                  <a
+                    href="mailto:jordan@haste.nyc"
+                    className="text-white/60 underline underline-offset-2 hover:text-white transition-colors"
+                  >
+                    send us an email
+                  </a>
+                </p>
+
                 {/* Continue button */}
                 {selectedTime && (
                   <motion.div
@@ -152,7 +163,7 @@ const Schedule = () => {
                   >
                     <button
                       onClick={handleContinue}
-                      className="px-8 py-3 rounded-lg bg-gradient-to-r from-pink-500 to-purple-500 hover:from-pink-600 hover:to-purple-600 text-white font-semibold text-sm transition-all"
+                      className="px-8 py-3 rounded-lg bg-transparent border border-white/25 text-white/80 hover:bg-white/5 hover:border-white/40 hover:text-white font-semibold text-sm transition-all"
                     >
                       Continue
                     </button>

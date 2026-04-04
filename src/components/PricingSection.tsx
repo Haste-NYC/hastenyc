@@ -1,12 +1,19 @@
+import { useState } from "react";
 import { motion } from "framer-motion";
 import PricingPlans from "@/components/PricingPlans";
 import { useCheckout } from "@/hooks/useCheckout";
 
 const PricingSection = () => {
   const { isLoading, startCheckout } = useCheckout();
+  const [redirectingPriceId, setRedirectingPriceId] = useState<string>();
 
-  const handleSelectPlan = (priceId: string) => {
-    startCheckout({ priceId, customerEmail: "" });
+  const handleSelectPlan = async (priceId: string) => {
+    setRedirectingPriceId(priceId);
+    const didStartRedirect = await startCheckout({ priceId, customerEmail: "" });
+
+    if (!didStartRedirect) {
+      setRedirectingPriceId(undefined);
+    }
   };
 
   return (
@@ -28,7 +35,7 @@ const PricingSection = () => {
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
           transition={{ duration: 0.6, delay: 0.1 }}
-          className="text-3xl md:text-5xl font-bold text-center mb-4 uppercase tracking-wide"
+          className="text-3xl md:text-5xl font-bold text-center mb-4 tracking-wide"
         >
           Choose Your Plan
         </motion.h2>
@@ -41,12 +48,11 @@ const PricingSection = () => {
         >
           7 day free trial included
         </motion.p>
-        <PricingPlans onSelectPlan={handleSelectPlan} />
-        {isLoading && (
-          <div className="fixed inset-0 bg-black/50 flex items-center justify-center z-50">
-            <div className="text-white text-lg">Redirecting to checkout...</div>
-          </div>
-        )}
+        <PricingPlans
+          onSelectPlan={handleSelectPlan}
+          selectedPriceId={redirectingPriceId}
+          isCheckoutLoading={isLoading}
+        />
       </div>
     </div>
   );

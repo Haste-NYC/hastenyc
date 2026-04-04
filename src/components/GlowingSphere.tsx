@@ -82,7 +82,7 @@ const GlowingSphere = ({ className = "" }: GlowingSphereProps) => {
 
         {/* Second animated ring */}
         <motion.div
-          className="absolute inset-[10%] rounded-full border border-purple-500/10"
+          className="absolute inset-[10%] rounded-full border border-white/10"
           animate={{
             rotate: -360,
           }}

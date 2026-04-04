@@ -3,13 +3,16 @@ import { motion } from "framer-motion";
 const VideoSection = () => {
   return (
     <section id="video" className="py-12 sm:py-16 px-4 sm:px-6 md:px-12 lg:px-24 relative w-full">
-      {/* Blue gradient background - inset vertically to avoid seams at section boundaries */}
+      {/* Atmospheric blue glow behind video - extends well beyond section to eliminate seams */}
       <div
-        className="absolute left-0 right-0 pointer-events-none z-0"
+        className="absolute pointer-events-none z-0"
         style={{
-          top: "80px",
-          bottom: "80px",
-          background: "radial-gradient(ellipse 120% 90% at 50% 50%, rgba(30, 120, 255, 0.12) 0%, rgba(59, 130, 246, 0.06) 18%, rgba(59, 130, 246, 0.02) 30%, rgba(59, 130, 246, 0.005) 45%, transparent 65%)",
+          top: "-300px",
+          bottom: "-400px",
+          left: "-30%",
+          right: "-30%",
+          background: "radial-gradient(ellipse 70% 55% at 50% 45%, rgba(40, 100, 255, 0.18) 0%, rgba(50, 120, 255, 0.10) 20%, rgba(60, 130, 255, 0.05) 40%, rgba(60, 130, 255, 0.015) 60%, transparent 80%)",
+          filter: "blur(80px)",
         }}
       />
 

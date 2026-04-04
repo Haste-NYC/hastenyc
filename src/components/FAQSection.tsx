@@ -41,28 +41,17 @@ const faqs = [
 
 const FAQSection = () => {
   return (
-    <div className="max-w-4xl mx-auto px-4 sm:px-6 md:px-8">
+    <div className="px-4 sm:px-6 md:px-20"><div className="max-w-7xl mx-auto">
       {/* Section Label */}
       <motion.div
         initial={{ opacity: 0 }}
         whileInView={{ opacity: 1 }}
         viewport={{ once: true }}
         transition={{ duration: 0.6 }}
-        className="text-center mb-6"
+        className="text-center mb-12"
       >
         <span className="section-label">FAQ</span>
       </motion.div>
-
-      {/* Section Title */}
-      <motion.h2
-        initial={{ opacity: 0, y: 20 }}
-        whileInView={{ opacity: 1, y: 0 }}
-        viewport={{ once: true }}
-        transition={{ duration: 0.6, delay: 0.1 }}
-        className="text-3xl md:text-5xl font-bold text-center mb-12 uppercase tracking-wide"
-      >
-        Frequently Asked Questions
-      </motion.h2>
 
       {/* FAQ Accordion */}
       <motion.div
@@ -79,7 +68,7 @@ const FAQSection = () => {
               className="glass-card rounded-lg px-4 transition-all duration-300 hover:border-white/15 relative overflow-hidden group"
             >
               {/* Gradient top-edge accent on hover */}
-              <div className="absolute top-0 left-0 right-0 h-[1px] bg-gradient-to-r from-purple-500/0 via-blue-500/30 to-purple-500/0 opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
+              <div className="absolute top-0 left-0 right-0 h-[1px] bg-white/0 group-hover:bg-white/10 transition-colors duration-300" />
               <AccordionTrigger className="text-left text-base md:text-lg font-medium hover:no-underline py-5">
                 {faq.question}
               </AccordionTrigger>
@@ -90,7 +79,7 @@ const FAQSection = () => {
           ))}
         </Accordion>
       </motion.div>
-    </div>
+    </div></div>
   );
 };
 

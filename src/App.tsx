@@ -10,6 +10,7 @@ import Terms from "./pages/Terms";
 import Privacy from "./pages/Privacy";
 import Eula from "./pages/Eula";
 import Refund from "./pages/Refund";
+import Cookies from "./pages/Cookies";
 import Blog from "./pages/Blog";
 import BlogPost from "./pages/BlogPost";
 import FigmaSchemaPost from "./pages/FigmaSchemaPost";
@@ -53,6 +54,7 @@ const App = () => (
             <Route path="/privacy" element={<Privacy />} />
             <Route path="/eula" element={<Eula />} />
             <Route path="/refund" element={<Refund />} />
+            <Route path="/cookies" element={<Cookies />} />
             <Route path="/blog" element={<Blog />} />
             <Route path="/blog/adobe-max-2025" element={<BlogPost />} />
             <Route path="/blog/figma-schema-2025" element={<FigmaSchemaPost />} />

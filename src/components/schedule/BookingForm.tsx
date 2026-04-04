@@ -19,6 +19,9 @@ const bookingSchema = z.object({
 
 type BookingFormData = z.infer<typeof bookingSchema>;
 
+const bookingFieldClassName =
+  "schedule-booking-field bg-white/5 border-white/10 text-white placeholder:text-white/30 focus:border-white/30 focus:bg-white/5 focus-visible:border-white/30 focus-visible:bg-white/5 focus-visible:ring-0 focus-visible:ring-offset-0";
+
 interface BookingFormProps {
   selectedDate: Date;
   selectedTime: string;
@@ -79,7 +82,7 @@ const BookingForm = ({
           <Input
             id="name"
             {...register("name")}
-            className="bg-white/5 border-white/10 text-white placeholder:text-white/30 focus:border-white/30"
+            className={bookingFieldClassName}
             placeholder="Your full name"
           />
           {errors.name && (
@@ -95,7 +98,7 @@ const BookingForm = ({
             id="email"
             type="email"
             {...register("email")}
-            className="bg-white/5 border-white/10 text-white placeholder:text-white/30 focus:border-white/30"
+            className={bookingFieldClassName}
             placeholder="your@email.com"
           />
           {errors.email && (
@@ -110,7 +113,7 @@ const BookingForm = ({
           <Input
             id="company"
             {...register("company")}
-            className="bg-white/5 border-white/10 text-white placeholder:text-white/30 focus:border-white/30"
+            className={bookingFieldClassName}
             placeholder="Your company (optional)"
           />
         </div>
@@ -122,7 +125,7 @@ const BookingForm = ({
           <Textarea
             id="notes"
             {...register("notes")}
-            className="bg-white/5 border-white/10 text-white placeholder:text-white/30 focus:border-white/30 min-h-[80px] resize-none"
+            className={`${bookingFieldClassName} min-h-[80px] resize-none`}
             placeholder="Anything we should know? (optional)"
           />
         </div>
@@ -140,7 +143,7 @@ const BookingForm = ({
           <Button
             type="submit"
             disabled={isSubmitting}
-            className="flex-1 bg-gradient-to-r from-pink-500 to-purple-500 hover:from-pink-600 hover:to-purple-600 text-white font-semibold"
+            className="flex-1 bg-transparent border border-white/25 text-white/80 hover:bg-white/5 hover:border-white/40 hover:text-white font-semibold"
           >
             {isSubmitting ? (
               <>

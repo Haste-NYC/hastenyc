@@ -294,6 +294,22 @@ export default function HasteASCIIFooter() {
     mousePosRef.current = { x: -1000, y: -1000 };
   }, []);
 
+  const updateTouchPos = useCallback((e: React.TouchEvent) => {
+    if (!canvasRef.current || e.touches.length === 0) return;
+    e.preventDefault();
+    const touch = e.touches[0];
+    const rect = canvasRef.current.getBoundingClientRect();
+    const scale = scaleRef.current;
+    mousePosRef.current = {
+      x: (touch.clientX - rect.left) / scale,
+      y: (touch.clientY - rect.top) / scale
+    };
+  }, []);
+
+  const handleTouchEnd = useCallback(() => {
+    mousePosRef.current = { x: -1000, y: -1000 };
+  }, []);
+
   return (
     <div
       ref={wrapperRef}
@@ -311,7 +327,12 @@ export default function HasteASCIIFooter() {
         height={ROWS * CHAR_HEIGHT}
         onMouseMove={handleMouseMove}
         onMouseLeave={handleMouseLeave}
+        onTouchStart={updateTouchPos}
+        onTouchMove={updateTouchPos}
+        onTouchEnd={handleTouchEnd}
+        onTouchCancel={handleTouchEnd}
         style={{
+          touchAction: 'none',
           cursor: 'default',
           transformOrigin: 'top center',
           width: COLS * CHAR_WIDTH,

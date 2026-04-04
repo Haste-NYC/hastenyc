@@ -51,7 +51,7 @@ const VfxStoragePost = () => {
                 </span>
               </div>
               <h1 className="text-3xl md:text-4xl font-bold uppercase leading-tight mb-6">
-                <span className="bg-gradient-to-r from-brand-orange via-brand-pink to-brand-blue bg-clip-text text-transparent">Engineering Storage for Global-Scale Post</span>
+                <span className="text-foreground/90">Engineering Storage for Global-Scale Post</span>
               </h1>
               <p className="text-xl text-foreground/80 max-w-3xl">
                 How the world's leading VFX studios and editorial post houses engineer storage for global-scale pipelines.
@@ -90,7 +90,7 @@ const VfxStoragePost = () => {
             </section>
 
             {/* Highlighted Quote */}
-            <blockquote className="border-l-4 border-brand-orange pl-6 py-4 my-12">
+            <blockquote className="border-l-4 border-white/20 pl-6 py-4 my-12">
               <p className="text-2xl md:text-3xl font-black uppercase text-gradient-brand">
                 At the highest level of post-production, storage is no longer just infrastructure — it's a critical part of the creative workflow.
               </p>
@@ -104,7 +104,7 @@ const VfxStoragePost = () => {
               </p>
 
               <div className="grid md:grid-cols-3 gap-6 my-12">
-                <div className="bg-card p-6 border border-border hover:border-brand-orange transition-colors duration-300">
+                <div className="bg-card p-6 border border-border hover:border-white/20 transition-colors duration-300">
                   <div className="text-3xl font-black text-brand-orange mb-4">Editorial</div>
                   <p className="text-muted-foreground text-sm font-normal normal-case">Real-time access for editors working with high-resolution dailies</p>
                 </div>
@@ -112,7 +112,7 @@ const VfxStoragePost = () => {
                   <div className="text-3xl font-black text-brand-pink mb-4">VFX</div>
                   <p className="text-muted-foreground text-sm font-normal normal-case">Massive throughput for simulation data and render farms</p>
                 </div>
-                <div className="bg-card p-6 border border-border hover:border-brand-orange transition-colors duration-300">
+                <div className="bg-card p-6 border border-border hover:border-white/20 transition-colors duration-300">
                   <div className="text-3xl font-black text-brand-orange mb-4">Delivery</div>
                   <p className="text-muted-foreground text-sm font-normal normal-case">Reliable output for final masters and distribution packages</p>
                 </div>
@@ -127,7 +127,7 @@ const VfxStoragePost = () => {
               </p>
 
               <div className="space-y-8">
-                <div className="border-l-4 border-brand-orange pl-6">
+                <div className="border-l-4 border-white/20 pl-6">
                   <h3 className="text-xl font-bold text-brand-orange mb-2">
                     <a href="https://www.lucidlink.com" target="_blank" rel="noopener noreferrer" className="hover:underline">LucidLink</a>
                   </h3>
@@ -154,7 +154,7 @@ const VfxStoragePost = () => {
                   </p>
                 </div>
 
-                <div className="border-l-4 border-brand-orange pl-6">
+                <div className="border-l-4 border-white/20 pl-6">
                   <h3 className="text-xl font-bold text-brand-orange mb-2">
                     <a href="https://www.editshare.com" target="_blank" rel="noopener noreferrer" className="hover:underline">EditShare</a>
                   </h3>
@@ -191,7 +191,7 @@ const VfxStoragePost = () => {
             </section>
 
             {/* Our Perspective */}
-            <div className="bg-gradient-to-r from-brand-orange/20 to-brand-pink/20 p-8 md:p-12 my-16 border-l-4 border-brand-orange">
+            <div className="bg-white/5 p-8 md:p-12 my-16 border-l-4 border-white/20">
               <h3 className="text-2xl md:text-3xl mb-4 text-gradient-brand font-bold">Our Perspective</h3>
               <p className="text-foreground/80 font-normal normal-case mb-6">
                 At Haste we see these same challenges across real-world post-production environments every day. Successful global VFX and editorial storage workflows are designed around how people actually work — not just how systems are built.
@@ -221,7 +221,7 @@ const VfxStoragePost = () => {
                 <ul className="flex flex-wrap justify-center gap-3 list-none p-0 m-0">
                   {["VFX", "Post-Production", "Editorial", "Storage", "Pipelines"].map((tag) => (
                     <li key={tag}>
-                      <span className="inline-block px-4 py-2 text-sm font-bold uppercase tracking-wider border border-border hover:border-brand-orange hover:text-brand-orange transition-colors">
+                      <span className="inline-block px-4 py-2 text-sm font-bold uppercase tracking-wider border border-border hover:border-white/20 hover:text-brand-orange transition-colors">
                         {tag}
                       </span>
                     </li>

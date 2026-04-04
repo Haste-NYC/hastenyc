@@ -3,26 +3,26 @@ set -e
 
 cd "$(dirname "$0")"
 
-# Create a temp file to capture Vite output
-VITE_LOG=$(mktemp)
+# Pull latest env vars from Vercel
+echo "Pulling environment variables from Vercel..."
+vercel env pull .env.local --environment development --yes 2>&1
 
-# Start the dev server, tee output to temp file and stdout
-npm run dev 2>&1 | tee "$VITE_LOG" &
+# Start Vite dev server with Vercel env vars loaded
+# API calls proxy to the live Vercel deployment
+echo "Starting dev server..."
+npm run dev 2>&1 &
 DEV_PID=$!
 
-# Wait for Vite to output the local URL and extract the port
+# Wait for Vite to be ready
 echo "Waiting for dev server..."
-PORT=""
-while [ -z "$PORT" ]; do
-  sleep 0.5
-  PORT=$(grep -oE 'Local:\s+http://localhost:([0-9]+)' "$VITE_LOG" 2>/dev/null | grep -oE '[0-9]+' | head -1 || true)
+until curl -s http://localhost:8080 > /dev/null 2>&1; do
+  sleep 1
 done
 
-# Open Chrome with the detected port
-open -a "Google Chrome" "http://localhost:$PORT"
+open -a "Google Chrome" "http://localhost:8080"
 
-echo "Dev server running on port $PORT (PID $DEV_PID). Press Ctrl+C to stop."
+echo "Dev server running on http://localhost:8080 (PID $DEV_PID). Press Ctrl+C to stop."
+echo "API calls proxy to Vercel. Env vars pulled from Vercel."
 
-# Cleanup temp file and forward Ctrl+C to the dev server
-trap "rm -f '$VITE_LOG'; kill $DEV_PID 2>/dev/null; exit" INT TERM
+trap "kill $DEV_PID 2>/dev/null; exit" INT TERM
 wait $DEV_PID

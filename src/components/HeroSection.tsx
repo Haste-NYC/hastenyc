@@ -125,28 +125,18 @@ const HeroSection = () => {
   return (
     <section
       ref={sectionRef}
-      className="relative flex flex-col items-center justify-center px-4 sm:px-6 py-4 min-h-[calc(100vh-200px)] overflow-visible"
+      className="relative flex flex-col items-center justify-center px-4 sm:px-6 py-4 min-h-[calc(100vh-320px)] sm:min-h-[calc(100vh-200px)] overflow-visible"
     >
       {/* Particle constellation effect */}
       <Particles />
 
-      {/* Atmospheric glow - centered blue/purple light emanation */}
+      {/* Subtle atmospheric glow - restrained white light */}
       <div
         className="absolute inset-0 pointer-events-none z-[2]"
         style={{
           background: `
-            radial-gradient(ellipse 80% 70% at 50% 45%, rgba(80, 120, 255, 0.35) 0%, rgba(100, 80, 220, 0.15) 25%, rgba(120, 60, 200, 0.06) 45%, transparent 70%)
+            radial-gradient(ellipse 60% 50% at 50% 45%, rgba(255, 255, 255, 0.06) 0%, rgba(255, 255, 255, 0.02) 40%, transparent 70%)
           `,
-        }}
-      />
-
-      {/* Secondary glow for depth - white core */}
-      <div
-        className="absolute inset-0 pointer-events-none z-[2]"
-        style={{
-          background:
-            "radial-gradient(ellipse 50% 45% at 50% 40%, rgba(160, 180, 255, 0.2) 0%, rgba(80, 120, 255, 0.08) 35%, transparent 60%)",
-          filter: "blur(40px)",
         }}
       />
 
@@ -208,12 +198,11 @@ const HeroSection = () => {
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.6, delay: 0.35 }}
-          className="text-xs md:text-sm max-w-3xl mx-auto leading-relaxed uppercase tracking-[0.06em] pt-6"
+          className="text-xs md:text-sm max-w-[300px] md:max-w-3xl mx-auto leading-relaxed uppercase tracking-[0.06em] pt-6"
         >
-          <span className="text-foreground/60">Project migration that once took days</span>{" "}
-          <span className="text-foreground">now takes seconds.</span>
-          <br />
-          <span className="text-foreground/90">100% frame-accurate, TPN+ compliant, trusted by major studios.</span>
+          <span className="text-foreground/60">We believe creatives should spend their time creating.</span>
+          <br className="hidden md:block" />{" "}
+          <span className="text-foreground">Frame-accurate, TPN+ compliant, built by filmmakers for filmmakers.</span>
         </motion.p>
 
         {/* CTA Button - white pill style */}
@@ -225,9 +214,9 @@ const HeroSection = () => {
         >
           <button
             onClick={scrollToPricing}
-            className="bg-white text-gray-900 font-medium text-sm sm:text-base px-6 sm:px-8 py-2.5 sm:py-3 rounded-full hover:bg-gray-100 transition-colors"
+            className="bg-transparent text-white font-medium text-sm sm:text-base px-6 sm:px-8 py-2.5 sm:py-3 rounded-full border border-white/80 hover:bg-white/10 transition-colors"
           >
-            Start Free Trial
+            Get Started
           </button>
         </motion.div>
       </div>

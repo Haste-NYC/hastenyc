@@ -80,7 +80,7 @@ const EntertainmentShakeupPost = () => {
             </section>
 
             {/* Highlighted Quote */}
-            <blockquote className="border-l-4 border-brand-orange pl-6 py-4 my-12">
+            <blockquote className="border-l-4 border-white/20 pl-6 py-4 my-12">
               <p className="text-2xl md:text-3xl font-black uppercase text-gradient-brand">
                 Last week, Warner Brothers announced that Netflix had won the bidding war. But now, Paramount is launching what's called a hostile bid.
               </p>
@@ -94,7 +94,7 @@ const EntertainmentShakeupPost = () => {
               </p>
 
               <div className="grid md:grid-cols-3 gap-6 my-12">
-                <div className="bg-card p-6 border border-border hover:border-brand-orange transition-colors duration-300">
+                <div className="bg-card p-6 border border-border hover:border-white/20 transition-colors duration-300">
                   <div className="text-4xl font-black text-brand-orange mb-2">^</div>
                   <h3 className="text-lg mb-2 font-bold text-gradient-brand">Rising Costs</h3>
                   <p className="text-muted-foreground text-sm font-normal normal-case">Your subscription fees will probably go up significantly</p>
@@ -124,7 +124,7 @@ const EntertainmentShakeupPost = () => {
             </section>
 
             {/* Economic Warning */}
-            <div className="bg-gradient-to-r from-brand-orange/20 to-brand-pink/20 p-8 md:p-12 my-16 border-l-4 border-brand-orange">
+            <div className="bg-white/5 p-8 md:p-12 my-16 border-l-4 border-white/20">
               <h3 className="text-2xl md:text-3xl mb-4 text-gradient-brand font-bold">Economic Warning Signs</h3>
               <p className="text-foreground/80 font-normal normal-case">
                 Job losses loom large, with unions warning of layoffs akin to Disney's post-Fox cuts, affecting writers, actors, crew, and global freelancers. Fewer films and series would follow, shrinking Hollywood's output amid an industry downturn and reducing vendor revenue worldwide. While Netflix claims boosted U.S. production and creative jobs, historical mergers show net reductions.
@@ -162,7 +162,7 @@ const EntertainmentShakeupPost = () => {
 
               <div className="bg-card border border-border p-8 mt-8">
                 <div className="flex items-center gap-4 mb-6">
-                  <div className="w-16 h-16 rounded-full bg-gradient-to-br from-brand-orange to-brand-pink flex items-center justify-center text-base font-black text-black">
+                  <div className="w-16 h-16 rounded-full bg-white/20 flex items-center justify-center text-base font-black text-black">
                     $400B+
                   </div>
                   <div>
@@ -195,7 +195,7 @@ const EntertainmentShakeupPost = () => {
                           onClick={() => setShowWarnerInfo(!showWarnerInfo)}
                           title={`View more information about ${tag}`}
                           aria-label={`Toggle information about ${tag}`}
-                          className={`inline-block px-4 py-2 text-sm font-bold uppercase tracking-wider border transition-colors ${showWarnerInfo ? 'border-brand-orange text-brand-orange bg-brand-orange/10' : 'border-border hover:border-brand-orange hover:text-brand-orange'}`}
+                          className={`inline-block px-4 py-2 text-sm font-bold uppercase tracking-wider border transition-colors ${showWarnerInfo ? 'border-white/20 text-brand-orange bg-brand-orange/10' : 'border-border hover:border-white/20 hover:text-brand-orange'}`}
                         >
                           {tag}
                         </button>
@@ -222,7 +222,7 @@ const EntertainmentShakeupPost = () => {
                           to={`/topics/${tag.toLowerCase().replace(/\s+/g, '-')}`}
                           title={`View more articles about ${tag}`}
                           aria-label={`Browse articles tagged with ${tag}`}
-                          className="inline-block px-4 py-2 text-sm font-bold uppercase tracking-wider border border-border hover:border-brand-orange hover:text-brand-orange transition-colors"
+                          className="inline-block px-4 py-2 text-sm font-bold uppercase tracking-wider border border-border hover:border-white/20 hover:text-brand-orange transition-colors"
                         >
                           {tag}
                         </Link>
@@ -234,7 +234,7 @@ const EntertainmentShakeupPost = () => {
 
               {/* Warner Bros Info Panel */}
               {showWarnerInfo && (
-                <div className="mt-8 bg-card border border-brand-orange/30 p-8 animate-fade-in">
+                <div className="mt-8 bg-card border border-white/20/30 p-8 animate-fade-in">
                   <h3 className="text-2xl font-bold text-gradient-brand mb-6">Warner Bros. Discovery Strategic Review</h3>
 
                   <div className="space-y-6 text-foreground/80 font-normal normal-case">

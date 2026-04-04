@@ -68,7 +68,7 @@ const RelatedArticles = ({ currentSlug }: RelatedArticlesProps) => {
           <h2 className="text-3xl md:text-4xl font-bold uppercase mb-8">
             RELATED
             <br />
-            <span className="bg-gradient-to-r from-brand-orange via-brand-pink to-brand-blue bg-clip-text text-transparent">
+            <span className="text-foreground/80">
               ARTICLES
             </span>
           </h2>
@@ -81,7 +81,7 @@ const RelatedArticles = ({ currentSlug }: RelatedArticlesProps) => {
               >
                 <div className="p-6 flex flex-col flex-grow">
                   <div className="flex flex-wrap items-center gap-3 mb-4">
-                    <span className="text-xs text-brand-orange uppercase tracking-wider font-bold">
+                    <span className="text-xs text-foreground/60 uppercase tracking-wider font-bold">
                       {article.date}
                     </span>
                     <span className="text-xs text-muted-foreground uppercase tracking-wider">

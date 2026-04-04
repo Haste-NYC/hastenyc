@@ -42,9 +42,9 @@ const FigmaSchemaPost = () => {
             <h1 className="text-6xl md:text-8xl font-bold uppercase leading-none mb-6">
               FIGMA
               <br />
-              <span className="bg-gradient-to-r from-brand-orange via-brand-pink to-brand-blue bg-clip-text text-transparent">SCHEMA</span>
+              <span className="text-foreground/90">SCHEMA</span>
               <br />
-              <span className="bg-gradient-to-r from-brand-orange via-brand-pink to-brand-blue bg-clip-text text-transparent">2025</span>
+              <span className="text-foreground/90">2025</span>
             </h1>
             <p className="text-xl text-foreground/80 max-w-2xl">
               The future of design systems is here
@@ -82,7 +82,7 @@ const FigmaSchemaPost = () => {
             <h2 className="text-4xl md:text-5xl font-bold uppercase mb-8">
               MCP SERVER:
               <br />
-              <span className="bg-gradient-to-r from-brand-orange via-brand-pink to-brand-blue bg-clip-text text-transparent">OUR NEW SECRET WEAPON</span>
+              <span className="text-foreground/90">OUR NEW SECRET WEAPON</span>
             </h2>
             <p className="text-lg leading-relaxed mb-6">
               The Model Context Protocol (MCP) server integration is a game-changer for Haste Conform Studio's development workflow. We're already incorporating this into our process, bringing Figma context directly into VS Code, Claude Code, and Cursor.
@@ -107,7 +107,7 @@ const FigmaSchemaPost = () => {
             <h2 className="text-4xl md:text-5xl font-bold uppercase mb-12">
               THE BIGGEST
               <br />
-              <span className="bg-gradient-to-r from-brand-orange via-brand-pink to-brand-blue bg-clip-text text-transparent">HIGHLIGHTS</span>
+              <span className="text-foreground/90">HIGHLIGHTS</span>
             </h2>
             
             <div className="space-y-12">
@@ -172,7 +172,7 @@ const FigmaSchemaPost = () => {
             <h2 className="text-4xl md:text-5xl font-bold uppercase mb-8">
               DEVELOPER &
               <br />
-              <span className="bg-gradient-to-r from-brand-orange via-brand-pink to-brand-blue bg-clip-text text-transparent">WORKFLOW INTEGRATION</span>
+              <span className="text-foreground/90">WORKFLOW INTEGRATION</span>
             </h2>
             
             <div className="space-y-8">
@@ -271,7 +271,7 @@ const FigmaSchemaPost = () => {
               <h2 className="text-4xl md:text-5xl font-bold uppercase">
                 THIS IS
                 <br />
-                <span className="bg-gradient-to-r from-brand-orange via-brand-pink to-brand-blue bg-clip-text text-transparent">THE FUTURE</span>
+                <span className="text-foreground/90">THE FUTURE</span>
               </h2>
               <p className="text-lg leading-relaxed">
                 Schema 2025 marks Figma's evolution towards being a unified, extensible platform powering design, code, and AI at scale. At Haste Conform Studio, we're not just watching this transformation—we're actively integrating it into every project.

@@ -43,9 +43,9 @@ const BlogPost = () => {
             <h1 className="text-6xl md:text-8xl font-bold uppercase leading-none mb-6">
               THE ULTIMATE
               <br />
-              <span className="bg-gradient-to-r from-brand-orange via-brand-pink to-brand-blue bg-clip-text text-transparent">ADOBE MAX</span>
+              <span className="text-foreground/90">ADOBE MAX</span>
               <br />
-              <span className="bg-gradient-to-r from-brand-orange via-brand-pink to-brand-blue bg-clip-text text-transparent">2025</span>
+              <span className="text-foreground/90">2025</span>
             </h1>
             <p className="text-xl text-foreground/80 max-w-2xl">
               The creative industry just hit a new level. Adobe MAX 2025 has arrived and it's 
@@ -84,7 +84,7 @@ const BlogPost = () => {
             <h2 className="text-4xl md:text-5xl font-bold uppercase mb-8">
               A QUICK LOOK AT
               <br />
-              <span className="bg-gradient-to-r from-brand-orange via-brand-pink to-brand-blue bg-clip-text text-transparent">ADOBE MAX 2025</span>
+              <span className="text-foreground/90">ADOBE MAX 2025</span>
             </h2>
             <p className="text-lg leading-relaxed mb-8">
               At this year's MAX, Adobe unveiled a collection of experimental AI tools internally 
@@ -164,7 +164,7 @@ const BlogPost = () => {
             <h2 className="text-4xl md:text-5xl font-bold uppercase mb-8">
               INCORPORATING
               <br />
-              <span className="bg-gradient-to-r from-brand-orange via-brand-pink to-brand-blue bg-clip-text text-transparent">MCP SERVER</span>
+              <span className="text-foreground/90">MCP SERVER</span>
             </h2>
             <p className="text-lg leading-relaxed mb-6">
               At <span className="font-bold">Haste Conform Studio</span>, we're not just excited observers, we're 
@@ -194,7 +194,7 @@ const BlogPost = () => {
               <h2 className="text-4xl md:text-5xl font-bold uppercase">
                 THE FUTURE IS
                 <br />
-                <span className="bg-gradient-to-r from-brand-orange via-brand-pink to-brand-blue bg-clip-text text-transparent">CREATIVE</span>
+                <span className="text-foreground/90">CREATIVE</span>
               </h2>
               <p className="text-lg leading-relaxed">
                 Adobe MAX 2025 has shown us that the boundaries between imagination and execution are
