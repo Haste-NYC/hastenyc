@@ -1,0 +1,457 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Feature Sections V2 - Audition</title>
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+
+    body {
+      background: #000;
+      color: #fff;
+      font-family: 'Helvetica Neue', -apple-system, Roboto, Helvetica, sans-serif;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    .section-label {
+      font-size: 9px;
+      letter-spacing: 0.3em;
+      text-transform: uppercase;
+      color: rgba(255,255,255,0.15);
+      text-align: center;
+      padding: 16px;
+    }
+
+    /* ========== HERO FEATURES ========== */
+    /* Big statement cards -- the top 3-4 most impactful features */
+
+    .hero-feature {
+      padding: 60px 20px;
+      border-bottom: 1px solid rgba(255,255,255,0.04);
+    }
+    @media (min-width: 768px) { .hero-feature { padding: 100px 48px; } }
+    @media (min-width: 1024px) { .hero-feature { padding: 120px 80px; } }
+
+    .hero-inner {
+      max-width: 1200px;
+      margin: 0 auto;
+    }
+
+    .hero-split {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 32px;
+      align-items: start;
+    }
+    @media (min-width: 768px) {
+      .hero-split { grid-template-columns: 1fr 1fr; gap: 64px; }
+    }
+
+    .hero-stat {
+      font-size: clamp(48px, 10vw, 120px);
+      font-weight: 900;
+      line-height: 1;
+      letter-spacing: -0.03em;
+      text-transform: uppercase;
+    }
+
+    .hero-stat .suffix {
+      display: block;
+      font-size: 0.35em;
+      font-weight: 700;
+      letter-spacing: 0.02em;
+      color: rgba(255,255,255,0.5);
+      margin-top: 4px;
+    }
+
+    .hero-title {
+      font-size: clamp(20px, 3vw, 36px);
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: -0.01em;
+      line-height: 1.2;
+      margin-bottom: 16px;
+    }
+
+    .hero-desc {
+      font-size: 14px;
+      color: rgba(255,255,255,0.55);
+      line-height: 1.7;
+      max-width: 500px;
+    }
+    @media (min-width: 768px) { .hero-desc { font-size: 15px; } }
+
+    .hours-saved {
+      display: inline-block;
+      margin-top: 16px;
+      font-size: 11px;
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+      color: rgba(74, 222, 128, 0.7);
+      border: 1px solid rgba(74, 222, 128, 0.2);
+      padding: 4px 10px;
+      border-radius: 4px;
+    }
+
+    /* ========== FEATURE GRID ========== */
+    /* Compact cards for the remaining features */
+
+    .grid-section {
+      padding: 60px 20px;
+      border-bottom: 1px solid rgba(255,255,255,0.04);
+    }
+    @media (min-width: 768px) { .grid-section { padding: 80px 48px; } }
+    @media (min-width: 1024px) { .grid-section { padding: 100px 80px; } }
+
+    .grid-inner {
+      max-width: 1200px;
+      margin: 0 auto;
+    }
+
+    .grid-header {
+      font-size: clamp(28px, 5vw, 56px);
+      font-weight: 900;
+      text-transform: uppercase;
+      letter-spacing: -0.02em;
+      line-height: 0.95;
+      margin-bottom: 48px;
+    }
+
+    .grid-header span {
+      color: rgba(255,255,255,0.4);
+    }
+
+    .feature-grid {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 1px;
+      background: rgba(255,255,255,0.04);
+      border: 1px solid rgba(255,255,255,0.06);
+      border-radius: 12px;
+      overflow: hidden;
+    }
+    @media (min-width: 640px) { .feature-grid { grid-template-columns: 1fr 1fr; } }
+    @media (min-width: 1024px) { .feature-grid { grid-template-columns: 1fr 1fr 1fr; } }
+
+    .feature-card {
+      background: rgba(0,0,0,0.8);
+      padding: 28px 24px;
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+    }
+
+    .feature-card-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+      gap: 12px;
+    }
+
+    .feature-card-title {
+      font-size: 13px;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.02em;
+      line-height: 1.3;
+      flex: 1;
+    }
+
+    .feature-card-hours {
+      font-size: 11px;
+      font-weight: 600;
+      color: rgba(74, 222, 128, 0.7);
+      white-space: nowrap;
+      padding: 2px 8px;
+      background: rgba(74, 222, 128, 0.08);
+      border-radius: 3px;
+      letter-spacing: 0.02em;
+    }
+
+    .feature-card-desc {
+      font-size: 12px;
+      color: rgba(255,255,255,0.4);
+      line-height: 1.6;
+    }
+
+    /* ========== TOTAL IMPACT BAR ========== */
+    .impact-bar {
+      padding: 40px 20px;
+      text-align: center;
+      border-bottom: 1px solid rgba(255,255,255,0.04);
+    }
+    @media (min-width: 768px) { .impact-bar { padding: 60px 48px; } }
+
+    .impact-stat {
+      font-size: clamp(36px, 8vw, 80px);
+      font-weight: 900;
+      letter-spacing: -0.03em;
+      line-height: 1;
+    }
+
+    .impact-stat .green { color: #4ade80; }
+
+    .impact-sub {
+      font-size: 12px;
+      text-transform: uppercase;
+      letter-spacing: 0.15em;
+      color: rgba(255,255,255,0.35);
+      margin-top: 12px;
+    }
+
+    /* ========== CLI SECTION ========== */
+    .cli-section {
+      padding: 60px 20px;
+    }
+    @media (min-width: 768px) { .cli-section { padding: 80px 48px; } }
+
+    .cli-inner {
+      max-width: 1200px;
+      margin: 0 auto;
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 32px;
+      align-items: start;
+    }
+    @media (min-width: 768px) { .cli-inner { grid-template-columns: 1fr 1fr; gap: 48px; } }
+
+    .cli-title {
+      font-size: clamp(28px, 5vw, 48px);
+      font-weight: 900;
+      text-transform: uppercase;
+      letter-spacing: -0.02em;
+      line-height: 1;
+    }
+
+    .cli-desc {
+      font-size: 14px;
+      color: rgba(255,255,255,0.5);
+      line-height: 1.7;
+      margin-top: 16px;
+    }
+
+    .cli-block {
+      background: rgba(255,255,255,0.03);
+      border: 1px solid rgba(255,255,255,0.08);
+      border-radius: 8px;
+      padding: 20px;
+      font-family: 'SF Mono', 'Monaco', 'Consolas', monospace;
+      font-size: 12px;
+      color: rgba(255,255,255,0.5);
+      line-height: 1.8;
+      overflow-x: auto;
+    }
+
+    .cli-block .cmd { color: rgba(74, 222, 128, 0.8); }
+    .cli-block .flag { color: rgba(255,255,255,0.35); }
+    .cli-block .comment { color: rgba(255,255,255,0.2); }
+
+    .note {
+      text-align: center;
+      font-size: 11px;
+      color: rgba(255,255,255,0.15);
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+      padding: 40px 20px;
+    }
+  </style>
+</head>
+<body>
+
+  <!-- ========== TOTAL IMPACT BAR ========== -->
+  <div class="section-label">Impact Statement</div>
+  <div class="impact-bar">
+    <div class="impact-stat">Save <span class="green">14-100+</span> Hours</div>
+    <p class="impact-sub">Per project with automated conform</p>
+  </div>
+
+  <!-- ========== HERO FEATURE 1: One-Click Conversion ========== -->
+  <div class="section-label">Hero Feature 1</div>
+  <div class="hero-feature">
+    <div class="hero-inner">
+      <div class="hero-split">
+        <div>
+          <div class="hero-stat">
+            4-40+
+            <span class="suffix">Hours Saved Per Project</span>
+          </div>
+        </div>
+        <div>
+          <h2 class="hero-title">One-Click Premiere-to-Resolve Conversion</h2>
+          <p class="hero-desc">
+            Converts an entire Adobe Premiere Pro timeline into DaVinci Resolve in minutes, not hours. Clips, tracks, timecodes, markers, audio levels, and media references transfer automatically — no manual rebuild required.
+          </p>
+          <span class="hours-saved">4-40+ hours saved</span>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ========== HERO FEATURE 2: Multi-Format Ingest ========== -->
+  <div class="section-label">Hero Feature 2</div>
+  <div class="hero-feature">
+    <div class="hero-inner">
+      <div class="hero-split">
+        <div>
+          <div class="hero-stat">
+            5
+            <span class="suffix">Formats Supported</span>
+          </div>
+        </div>
+        <div>
+          <h2 class="hero-title">Multi-Format Ingest</h2>
+          <p class="hero-desc">
+            Import timelines from Avid Media Composer, Final Cut Pro 7, Final Cut Pro X, and industry-standard interchange formats. AAF, EDL, FCPXML, FCP7 XML, AVB — a single tool replaces format-specific workarounds and manual re-edits.
+          </p>
+          <span class="hours-saved">2-20 hours saved</span>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ========== HERO FEATURE 3: Frame-Accurate QC ========== -->
+  <div class="section-label">Hero Feature 3</div>
+  <div class="hero-feature">
+    <div class="hero-inner">
+      <div class="hero-split">
+        <div>
+          <div class="hero-stat" style="font-size: clamp(36px, 7vw, 90px);">
+            Pixel-Level
+            <span class="suffix">QC Verification</span>
+          </div>
+        </div>
+        <div>
+          <h2 class="hero-title">Frame-Accurate QC with NDI and Render Analysis</h2>
+          <p class="hero-desc">
+            Pixel-level comparison between Premiere and Resolve outputs using SSIM scoring. Runs in real-time over NDI or offline against rendered frames. Flags every clip that doesn't match, with configurable pass/fail thresholds and CSV export.
+          </p>
+          <span class="hours-saved">2-6 hours saved</span>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ========== FEATURE GRID ========== -->
+  <div class="section-label">Feature Grid</div>
+  <div class="grid-section">
+    <div class="grid-inner">
+      <h2 class="grid-header">
+        <span>Every detail,</span><br>
+        Preserved.
+      </h2>
+
+      <div class="feature-grid">
+        <div class="feature-card">
+          <div class="feature-card-header">
+            <div class="feature-card-title">Automated Media Relinking</div>
+            <div class="feature-card-hours">1-8h</div>
+          </div>
+          <p class="feature-card-desc">Automatically locates source media across drives, matches filenames, handles proxy-to-full-res switching and volume remapping.</p>
+        </div>
+
+        <div class="feature-card">
+          <div class="feature-card-header">
+            <div class="feature-card-title">Conform Verification</div>
+            <div class="feature-card-hours">1-4h</div>
+          </div>
+          <p class="feature-card-desc">Compares your source project against the Resolve timeline clip-by-clip. Detects timecode, duration, and track discrepancies. Auto-corrects issues.</p>
+        </div>
+
+        <div class="feature-card">
+          <div class="feature-card-header">
+            <div class="feature-card-title">Speed &amp; Retime Preservation</div>
+            <div class="feature-card-hours">1-3h</div>
+          </div>
+          <p class="feature-card-desc">Translates constant and variable speed effects including bezier-curve retimes. Validates frame-by-frame and corrects drift automatically.</p>
+        </div>
+
+        <div class="feature-card">
+          <div class="feature-card-header">
+            <div class="feature-card-title">Bezier Keyframe Transfer</div>
+            <div class="feature-card-hours">1-3h</div>
+          </div>
+          <p class="feature-card-desc">Preserves scale, position, rotation, opacity, and crop keyframes with bezier curve data intact. Visual SSIM validation ensures accuracy.</p>
+        </div>
+
+        <div class="feature-card">
+          <div class="feature-card-header">
+            <div class="feature-card-title">Multicam Clip Flattening</div>
+            <div class="feature-card-hours">0.5-2h</div>
+          </div>
+          <p class="feature-card-desc">Detects multicam clips and flattens to the active angle's source media. Resolve receives clean, single-source clips.</p>
+        </div>
+
+        <div class="feature-card">
+          <div class="feature-card-header">
+            <div class="feature-card-title">Subtitle &amp; Caption Conversion</div>
+            <div class="feature-card-hours">0.5-2h</div>
+          </div>
+          <p class="feature-card-desc">Extracts caption data and creates native Resolve subtitle tracks with styling preserved. Generates SRT for delivery.</p>
+        </div>
+
+        <div class="feature-card">
+          <div class="feature-card-header">
+            <div class="feature-card-title">Audio Gain Verification</div>
+            <div class="feature-card-hours">0.5-2h</div>
+          </div>
+          <p class="feature-card-desc">Per-track RMS comparison between Premiere and Resolve audio. Configurable dB tolerance detects gain mismatches before final mix.</p>
+        </div>
+
+        <div class="feature-card">
+          <div class="feature-card-header">
+            <div class="feature-card-title">Text &amp; Graphics Transfer</div>
+            <div class="feature-card-hours">0.5-2h</div>
+          </div>
+          <p class="feature-card-desc">Converts text layers to Resolve Text+ / Fusion nodes with font mapping, positioning, and scale. Generates Fusion backgrounds.</p>
+        </div>
+
+        <div class="feature-card">
+          <div class="feature-card-header">
+            <div class="feature-card-title">Markers &amp; Metadata</div>
+            <div class="feature-card-hours">0.5-1h</div>
+          </div>
+          <p class="feature-card-desc">Transfers markers with colors, names, notes. Preserves clip labels, disabled states, and custom metadata fields.</p>
+        </div>
+
+        <div class="feature-card">
+          <div class="feature-card-header">
+            <div class="feature-card-title">Effects &amp; Transitions</div>
+            <div class="feature-card-hours">0.5-1h</div>
+          </div>
+          <p class="feature-card-desc">Converts opacity, transform, and crop effects with keyframe data. Maps Premiere transitions to Resolve equivalents.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ========== CLI / PIPELINE SECTION ========== -->
+  <div class="section-label">CLI / Pipeline Integration</div>
+  <div class="cli-section">
+    <div class="cli-inner">
+      <div>
+        <h2 class="cli-title">Full CLI<br>for Pipelines</h2>
+        <p class="cli-desc">
+          40+ command-line flags for headless conversion, batch ingest, QC automation, and verification reporting. Integrates into facility pipelines, render farms, and CI/CD systems without a GUI.
+        </p>
+        <span class="hours-saved" style="margin-top:20px">2-10+ hours saved per batch</span>
+      </div>
+      <div class="cli-block">
+        <span class="comment"># Batch convert all projects</span><br>
+        <span class="cmd">conform-studio</span> <span class="flag">--input</span> /projects/*.prproj \<br>
+        &nbsp;&nbsp;<span class="flag">--output</span> /resolve/imports/ \<br>
+        &nbsp;&nbsp;<span class="flag">--media-path</span> /nas/media/ \<br>
+        &nbsp;&nbsp;<span class="flag">--qc</span> <span class="flag">--ssim-threshold</span> 0.98 \<br>
+        &nbsp;&nbsp;<span class="flag">--verify</span> <span class="flag">--csv-report</span><br><br>
+        <span class="comment"># NDI real-time QC</span><br>
+        <span class="cmd">conform-studio</span> <span class="flag">qc</span> <span class="flag">--ndi</span> \<br>
+        &nbsp;&nbsp;<span class="flag">--source</span> "Premiere NDI" \<br>
+        &nbsp;&nbsp;<span class="flag">--compare</span> "Resolve NDI"
+      </div>
+    </div>
+  </div>
+
+  <p class="note">Audition page -- not linked from site</p>
+
+</body>
+</html>

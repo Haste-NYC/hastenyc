@@ -56,8 +56,6 @@ export default function Conform3DVisualization() {
   }, []);
 
   useEffect(() => {
-    // Skip 3D rendering on mobile for performance
-    if (isMobile) return;
 
     if (!containerRef.current) return;
     setMounted(true);
@@ -237,24 +235,70 @@ export default function Conform3DVisualization() {
       setTimeout(() => { isInteractingRef.current = false; }, 1500);
     };
 
-    // Scroll zoom disabled - fixed camera distance
-    const cameraDistanceFixed = 380;
+    // Camera distance - adjustable via pinch on mobile
+    let cameraDistance = 380;
+    let targetCameraDistance = 380;
+    const isMobileDevice = window.innerWidth < 768;
+    let lastPinchDist = 0;
+    let touchStartX = 0;
+    let touchMoved = false;
 
     const onTouchStart = (e: TouchEvent) => {
-      isDragging = true;
-      isInteractingRef.current = true;
-      lastMouseX = e.touches[0].clientX;
-      lastMouseY = e.touches[0].clientY;
+      if (e.touches.length === 2) {
+        // Pinch start - capture initial distance
+        const dx = e.touches[0].clientX - e.touches[1].clientX;
+        const dy = e.touches[0].clientY - e.touches[1].clientY;
+        lastPinchDist = Math.sqrt(dx * dx + dy * dy);
+        isDragging = false;
+      } else if (e.touches.length === 1) {
+        isDragging = true;
+        isInteractingRef.current = true;
+        lastMouseX = e.touches[0].clientX;
+        lastMouseY = e.touches[0].clientY;
+        touchStartX = e.touches[0].clientX;
+        touchMoved = false;
+      }
     };
 
     const onTouchMove = (e: TouchEvent) => {
-      if (isDragging && e.touches.length === 1) {
+      if (e.touches.length === 2) {
+        // Pinch zoom
+        const dx = e.touches[0].clientX - e.touches[1].clientX;
+        const dy = e.touches[0].clientY - e.touches[1].clientY;
+        const dist = Math.sqrt(dx * dx + dy * dy);
+        if (lastPinchDist > 0) {
+          const scale = lastPinchDist / dist;
+          targetCameraDistance = Math.max(200, Math.min(600, targetCameraDistance * scale));
+        }
+        lastPinchDist = dist;
+        e.preventDefault();
+      } else if (isDragging && e.touches.length === 1) {
         const deltaX = e.touches[0].clientX - lastMouseX;
-        const deltaY = e.touches[0].clientY - lastMouseY;
-        targetAngle += deltaX * 0.004;
-        targetVertical = Math.max(-1.2, Math.min(1.2, targetVertical + deltaY * 0.004));
+        // Horizontal only on mobile (won't interfere with vertical scroll)
+        targetAngle += deltaX * 0.005;
+        if (!isMobileDevice) {
+          const deltaY = e.touches[0].clientY - lastMouseY;
+          targetVertical = Math.max(-1.2, Math.min(1.2, targetVertical + deltaY * 0.004));
+        }
         lastMouseX = e.touches[0].clientX;
         lastMouseY = e.touches[0].clientY;
+        if (Math.abs(e.touches[0].clientX - touchStartX) > 5) touchMoved = true;
+      }
+    };
+
+    const onTouchEnd = (e: TouchEvent) => {
+      if (e.touches.length === 0) {
+        lastPinchDist = 0;
+        isDragging = false;
+        setTimeout(() => { isInteractingRef.current = false; }, 1500);
+
+        // If it was a tap (not a drag), raycast for tooltip
+        if (!touchMoved && isMobileDevice && e.changedTouches.length > 0) {
+          const rect = container.getBoundingClientRect();
+          const touch = e.changedTouches[0];
+          mouseRef.current.x = ((touch.clientX - rect.left) / rect.width) * 2 - 1;
+          mouseRef.current.y = -((touch.clientY - rect.top) / rect.height) * 2 + 1;
+        }
       }
     };
 
@@ -262,9 +306,9 @@ export default function Conform3DVisualization() {
     renderer.domElement.addEventListener('mousemove', onMouseMove);
     renderer.domElement.addEventListener('mouseup', onMouseUp);
     renderer.domElement.addEventListener('mouseleave', onMouseUp);
-    renderer.domElement.addEventListener('touchstart', onTouchStart);
-    renderer.domElement.addEventListener('touchmove', onTouchMove);
-    renderer.domElement.addEventListener('touchend', onMouseUp);
+    renderer.domElement.addEventListener('touchstart', onTouchStart, { passive: false });
+    renderer.domElement.addEventListener('touchmove', onTouchMove, { passive: false });
+    renderer.domElement.addEventListener('touchend', onTouchEnd);
 
     let prevHoveredKey: string | null = null;
     let prevTooltipX = 0;
@@ -283,9 +327,10 @@ export default function Conform3DVisualization() {
       cameraAngle += (targetAngle - cameraAngle) * 0.03;
       cameraVertical += (targetVertical - cameraVertical) * 0.03;
 
-      camera.position.x = Math.sin(cameraAngle) * Math.cos(cameraVertical) * cameraDistanceFixed;
-      camera.position.z = Math.cos(cameraAngle) * Math.cos(cameraVertical) * cameraDistanceFixed;
-      camera.position.y = Math.sin(cameraVertical) * cameraDistanceFixed;
+      cameraDistance += (targetCameraDistance - cameraDistance) * 0.05;
+      camera.position.x = Math.sin(cameraAngle) * Math.cos(cameraVertical) * cameraDistance;
+      camera.position.z = Math.cos(cameraAngle) * Math.cos(cameraVertical) * cameraDistance;
+      camera.position.y = Math.sin(cameraVertical) * cameraDistance;
       camera.lookAt(0, 0, 0);
 
       // Gentle cube rotation (Issue 10: use pre-built array instead of scene traversal)
@@ -368,7 +413,7 @@ export default function Conform3DVisualization() {
       renderer.domElement.removeEventListener('mouseleave', onMouseUp);
       renderer.domElement.removeEventListener('touchstart', onTouchStart);
       renderer.domElement.removeEventListener('touchmove', onTouchMove);
-      renderer.domElement.removeEventListener('touchend', onMouseUp);
+      renderer.domElement.removeEventListener('touchend', onTouchEnd);
       // Dispose GPU resources to prevent memory leaks on remount
       scene.traverse((obj) => {
         if (obj instanceof THREE.Mesh || obj instanceof THREE.Line) {
@@ -383,59 +428,24 @@ export default function Conform3DVisualization() {
     };
   }, [isMobile]);
 
-  // On mobile, show a static fallback
-  if (isMobile) {
-    return (
-      <div className="w-full px-4">
-        <div className="max-w-4xl mx-auto text-center space-y-6">
-          <div className="text-xs uppercase tracking-[0.25em] text-green-400">
-            Conversion Complete
-          </div>
-          <h2 className="text-2xl font-normal">
-            <span className="text-white/40">Premiere Pro</span>
-            <span className="mx-3 text-white/20">→</span>
-            <span className="text-white">DaVinci Resolve</span>
-          </h2>
-          <div className="grid grid-cols-2 gap-4 mt-8">
-            {mockData.slice(0, 4).map((item) => (
-              <div
-                key={item.key}
-                className="bg-white/5 border border-white/10 rounded-lg p-4"
-              >
-                <div className={`text-2xl font-semibold ${
-                  item.warning ? 'text-yellow-400' : item.highlight ? 'text-blue-300' : 'text-white'
-                }`}>
-                  {item.value}
-                </div>
-                <div className="text-xs text-white/40 uppercase tracking-wider mt-1">
-                  {item.label}
-                </div>
-              </div>
-            ))}
-          </div>
-        </div>
-      </div>
-    );
-  }
-
   return (
-    <div className="relative w-full h-[600px] overflow-hidden">
+    <div className="relative w-full h-[calc(var(--vh,100dvh)-160px)] md:h-[600px] overflow-hidden">
       <div ref={containerRef} className="w-full h-full" />
 
       {/* Header */}
       <div
-        className="absolute top-10 left-1/2 -translate-x-1/2 text-center z-10 pointer-events-none"
+        className="absolute top-4 md:top-10 left-1/2 -translate-x-1/2 text-center z-10 pointer-events-none"
         style={{
           opacity: mounted ? 1 : 0,
           transition: 'opacity 1s ease 0.3s'
         }}
       >
-        <div className="text-xs tracking-[0.25em] text-green-400 uppercase mb-2">
+        <div className="text-[10px] md:text-xs tracking-[0.25em] text-green-400 uppercase mb-2 whitespace-nowrap">
           Conversion Complete
         </div>
-        <h2 className="text-2xl font-normal tracking-tight">
+        <h2 className="text-base md:text-2xl font-normal tracking-tight whitespace-nowrap">
           <span className="text-white/40">Premiere Pro</span>
-          <span className="mx-3 text-white/20">→</span>
+          <span className="mx-2 md:mx-3 text-white/20">→</span>
           <span className="text-white">DaVinci Resolve</span>
         </h2>
       </div>

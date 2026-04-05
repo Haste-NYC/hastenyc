@@ -180,6 +180,10 @@
       padding-top: 52px;
       box-sizing: border-box;
     }
+    .snap-section-flow {
+      scroll-snap-align: start;
+      box-sizing: border-box;
+    }
   }
 
   .font-display {

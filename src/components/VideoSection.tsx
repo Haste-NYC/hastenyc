@@ -1,8 +1,10 @@
+import { useState } from "react";
 import { motion } from "framer-motion";
 
 const VideoSection = () => {
+  const [activated, setActivated] = useState(false);
   return (
-    <section id="video" className="py-12 sm:py-16 px-4 sm:px-6 md:px-12 lg:px-24 relative w-full">
+    <section id="video" className="py-12 sm:py-16 px-4 sm:px-6 md:px-12 lg:px-24 relative w-full min-h-screen flex flex-col justify-center">
       {/* Atmospheric blue glow behind video - extends well beyond section to eliminate seams */}
       <div
         className="absolute pointer-events-none z-0"
@@ -21,7 +23,7 @@ const VideoSection = () => {
         whileInView={{ opacity: 1, y: 0 }}
         viewport={{ once: true, margin: "-100px" }}
         transition={{ duration: 0.7 }}
-        className="max-w-4xl mx-auto relative z-10"
+        className="max-w-6xl mx-auto relative z-10 w-full"
       >
         {/* Accent label above video - Frame.io style */}
         <motion.p
@@ -35,12 +37,17 @@ const VideoSection = () => {
         </motion.p>
 
         {/* Video container with Vimeo embed */}
-        <div className="relative rounded-lg overflow-hidden">
+        <div className="relative rounded-lg overflow-hidden bg-black/40">
           <div style={{ padding: "52.5% 0 0 0", position: "relative" }}>
+            {/* Loading placeholder */}
+            <div className="absolute inset-0 flex items-center justify-center z-0">
+              <div className="w-6 h-6 border-2 border-white/10 border-t-white/40 rounded-full animate-spin" />
+            </div>
             <iframe
               src="https://player.vimeo.com/video/1081347302?badge=0&autopause=0&player_id=0&app_id=58479"
               frameBorder="0"
               allow="autoplay; fullscreen; picture-in-picture; clipboard-write; encrypted-media"
+              loading="lazy"
               style={{
                 position: "absolute",
                 top: 0,
@@ -49,7 +56,15 @@ const VideoSection = () => {
                 height: "100%",
               }}
               title="CONFORMSTUDIO-WEBSITE-R1"
+              className="relative z-10"
             />
+            {/* Scroll pass-through overlay - click to activate iframe interaction */}
+            {!activated && (
+              <div
+                className="absolute inset-0 z-20 cursor-pointer"
+                onClick={() => setActivated(true)}
+              />
+            )}
           </div>
         </div>
       </motion.div>
