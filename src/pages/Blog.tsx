@@ -9,7 +9,7 @@ const Blog = () => {
   return (
     <div className="min-h-screen bg-background">
       <SEO
-        title="Blog - Creative Technology Insights"
+        title="Blog"
         description="Explore the latest insights on AI-powered creative tools, design systems, and post-production automation from HASTE.NYC."
         canonical="/blog"
       />

@@ -1,5 +1,4 @@
-import { motion, useInView } from "framer-motion";
-import { useRef } from "react";
+import { motion } from "framer-motion";
 
 const apps = [
   { name: "Premiere", status: "live" as const, icon: "/app-icons/premiere.svg" },
@@ -18,18 +17,14 @@ const statusStyles = {
 };
 
 export default function AppRoadmap() {
-  const ref = useRef<HTMLDivElement>(null);
-  const isInView = useInView(ref, { once: true, margin: "-80px" });
-
   return (
     <div className="w-full px-4 sm:px-6 md:px-12 lg:px-20">
       <motion.div
-        ref={ref}
         className="max-w-5xl mx-auto"
         initial={{ opacity: 0, y: 20 }}
         whileInView={{ opacity: 1, y: 0 }}
-        viewport={{ once: true, margin: "-80px" }}
-        transition={{ duration: 0.5 }}
+        viewport={{ once: true, margin: "200px" }}
+        transition={{ duration: 0.5, delay: 0.5 }}
       >
         <h3 className="text-[9px] md:text-sm uppercase tracking-[0.2em] text-white/40 mb-4 md:mb-10 text-center">
           Application Support Roadmap
@@ -41,8 +36,9 @@ export default function AppRoadmap() {
           <motion.div
             className="absolute top-[26px] md:top-[46px] left-0 h-px bg-white/10 origin-left"
             initial={{ scaleX: 0 }}
-            animate={isInView ? { scaleX: 1 } : {}}
-            transition={{ duration: 1.2, ease: "easeOut", delay: 0.2 }}
+            whileInView={{ scaleX: 1 }}
+            viewport={{ once: true, margin: "200px" }}
+            transition={{ duration: 1.2, ease: "easeOut", delay: 0.7 }}
             style={{ width: "100%" }}
           />
 
@@ -51,14 +47,15 @@ export default function AppRoadmap() {
             {apps.map((app, i) => {
               const style = statusStyles[app.status];
               const isPlanned = app.status === "planned";
-              const delay = 0.15 + i * 0.12;
+              const delay = 0.7 + i * 0.12;
               return (
                 <motion.div
                   key={app.name}
                   className="flex flex-col items-center relative"
                   style={{ flex: "1 1 0" }}
                   initial={{ opacity: 0, y: 15 }}
-                  animate={isInView ? { opacity: 1, y: 0 } : {}}
+                  whileInView={{ opacity: 1, y: 0 }}
+                  viewport={{ once: true, margin: "200px" }}
                   transition={{ duration: 0.4, delay, ease: "easeOut" }}
                 >
                   {/* Logo */}
@@ -66,9 +63,10 @@ export default function AppRoadmap() {
                     src={app.icon}
                     alt={app.name}
                     className={`w-5 h-5 md:w-9 md:h-9 rounded-md md:rounded-lg relative z-10 ${isPlanned ? "opacity-25 grayscale" : "opacity-80"}`}
-                    loading="lazy"
+                    loading="eager"
                     initial={{ scale: 0.5 }}
-                    animate={isInView ? { scale: 1 } : {}}
+                    whileInView={{ scale: 1 }}
+                    viewport={{ once: true, margin: "200px" }}
                     transition={{ duration: 0.35, delay: delay + 0.1, ease: [0.34, 1.56, 0.64, 1] }}
                   />
 
@@ -76,7 +74,8 @@ export default function AppRoadmap() {
                   <motion.div
                     className={`w-[4px] h-[4px] md:w-[5px] md:h-[5px] rounded-full ${style.dot} mt-1.5 md:mt-2`}
                     initial={{ scale: 0 }}
-                    animate={isInView ? { scale: 1 } : {}}
+                    whileInView={{ scale: 1 }}
+                    viewport={{ once: true, margin: "200px" }}
                     transition={{ duration: 0.3, delay: delay + 0.15, ease: [0.34, 1.56, 0.64, 1] }}
                   />
 
@@ -86,7 +85,8 @@ export default function AppRoadmap() {
                       isPlanned ? "text-white/30" : "text-white/70"
                     }`}
                     initial={{ opacity: 0 }}
-                    animate={isInView ? { opacity: 1 } : {}}
+                    whileInView={{ opacity: 1 }}
+                    viewport={{ once: true, margin: "200px" }}
                     transition={{ duration: 0.3, delay: delay + 0.2 }}
                   >
                     {app.name}
@@ -98,7 +98,8 @@ export default function AppRoadmap() {
                       isPlanned ? "text-white/20" : style.labelColor
                     }`}
                     initial={{ opacity: 0 }}
-                    animate={isInView ? { opacity: 1 } : {}}
+                    whileInView={{ opacity: 1 }}
+                    viewport={{ once: true, margin: "200px" }}
                     transition={{ duration: 0.3, delay: delay + 0.25 }}
                   >
                     {isPlanned ? "Coming Soon" : style.label}

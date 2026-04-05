@@ -4,7 +4,7 @@ const StyleGuide = () => {
   return (
     <div className="min-h-screen bg-black text-white overflow-hidden">
       <SEO
-        title="Haste Brand Style Guide"
+        title="Style Guide"
         description="Brand style guide for Haste Conform Studio, including typography, colors, and logos."
         canonical="/style-guide"
       />

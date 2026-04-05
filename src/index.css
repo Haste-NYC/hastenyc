@@ -467,6 +467,15 @@
 }
 
 /* Right to left scrolling animation for trust badges */
+@keyframes trust-scroll {
+  from {
+    transform: translate3d(0, 0, 0);
+  }
+  to {
+    transform: translate3d(var(--scroll-distance), 0, 0);
+  }
+}
+
 @keyframes scroll-right-to-left {
   from {
     transform: translate3d(0, 0, 0);

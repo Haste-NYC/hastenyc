@@ -1,4 +1,5 @@
 import { motion } from "framer-motion";
+import { useEffect, useRef, useState } from "react";
 import nipcLogo from "@/assets/nipc-logo.png";
 import wavelengthLogo from "@/assets/wavelength-logo.png";
 import roastnpostLogo from "@/assets/roastnpost-logo.png";
@@ -8,20 +9,16 @@ import dungeonbeachLogo from "@/assets/dungeonbeach-logo.png";
 import niceshoesLogo from "@/assets/niceshoes-logo.png";
 import panupLogo from "@/assets/panup-logo.png";
 
-// Shared classes for consistent logo sizing
-const svgClass = "h-7 sm:h-8 md:h-10 w-auto fill-current";
-
 const RareMediumLogo = () => (
-  <img src={raremediumLogo} alt="Rare Medium" className="h-7 sm:h-8 md:h-10 w-auto opacity-40" />
+  <img src={raremediumLogo} alt="Rare Medium" className="h-7 sm:h-8 md:h-10 w-auto opacity-40" loading="eager" />
 );
 
-
 const DungeonBeachLogo = () => (
-  <img src={dungeonbeachLogo} alt="Dungeon Beach" className="h-5 sm:h-6 md:h-7 w-auto brightness-0 invert opacity-40" />
+  <img src={dungeonbeachLogo} alt="Dungeon Beach" className="h-5 sm:h-6 md:h-7 w-auto brightness-0 invert opacity-40" loading="eager" />
 );
 
 const NiceShoesLogo = () => (
-  <img src={niceshoesLogo} alt="Nice Shoes" className="h-8 sm:h-10 md:h-12 w-auto opacity-40" />
+  <img src={niceshoesLogo} alt="Nice Shoes" className="h-8 sm:h-10 md:h-12 w-auto opacity-40" loading="eager" />
 );
 
 const TransientLogo = () => (
@@ -30,27 +27,24 @@ const TransientLogo = () => (
   </svg>
 );
 
-// Image-based logos: brightness-0 invert turns dark logos white; opacity-40 matches SVG text-white/40
-const imgClass = "h-7 sm:h-8 md:h-10 w-auto opacity-40";
-
 const TabuLogo = () => (
-  <img src={tabuLogo} alt="Tabu Productions" className="h-4 sm:h-5 md:h-6 w-auto opacity-40" />
+  <img src={tabuLogo} alt="Tabu Productions" className="h-4 sm:h-5 md:h-6 w-auto opacity-40" loading="eager" />
 );
 
 const WavelengthLogo = () => (
-  <img src={wavelengthLogo} alt="Wavelength Productions" className="h-auto max-w-[100px] sm:max-w-[120px] md:max-w-[140px] opacity-40" />
+  <img src={wavelengthLogo} alt="Wavelength Productions" className="h-auto max-w-[100px] sm:max-w-[120px] md:max-w-[140px] opacity-40" loading="eager" />
 );
 
 const NIPCLogo = () => (
-  <img src={nipcLogo} alt="New International Picture Company" className="h-auto max-w-[90px] sm:max-w-[110px] md:max-w-[130px] brightness-0 invert opacity-40" />
+  <img src={nipcLogo} alt="New International Picture Company" className="h-auto max-w-[90px] sm:max-w-[110px] md:max-w-[130px] brightness-0 invert opacity-40" loading="eager" />
 );
 
 const RoastNPostLogo = () => (
-  <img src={roastnpostLogo} alt="Roast N Post" className="h-10 sm:h-12 md:h-14 w-auto opacity-40" />
+  <img src={roastnpostLogo} alt="Roast N Post" className="h-10 sm:h-12 md:h-14 w-auto opacity-40" loading="eager" />
 );
 
 const PanUpLogo = () => (
-  <img src={panupLogo} alt="Pan Up" className="h-auto max-w-[80px] sm:max-w-[90px] md:max-w-[110px] opacity-40" />
+  <img src={panupLogo} alt="Pan Up" className="h-auto max-w-[80px] sm:max-w-[90px] md:max-w-[110px] opacity-40" loading="eager" />
 );
 
 const partners = [
@@ -79,6 +73,52 @@ const LogoSet = () => (
 );
 
 const TrustBadgeBar = () => {
+  const trackRef = useRef<HTMLDivElement>(null);
+  const firstSetRef = useRef<HTMLDivElement>(null);
+  const [scrollWidth, setScrollWidth] = useState<number | null>(null);
+
+  useEffect(() => {
+    const firstSet = firstSetRef.current;
+    if (!firstSet) return;
+
+    // Wait for all images inside to load before measuring
+    const images = firstSet.querySelectorAll("img");
+    let loaded = 0;
+    const total = images.length;
+
+    const measure = () => {
+      setScrollWidth(firstSet.offsetWidth);
+    };
+
+    if (total === 0) {
+      measure();
+      return;
+    }
+
+    const onLoad = () => {
+      loaded++;
+      if (loaded >= total) measure();
+    };
+
+    images.forEach((img) => {
+      if (img.complete) {
+        loaded++;
+      } else {
+        img.addEventListener("load", onLoad);
+        img.addEventListener("error", onLoad);
+      }
+    });
+
+    if (loaded >= total) measure();
+
+    return () => {
+      images.forEach((img) => {
+        img.removeEventListener("load", onLoad);
+        img.removeEventListener("error", onLoad);
+      });
+    };
+  }, []);
+
   return (
     <section className="py-6 sm:py-12 relative" style={{ background: 'transparent' }}>
       {/* Label */}
@@ -100,9 +140,21 @@ const TrustBadgeBar = () => {
           WebkitMaskImage: "linear-gradient(to right, transparent, black 128px, black calc(100% - 128px), transparent)",
         }}
       >
-        {/* Two identical flex rows side-by-side, each animating independently */}
-        <div className="flex w-max animate-scroll-right-to-left items-center">
-          <div className="flex items-center flex-shrink-0">
+        <div
+          ref={trackRef}
+          className="flex w-max items-center"
+          style={{
+            willChange: "transform",
+            backfaceVisibility: "hidden",
+            animation: scrollWidth
+              ? `trust-scroll ${30}s linear infinite`
+              : "none",
+            opacity: scrollWidth ? 1 : 0,
+            // Use a custom property so the keyframes know the exact pixel offset
+            ["--scroll-distance" as string]: scrollWidth ? `-${scrollWidth}px` : "0px",
+          }}
+        >
+          <div ref={firstSetRef} className="flex items-center flex-shrink-0">
             <LogoSet />
           </div>
           <div className="flex items-center flex-shrink-0" aria-hidden="true">

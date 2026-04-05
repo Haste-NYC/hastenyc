@@ -24,7 +24,7 @@ interface SEOProps {
 }
 
 const BASE_URL = "https://www.haste.nyc";
-const DEFAULT_TITLE = "HASTE - AI-Powered Creative Technology";
+const DEFAULT_TITLE = "Conform Studio | Haste";
 const DEFAULT_DESCRIPTION = "Instant project migration from Adobe Premiere to Davinci Resolve. Haste Conform Studio uses AI to automate post-production. 300X faster timeline conform for film and TV. Built for studios, secure, and scalable.";
 const DEFAULT_IMAGE = `${BASE_URL}/og-image.png`;
 
@@ -37,7 +37,7 @@ const SEO = ({
   article,
   video,
 }: SEOProps) => {
-  const fullTitle = title ? `${title} | HASTE` : DEFAULT_TITLE;
+  const fullTitle = title ? `${title} | Haste` : DEFAULT_TITLE;
   const fullCanonical = canonical ? `${BASE_URL}${canonical}` : BASE_URL;
   const fullImage = image.startsWith("http") ? image : `${BASE_URL}${image}`;
 

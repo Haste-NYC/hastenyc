@@ -10,7 +10,7 @@ const GoogleFlowPost = () => {
   return (
     <div className="min-h-screen bg-background">
       <SEO
-        title="Google's Flow is the AI Video Editor We've Been Waiting For"
+        title="Google Flow"
         description="Google's Flow, the new AI-powered video engine in Workspace via Gemini, is a full-throated assault on video production barriers. Here's why it's about to torch the old guard."
         canonical="/blog/google-flow-workspace"
         type="article"

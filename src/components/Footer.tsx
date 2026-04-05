@@ -49,13 +49,12 @@ const Footer = ({ hideAsciiLogo = false }: { hideAsciiLogo?: boolean }) => {
       {/* Social & Contact Links */}
       <div className="flex flex-wrap justify-center items-center gap-x-4 gap-y-1.5 mt-7 sm:mt-8 px-4 sm:gap-x-0">
         {[
-          { label: 'E-MAIL', href: 'mailto:info@haste.nyc' },
+          { label: 'EMAIL', href: 'mailto:info@haste.nyc' },
           { label: 'INSTAGRAM', href: 'https://instagram.com/haste.nyc' },
           { label: 'YOUTUBE', href: 'https://www.youtube.com/channel/UCXtE1RONg-_D5EUI9-sxB_g' },
           { label: 'TIKTOK', href: 'https://www.tiktok.com/@haste.nyc' },
-          { label: 'FACEBOOK', href: 'https://facebook.com/hastenyc' },
           { label: 'LINKEDIN', href: 'https://linkedin.com/company/98756314' },
-          { label: 'TWITTER', href: 'https://twitter.com/@haste_nyc' },
+          { label: 'X', href: 'https://twitter.com/@haste_nyc' },
         ].map((link, i, arr) => (
           <span key={link.label} className="inline-flex items-center">
             <a
@@ -81,7 +80,8 @@ const Footer = ({ hideAsciiLogo = false }: { hideAsciiLogo?: boolean }) => {
       {/* Legal / Nav Links */}
       <div className="flex flex-wrap justify-center items-center gap-x-4 gap-y-1.5 mt-4 px-4 sm:gap-x-0">
         {[
-          { label: 'Production Company', to: '/about' },
+          { label: 'About', to: '/about' },
+          { label: 'Production Company', href: 'https://www.haste.studio' },
           { label: 'Terms of Service', to: '/terms' },
           { label: 'Privacy Notice', to: '/privacy' },
           { label: 'License Agreement', to: '/eula' },
@@ -89,17 +89,33 @@ const Footer = ({ hideAsciiLogo = false }: { hideAsciiLogo?: boolean }) => {
           { label: 'Blog', to: '/blog' },
         ].map((item, i, arr) => (
           <span key={item.label} className="inline-flex items-center">
-            <Link
-              to={item.to}
-              className="text-white/30 hover:text-white/50 no-underline transition-colors duration-200 uppercase"
-              style={{
-                fontSize: '9px',
-                letterSpacing: '0.12em',
-                fontFamily: '-apple-system, BlinkMacSystemFont, sans-serif',
-              }}
-            >
-              {item.label}
-            </Link>
+            {'href' in item ? (
+              <a
+                href={item.href}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="text-white/30 hover:text-white/50 no-underline transition-colors duration-200 uppercase"
+                style={{
+                  fontSize: '9px',
+                  letterSpacing: '0.12em',
+                  fontFamily: '-apple-system, BlinkMacSystemFont, sans-serif',
+                }}
+              >
+                {item.label}
+              </a>
+            ) : (
+              <Link
+                to={item.to}
+                className="text-white/30 hover:text-white/50 no-underline transition-colors duration-200 uppercase"
+                style={{
+                  fontSize: '9px',
+                  letterSpacing: '0.12em',
+                  fontFamily: '-apple-system, BlinkMacSystemFont, sans-serif',
+                }}
+              >
+                {item.label}
+              </Link>
+            )}
             {i < arr.length - 1 && (
               <span className="text-white/10 mx-2 text-[7px] select-none hidden sm:inline">&middot;</span>
             )}

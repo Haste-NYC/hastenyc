@@ -178,7 +178,7 @@ const PremiereRewind = () => {
   return (
     <div className="min-h-screen flex flex-col bg-background overflow-x-hidden relative">
       <SEO
-        title="Premiere Rewind - Version Rollback for .prproj Files"
+        title="Premiere Rewind"
         description="Open newer Premiere Pro projects in older versions. Drag and drop your .prproj files for instant version rollback. Free, fast, and secure."
         canonical="/premiere-rewind"
       />

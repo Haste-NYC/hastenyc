@@ -13,7 +13,7 @@ const BlogPost = () => {
   return (
     <div className="min-h-screen bg-background">
       <SEO
-        title="Adobe MAX 2025 - AI-Powered Creative Tools Revolution"
+        title="Adobe MAX 2025"
         description="Adobe MAX 2025 redefines creativity with AI-powered tools including Project Frame Forward, AI Light Control, and Smart Audio Correction. The future of creative production."
         canonical="/blog/adobe-max-2025"
         type="article"

@@ -9,7 +9,7 @@ const VfxStoragePost = () => {
   return (
     <div className="min-h-screen bg-background">
       <SEO
-        title="Engineering Storage for Global-Scale Post"
+        title="VFX Storage"
         description="How the world's leading VFX studios and editorial post houses engineer storage for global-scale pipelines."
         canonical="/blog/global-storage-post"
         type="article"
