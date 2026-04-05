@@ -66,7 +66,7 @@ const Eula = () => {
   return (
     <div className="bg-background">
       <SEO
-        title="End User License Agreement"
+        title="License Agreement"
         description="End User License Agreement for Conform Studio by Haste.NYC LLC."
         canonical="/eula"
       />

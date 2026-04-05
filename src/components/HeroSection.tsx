@@ -118,8 +118,8 @@ const HeroSection = () => {
     if (lenis) {
       lenis.scrollTo("#pricing", {
         offset: -40,
-        duration: 1.2,
-        easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)),
+        duration: 2.5,
+        easing: (t) => t < 0.3 ? (1 / 0.3) * t * t * t / (0.3 * 0.3) : 1 - Math.pow(1 - (t - 0.3) / 0.7, 4),
       });
     } else {
       document.getElementById("pricing")?.scrollIntoView({ behavior: "smooth" });
@@ -220,7 +220,7 @@ const HeroSection = () => {
             onClick={scrollToPricing}
             className="bg-transparent text-white font-medium text-sm sm:text-base px-6 sm:px-8 py-2.5 sm:py-3 rounded-full border border-white/80 hover:bg-white/10 transition-colors"
           >
-            Get Started
+            Start Your Free Trial
           </button>
         </motion.div>
       </div>

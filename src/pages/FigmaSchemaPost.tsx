@@ -12,7 +12,7 @@ const FigmaSchemaPost = () => {
   return (
     <div className="min-h-screen bg-background">
       <SEO
-        title="Figma Schema 2025 - The Future of Design Systems"
+        title="Figma Schema 2025"
         description="Figma Schema 2025 brings MCP server integration, component slots, extended collections, and 10x performance improvements. The future of design systems is here."
         canonical="/blog/figma-schema-2025"
         type="article"

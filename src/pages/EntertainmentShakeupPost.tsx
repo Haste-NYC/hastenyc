@@ -15,7 +15,7 @@ const EntertainmentShakeupPost = () => {
   return (
     <div className="min-h-screen bg-background">
       <SEO
-        title="Paramount's Hostile Takeover Attempt on Warner Bros"
+        title="Paramount Shakeup"
         description="Paramount launches hostile bid for Warner Bros as Netflix competes for streaming dominance. Analysis of the $82.7B deal and its economic implications."
         canonical="/blog/entertainment-shakeup"
         type="article"

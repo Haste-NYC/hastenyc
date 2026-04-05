@@ -65,7 +65,7 @@ const Privacy = () => {
   return (
     <div className="bg-background">
       <SEO
-        title="Privacy Policy"
+        title="Privacy"
         description="Privacy Policy for Haste.NYC LLC. Learn how we collect, use, share, and protect your personal information."
         canonical="/privacy"
       />
