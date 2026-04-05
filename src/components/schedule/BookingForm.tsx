@@ -130,20 +130,11 @@ const BookingForm = ({
           />
         </div>
 
-        <div className="flex gap-3 pt-4">
-          <Button
-            type="button"
-            onClick={onBack}
-            variant="outline"
-            className="bg-transparent border-white/10 text-white hover:bg-white/5"
-          >
-            <ArrowLeft className="w-4 h-4 mr-2" />
-            Back
-          </Button>
+        <div className="pt-4">
           <Button
             type="submit"
             disabled={isSubmitting}
-            className="flex-1 bg-transparent border border-white/25 text-white/80 hover:bg-white/5 hover:border-white/40 hover:text-white font-semibold"
+            className="w-full bg-transparent border border-white/25 text-white/80 hover:bg-white/5 hover:border-white/40 hover:text-white font-semibold"
           >
             {isSubmitting ? (
               <>

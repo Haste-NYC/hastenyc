@@ -31,7 +31,7 @@ export default function AppRoadmap() {
         viewport={{ once: true, margin: "-80px" }}
         transition={{ duration: 0.5 }}
       >
-        <h3 className="text-xs md:text-sm uppercase tracking-[0.2em] text-white/40 mb-8 md:mb-10 text-center">
+        <h3 className="text-[9px] md:text-sm uppercase tracking-[0.2em] text-white/40 mb-4 md:mb-10 text-center">
           Application Support Roadmap
         </h3>
 
@@ -39,7 +39,7 @@ export default function AppRoadmap() {
         <div className="relative">
           {/* Horizontal line - animates width left to right */}
           <motion.div
-            className="absolute top-[38px] md:top-[46px] left-0 h-px bg-white/10 origin-left"
+            className="absolute top-[26px] md:top-[46px] left-0 h-px bg-white/10 origin-left"
             initial={{ scaleX: 0 }}
             animate={isInView ? { scaleX: 1 } : {}}
             transition={{ duration: 1.2, ease: "easeOut", delay: 0.2 }}
@@ -65,7 +65,7 @@ export default function AppRoadmap() {
                   <motion.img
                     src={app.icon}
                     alt={app.name}
-                    className={`w-7 h-7 md:w-9 md:h-9 rounded-lg relative z-10 ${isPlanned ? "opacity-25 grayscale" : "opacity-80"}`}
+                    className={`w-5 h-5 md:w-9 md:h-9 rounded-md md:rounded-lg relative z-10 ${isPlanned ? "opacity-25 grayscale" : "opacity-80"}`}
                     loading="lazy"
                     initial={{ scale: 0.5 }}
                     animate={isInView ? { scale: 1 } : {}}
@@ -74,15 +74,15 @@ export default function AppRoadmap() {
 
                   {/* Dot */}
                   <motion.div
-                    className={`w-[5px] h-[5px] rounded-full ${style.dot} mt-2`}
+                    className={`w-[4px] h-[4px] md:w-[5px] md:h-[5px] rounded-full ${style.dot} mt-1.5 md:mt-2`}
                     initial={{ scale: 0 }}
                     animate={isInView ? { scale: 1 } : {}}
                     transition={{ duration: 0.3, delay: delay + 0.15, ease: [0.34, 1.56, 0.64, 1] }}
                   />
 
-                  {/* App name */}
+                  {/* App name - hidden on mobile */}
                   <motion.span
-                    className={`mt-2 text-[8px] md:text-[11px] font-medium uppercase tracking-[0.06em] text-center leading-tight ${
+                    className={`mt-1 md:mt-2 text-[6px] md:text-[11px] font-medium uppercase tracking-[0.04em] md:tracking-[0.06em] text-center leading-tight hidden md:block ${
                       isPlanned ? "text-white/30" : "text-white/70"
                     }`}
                     initial={{ opacity: 0 }}
@@ -92,9 +92,9 @@ export default function AppRoadmap() {
                     {app.name}
                   </motion.span>
 
-                  {/* Status label */}
+                  {/* Status label - hidden on mobile */}
                   <motion.span
-                    className={`mt-1 text-[7px] md:text-[8px] uppercase tracking-[0.1em] ${
+                    className={`mt-1 text-[7px] md:text-[8px] uppercase tracking-[0.1em] hidden md:block ${
                       isPlanned ? "text-white/20" : style.labelColor
                     }`}
                     initial={{ opacity: 0 }}

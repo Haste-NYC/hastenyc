@@ -4,6 +4,7 @@ import HeroSection from "@/components/HeroSection";
 import TrustBadgeBar from "@/components/TrustBadgeBar";
 import VideoSection from "@/components/VideoSection";
 import ImpactStatement from "@/components/features/ImpactStatement";
+import { motion } from "framer-motion";
 import HeroFeatures from "@/components/features/HeroFeatures";
 import FeatureGrid from "@/components/features/FeatureGrid";
 import CLISection from "@/components/features/CLISection";
@@ -74,6 +75,117 @@ const Vignette = () => (
 
 const isMobile = typeof window !== "undefined" && window.innerWidth < 768;
 
+// Mobile: text with play button at bottom, video launches fullscreen
+function MobileTextWithVideo() {
+  const [showVideo, setShowVideo] = useState(false);
+
+  const handlePlay = () => {
+    setShowVideo(true);
+  };
+
+  const words = [
+    { text: "Stop", dim: false },
+    { text: "rebuilding", dim: false },
+    { text: "timelines.", dim: false },
+    { text: "Start", dim: false },
+    { text: "finishing.", dim: false },
+    { text: "Let", dim: true },
+    { text: "us", dim: true },
+    { text: "handle", dim: true },
+    { text: "the", dim: true },
+    { text: "hard", dim: true },
+    { text: "work", dim: true },
+    { text: "for", dim: true },
+    { text: "you.", dim: true },
+    { text: "Project", dim: false },
+    { text: "migration", dim: false },
+    { text: "done", dim: false },
+    { text: "in", dim: false },
+    { text: "minutes,", dim: false },
+    { text: "not", dim: false },
+    { text: "days.", dim: false },
+  ];
+
+  return (
+    <div className="snap-section flex flex-col justify-between px-5 bg-background">
+
+      {/* Text centered vertically with flex-grow spacers */}
+      <div className="flex-1" />
+      <div>
+        <h2
+          className="font-black tracking-tight leading-[1.1] uppercase flex flex-wrap gap-x-[0.22em]"
+          style={{ fontSize: "clamp(26px, 7.5vw, 42px)", letterSpacing: "-0.03em" }}
+        >
+          {words.map((word, i) => (
+            <motion.span
+              key={i}
+              initial={{ opacity: 0, y: 10 }}
+              whileInView={{ opacity: word.dim ? 0.4 : 1, y: 0 }}
+              viewport={{ once: true }}
+              transition={{ duration: 0.25, delay: i * 0.08 }}
+              style={{ display: "inline-block" }}
+            >
+              {word.text}
+            </motion.span>
+          ))}
+        </h2>
+      </div>
+      <div className="flex-1" />
+
+      {/* Play button at bottom */}
+      <motion.div
+        className="flex flex-col items-center gap-3 pb-10"
+        initial={{ opacity: 0 }}
+        whileInView={{ opacity: 1 }}
+        viewport={{ once: true }}
+        transition={{ duration: 0.5, delay: 1.5 }}
+      >
+        <span className="text-[10px] uppercase tracking-[0.2em] text-white/30">
+          See it in action
+        </span>
+        <button
+          onClick={handlePlay}
+          className="flex items-center gap-2.5 px-6 py-3 rounded-full border border-white/20 hover:border-white/40 transition-colors"
+        >
+          <svg className="w-4 h-4 text-white/70" viewBox="0 0 24 24" fill="currentColor">
+            <path d="M8 5v14l11-7z" />
+          </svg>
+          <span className="text-sm text-white/70 font-medium tracking-wide">Play Video</span>
+        </button>
+      </motion.div>
+
+      {/* Fullscreen video overlay */}
+      {showVideo && (
+        <motion.div
+          className="fixed inset-0 z-[100] bg-black flex items-center justify-center"
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          transition={{ duration: 0.3 }}
+        >
+          <button
+            onClick={() => setShowVideo(false)}
+            className="absolute top-4 right-4 z-10 w-10 h-10 flex items-center justify-center rounded-full bg-white/10"
+          >
+            <svg className="w-5 h-5 text-white" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round">
+              <line x1="18" y1="6" x2="6" y2="18" />
+              <line x1="6" y1="6" x2="18" y2="18" />
+            </svg>
+          </button>
+          <div className="w-full px-2" style={{ padding: "56.25% 0 0 0", position: "relative" }}>
+            <iframe
+              src="https://player.vimeo.com/video/1081347302?autoplay=1&badge=0&autopause=0&player_id=0&app_id=58479"
+              frameBorder="0"
+              allow="autoplay; fullscreen; picture-in-picture"
+              style={{ position: "absolute", top: 0, left: 0, width: "100%", height: "100%" }}
+              title="CONFORMSTUDIO-WEBSITE-R1"
+            />
+          </div>
+        </motion.div>
+      )}
+    </div>
+  );
+}
+
 const Index = () => {
   const heroRef = useRef<HTMLElement>(null);
 
@@ -112,11 +224,13 @@ const Index = () => {
       />
       {/* Persistent vignette overlay */}
       <Vignette />
-      {/* Lava lamp background - pauses when hero scrolls out of view */}
-      <LavaLampBackground
-        className="fixed inset-0 w-full h-full z-0"
-        visibilityRef={heroRef}
-      />
+      {/* Lava lamp background - fixed on desktop, inside hero on mobile */}
+      {!isMobile && (
+        <LavaLampBackground
+          className="fixed inset-0 w-full h-full z-0"
+          visibilityRef={heroRef}
+        />
+      )}
       {/* Continuous atmospheric gradients across all sections including footer */}
       <div className="absolute inset-0 overflow-hidden pointer-events-none z-0">
         <PageAtmosphere />
@@ -124,32 +238,43 @@ const Index = () => {
       <Header />
       <main>
         {/* Hero - full viewport height on mobile */}
-        <section id="hero" ref={heroRef} className="sm:pt-10 relative overflow-visible snap-section flex flex-col justify-center">
+        <section id="hero" ref={heroRef} className="sm:pt-10 relative overflow-hidden snap-section flex flex-col justify-center">
+          {/* Lava lamp inside hero on mobile - scrolls away with section, no flicker */}
+          {isMobile && (
+            <LavaLampBackground
+              className="absolute inset-0 w-full h-full z-0"
+            />
+          )}
           <HeroSection />
+          <TrustBadgeBar />
         </section>
 
-        <TrustBadgeBar />
+        {/* Text + Video */}
+        {isMobile ? (
+          <MobileTextWithVideo />
+        ) : (
+          <div className="relative overflow-visible bg-background snap-section-center flex flex-col justify-center">
+            <VideoSection />
+          </div>
+        )}
 
-        {/* Video Section */}
-        <div className="relative overflow-visible bg-background snap-section-center flex flex-col justify-center">
-          <VideoSection />
-        </div>
-
-        {/* Impact Statement */}
-        <section id="features" className="relative overflow-visible bg-background">
-          <div
-            className="absolute left-0 right-0 pointer-events-none z-0"
-            style={{
-              top: "-100px",
-              bottom: "-100px",
-              background: "radial-gradient(ellipse 120% 90% at 50% 40%, rgba(70, 110, 245, 0.12) 0%, rgba(70, 110, 245, 0.03) 35%, transparent 60%)",
-            }}
-          />
-          <ImpactStatement />
-        </section>
+        {/* Impact Statement - desktop only (scroll-driven) */}
+        {!isMobile && (
+          <section id="features" className="relative overflow-visible bg-background">
+            <div
+              className="absolute left-0 right-0 pointer-events-none z-0"
+              style={{
+                top: "-100px",
+                bottom: "-100px",
+                background: "radial-gradient(ellipse 120% 90% at 50% 40%, rgba(70, 110, 245, 0.12) 0%, rgba(70, 110, 245, 0.03) 35%, transparent 60%)",
+              }}
+            />
+            <ImpactStatement />
+          </section>
+        )}
 
         {/* 3D Visualization */}
-        <section className="py-10 sm:py-20 px-4 sm:px-6 md:px-12 lg:px-20 relative overflow-visible bg-background snap-section-center flex flex-col justify-center">
+        <section className="py-4 sm:py-20 px-4 sm:px-6 md:px-12 lg:px-20 relative overflow-visible bg-background snap-section flex flex-col justify-start pt-[56px] md:justify-center md:pt-0 md:snap-section-center">
           <div
             className="absolute left-0 right-0 pointer-events-none z-0"
             style={{
@@ -158,16 +283,22 @@ const Index = () => {
               background: "radial-gradient(ellipse 160% 140% at 50% 50%, rgba(70, 110, 245, 0.12) 0%, rgba(70, 110, 245, 0.04) 30%, transparent 55%)",
             }}
           />
-          <div className="max-w-7xl mx-auto w-full min-h-[600px]">
+          <div className="max-w-7xl mx-auto w-full flex-1 md:min-h-[600px] md:flex-none">
             <LazyOnView>
-              <Suspense fallback={<div className="h-[600px] flex items-center justify-center"><div className="w-8 h-8 border-2 border-white/20 border-t-white/60 rounded-full animate-spin" /></div>}>
+              <Suspense fallback={<div className="h-full md:h-[600px] flex items-center justify-center"><div className="w-8 h-8 border-2 border-white/20 border-t-white/60 rounded-full animate-spin" /></div>}>
                 <Conform3DVisualization />
               </Suspense>
             </LazyOnView>
           </div>
+          {/* App Roadmap - pinned to bottom on mobile */}
+          {isMobile && (
+            <div className="relative z-10 pb-3">
+              <AppRoadmap />
+            </div>
+          )}
         </section>
 
-        {/* Hero Features - top 3 */}
+        {/* Hero Features */}
         <section className="relative overflow-visible bg-background">
           <div
             className="absolute left-0 right-0 pointer-events-none z-0"
@@ -188,13 +319,13 @@ const Index = () => {
           <HeroFeatures />
         </section>
 
-        {/* App Roadmap */}
-        <section className="py-10 sm:py-14 relative overflow-visible bg-background">
+        {/* App Roadmap - desktop only (on mobile it's inside 3D section) */}
+        <section className="hidden md:block py-10 sm:py-14 relative overflow-visible bg-background">
           <AppRoadmap />
         </section>
 
-        {/* Feature Grid - detailed capabilities */}
-        <section className="py-12 md:py-20 relative overflow-visible bg-background">
+        {/* Feature Grid - detailed capabilities (desktop only) */}
+        <section className="hidden md:block py-12 md:py-20 relative overflow-visible bg-background">
           <div
             className="absolute left-0 right-0 pointer-events-none z-0"
             style={{
@@ -207,7 +338,7 @@ const Index = () => {
         </section>
 
         {/* CLI / Pipeline Integration */}
-        <section className="py-12 md:py-20 relative overflow-visible bg-background">
+        <section className="py-12 md:py-20 relative overflow-visible bg-background snap-section">
           <div
             className="absolute left-0 right-0 pointer-events-none z-0"
             style={{
@@ -220,7 +351,7 @@ const Index = () => {
         </section>
 
         {/* Feature Comparison Chart */}
-        <section className="py-10 sm:py-20 relative overflow-visible bg-background snap-section-center flex flex-col justify-center">
+        <section className="py-10 sm:py-20 relative overflow-y-auto bg-background snap-section flex flex-col justify-start pt-[60px] md:justify-center md:pt-0 md:snap-section-center">
           <div
             className="absolute left-0 right-0 pointer-events-none z-0"
             style={{
@@ -233,7 +364,7 @@ const Index = () => {
         </section>
 
         {/* Pricing - full viewport on mobile */}
-        <section id="pricing" className="py-10 sm:py-20 relative overflow-visible bg-background snap-section-center flex flex-col justify-center">
+        <section id="pricing" className="py-10 sm:py-20 relative overflow-y-auto bg-background snap-section flex flex-col justify-start pt-[60px] md:justify-center md:pt-0 md:snap-section-center">
           <div
             className="absolute left-0 right-0 pointer-events-none z-0"
             style={{
@@ -254,7 +385,7 @@ const Index = () => {
         </section>
 
         {/* FAQ - scrollable content */}
-        <section id="faq" className="py-10 sm:py-20 relative overflow-visible bg-background snap-section-center flex flex-col justify-center">
+        <section id="faq" className="py-10 sm:py-20 relative overflow-y-auto bg-background snap-section-auto flex flex-col justify-start pt-[60px] md:justify-center md:pt-0 md:snap-section-center">
           <div
             className="absolute left-0 right-0 pointer-events-none z-0"
             style={{

@@ -53,7 +53,22 @@ const Schedule = () => {
 
   const handleTimeSelect = (time: string) => {
     setSelectedTime(time);
+    setStep("form");
+    window.history.pushState({ step: "form" }, "");
   };
+
+  // Browser back button returns to calendar
+  useEffect(() => {
+    const handlePopState = () => {
+      if (step === "form") {
+        setStep("select");
+      } else if (step === "confirmation") {
+        setStep("select");
+      }
+    };
+    window.addEventListener("popstate", handlePopState);
+    return () => window.removeEventListener("popstate", handlePopState);
+  }, [step]);
 
   const handleContinue = () => {
     if (selectedDate && selectedTime) {
@@ -81,7 +96,7 @@ const Schedule = () => {
   };
 
   return (
-    <div className="min-h-screen bg-background overflow-x-hidden relative">
+    <div className="h-screen md:min-h-screen bg-background overflow-x-hidden overflow-y-auto md:overflow-y-visible relative">
       <SEO
         title="Schedule a Demo"
         description="Book a 30-minute demo of Haste Conform Studio. See how AI-powered timeline migration works for your post-production workflow."
@@ -90,24 +105,21 @@ const Schedule = () => {
       <PageAtmosphere />
       <Header />
 
-      <main className="relative z-10 pt-32 pb-24 px-4 sm:px-6">
-        <div className="max-w-3xl mx-auto">
+      <main className="relative z-10 pt-16 md:pt-32 pb-4 md:pb-24 px-4 sm:px-6 h-[calc(100vh-52px)] md:h-auto flex flex-col">
+        <div className="max-w-3xl mx-auto w-full flex-1 flex flex-col min-h-0">
           {/* Section Label & Heading */}
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.5 }}
-            className="text-center mb-12"
+            className="text-center mb-4 md:mb-12"
           >
-            <p className="text-white/30 text-xs uppercase tracking-[0.2em] mb-4">
-              [ Schedule ]
+            <p className="text-white/30 text-xs uppercase tracking-[0.2em] mb-2 md:mb-4">
+              [ Schedule Call ]
             </p>
-            <h1 className="text-2xl md:text-4xl font-bold text-white mb-4">
-              Conform Studio | Demo
-            </h1>
 
             {/* Info Badges */}
-            <div className="flex flex-wrap items-center justify-center gap-3 mt-6">
+            <div className="flex flex-wrap items-center justify-center gap-2 md:gap-3 mt-2 md:mt-6">
               <span className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-white/5 border border-white/10 text-white/50 text-xs">
                 <Clock className="w-3.5 h-3.5" />
                 30 min
@@ -132,6 +144,7 @@ const Schedule = () => {
                 animate={{ opacity: 1, y: 0 }}
                 exit={{ opacity: 0, y: -10 }}
                 transition={{ duration: 0.3 }}
+                className="flex-1 overflow-y-auto min-h-0 md:overflow-visible md:flex-none"
               >
                 <ScheduleCalendar
                   availability={availability}
@@ -154,21 +167,6 @@ const Schedule = () => {
                   </a>
                 </p>
 
-                {/* Continue button */}
-                {selectedTime && (
-                  <motion.div
-                    initial={{ opacity: 0, y: 10 }}
-                    animate={{ opacity: 1, y: 0 }}
-                    className="mt-6 flex justify-end"
-                  >
-                    <button
-                      onClick={handleContinue}
-                      className="px-8 py-3 rounded-lg bg-transparent border border-white/25 text-white/80 hover:bg-white/5 hover:border-white/40 hover:text-white font-semibold text-sm transition-all"
-                    >
-                      Continue
-                    </button>
-                  </motion.div>
-                )}
               </motion.div>
             )}
 

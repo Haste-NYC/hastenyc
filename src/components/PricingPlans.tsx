@@ -83,20 +83,9 @@ const PricingPlans = ({
 }: PricingPlansProps) => {
   const navigate = useNavigate();
   const [isYearly, setIsYearly] = useState(true);
-  const [activeCardIndex, setActiveCardIndex] = useState(1);
+  const [activeCardIndex, setActiveCardIndex] = useState(0);
   const scrollContainerRef = useRef<HTMLDivElement>(null);
   const cardRefs = useRef<(HTMLDivElement | null)[]>([]);
-
-  // Scroll to Studio card (index 1) on mount for mobile
-  useEffect(() => {
-    const container = scrollContainerRef.current;
-    if (!container || window.innerWidth >= 640) return;
-    requestAnimationFrame(() => {
-      const cardWidth = container.offsetWidth * 0.85;
-      const gap = 16;
-      container.scrollTo({ left: cardWidth + gap, behavior: "instant" });
-    });
-  }, []);
 
   // Track which card is most visible using Intersection Observer
   // Responds to viewport changes (e.g. device rotation) via matchMedia
@@ -194,7 +183,7 @@ const PricingPlans = ({
 
 
   return (
-    <div className="w-full space-y-8">
+    <div className="w-full space-y-4 sm:space-y-8">
       {/* Billing Toggle */}
       <div className="flex items-center justify-center">
         <div className="relative flex items-center gap-4">
@@ -303,8 +292,6 @@ const PricingPlans = ({
                     disabled={isCheckoutLoading}
                     className={`w-full rounded-full py-5 text-sm font-medium transition-all duration-200 ${
                       isRedirecting(tier) || isSelected(tier)
-                        ? "bg-white hover:bg-gray-100 text-gray-900"
-                        : tier.popular
                         ? "bg-white hover:bg-gray-100 text-gray-900"
                         : "bg-transparent hover:bg-white/5 text-white border border-white/20 hover:border-white/40"
                     }`}

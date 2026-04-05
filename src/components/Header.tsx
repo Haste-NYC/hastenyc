@@ -51,14 +51,21 @@ const Header = ({ minimal = false }: { minimal?: boolean }) => {
   }, []);
 
   const scrollToSection = (id: string) => {
-    lenis?.scrollTo(`#${id}`, {
-      offset: -40,
-      duration: 1.2,
-      easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)),
-    });
-
     setMobileMenuOpen(false);
     setProductsOpen(false);
+
+    // Small delay to let mobile menu close before scrolling
+    setTimeout(() => {
+      if (lenis) {
+        lenis.scrollTo(`#${id}`, {
+          offset: -40,
+          duration: 1.2,
+          easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)),
+        });
+      } else {
+        document.getElementById(id)?.scrollIntoView({ behavior: "smooth" });
+      }
+    }, 100);
   };
 
   const scrollToPricing = () => scrollToSection("pricing");
@@ -123,13 +130,6 @@ const Header = ({ minimal = false }: { minimal?: boolean }) => {
               </a>
             ))}
 
-            {/* About link */}
-            <Link
-              to="/about"
-              className="text-xs uppercase tracking-wider transition-colors text-foreground/60 hover:text-foreground"
-            >
-              About
-            </Link>
           </div>
         </div>
 
@@ -201,13 +201,6 @@ const Header = ({ minimal = false }: { minimal?: boolean }) => {
                   {link.label}
                 </a>
               ))}
-              <Link
-                to="/about"
-                className="text-foreground/60 text-lg uppercase tracking-wider"
-                onClick={() => setMobileMenuOpen(false)}
-              >
-                About
-              </Link>
               <Link
                 to="/schedule"
                 className="text-foreground/60 text-lg uppercase tracking-wider"

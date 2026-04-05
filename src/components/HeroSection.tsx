@@ -115,11 +115,15 @@ const HeroSection = () => {
   const backgroundY = useTransform(scrollYProgress, [0, 1], ["0%", "30%"]);
 
   const scrollToPricing = () => {
-    lenis?.scrollTo("#pricing", {
-      offset: -40,
-      duration: 1.2,
-      easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)),
-    });
+    if (lenis) {
+      lenis.scrollTo("#pricing", {
+        offset: -40,
+        duration: 1.2,
+        easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)),
+      });
+    } else {
+      document.getElementById("pricing")?.scrollIntoView({ behavior: "smooth" });
+    }
   };
 
   return (
@@ -198,11 +202,11 @@ const HeroSection = () => {
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.6, delay: 0.35 }}
-          className="text-xs md:text-sm max-w-[300px] md:max-w-3xl mx-auto leading-relaxed uppercase tracking-[0.06em] pt-6"
+          className="hidden text-xs md:text-sm max-w-[300px] md:max-w-3xl mx-auto leading-relaxed uppercase tracking-[0.06em] pt-6"
         >
-          <span className="text-foreground/60">We believe creatives should spend their time creating.</span>
+          <span className="text-foreground/60">We automated the conform process.</span>
           <br className="hidden md:block" />{" "}
-          <span className="text-foreground">Frame-accurate, TPN+ compliant, built by filmmakers for filmmakers.</span>
+          <span className="text-foreground">Frame-accurate project hand off between post-production tools, built by filmmakers for filmmakers.</span>
         </motion.p>
 
         {/* CTA Button - white pill style */}

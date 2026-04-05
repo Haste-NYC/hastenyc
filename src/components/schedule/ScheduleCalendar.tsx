@@ -15,6 +15,84 @@ interface ScheduleCalendarProps {
   onMonthChange: (startDate: string, endDate: string) => void;
 }
 
+const SLOTS_PER_PAGE = 4;
+
+function PaginatedSlots({
+  slots,
+  selectedTime,
+  selectedDateStr,
+  dayLabel,
+  selectedDate,
+  onTimeSelect,
+}: {
+  slots: string[];
+  selectedTime: string | undefined;
+  selectedDateStr: string | null;
+  dayLabel: string | undefined;
+  selectedDate: Date | undefined;
+  onTimeSelect: (time: string) => void;
+}) {
+  const [page, setPage] = useState(0);
+  const totalPages = Math.ceil(slots.length / SLOTS_PER_PAGE);
+  const visibleSlots = slots.slice(page * SLOTS_PER_PAGE, (page + 1) * SLOTS_PER_PAGE);
+
+  // Reset page when date changes
+  useEffect(() => {
+    setPage(0);
+  }, [selectedDateStr]);
+
+  return (
+    <div>
+      <p className="text-white/40 text-xs uppercase tracking-wider mb-4">
+        {dayLabel}, {selectedDate && format(selectedDate, "MMMM d")}
+      </p>
+      <div className="grid grid-cols-2 gap-2">
+        {visibleSlots.map((slot) => {
+          const isActive = selectedTime === slot;
+          const displayTime = selectedDateStr
+            ? convertSlotToLocal(selectedDateStr, slot)
+            : slot;
+
+          return (
+            <button
+              key={slot}
+              onClick={() => onTimeSelect(slot)}
+              className={`px-4 py-2.5 rounded-lg text-sm font-medium transition-all duration-200 border ${
+                isActive
+                  ? "bg-white/10 border-white/40 text-white"
+                  : "bg-white/5 border-white/10 text-white/70 hover:bg-white/10 hover:border-white/20"
+              }`}
+            >
+              {displayTime}
+            </button>
+          );
+        })}
+      </div>
+      {totalPages > 1 && (
+        <div className="flex items-center justify-between mt-3">
+          <button
+            onClick={() => setPage((p) => Math.max(0, p - 1))}
+            disabled={page === 0}
+            className="text-xs text-white/40 hover:text-white/70 disabled:opacity-20 disabled:hover:text-white/40 transition-colors px-2 py-1"
+          >
+            Earlier
+          </button>
+          <span className="text-[10px] text-white/25 uppercase tracking-wider">
+            {page + 1} / {totalPages}
+          </span>
+          <button
+            onClick={() => setPage((p) => Math.min(totalPages - 1, p + 1))}
+            disabled={page >= totalPages - 1}
+            className="text-xs text-white/40 hover:text-white/70 disabled:opacity-20 disabled:hover:text-white/40 transition-colors px-2 py-1"
+          >
+            Later
+          </button>
+        </div>
+      )}
+    </div>
+  );
+}
+
 const ScheduleCalendar = ({
   availability,
   isLoading,
@@ -134,33 +212,14 @@ const ScheduleCalendar = ({
               )}
             </div>
           ) : (
-            <div>
-              <p className="text-white/40 text-xs uppercase tracking-wider mb-4">
-                {dayData?.dayLabel}, {selectedDate && format(selectedDate, "MMMM d")}
-              </p>
-              <div className="grid grid-cols-2 gap-2">
-                {slots.map((slot) => {
-                  const isActive = selectedTime === slot;
-                  const displayTime = selectedDateStr
-                    ? convertSlotToLocal(selectedDateStr, slot)
-                    : slot;
-
-                  return (
-                    <button
-                      key={slot}
-                      onClick={() => onTimeSelect(slot)}
-                      className={`px-4 py-2.5 rounded-lg text-sm font-medium transition-all duration-200 border ${
-                        isActive
-                          ? "bg-white/10 border-white/40 text-white"
-                          : "bg-white/5 border-white/10 text-white/70 hover:bg-white/10 hover:border-white/20"
-                      }`}
-                    >
-                      {displayTime}
-                    </button>
-                  );
-                })}
-              </div>
-            </div>
+            <PaginatedSlots
+              slots={slots}
+              selectedTime={selectedTime}
+              selectedDateStr={selectedDateStr}
+              dayLabel={dayData?.dayLabel}
+              selectedDate={selectedDate}
+              onTimeSelect={onTimeSelect}
+            />
           )}
         </div>
       </div>

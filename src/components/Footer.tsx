@@ -47,20 +47,21 @@ const Footer = ({ hideAsciiLogo = false }: { hideAsciiLogo?: boolean }) => {
       </p>
 
       {/* Social & Contact Links */}
-      <div className="flex flex-wrap justify-center items-center gap-x-4 gap-y-1.5 mt-7 sm:mt-8 mb-28 px-4 sm:gap-x-0">
+      <div className="flex flex-wrap justify-center items-center gap-x-4 gap-y-1.5 mt-7 sm:mt-8 px-4 sm:gap-x-0">
         {[
           { label: 'E-MAIL', href: 'mailto:info@haste.nyc' },
           { label: 'INSTAGRAM', href: 'https://instagram.com/haste.nyc' },
           { label: 'YOUTUBE', href: 'https://www.youtube.com/channel/UCXtE1RONg-_D5EUI9-sxB_g' },
           { label: 'TIKTOK', href: 'https://www.tiktok.com/@haste.nyc' },
+          { label: 'FACEBOOK', href: 'https://facebook.com/hastenyc' },
           { label: 'LINKEDIN', href: 'https://linkedin.com/company/98756314' },
-          { label: 'X', href: 'https://twitter.com/@haste_nyc' },
+          { label: 'TWITTER', href: 'https://twitter.com/@haste_nyc' },
         ].map((link, i, arr) => (
           <span key={link.label} className="inline-flex items-center">
             <a
               href={link.href}
-              target={link.href.startsWith('mailto:') || link.href.startsWith('tel:') ? undefined : '_blank'}
-              rel={link.href.startsWith('mailto:') || link.href.startsWith('tel:') ? undefined : 'noopener noreferrer'}
+              target={link.href.startsWith('mailto:') ? undefined : '_blank'}
+              rel={link.href.startsWith('mailto:') ? undefined : 'noopener noreferrer'}
               className="text-white/50 hover:text-white no-underline transition-colors duration-200"
               style={{
                 fontSize: '9px',
@@ -77,43 +78,43 @@ const Footer = ({ hideAsciiLogo = false }: { hideAsciiLogo?: boolean }) => {
         ))}
       </div>
 
-      {/* Bottom bar: Nav links left, Copyright right */}
-      <div className="w-full flex flex-col sm:flex-row sm:items-center sm:justify-between mt-6 pb-2 gap-2" style={{ margin: '0 -20px', width: 'calc(100% + 40px)', padding: '0 8px 6px' }}>
-        <nav className="flex flex-wrap items-center gap-x-4 gap-y-1.5 sm:gap-x-0">
-          {[
-            { label: 'Terms', to: '/terms' },
-            { label: 'Privacy', to: '/privacy' },
-            { label: 'Cookies', to: '/cookies' },
-            { label: 'License', to: '/eula' },
-            { label: 'Refund', to: '/refund' },
-            { label: 'Blog', to: '/blog' },
-          ].map((item, i, arr) => (
-            <span key={item.label} className="inline-flex items-center">
-              <Link
-                to={item.to}
-                className="text-white/30 hover:text-white/70 no-underline transition-colors duration-200 uppercase"
-                style={{
-                  fontSize: '9px',
-                  letterSpacing: '0.12em',
-                  fontFamily: '-apple-system, BlinkMacSystemFont, sans-serif',
-                }}
-              >
-                {item.label}
-              </Link>
-              {i < arr.length - 1 && (
-                <span className="text-white/10 mx-2 text-[7px] select-none hidden sm:inline">&middot;</span>
-              )}
-            </span>
-          ))}
-        </nav>
-
-        <p className="text-white/20 sm:text-right" style={{
-          fontSize: '9px',
-          letterSpacing: '0.15em',
-        }}>
-          &copy; 2026 Haste NYC LLC
-        </p>
+      {/* Legal / Nav Links */}
+      <div className="flex flex-wrap justify-center items-center gap-x-4 gap-y-1.5 mt-4 px-4 sm:gap-x-0">
+        {[
+          { label: 'Production Company', to: '/about' },
+          { label: 'Terms of Service', to: '/terms' },
+          { label: 'Privacy Notice', to: '/privacy' },
+          { label: 'License Agreement', to: '/eula' },
+          { label: 'Refund Policy', to: '/refund' },
+          { label: 'Blog', to: '/blog' },
+        ].map((item, i, arr) => (
+          <span key={item.label} className="inline-flex items-center">
+            <Link
+              to={item.to}
+              className="text-white/30 hover:text-white/50 no-underline transition-colors duration-200 uppercase"
+              style={{
+                fontSize: '9px',
+                letterSpacing: '0.12em',
+                fontFamily: '-apple-system, BlinkMacSystemFont, sans-serif',
+              }}
+            >
+              {item.label}
+            </Link>
+            {i < arr.length - 1 && (
+              <span className="text-white/10 mx-2 text-[7px] select-none hidden sm:inline">&middot;</span>
+            )}
+          </span>
+        ))}
       </div>
+
+      {/* Copyright */}
+      <p className="text-white/20 text-center mt-4 mb-6" style={{
+        fontSize: '9px',
+        letterSpacing: '0.15em',
+        fontFamily: '-apple-system, BlinkMacSystemFont, sans-serif',
+      }}>
+        &copy; 2026 Haste NYC LLC
+      </p>
     </footer>
   );
 };
