@@ -1,13 +1,87 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { useSearchParams } from "react-router-dom";
-import { Button } from "@/components/ui/button";
 import { Checkbox } from "@/components/ui/checkbox";
-import { Download as DownloadIcon, CheckCircle2 } from "lucide-react";
+import { Download as DownloadIcon, CheckCircle2, Loader2, ArrowRight, Monitor } from "lucide-react";
 import { TermsOfService } from "@/components/download/TermsOfService";
 import { toast } from "sonner";
+import { supabase } from "@/integrations/supabase/client";
 import conformStudioLogo from "@/assets/conform-studio-logo.svg";
 import Header from "@/components/Header";
 
+const STORAGE_KEY = "conform_studio_email";
+
+const METADATA_URL =
+  "https://fpgieuoozfvoqjsdltgh.supabase.co/storage/v1/object/public/conform-studio/metadata.json";
+
+interface ReleaseInfo {
+  version: string;
+  arm64Url: string;
+  x64Url: string;
+  hasArchSplit: boolean;
+}
+
+function useReleaseInfo(): ReleaseInfo & { isLoading: boolean } {
+  const [info, setInfo] = useState<ReleaseInfo>({
+    version: "",
+    arm64Url: "",
+    x64Url: "",
+    hasArchSplit: false,
+  });
+  const [isLoading, setIsLoading] = useState(true);
+
+  useEffect(() => {
+    let cancelled = false;
+
+    async function fetchMetadata() {
+      try {
+        const res = await fetch(METADATA_URL, { cache: "no-store" });
+        if (!res.ok) throw new Error("metadata not found");
+        const data = await res.json();
+
+        if (cancelled) return;
+
+        // Supabase may return a JSON error body (e.g. {"statusCode":"404"}) with a non-404 status
+        if (data.statusCode || data.error) throw new Error("metadata returned error response");
+
+        const version = data.latest_version;
+        if (!version) throw new Error("no latest_version in metadata");
+
+        const release = data.releases?.[version];
+        if (!release) throw new Error(`no release entry for ${version}`);
+
+        const darwin = release.downloads?.darwin;
+        const darwinX64 = release.downloads?.darwin_x64;
+
+        if (darwinX64) {
+          // Architecture-specific builds available
+          setInfo({
+            version,
+            arm64Url: darwin?.url || "",
+            x64Url: darwinX64.url,
+            hasArchSplit: true,
+          });
+        } else if (darwin) {
+          // Universal build only
+          setInfo({
+            version,
+            arm64Url: darwin.url,
+            x64Url: darwin.url,
+            hasArchSplit: false,
+          });
+        }
+      } catch (err) {
+        console.error("[Download] Failed to fetch release metadata:", err);
+      } finally {
+        if (!cancelled) setIsLoading(false);
+      }
+    }
+
+    fetchMetadata();
+    return () => { cancelled = true; };
+  }, []);
+
+  return { ...info, isLoading };
+}
 
 const Download = () => {
   const [searchParams] = useSearchParams();
@@ -15,11 +89,54 @@ const Download = () => {
   const [hasScrolledToBottom, setHasScrolledToBottom] = useState(false);
   const [agreedToTerms, setAgreedToTerms] = useState(false);
 
-  const handleDownload = () => {
+  const release = useReleaseInfo();
+
+  // Email gate state -- skip if user came from Stripe checkout or already provided email
+  const storedEmail = localStorage.getItem(STORAGE_KEY);
+  const [emailCaptured, setEmailCaptured] = useState(!!sessionId || !!storedEmail);
+  const [email, setEmail] = useState(storedEmail || "");
+  const [isSubmittingEmail, setIsSubmittingEmail] = useState(false);
+
+  const handleEmailSubmit = async (e: React.FormEvent) => {
+    e.preventDefault();
+
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    if (!email || !emailRegex.test(email.trim())) {
+      toast.error("Please enter a valid email address");
+      return;
+    }
+
+    setIsSubmittingEmail(true);
+
+    try {
+      const { error } = await supabase
+        .from("mailing_list")
+        .insert({ email: email.trim().toLowerCase(), source: "conform-studio-download" });
+
+      if (error) {
+        console.error("[Download] Email insert error:", error);
+      }
+
+      localStorage.setItem(STORAGE_KEY, email.trim().toLowerCase());
+      setEmailCaptured(true);
+    } catch (err) {
+      console.error("[Download] Email error:", err);
+      setEmailCaptured(true);
+    } finally {
+      setIsSubmittingEmail(false);
+    }
+  };
+
+  const handleDownload = (url: string, label: string) => {
+    if (!url) {
+      toast.error("Download unavailable. Please refresh the page and try again.");
+      return;
+    }
     toast.success("Download started!", {
-      description: "Your software is being downloaded.",
+      description: `Downloading ${label} installer.`,
     });
-    window.location.href = "https://fpgieuoozfvoqjsdltgh.supabase.co/storage/v1/object/public/conform-studio/releases/1.9.10.2/ConformStudio-1.9.10.2-Installer.pkg";
+    // Open in new tab so the current page state is preserved
+    window.open(url, "_blank");
   };
 
   return (
@@ -75,12 +192,63 @@ const Download = () => {
       {/* Main Content */}
       <main className="container mx-auto px-4 py-16">
         <div className="space-y-12">
-          {/* Terms Section */}
-          <section>
-            <TermsOfService onScrollToBottom={setHasScrolledToBottom} />
-          </section>
 
-          {/* Download Section */}
+          {/* Email Capture -- shown only if user hasn't provided email and didn't come from Stripe */}
+          {!emailCaptured && (
+            <section className="max-w-xl mx-auto">
+              <div className="glass-card p-8 md:p-10 rounded-2xl text-center space-y-6 border border-border">
+                <div className="space-y-2">
+                  <h2 className="text-2xl font-bold tracking-tight">
+                    Download Conform Studio
+                  </h2>
+                  <p className="text-sm text-muted-foreground">
+                    Enter your email to get started. You'll create an account and activate your subscription when you launch the app.
+                  </p>
+                </div>
+
+                <form onSubmit={handleEmailSubmit} className="space-y-4">
+                  <div className="flex gap-3">
+                    <input
+                      type="email"
+                      placeholder="you@example.com"
+                      value={email}
+                      onChange={(e) => setEmail(e.target.value)}
+                      required
+                      autoFocus
+                      className="flex-1 h-10 px-4 rounded-lg border border-white/[0.12] bg-white/[0.04] text-sm text-foreground placeholder:text-muted-foreground/50 focus:outline-none focus:border-white/30 transition-colors"
+                    />
+                    <button
+                      type="submit"
+                      disabled={isSubmittingEmail}
+                      className="h-10 px-5 rounded-lg bg-white text-black text-sm font-medium transition-all hover:bg-white/90 disabled:opacity-50 disabled:pointer-events-none inline-flex items-center gap-2"
+                    >
+                      {isSubmittingEmail ? (
+                        <Loader2 className="w-4 h-4 animate-spin" />
+                      ) : (
+                        <>
+                          Continue
+                          <ArrowRight className="w-3.5 h-3.5" />
+                        </>
+                      )}
+                    </button>
+                  </div>
+                  <p className="text-xs text-muted-foreground/60">
+                    Free download -- 7-day trial included. No credit card required.
+                  </p>
+                </form>
+              </div>
+            </section>
+          )}
+
+          {/* Terms Section -- only shown after email is captured */}
+          {emailCaptured && (
+            <section>
+              <TermsOfService onScrollToBottom={setHasScrolledToBottom} />
+            </section>
+          )}
+
+          {/* Download Section -- only shown after email is captured */}
+          {emailCaptured && (
           <section className="max-w-3xl mx-auto">
             <div className="glass-card p-8 md:p-12 rounded-2xl text-center space-y-6 border border-border">
               <div className="space-y-2">
@@ -89,7 +257,7 @@ const Download = () => {
                 </h2>
                 <p className="text-muted-foreground">
                   {agreedToTerms
-                    ? "Click the button below to download the latest version."
+                    ? "Select your installer below to download the latest version."
                     : hasScrolledToBottom
                       ? "Please agree to the Terms of Service to continue."
                       : "Please read the Terms of Service above to continue."}
@@ -114,14 +282,40 @@ const Download = () => {
                 </label>
               </div>
 
-              <button
-                className="h-9 px-5 rounded-md border border-white/[0.12] bg-white/[0.06] text-[11px] font-normal tracking-[0.15px] text-white/70 transition-all hover:border-white/[0.18] hover:bg-white/[0.09] hover:text-white/90 disabled:opacity-40 disabled:pointer-events-none inline-flex items-center justify-center gap-2"
-                disabled={!agreedToTerms}
-                onClick={handleDownload}
-              >
-                <DownloadIcon className="w-3.5 h-3.5" />
-                Download
-              </button>
+              {/* Download buttons */}
+              {release.hasArchSplit ? (
+                <div className="flex flex-col sm:flex-row items-center justify-center gap-3">
+                  <button
+                    className="h-10 px-6 rounded-md border border-white/[0.12] bg-white/[0.06] text-xs font-normal tracking-[0.15px] text-white/70 transition-all hover:border-white/[0.18] hover:bg-white/[0.09] hover:text-white/90 disabled:opacity-40 disabled:pointer-events-none inline-flex items-center justify-center gap-2"
+                    disabled={!agreedToTerms || release.isLoading || !release.arm64Url}
+                    onClick={() => handleDownload(release.arm64Url, "Apple Silicon")}
+                  >
+                    <DownloadIcon className="w-3.5 h-3.5" />
+                    Apple Silicon (M1/M2/M3/M4)
+                  </button>
+                  <button
+                    className="h-10 px-6 rounded-md border border-white/[0.12] bg-white/[0.06] text-xs font-normal tracking-[0.15px] text-white/70 transition-all hover:border-white/[0.18] hover:bg-white/[0.09] hover:text-white/90 disabled:opacity-40 disabled:pointer-events-none inline-flex items-center justify-center gap-2"
+                    disabled={!agreedToTerms || release.isLoading || !release.x64Url}
+                    onClick={() => handleDownload(release.x64Url, "Intel")}
+                  >
+                    <DownloadIcon className="w-3.5 h-3.5" />
+                    Intel
+                  </button>
+                </div>
+              ) : (
+                <button
+                  className="h-9 px-5 rounded-md border border-white/[0.12] bg-white/[0.06] text-[11px] font-normal tracking-[0.15px] text-white/70 transition-all hover:border-white/[0.18] hover:bg-white/[0.09] hover:text-white/90 disabled:opacity-40 disabled:pointer-events-none inline-flex items-center justify-center gap-2"
+                  disabled={!agreedToTerms || release.isLoading || !release.arm64Url}
+                  onClick={() => handleDownload(release.arm64Url, "macOS")}
+                >
+                  {release.isLoading ? (
+                    <Loader2 className="w-3.5 h-3.5 animate-spin" />
+                  ) : (
+                    <DownloadIcon className="w-3.5 h-3.5" />
+                  )}
+                  Download
+                </button>
+              )}
 
               {!hasScrolledToBottom && (
                 <p className="text-sm text-muted-foreground animate-pulse">
@@ -129,11 +323,26 @@ const Download = () => {
                 </p>
               )}
 
-              <div className="pt-6 border-t border-border text-xs text-muted-foreground">
-                <p>Version 1.9.10.2 -- Compatible with macOS</p>
+              {/* Version + system requirements */}
+              <div className="pt-6 border-t border-border text-xs text-muted-foreground space-y-3">
+                <p>{release.isLoading ? "Loading version..." : `Version ${release.version}`}</p>
+
+                <div className="flex items-start justify-center gap-2 text-muted-foreground/60">
+                  <Monitor className="w-3.5 h-3.5 mt-0.5 flex-shrink-0" />
+                  <div className="text-left">
+                    <p>Requires macOS Sonoma (14.0) or later</p>
+                    <p>Adobe Premiere Pro 2024 or later</p>
+                    <p>DaVinci Resolve Studio 18 or later</p>
+                  </div>
+                </div>
+
+                <p className="text-muted-foreground/60">
+                  After installing, you'll be prompted to create an account and start your free trial.
+                </p>
               </div>
             </div>
           </section>
+          )}
 
           {/* Features Section */}
           <section className="max-w-5xl mx-auto pt-12">
