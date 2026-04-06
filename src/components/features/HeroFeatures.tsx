@@ -10,6 +10,7 @@ const heroFeatures = [
     description:
       "Stop bouncing between applications to check your work. Conform once, grade in Resolve, and never rebuild a timeline again.",
     hours: "Eliminates round trips",
+    video: "/product_pushin_veo31.mp4",
   },
   {
     stat: "One-Click",
@@ -19,6 +20,7 @@ const heroFeatures = [
     description:
       "Converts an entire Adobe Premiere Pro timeline into DaVinci Resolve in minutes, not hours. Clips, tracks, timecodes, markers, audio levels, and media references transfer automatically — no manual rebuild required.",
     hours: "4-40+ hours saved",
+    video: "/product_oneclick.mp4",
   },
   {
     stat: "Batch",
@@ -164,7 +166,7 @@ function PixelPerfectVisual() {
 
 const mobileVisuals = [ColorContextVisual, OneClickVisual, BatchVisual, PixelPerfectVisual];
 
-function AutoplayVideo({ className }: { className?: string }) {
+function AutoplayVideo({ className, src = "/product_pushin_veo31.mp4" }: { className?: string; src?: string }) {
   const containerRef = useRef<HTMLDivElement>(null);
   const videoARef = useRef<HTMLVideoElement>(null);
   const videoBRef = useRef<HTMLVideoElement>(null);
@@ -238,7 +240,7 @@ function AutoplayVideo({ className }: { className?: string }) {
     <div ref={containerRef} className="relative">
       <video
         ref={videoARef}
-        src="/product_pushin_veo31.mp4"
+        src={src}
         muted
         playsInline
         preload="auto"
@@ -247,7 +249,7 @@ function AutoplayVideo({ className }: { className?: string }) {
       />
       <video
         ref={videoBRef}
-        src="/product_pushin_veo31.mp4"
+        src={src}
         muted
         playsInline
         preload="auto"
@@ -279,8 +281,8 @@ export default function HeroFeatures() {
             <div className="hidden md:grid max-w-7xl mx-auto grid-cols-2 gap-16 items-start">
               {/* Video */}
               <div className={`relative ${videoOnLeft ? "" : "order-2"}`}>
-                <AutoplayVideo />
-                {i > 0 && (
+                <AutoplayVideo src={feature.video} />
+                {!feature.video && i > 0 && (
                   <div className="absolute inset-0 flex items-center justify-center rounded-lg bg-black/40">
                     <span className="text-xs uppercase tracking-[0.2em] text-white/50 font-medium">Placeholder</span>
                   </div>
@@ -334,8 +336,8 @@ export default function HeroFeatures() {
 
               {/* Video - cropped taller for mobile */}
               <div className="relative h-[45vh] overflow-hidden rounded-lg">
-                <AutoplayVideo className="w-full h-full object-cover" />
-                {i > 0 && (
+                <AutoplayVideo className="w-full h-full object-cover" src={feature.video} />
+                {!feature.video && i > 0 && (
                   <div className="absolute inset-0 flex items-center justify-center bg-black/40">
                     <span className="text-xs uppercase tracking-[0.2em] text-white/50 font-medium">Placeholder</span>
                   </div>
