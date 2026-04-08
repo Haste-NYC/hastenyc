@@ -147,14 +147,19 @@ const TrustBadgeBar = () => {
             willChange: "transform",
             backfaceVisibility: "hidden",
             animation: scrollWidth
-              ? `trust-scroll ${30}s linear infinite`
+              ? `trust-scroll 30s linear infinite`
               : "none",
+            animationDelay: scrollWidth ? "-10s" : "0s",
             opacity: scrollWidth ? 1 : 0,
+            transition: "opacity 0.6s ease-in",
             // Use a custom property so the keyframes know the exact pixel offset
             ["--scroll-distance" as string]: scrollWidth ? `-${scrollWidth}px` : "0px",
           }}
         >
           <div ref={firstSetRef} className="flex items-center flex-shrink-0">
+            <LogoSet />
+          </div>
+          <div className="flex items-center flex-shrink-0" aria-hidden="true">
             <LogoSet />
           </div>
           <div className="flex items-center flex-shrink-0" aria-hidden="true">

@@ -10,7 +10,7 @@ const heroFeatures = [
     description:
       "Stop bouncing between applications to check your work. Conform once, grade in Resolve, and never rebuild a timeline again.",
     hours: "Eliminates round trips",
-    video: "/product_pushin_veo31.mp4",
+    video: "/product_oneclick.mp4",
   },
   {
     stat: "One-Click",
@@ -20,16 +20,7 @@ const heroFeatures = [
     description:
       "Converts an entire Adobe Premiere Pro timeline into DaVinci Resolve in minutes, not hours. Clips, tracks, timecodes, markers, audio levels, and media references transfer automatically — no manual rebuild required.",
     hours: "4-40+ hours saved",
-    video: "/product_oneclick.mp4",
-  },
-  {
-    stat: "Batch",
-    statSmall: true,
-    suffix: "Timeline Support",
-    title: "Less Rebuilding / More Finishing",
-    description:
-      "Import timelines from Avid Media Composer, Final Cut Pro 7, Final Cut Pro X, and industry-standard interchange formats. AAF, EDL, FCPXML, FCP7 XML, AVB — a single tool replaces format-specific workarounds and manual re-edits.",
-    hours: "2-20 hours saved",
+    video: "/product_tap.mp4",
   },
   {
     stat: "Pixel-Perfect",
@@ -39,6 +30,17 @@ const heroFeatures = [
     description:
       "Pixel-level comparison between Premiere and Resolve outputs using SSIM scoring. Runs in real-time over NDI or offline against rendered frames. Flags every clip that doesn't match, with configurable pass/fail thresholds and optional CSV report.",
     hours: "2-6 hours saved",
+    video: "/qc_cycle_5s.mp4",
+  },
+  {
+    stat: "Batch",
+    statSmall: true,
+    suffix: "Timeline Support",
+    title: "Less Rebuilding / More Finishing",
+    description:
+      "Import timelines from Avid Media Composer, Final Cut Pro 7, Final Cut Pro X, and industry-standard interchange formats. AAF, EDL, FCPXML, FCP7 XML, AVB — a single tool replaces format-specific workarounds and manual re-edits.",
+    hours: "2-20 hours saved",
+    video: "/product_batch.mp4",
   },
 ];
 

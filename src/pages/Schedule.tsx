@@ -1,4 +1,4 @@
-import { useState, useCallback } from "react";
+import { useState, useCallback, useEffect } from "react";
 import { AnimatePresence, motion } from "framer-motion";
 import { Clock, Video, Globe } from "lucide-react";
 import { getUserTimezoneName } from "@/lib/timezone";
