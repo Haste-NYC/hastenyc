@@ -1,4 +1,5 @@
 import { motion } from "framer-motion";
+import { useRef, useEffect } from "react";
 
 const heroFeatures = [
   {
@@ -9,6 +10,7 @@ const heroFeatures = [
     description:
       "Stop bouncing between applications to check your work. Conform once, grade in Resolve, and never rebuild a timeline again.",
     hours: "Eliminates round trips",
+    video: "/product_oneclick.mp4",
   },
   {
     stat: "One-Click",
@@ -18,15 +20,7 @@ const heroFeatures = [
     description:
       "Converts an entire Adobe Premiere Pro timeline into DaVinci Resolve in minutes, not hours. Clips, tracks, timecodes, markers, audio levels, and media references transfer automatically — no manual rebuild required.",
     hours: "4-40+ hours saved",
-  },
-  {
-    stat: "Batch",
-    statSmall: true,
-    suffix: "Timeline Support",
-    title: "Less Rebuilding / More Finishing",
-    description:
-      "Import timelines from Avid Media Composer, Final Cut Pro 7, Final Cut Pro X, and industry-standard interchange formats. AAF, EDL, FCPXML, FCP7 XML, AVB — a single tool replaces format-specific workarounds and manual re-edits.",
-    hours: "2-20 hours saved",
+    video: "/product_tap.mp4",
   },
   {
     stat: "Pixel-Perfect",
@@ -36,6 +30,17 @@ const heroFeatures = [
     description:
       "Pixel-level comparison between Premiere and Resolve outputs using SSIM scoring. Runs in real-time over NDI or offline against rendered frames. Flags every clip that doesn't match, with configurable pass/fail thresholds and optional CSV report.",
     hours: "2-6 hours saved",
+    video: "/qc_cycle_5s.mp4",
+  },
+  {
+    stat: "Batch",
+    statSmall: true,
+    suffix: "Timeline Support",
+    title: "Less Rebuilding / More Finishing",
+    description:
+      "Import timelines from Avid Media Composer, Final Cut Pro 7, Final Cut Pro X, and industry-standard interchange formats. AAF, EDL, FCPXML, FCP7 XML, AVB — a single tool replaces format-specific workarounds and manual re-edits.",
+    hours: "2-20 hours saved",
+    video: "/product_batch.mp4",
   },
 ];
 
@@ -163,11 +168,108 @@ function PixelPerfectVisual() {
 
 const mobileVisuals = [ColorContextVisual, OneClickVisual, BatchVisual, PixelPerfectVisual];
 
+function AutoplayVideo({ className, src = "/product_pushin_veo31.mp4" }: { className?: string; src?: string }) {
+  const containerRef = useRef<HTMLDivElement>(null);
+  const videoARef = useRef<HTMLVideoElement>(null);
+  const videoBRef = useRef<HTMLVideoElement>(null);
+  const activeRef = useRef<"a" | "b">("a");
+
+  useEffect(() => {
+    const container = containerRef.current;
+    const videoA = videoARef.current;
+    const videoB = videoBRef.current;
+    if (!container || !videoA || !videoB) return;
+
+    let rafId = 0;
+    let isVisible = false;
+
+    const getActive = () => activeRef.current === "a" ? videoA : videoB;
+    const getStandby = () => activeRef.current === "a" ? videoB : videoA;
+
+    const swap = () => {
+      const active = getActive();
+      const standby = getStandby();
+
+      // Start standby (already at frame 0 and preloaded)
+      standby.play().catch(() => {});
+      standby.style.opacity = "1";
+
+      // Hide the old active
+      active.style.opacity = "0";
+      active.pause();
+      active.currentTime = 0;
+
+      // Flip
+      activeRef.current = activeRef.current === "a" ? "b" : "a";
+    };
+
+    const checkLoop = () => {
+      const active = getActive();
+      if (active.duration && active.currentTime > active.duration - 0.25) {
+        swap();
+      }
+      if (isVisible) {
+        rafId = requestAnimationFrame(checkLoop);
+      }
+    };
+
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        isVisible = entry.isIntersecting;
+        if (isVisible) {
+          const active = getActive();
+          active.play().catch(() => {});
+          rafId = requestAnimationFrame(checkLoop);
+        } else {
+          cancelAnimationFrame(rafId);
+          videoA.pause();
+          videoB.pause();
+        }
+      },
+      { threshold: 0.3 }
+    );
+
+    observer.observe(container);
+    return () => {
+      cancelAnimationFrame(rafId);
+      observer.disconnect();
+    };
+  }, []);
+
+  const cls = className ?? "w-full rounded-lg";
+
+  return (
+    <div ref={containerRef} className="relative">
+      <video
+        ref={videoARef}
+        src={src}
+        muted
+        playsInline
+        preload="auto"
+        className={cls}
+        style={{ opacity: 1 }}
+      />
+      <video
+        ref={videoBRef}
+        src={src}
+        muted
+        playsInline
+        preload="auto"
+        className={`${cls} absolute inset-0`}
+        style={{ opacity: 0 }}
+      />
+    </div>
+  );
+}
+
 export default function HeroFeatures() {
   return (
     <div className="space-y-0">
       {heroFeatures.map((feature, i) => {
-        const MobileVisual = mobileVisuals[i];
+        // Even index (0,2): video LEFT, text RIGHT
+        // Odd index (1,3): text LEFT, video RIGHT
+        const videoOnLeft = i % 2 === 0;
+
         return (
           <motion.div
             key={i}
@@ -177,27 +279,36 @@ export default function HeroFeatures() {
             viewport={{ once: true, margin: "-80px" }}
             transition={{ duration: 0.5 }}
           >
-            <div className={`max-w-7xl mx-auto grid grid-cols-1 md:grid-cols-2 gap-8 md:gap-16 items-start`}>
-              {/* Stat */}
-              <div className={i % 2 === 1 ? "md:order-2 md:text-right" : ""}>
-                <span
-                  className="font-black leading-none tracking-tight block"
-                  style={{
-                    fontSize: feature.statSmall
-                      ? "clamp(36px, 7vw, 90px)"
-                      : "clamp(48px, 10vw, 120px)",
-                    letterSpacing: "-0.03em",
-                  }}
-                >
-                  {feature.stat}
-                </span>
-                <span className={`block text-sm md:text-base font-bold tracking-wider text-foreground/50 uppercase -mt-1 md:-mt-2 ${i === 0 ? "pl-[0.35em]" : ""}`}>
-                  {feature.suffix}
-                </span>
+            {/* Desktop: two-column grid */}
+            <div className="hidden md:grid max-w-7xl mx-auto grid-cols-2 gap-16 items-start">
+              {/* Video */}
+              <div className={`relative ${videoOnLeft ? "" : "order-2"}`}>
+                <AutoplayVideo src={feature.video} />
+                {!feature.video && i > 0 && (
+                  <div className="absolute inset-0 flex items-center justify-center rounded-lg bg-black/40">
+                    <span className="text-xs uppercase tracking-[0.2em] text-white/50 font-medium">Placeholder</span>
+                  </div>
+                )}
               </div>
 
-              {/* Content */}
-              <div className={i % 2 === 1 ? "md:order-1" : ""}>
+              {/* Text content */}
+              <div className={videoOnLeft ? "" : "order-1"}>
+                <div className="mb-4 w-fit">
+                  <span
+                    className="font-black leading-none tracking-tight block"
+                    style={{
+                      fontSize: feature.statSmall
+                        ? "clamp(36px, 7vw, 90px)"
+                        : "clamp(48px, 10vw, 120px)",
+                      letterSpacing: "-0.03em",
+                    }}
+                  >
+                    {feature.stat}
+                  </span>
+                  <span className="block text-sm md:text-base font-bold tracking-wider text-foreground/50 uppercase -mt-1 md:-mt-2 text-right">
+                    {feature.suffix}
+                  </span>
+                </div>
                 <h3 className="text-lg md:text-2xl font-bold uppercase tracking-tight leading-tight mb-4">
                   {feature.title}
                 </h3>
@@ -207,9 +318,43 @@ export default function HeroFeatures() {
               </div>
             </div>
 
-            {/* Mobile visual at bottom */}
-            <div className="flex-1 md:hidden">
-              <MobileVisual />
+            {/* Mobile: heading + video + description grouped and centered vertically */}
+            <div className="md:hidden flex flex-col flex-1 justify-center">
+              {/* Stat heading */}
+              <div className="w-fit mb-4">
+                <span
+                  className="font-black leading-none tracking-tight block"
+                  style={{
+                    fontSize: "clamp(42px, 9vw, 90px)",
+                    letterSpacing: "-0.03em",
+                  }}
+                >
+                  {feature.stat}
+                </span>
+                <span className="block text-base font-bold tracking-wider text-foreground/50 uppercase -mt-1 text-right">
+                  {feature.suffix}
+                </span>
+              </div>
+
+              {/* Video - cropped taller for mobile */}
+              <div className="relative h-[45vh] overflow-hidden rounded-lg">
+                <AutoplayVideo className="w-full h-full object-cover" src={feature.video} />
+                {!feature.video && i > 0 && (
+                  <div className="absolute inset-0 flex items-center justify-center bg-black/40">
+                    <span className="text-xs uppercase tracking-[0.2em] text-white/50 font-medium">Placeholder</span>
+                  </div>
+                )}
+              </div>
+
+              {/* Title + Description */}
+              <div className="mt-4">
+                <h3 className="text-xl font-bold uppercase tracking-tight leading-tight mb-3">
+                  {feature.title}
+                </h3>
+                <p className="text-[15px] text-foreground/55 leading-relaxed">
+                  {feature.description}
+                </p>
+              </div>
             </div>
           </motion.div>
         );

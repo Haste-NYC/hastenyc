@@ -114,7 +114,7 @@ function MobileTextWithVideo() {
       <div>
         <h2
           className="font-black tracking-tight leading-[1.1] uppercase flex flex-wrap gap-x-[0.22em]"
-          style={{ fontSize: "clamp(26px, 7.5vw, 42px)", letterSpacing: "-0.03em" }}
+          style={{ fontSize: "clamp(34px, 10vw, 54px)", letterSpacing: "-0.03em" }}
         >
           {words.map((word, i) => (
             <motion.span
@@ -209,7 +209,7 @@ const Index = () => {
   return (
     <div className={containerClass}>
       <SEO
-        title="Haste Conform Studio - Premiere to Resolve"
+        title="Conform Studio"
         description="Instant project migration from Adobe Premiere to Davinci Resolve. Haste Conform Studio uses AI to automate post-production. 300X faster timeline conform for film and TV. Built for studios, secure, and scalable."
         canonical="/"
         video={{
@@ -224,13 +224,7 @@ const Index = () => {
       />
       {/* Persistent vignette overlay */}
       <Vignette />
-      {/* Lava lamp background - fixed on desktop, inside hero on mobile */}
-      {!isMobile && (
-        <LavaLampBackground
-          className="fixed inset-0 w-full h-full z-0"
-          visibilityRef={heroRef}
-        />
-      )}
+      {/* Lava lamp background removed from fixed layer -- now confined to hero section */}
       {/* Continuous atmospheric gradients across all sections including footer */}
       <div className="absolute inset-0 overflow-hidden pointer-events-none z-0">
         <PageAtmosphere />
@@ -239,12 +233,10 @@ const Index = () => {
       <main>
         {/* Hero - full viewport height on mobile */}
         <section id="hero" ref={heroRef} className="sm:pt-10 relative overflow-hidden snap-section flex flex-col justify-center">
-          {/* Lava lamp inside hero on mobile - scrolls away with section, no flicker */}
-          {isMobile && (
-            <LavaLampBackground
-              className="absolute inset-0 w-full h-full z-0"
-            />
-          )}
+          {/* Lava lamp confined to hero -- scrolls away naturally, no z-bleed */}
+          <LavaLampBackground
+            className="absolute inset-0 w-full h-full z-0"
+          />
           <HeroSection />
           <TrustBadgeBar />
         </section>
@@ -274,7 +266,7 @@ const Index = () => {
         )}
 
         {/* 3D Visualization */}
-        <section className="py-4 sm:py-20 px-4 sm:px-6 md:px-12 lg:px-20 relative overflow-visible bg-background snap-section flex flex-col justify-start pt-[56px] md:justify-center md:pt-0 md:snap-section-center">
+        <section className="py-4 sm:py-10 px-4 sm:px-6 md:px-12 lg:px-20 relative overflow-visible bg-background snap-section flex flex-col justify-start pt-[56px] md:justify-center md:pt-0 md:snap-section-center">
           <div
             className="absolute left-0 right-0 pointer-events-none z-0"
             style={{
@@ -290,12 +282,10 @@ const Index = () => {
               </Suspense>
             </LazyOnView>
           </div>
-          {/* App Roadmap - pinned to bottom on mobile */}
-          {isMobile && (
-            <div className="relative z-10 pb-3">
-              <AppRoadmap />
-            </div>
-          )}
+          {/* App Roadmap - part of 3D section on all screen sizes */}
+          <div className="relative z-10 pb-3 md:pt-2">
+            <AppRoadmap />
+          </div>
         </section>
 
         {/* Hero Features */}
@@ -319,11 +309,6 @@ const Index = () => {
           <HeroFeatures />
         </section>
 
-        {/* App Roadmap - desktop only (on mobile it's inside 3D section) */}
-        <section className="hidden md:block py-10 sm:py-14 relative overflow-visible bg-background">
-          <AppRoadmap />
-        </section>
-
         {/* Feature Grid - detailed capabilities (desktop only) */}
         <section className="hidden md:block py-12 md:py-20 relative overflow-visible bg-background">
           <div
@@ -337,8 +322,8 @@ const Index = () => {
           <FeatureGrid />
         </section>
 
-        {/* CLI / Pipeline Integration */}
-        <section className="py-12 md:py-20 relative overflow-visible bg-background snap-section">
+        {/* CLI / Pipeline Integration - after comparison chart on mobile */}
+        <section className="py-12 md:py-20 relative overflow-visible bg-background snap-section hidden md:block md:order-none">
           <div
             className="absolute left-0 right-0 pointer-events-none z-0"
             style={{
@@ -363,8 +348,21 @@ const Index = () => {
           <FeatureComparisonChart />
         </section>
 
+        {/* CLI / Pipeline Integration - mobile only, after comparison chart */}
+        <section className="py-12 relative overflow-visible bg-background snap-section md:hidden">
+          <div
+            className="absolute left-0 right-0 pointer-events-none z-0"
+            style={{
+              top: "-80px",
+              bottom: "-80px",
+              background: "radial-gradient(ellipse 120% 90% at 70% 40%, rgba(100, 70, 230, 0.10) 0%, rgba(100, 70, 230, 0.03) 35%, transparent 60%)",
+            }}
+          />
+          <CLISection />
+        </section>
+
         {/* Pricing - full viewport on mobile */}
-        <section id="pricing" className="py-10 sm:py-20 relative overflow-y-auto bg-background snap-section flex flex-col justify-start pt-[60px] md:justify-center md:pt-0 md:snap-section-center">
+        <section id="pricing" className="py-10 sm:py-20 md:pb-32 relative overflow-y-auto bg-background snap-section flex flex-col justify-start pt-[60px] md:justify-center md:pt-0 md:snap-section-center">
           <div
             className="absolute left-0 right-0 pointer-events-none z-0"
             style={{

@@ -71,7 +71,7 @@ const Terms = () => {
   return (
     <div className="bg-background">
       <SEO
-        title="Terms of Service"
+        title="Terms"
         description="Terms of Service for Haste.NYC LLC. Review our service agreement and usage policies."
         canonical="/terms"
       />

@@ -1,4 +1,4 @@
-import { useState, useCallback } from "react";
+import { useState, useCallback, useEffect } from "react";
 import { AnimatePresence, motion } from "framer-motion";
 import { Clock, Video, Globe } from "lucide-react";
 import { getUserTimezoneName } from "@/lib/timezone";
@@ -98,7 +98,7 @@ const Schedule = () => {
   return (
     <div className="h-screen md:min-h-screen bg-background overflow-x-hidden overflow-y-auto md:overflow-y-visible relative">
       <SEO
-        title="Schedule a Demo"
+        title="Schedule Demo"
         description="Book a 30-minute demo of Haste Conform Studio. See how AI-powered timeline migration works for your post-production workflow."
         canonical="/schedule"
       />

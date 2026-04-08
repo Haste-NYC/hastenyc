@@ -15,7 +15,7 @@ const Cookies = () => {
   return (
     <div className="bg-background">
       <SEO
-        title="Cookies Policy"
+        title="Cookies"
         description="Cookies Policy for Haste.NYC LLC. Learn how we use cookies and similar technologies on our websites and services."
         canonical="/cookies"
       />

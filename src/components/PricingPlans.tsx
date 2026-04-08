@@ -20,6 +20,7 @@ interface PricingTier {
   monthlyPrice: number | null;
   yearlyPrice: number | null;
   seats: string;
+  seatBadge: string;
   features: string[];
   popular?: boolean;
   priceIdMonthly?: string;
@@ -31,10 +32,11 @@ const tiers: PricingTier[] = [
   {
     name: "Freelancer",
     category: "FOR INDIVIDUALS",
-    description: "Everything you need to get started with professional conforming workflows.",
-    monthlyPrice: 49,
-    yearlyPrice: 468,
+    description: "Everything you need to get started with automated project migration workflows. Includes full access to all core features.",
+    monthlyPrice: 59,
+    yearlyPrice: 588,
     seats: "1 user / device license",
+    seatBadge: "1 Seat",
     features: [
       "1 user / device license",
       "Email support",
@@ -46,12 +48,13 @@ const tiers: PricingTier[] = [
   {
     name: "Team",
     category: "FOR SMALL TEAMS",
-    description: "Collaborate with your team on conforming projects with shared access and priority support.",
-    monthlyPrice: 129,
-    yearlyPrice: 1188,
+    description: "Collaborate with your team with shared access and priority support. Manage multiple seats under one account.",
+    monthlyPrice: 249,
+    yearlyPrice: 2388,
     seats: "3 users / device licenses",
+    seatBadge: "4 Seats",
     features: [
-      "3 users / device licenses",
+      "Up to 4 users / device licenses",
       "Priority support",
       "7-day free trial",
     ],
@@ -62,10 +65,11 @@ const tiers: PricingTier[] = [
   {
     name: "Enterprise",
     category: "FOR ORGANIZATIONS",
-    description: "Custom solutions for larger teams with dedicated support and full pipeline integration.",
+    description: "Required for companies with 5 or more employees. Custom solutions with dedicated support and full pipeline integration.",
     monthlyPrice: null,
     yearlyPrice: null,
     seats: "Unlimited seats",
+    seatBadge: "5+",
     features: [
       "Full CLI for pipelines",
       "Priority support and training",
@@ -232,6 +236,17 @@ const PricingPlans = ({
                   : "border-white/[0.08] hover:border-white/20 bg-white/[0.03] backdrop-blur-xl"
               }`}
             >
+              {/* Seat badge */}
+              <div className="absolute top-4 right-4 z-10">
+                <span className={`inline-flex items-center gap-1 px-2.5 py-1 rounded-full text-[10px] font-semibold tracking-[0.08em] uppercase ${
+                  tier.isEnterprise
+                    ? "bg-blue-500/15 text-blue-400 border border-blue-500/20"
+                    : "bg-white/[0.06] text-white/50 border border-white/[0.08]"
+                }`}>
+                  {tier.isEnterprise ? `${tier.seatBadge} Seats` : tier.seatBadge}
+                </span>
+              </div>
+
               {/* Card content */}
               <div className="p-6 sm:p-8 flex flex-col h-full">
                 {/* Category label */}

@@ -6,7 +6,7 @@ const Refund = () => {
   return (
     <div className="min-h-screen bg-background">
       <SEO
-        title="Refund Policy"
+        title="Refunds"
         description="Refund Policy for Haste Conform Studio. Review our refund procedures and satisfaction guarantee."
         canonical="/refund"
       />
