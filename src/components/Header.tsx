@@ -1,5 +1,5 @@
 import { useState, useRef, useEffect } from "react";
-import { Link } from "react-router-dom";
+import { Link, useLocation, useNavigate } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet";
 import { Menu, ChevronDown } from "lucide-react";
@@ -31,12 +31,15 @@ const navLinks = [
   { label: "FAQ", id: "faq" },
 ];
 
-const Header = ({ minimal = false }: { minimal?: boolean }) => {
+const Header = () => {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [productsOpen, setProductsOpen] = useState(false);
   const productsRef = useRef<HTMLDivElement>(null);
   const lenis = useLenis();
   const activeSection = useActiveSection();
+  const location = useLocation();
+  const navigate = useNavigate();
+  const isHomePage = location.pathname === "/";
 
   // Close dropdown when clicking outside
   useEffect(() => {
@@ -53,6 +56,11 @@ const Header = ({ minimal = false }: { minimal?: boolean }) => {
   const scrollToSection = (id: string) => {
     setMobileMenuOpen(false);
     setProductsOpen(false);
+
+    if (!isHomePage) {
+      navigate(`/#${id}`);
+      return;
+    }
 
     // Small delay to let mobile menu close before scrolling
     setTimeout(() => {
@@ -111,8 +119,8 @@ const Header = ({ minimal = false }: { minimal?: boolean }) => {
               )}
             </div>
 
-            {/* Nav Links - Conform Studio only */}
-            {!minimal && navLinks.map(link => (
+            {/* Nav Links - always visible, navigate to home page sections */}
+            {navLinks.map(link => (
               <a
                 key={link.id}
                 href={`#${link.id}`}
@@ -142,14 +150,12 @@ const Header = ({ minimal = false }: { minimal?: boolean }) => {
             Book a Demo
           </Link>
 
-          {!minimal && (
-            <Link
-              to="/download"
-              className="text-foreground/80 hover:text-foreground hover:bg-white/5 text-xs uppercase tracking-wider transition-all px-3 py-1.5 rounded-full border border-white/20 hover:border-white/40"
-            >
-              Download
-            </Link>
-          )}
+          <Link
+            to="/download"
+            className="text-foreground/80 hover:text-foreground hover:bg-white/5 text-xs uppercase tracking-wider transition-all px-3 py-1.5 rounded-full border border-white/20 hover:border-white/40"
+          >
+            Download
+          </Link>
         </div>
 
         {/* Mobile Menu */}
@@ -184,7 +190,7 @@ const Header = ({ minimal = false }: { minimal?: boolean }) => {
                 </div>
               </div>
 
-              {!minimal && navLinks.map(link => (
+              {navLinks.map(link => (
                 <a
                   key={link.id}
                   href={`#${link.id}`}
@@ -208,15 +214,13 @@ const Header = ({ minimal = false }: { minimal?: boolean }) => {
               >
                 Book a Demo
               </Link>
-              {!minimal && (
-                <Link
-                  to="/download"
-                  onClick={() => setMobileMenuOpen(false)}
-                  className="text-foreground/80 text-center text-lg uppercase tracking-wider"
-                >
-                  Download
-                </Link>
-              )}
+              <Link
+                to="/download"
+                onClick={() => setMobileMenuOpen(false)}
+                className="text-foreground/80 text-center text-lg uppercase tracking-wider"
+              >
+                Download
+              </Link>
             </div>
           </SheetContent>
         </Sheet>

@@ -6,7 +6,7 @@ const heroFeatures = [
     stat: "View Color",
     statSmall: true,
     suffix: "In Context",
-    title: "The End of Roundtrip Workflows",
+    title: "The End of Roundtrip Workflows.",
     description:
       "Stop bouncing between applications to check your work. Conform once, grade in Resolve, and never rebuild a timeline again.",
     hours: "Eliminates round trips",
@@ -16,7 +16,7 @@ const heroFeatures = [
     stat: "One-Click",
     statSmall: true,
     suffix: "Conversion",
-    title: "We Handle the Conform / You Focus on the Grade",
+    title: "We Conform, You Create.",
     description:
       "Converts an entire Adobe Premiere Pro timeline into DaVinci Resolve in minutes, not hours. Clips, tracks, timecodes, markers, audio levels, and media references transfer automatically — no manual rebuild required.",
     hours: "4-40+ hours saved",
@@ -26,7 +26,7 @@ const heroFeatures = [
     stat: "Pixel-Perfect",
     statSmall: true,
     suffix: "QC Verification",
-    title: "Every Frame Verified / Nothing Slips Through",
+    title: "Every Frame Verified.",
     description:
       "Pixel-level comparison between Premiere and Resolve outputs using SSIM scoring. Runs in real-time over NDI or offline against rendered frames. Flags every clip that doesn't match, with configurable pass/fail thresholds and optional CSV report.",
     hours: "2-6 hours saved",
@@ -36,11 +36,13 @@ const heroFeatures = [
     stat: "Batch",
     statSmall: true,
     suffix: "Timeline Support",
-    title: "Less Rebuilding / More Finishing",
+    title: "Import Everything All at Once.",
     description:
       "Import timelines from Avid Media Composer, Final Cut Pro 7, Final Cut Pro X, and industry-standard interchange formats. AAF, EDL, FCPXML, FCP7 XML, AVB — a single tool replaces format-specific workarounds and manual re-edits.",
     hours: "2-20 hours saved",
     video: "/product_batch.mp4",
+    mobileVideoScale: 1.15,
+    mobileVideoPosition: "1% center",
   },
 ];
 
@@ -168,7 +170,7 @@ function PixelPerfectVisual() {
 
 const mobileVisuals = [ColorContextVisual, OneClickVisual, BatchVisual, PixelPerfectVisual];
 
-function AutoplayVideo({ className, src = "/product_pushin_veo31.mp4" }: { className?: string; src?: string }) {
+function AutoplayVideo({ className, src = "/product_pushin_veo31.mp4", style }: { className?: string; src?: string; style?: React.CSSProperties }) {
   const containerRef = useRef<HTMLDivElement>(null);
   const videoARef = useRef<HTMLVideoElement>(null);
   const videoBRef = useRef<HTMLVideoElement>(null);
@@ -182,9 +184,15 @@ function AutoplayVideo({ className, src = "/product_pushin_veo31.mp4" }: { class
 
     let rafId = 0;
     let isVisible = false;
+    const ready = { a: false, b: false };
+
+    // Track when each video has decoded enough to display
+    videoA.addEventListener("canplaythrough", () => { ready.a = true; }, { once: true });
+    videoB.addEventListener("canplaythrough", () => { ready.b = true; }, { once: true });
 
     const getActive = () => activeRef.current === "a" ? videoA : videoB;
     const getStandby = () => activeRef.current === "a" ? videoB : videoA;
+    const standbyReady = () => activeRef.current === "a" ? ready.b : ready.a;
 
     const swap = () => {
       const active = getActive();
@@ -206,7 +214,13 @@ function AutoplayVideo({ className, src = "/product_pushin_veo31.mp4" }: { class
     const checkLoop = () => {
       const active = getActive();
       if (active.duration && active.currentTime > active.duration - 0.25) {
-        swap();
+        if (standbyReady()) {
+          swap();
+        } else {
+          // Standby not decoded yet -- let active loop natively
+          active.currentTime = 0;
+          active.play().catch(() => {});
+        }
       }
       if (isVisible) {
         rafId = requestAnimationFrame(checkLoop);
@@ -238,8 +252,13 @@ function AutoplayVideo({ className, src = "/product_pushin_veo31.mp4" }: { class
 
   const cls = className ?? "w-full rounded-lg";
 
+  // When h-full is requested, the wrapper must also fill its parent
+  const wrapperCls = className && className.includes("h-full")
+    ? "relative w-full h-full"
+    : "relative";
+
   return (
-    <div ref={containerRef} className="relative">
+    <div ref={containerRef} className={wrapperCls}>
       <video
         ref={videoARef}
         src={src}
@@ -247,7 +266,7 @@ function AutoplayVideo({ className, src = "/product_pushin_veo31.mp4" }: { class
         playsInline
         preload="auto"
         className={cls}
-        style={{ opacity: 1 }}
+        style={{ opacity: 1, ...style }}
       />
       <video
         ref={videoBRef}
@@ -256,11 +275,13 @@ function AutoplayVideo({ className, src = "/product_pushin_veo31.mp4" }: { class
         playsInline
         preload="auto"
         className={`${cls} absolute inset-0`}
-        style={{ opacity: 0 }}
+        style={{ opacity: 0, ...style }}
       />
     </div>
   );
 }
+
+const isMobile = typeof window !== "undefined" && window.innerWidth < 768;
 
 export default function HeroFeatures() {
   return (
@@ -274,8 +295,8 @@ export default function HeroFeatures() {
           <motion.div
             key={i}
             className="px-4 sm:px-6 md:px-12 lg:px-20 py-6 md:py-10 border-b border-white/[0.04] min-h-[var(--vh,100dvh)] md:min-h-0 flex flex-col justify-start pt-[72px] md:pt-6 snap-section-flow md:!scroll-snap-align-none"
-            initial={{ opacity: 0, y: 30 }}
-            whileInView={{ opacity: 1, y: 0 }}
+            initial={{ opacity: 0, ...(isMobile ? {} : { y: 30 }) }}
+            whileInView={{ opacity: 1, ...(isMobile ? {} : { y: 0 }) }}
             viewport={{ once: true, margin: "-80px" }}
             transition={{ duration: 0.5 }}
           >
@@ -318,10 +339,10 @@ export default function HeroFeatures() {
               </div>
             </div>
 
-            {/* Mobile: heading + video + description grouped and centered vertically */}
+            {/* Mobile: video + description packed tight to fit viewport */}
             <div className="md:hidden flex flex-col flex-1 justify-center">
               {/* Stat heading */}
-              <div className="w-fit mb-4">
+              <div className="w-fit mb-2">
                 <span
                   className="font-black leading-none tracking-tight block"
                   style={{
@@ -336,9 +357,12 @@ export default function HeroFeatures() {
                 </span>
               </div>
 
-              {/* Video - cropped taller for mobile */}
-              <div className="relative h-[45vh] overflow-hidden rounded-lg">
-                <AutoplayVideo className="w-full h-full object-cover" src={feature.video} />
+              {/* Video - 4:5 aspect ratio for mobile */}
+              <div className="relative aspect-square overflow-hidden rounded-lg flex-shrink-0">
+                <AutoplayVideo className="w-full h-full object-cover" src={feature.video} style={{
+                  ...(feature.mobileVideoScale ? { transform: `scale(${feature.mobileVideoScale})`, transformOrigin: feature.mobileVideoPosition || 'center' } : {}),
+                  ...(feature.mobileVideoPosition ? { objectPosition: feature.mobileVideoPosition } : {}),
+                }} />
                 {!feature.video && i > 0 && (
                   <div className="absolute inset-0 flex items-center justify-center bg-black/40">
                     <span className="text-xs uppercase tracking-[0.2em] text-white/50 font-medium">Placeholder</span>
@@ -346,9 +370,9 @@ export default function HeroFeatures() {
                 )}
               </div>
 
-              {/* Title + Description */}
-              <div className="mt-4">
-                <h3 className="text-xl font-bold uppercase tracking-tight leading-tight mb-3">
+              {/* Description */}
+              <div className="mt-2">
+                <h3 className="text-xl font-bold uppercase tracking-tight leading-tight mb-1">
                   {feature.title}
                 </h3>
                 <p className="text-[15px] text-foreground/55 leading-relaxed">

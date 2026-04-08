@@ -1,4 +1,5 @@
 import { lazy, Suspense, useRef, useState, useEffect } from "react";
+import { useLocation } from "react-router-dom";
 import Header from "@/components/Header";
 import HeroSection from "@/components/HeroSection";
 import TrustBadgeBar from "@/components/TrustBadgeBar";
@@ -188,6 +189,18 @@ function MobileTextWithVideo() {
 
 const Index = () => {
   const heroRef = useRef<HTMLElement>(null);
+  const location = useLocation();
+
+  // Scroll to hash section when arriving from another page (e.g. /#features)
+  useEffect(() => {
+    if (location.hash) {
+      const id = location.hash.slice(1);
+      // Small delay to let the page render before scrolling
+      setTimeout(() => {
+        document.getElementById(id)?.scrollIntoView({ behavior: "smooth" });
+      }, 100);
+    }
+  }, [location.hash]);
 
   // Set --vh to the real visible viewport height (accounts for browser chrome)
   useEffect(() => {

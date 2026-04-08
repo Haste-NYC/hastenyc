@@ -186,7 +186,7 @@ const PremiereRewind = () => {
       <div className="absolute inset-0 overflow-hidden pointer-events-none z-0">
         <PageAtmosphere />
       </div>
-      <Header minimal />
+      <Header />
 
       <main className="flex-grow flex flex-col items-center justify-center px-4 sm:px-8 pt-14 pb-12 relative z-10">
         <div className="text-center mb-12 max-w-3xl">
