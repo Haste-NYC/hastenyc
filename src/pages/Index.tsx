@@ -224,13 +224,7 @@ const Index = () => {
       />
       {/* Persistent vignette overlay */}
       <Vignette />
-      {/* Lava lamp background - fixed on desktop, inside hero on mobile */}
-      {!isMobile && (
-        <LavaLampBackground
-          className="fixed inset-0 w-full h-full z-0"
-          visibilityRef={heroRef}
-        />
-      )}
+      {/* Lava lamp background removed from fixed layer -- now confined to hero section */}
       {/* Continuous atmospheric gradients across all sections including footer */}
       <div className="absolute inset-0 overflow-hidden pointer-events-none z-0">
         <PageAtmosphere />
@@ -239,12 +233,10 @@ const Index = () => {
       <main>
         {/* Hero - full viewport height on mobile */}
         <section id="hero" ref={heroRef} className="sm:pt-10 relative overflow-hidden snap-section flex flex-col justify-center">
-          {/* Lava lamp inside hero on mobile - scrolls away with section, no flicker */}
-          {isMobile && (
-            <LavaLampBackground
-              className="absolute inset-0 w-full h-full z-0"
-            />
-          )}
+          {/* Lava lamp confined to hero -- scrolls away naturally, no z-bleed */}
+          <LavaLampBackground
+            className="absolute inset-0 w-full h-full z-0"
+          />
           <HeroSection />
           <TrustBadgeBar />
         </section>

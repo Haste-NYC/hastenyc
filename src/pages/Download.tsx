@@ -141,7 +141,7 @@ const Download = () => {
 
   return (
     <div className="min-h-screen bg-background">
-      <Header minimal />
+      <Header />
 
       {/* Payment Success Banner */}
       {sessionId && (
