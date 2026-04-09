@@ -25,6 +25,7 @@ import Download from "./pages/Download";
 import About from "./pages/About";
 import LavaLampExperiments from "./pages/LavaLampExperiments";
 import HeroMockup from "./pages/HeroMockup";
+import OgImagePreview from "./pages/OgImagePreview";
 
 import NotFound from "./pages/NotFound";
 
@@ -69,6 +70,7 @@ const App = () => (
             <Route path="/about" element={<About />} />
             <Route path="/experiments/lava-lamp" element={<LavaLampExperiments />} />
             <Route path="/experiments/hero-mockup" element={<HeroMockup />} />
+            <Route path="/og-preview" element={<OgImagePreview />} />
 
             {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
             <Route path="*" element={<NotFound />} />

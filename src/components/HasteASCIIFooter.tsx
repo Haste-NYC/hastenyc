@@ -327,12 +327,8 @@ export default function HasteASCIIFooter() {
         height={ROWS * CHAR_HEIGHT}
         onMouseMove={handleMouseMove}
         onMouseLeave={handleMouseLeave}
-        onTouchStart={updateTouchPos}
-        onTouchMove={updateTouchPos}
-        onTouchEnd={handleTouchEnd}
-        onTouchCancel={handleTouchEnd}
         style={{
-          touchAction: 'none',
+          touchAction: 'auto',
           cursor: 'default',
           transformOrigin: 'top center',
           width: COLS * CHAR_WIDTH,

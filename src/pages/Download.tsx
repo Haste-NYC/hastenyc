@@ -7,6 +7,7 @@ import { toast } from "sonner";
 import { supabase } from "@/integrations/supabase/client";
 import conformStudioLogo from "@/assets/conform-studio-logo.svg";
 import Header from "@/components/Header";
+import SEO from "@/components/SEO";
 
 const STORAGE_KEY = "conform_studio_email";
 
@@ -141,6 +142,11 @@ const Download = () => {
 
   return (
     <div className="min-h-screen bg-background">
+      <SEO
+        title="Download"
+        description="Download Haste Conform Studio for macOS. Instant project migration from Adobe Premiere to DaVinci Resolve. Free 7-day trial, no credit card required."
+        canonical="/download"
+      />
       <Header />
 
       {/* Payment Success Banner */}
