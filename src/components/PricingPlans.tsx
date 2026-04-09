@@ -321,7 +321,7 @@ const PricingPlans = ({
                     ) : isSelected(tier) ? (
                       "Selected"
                     ) : (
-                      "Select Plan"
+                      "Start Trial"
                     )}
                   </Button>
                 </div>
