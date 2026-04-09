@@ -55,6 +55,7 @@ app.post('/api/create-checkout-session', async (req, res) => {
           quantity: 1,
         },
       ],
+      allow_promotion_codes: priceId === 'price_1THgtFRk08WBLpB69187D4zo',
       customer_email: customerEmail,
       success_url: `${process.env.FRONTEND_URL || 'http://localhost:5173'}/download?session_id={CHECKOUT_SESSION_ID}`,
       cancel_url: `${process.env.FRONTEND_URL || 'http://localhost:5173'}/checkout`,
