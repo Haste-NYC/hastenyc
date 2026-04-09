@@ -262,6 +262,7 @@ function AutoplayVideo({ className, src = "/product_pushin_veo31.mp4", style }: 
       <video
         ref={videoARef}
         src={src}
+        title=""
         muted
         playsInline
         preload="auto"
@@ -271,6 +272,7 @@ function AutoplayVideo({ className, src = "/product_pushin_veo31.mp4", style }: 
       <video
         ref={videoBRef}
         src={src}
+        title=""
         muted
         playsInline
         preload="auto"

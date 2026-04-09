@@ -213,21 +213,19 @@ const impactWords = [
 function DesktopVideoSection() {
   return (
     <section className="relative bg-background">
-      <div className="max-w-5xl mx-auto px-4 sm:px-6 md:px-12 lg:px-20 py-16">
-        <div className="text-center mb-8">
-          <span className="text-[10px] uppercase tracking-[0.3em] text-white/30">
-            [ See it in action ]
-          </span>
-        </div>
-        <div style={{ padding: "56.25% 0 0 0", position: "relative" }}>
-          <iframe
-            src="https://player.vimeo.com/video/1081347302?badge=0&autopause=0&player_id=0&app_id=58479"
-            frameBorder="0"
-            allow="autoplay; fullscreen; picture-in-picture"
-            style={{ position: "absolute", top: 0, left: 0, width: "100%", height: "100%" }}
-            title="CONFORMSTUDIO-WEBSITE-R1"
-          />
-        </div>
+      <div className="text-center mb-8 pt-16">
+        <span className="text-[10px] uppercase tracking-[0.3em] text-white/30">
+          [ See it in action ]
+        </span>
+      </div>
+      <div style={{ padding: "56.25% 0 0 0", position: "relative" }}>
+        <iframe
+          src="https://player.vimeo.com/video/1081347302?badge=0&autopause=0&player_id=0&app_id=58479"
+          frameBorder="0"
+          allow="autoplay; fullscreen; picture-in-picture"
+          style={{ position: "absolute", top: 0, left: 0, width: "100%", height: "100%" }}
+          title="CONFORMSTUDIO-WEBSITE-R1"
+        />
       </div>
     </section>
   );
@@ -404,11 +402,9 @@ const Index = () => {
           <TrustBadgeBar />
         </section>
 
-        {/* UIShowcase - 3D monitor with impact text overlay, pinned */}
-        {isMobile ? (
-          <MobileTextWithVideo />
-        ) : (
-          <DesktopShowcaseWithImpactText />
+        {/* Video Section */}
+        {!isMobile && (
+          <DesktopVideoSection />
         )}
 
         {/* Hero Features */}
@@ -432,9 +428,11 @@ const Index = () => {
           <HeroFeatures />
         </section>
 
-        {/* Video Section */}
-        {!isMobile && (
-          <DesktopVideoSection />
+        {/* UIShowcase - 3D monitor with impact text overlay, pinned */}
+        {isMobile ? (
+          <MobileTextWithVideo />
+        ) : (
+          <DesktopShowcaseWithImpactText />
         )}
 
         {/* Feature Grid - detailed capabilities (desktop only) */}
