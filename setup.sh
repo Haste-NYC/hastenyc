@@ -46,6 +46,20 @@ if ! command -v npm &> /dev/null; then
 fi
 echo -e "${GREEN}npm $(npm -v) found${NC}"
 
+# Link to Vercel project (west-monroe serves haste.nyc)
+echo ""
+echo -e "${YELLOW}Linking Vercel project...${NC}"
+if [ ! -d ".vercel" ]; then
+    vercel link --yes --project west-monroe --scope jordantaylorfullers-projects 2>/dev/null
+    if [ $? -eq 0 ]; then
+        echo -e "${GREEN}Linked to Vercel project west-monroe${NC}"
+    else
+        echo -e "${YELLOW}Warning: Could not link Vercel project. Run 'vercel link' manually.${NC}"
+    fi
+else
+    echo -e "${GREEN}Vercel project already linked${NC}"
+fi
+
 # Install dependencies
 echo ""
 echo -e "${YELLOW}Installing npm dependencies...${NC}"
