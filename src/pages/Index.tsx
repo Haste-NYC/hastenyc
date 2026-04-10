@@ -407,6 +407,9 @@ const Index = () => {
           <DesktopVideoSection />
         )}
 
+        {/* Impact Statement + Video - mobile only, before feature callouts */}
+        {isMobile && <MobileTextWithVideo />}
+
         {/* Hero Features */}
         <section className="relative overflow-visible bg-background">
           <div
@@ -428,12 +431,8 @@ const Index = () => {
           <HeroFeatures />
         </section>
 
-        {/* UIShowcase - 3D monitor with impact text overlay, pinned */}
-        {isMobile ? (
-          <MobileTextWithVideo />
-        ) : (
-          <DesktopShowcaseWithImpactText />
-        )}
+        {/* UIShowcase - 3D monitor with impact text overlay, pinned (desktop only) */}
+        {!isMobile && <DesktopShowcaseWithImpactText />}
 
         {/* Feature Grid - detailed capabilities (desktop only) */}
         <section className="hidden md:block py-12 md:py-20 relative overflow-visible bg-background">

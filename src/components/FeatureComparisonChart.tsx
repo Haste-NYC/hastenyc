@@ -57,10 +57,10 @@ export default function FeatureComparisonChart() {
   const gridCols = "grid-cols-[1fr_repeat(4,36px)] sm:grid-cols-[1fr_repeat(4,44px)] md:grid-cols-[1fr_repeat(4,100px)] lg:grid-cols-[1fr_repeat(4,120px)]";
 
   return (
-    <div className="w-full px-4 sm:px-6 md:px-20">
-      <div className="max-w-7xl mx-auto" ref={ref}>
-        <div className="overflow-x-auto" style={{ WebkitOverflowScrolling: "touch" }}>
-          <div className="min-w-[320px]">
+    <div className="w-full px-2 sm:px-6 md:px-20 overflow-hidden">
+      <div className="max-w-7xl mx-auto origin-center scale-[0.88] sm:scale-100" ref={ref}>
+        <div>
+          <div>
             {/* Header row: title + column names */}
             <motion.div
               className={`grid ${gridCols} items-end pb-3 mb-1 border-b border-white/15 gap-1`}
