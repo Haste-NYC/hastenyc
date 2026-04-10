@@ -36,6 +36,9 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
       allow_promotion_codes: priceId === 'price_1THgtFRk08WBLpB69187D4zo',
       success_url: `${process.env.FRONTEND_URL || 'http://localhost:5173'}/download?session_id={CHECKOUT_SESSION_ID}`,
       cancel_url: `${process.env.FRONTEND_URL || 'http://localhost:5173'}/#pricing`,
+      subscription_data: {
+        trial_period_days: 7,
+      },
     };
 
     // Only pre-fill email if provided; otherwise Stripe collects it

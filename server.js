@@ -59,6 +59,9 @@ app.post('/api/create-checkout-session', async (req, res) => {
       customer_email: customerEmail,
       success_url: `${process.env.FRONTEND_URL || 'http://localhost:5173'}/download?session_id={CHECKOUT_SESSION_ID}`,
       cancel_url: `${process.env.FRONTEND_URL || 'http://localhost:5173'}/checkout`,
+      subscription_data: {
+        trial_period_days: 7,
+      },
     });
 
     res.json({ url: session.url });
@@ -67,6 +70,29 @@ app.post('/api/create-checkout-session', async (req, res) => {
     res.status(500).json({
       error: error instanceof Error ? error.message : 'Failed to create checkout session'
     });
+  }
+});
+
+// Changelog proxy (keeps GitHub token server-side)
+app.get('/api/changelog', async (req, res) => {
+  try {
+    const token = process.env.GITHUB_TOKEN;
+    const headers = token ? { Authorization: `token ${token}` } : {};
+
+    const response = await fetch(
+      'https://raw.githubusercontent.com/Haste-NYC/haste-conform/main/CHANGELOG.md',
+      { headers }
+    );
+    if (!response.ok) {
+      return res.status(response.status).json({ error: 'Failed to fetch changelog' });
+    }
+
+    const text = await response.text();
+    res.setHeader('Cache-Control', 'public, max-age=300');
+    res.type('text/plain').send(text);
+  } catch (err) {
+    console.error('Changelog fetch error:', err.message);
+    res.status(500).json({ error: 'Failed to fetch changelog' });
   }
 });
 

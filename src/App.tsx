@@ -27,6 +27,12 @@ import LavaLampExperiments from "./pages/LavaLampExperiments";
 import HeroMockup from "./pages/HeroMockup";
 import OgImagePreview from "./pages/OgImagePreview";
 
+import ConformDocs from "./pages/conform-studio/Docs";
+import ConformSupport from "./pages/conform-studio/Support";
+import ConformChangelog from "./pages/conform-studio/Changelog";
+import ConformDocsEnterprise from "./pages/conform-studio/DocsEnterprise";
+import ConformDocsQC from "./pages/conform-studio/DocsQC";
+import ConformDocsGettingStarted from "./pages/conform-studio/DocsGettingStarted";
 import NotFound from "./pages/NotFound";
 
 const queryClient = new QueryClient();
@@ -71,6 +77,15 @@ const App = () => (
             <Route path="/experiments/lava-lamp" element={<LavaLampExperiments />} />
             <Route path="/experiments/hero-mockup" element={<HeroMockup />} />
             <Route path="/og-preview" element={<OgImagePreview />} />
+
+            <Route path="/conform-studio/docs" element={<ConformDocs />} />
+            <Route path="/conform-studio/docs/getting-started" element={<ConformDocsGettingStarted />} />
+            <Route path="/conform-studio/docs/enterprise" element={<ConformDocsEnterprise />} />
+            <Route path="/conform-studio/docs/qc" element={<ConformDocsQC />} />
+            <Route path="/conform-studio/docs/qc/*" element={<ConformDocsQC />} />
+            <Route path="/conform-studio/support" element={<ConformSupport />} />
+            <Route path="/conform-studio/changelog" element={<ConformChangelog />} />
+            <Route path="/conform-studio/download" element={<Download />} />
 
             {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
             <Route path="*" element={<NotFound />} />
