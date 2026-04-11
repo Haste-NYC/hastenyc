@@ -73,23 +73,68 @@ app.post('/api/create-checkout-session', async (req, res) => {
   }
 });
 
-// Changelog proxy (keeps GitHub token server-side)
+// Changelog via GitHub Releases API (keeps GitHub token server-side)
+const PREFIX_TO_CATEGORY = {
+  feat: 'Added',
+  fix: 'Fixed',
+  chore: 'Changed',
+  style: 'Changed',
+  docs: 'Changed',
+  ci: 'Changed',
+  refactor: 'Changed',
+};
+
+const MAX_ITEMS_PER_CATEGORY = 3;
+
+function parseReleaseBody(body) {
+  const categories = {};
+  for (const line of body.split('\n')) {
+    const trimmed = line.trim();
+    if (!trimmed.startsWith('- ')) continue;
+    const item = trimmed.slice(2);
+    const colonIdx = item.indexOf(':');
+    if (colonIdx === -1) continue;
+    const prefix = item.slice(0, colonIdx).trim().toLowerCase();
+    let category;
+    if (prefix === 'feat') category = 'Added';
+    else if (prefix === 'fix') category = 'Fixed';
+    else continue;
+    const description = item.slice(colonIdx + 1).trim();
+    if (!description || description.startsWith('bump version')) continue;
+    if (!categories[category]) categories[category] = [];
+    categories[category].push(description.charAt(0).toUpperCase() + description.slice(1));
+  }
+  return ['Added', 'Fixed']
+    .filter((cat) => categories[cat]?.length)
+    .map((cat) => ({ category: cat, items: categories[cat].slice(0, MAX_ITEMS_PER_CATEGORY) }));
+}
+
 app.get('/api/changelog', async (req, res) => {
   try {
     const token = process.env.GITHUB_TOKEN;
-    const headers = token ? { Authorization: `token ${token}` } : {};
+    const headers = { Accept: 'application/vnd.github+json' };
+    if (token) headers.Authorization = `token ${token}`;
 
     const response = await fetch(
-      'https://raw.githubusercontent.com/Haste-NYC/haste-conform/main/CHANGELOG.md',
+      'https://api.github.com/repos/Haste-NYC/haste-conform/releases?per_page=100',
       { headers }
     );
     if (!response.ok) {
-      return res.status(response.status).json({ error: 'Failed to fetch changelog' });
+      return res.status(response.status).json({ error: 'Failed to fetch releases' });
     }
 
-    const text = await response.text();
+    const ghReleases = await response.json();
+    const releases = ghReleases
+      .filter((r) => !r.draft && !r.prerelease)
+      .map((r) => ({
+        version: r.tag_name.replace(/^v/, ''),
+        date: r.published_at?.slice(0, 10) ?? '',
+        changes: parseReleaseBody(r.body ?? ''),
+      }))
+      .filter((r) => r.changes.length > 0);
+
     res.setHeader('Cache-Control', 'public, max-age=300');
-    res.type('text/plain').send(text);
+    res.json(releases);
   } catch (err) {
     console.error('Changelog fetch error:', err.message);
     res.status(500).json({ error: 'Failed to fetch changelog' });
