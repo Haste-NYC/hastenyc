@@ -4,7 +4,7 @@ import { Checkbox } from "@/components/ui/checkbox";
 import { Download as DownloadIcon, CheckCircle2, Loader2, ArrowRight, Monitor } from "lucide-react";
 import { TermsOfService } from "@/components/download/TermsOfService";
 import { toast } from "sonner";
-import { supabase } from "@/integrations/supabase/client";
+
 import conformStudioLogo from "@/assets/conform-studio-logo.svg";
 import Header from "@/components/Header";
 import SEO from "@/components/SEO";
@@ -110,12 +110,14 @@ const Download = () => {
     setIsSubmittingEmail(true);
 
     try {
-      const { error } = await supabase
-        .from("mailing_list")
-        .insert({ email: email.trim().toLowerCase(), source: "conform-studio-download" });
+      const res = await fetch('/api/notify/signup', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ email: email.trim().toLowerCase(), source: 'conform-studio-download' }),
+      });
 
-      if (error) {
-        console.error("[Download] Email insert error:", error);
+      if (!res.ok) {
+        console.error("[Download] Signup API error:", res.status);
       }
 
       localStorage.setItem(STORAGE_KEY, email.trim().toLowerCase());

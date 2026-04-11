@@ -47,6 +47,22 @@ const ScrollToTop = () => {
   return null;
 };
 
+const VisitorBeacon = () => {
+  const { pathname } = useLocation();
+
+  useEffect(() => {
+    if (sessionStorage.getItem('_vb')) return;
+    sessionStorage.setItem('_vb', '1');
+    fetch('/api/identify', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ path: pathname }),
+    }).catch(() => {});
+  }, []); // eslint-disable-line react-hooks/exhaustive-deps
+
+  return null;
+};
+
 const App = () => (
   <QueryClientProvider client={queryClient}>
     <SmoothScrollProvider>
@@ -55,6 +71,7 @@ const App = () => (
         <Sonner />
         <BrowserRouter basename={import.meta.env.BASE_URL}>
           <ScrollToTop />
+          <VisitorBeacon />
           <Routes>
             <Route path="/" element={<Index />} />
             <Route path="/terms" element={<Terms />} />

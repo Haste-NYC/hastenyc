@@ -1,5 +1,6 @@
 import type { VercelRequest, VercelResponse } from '@vercel/node';
 import { google } from 'googleapis';
+import { notifyBooking } from '../lib/slack.js';
 
 const SCHEDULE_TIMEZONE = 'America/New_York';
 const SLOT_DURATION_MIN = 30;
@@ -177,6 +178,13 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
     const meetLink = event.data.conferenceData?.entryPoints?.find(
       (e) => e.entryPointType === 'video'
     )?.uri;
+
+    // Send Slack notification (non-blocking for the response)
+    try {
+      await notifyBooking(name, email, company, date, time);
+    } catch (e: any) {
+      console.error('[book] Slack notification error:', e.message);
+    }
 
     res.json({
       success: true,

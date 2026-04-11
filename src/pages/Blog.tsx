@@ -248,7 +248,7 @@ const Blog = () => {
                 <div className="p-8 flex flex-col flex-grow">
                   <div className="flex flex-wrap items-center gap-4 mb-6">
                     <span className="text-xs text-brand-orange uppercase tracking-wider font-bold">
-                      DECEMBER 19, 2024
+                      DECEMBER 19, 2025
                     </span>
                     <span className="text-xs text-muted-foreground uppercase tracking-wider">
                       BREAKING NEWS
