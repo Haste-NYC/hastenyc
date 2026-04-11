@@ -12,6 +12,12 @@ export function extractCompanyDomain(email: string): string | null {
   return domain;
 }
 
+function sanitizeMrkdwn(str: string): string {
+  return str
+    .replace(/</g, '&lt;')
+    .replace(/>/g, '&gt;');
+}
+
 async function postToSlack(blocks: any[], text: string) {
   const webhookUrl = process.env.SLACK_WEBHOOK_URL;
   if (!webhookUrl) {
@@ -43,7 +49,7 @@ export async function notifySignup(email: string, source: string) {
       type: 'section',
       text: {
         type: 'mrkdwn',
-        text: `:envelope: *New Mailing List Signup*\n*Email:* ${email}${domainLabel}\n*Source:* ${source}`,
+        text: `:envelope: *New Mailing List Signup*\n*Email:* ${sanitizeMrkdwn(email)}${domainLabel}\n*Source:* ${sanitizeMrkdwn(source)}`,
       },
     },
   ], text);
@@ -108,7 +114,7 @@ export async function notifyVisitor(org: string, city: string, region: string, p
       type: 'section',
       text: {
         type: 'mrkdwn',
-        text: `:eyes: *Notable Visitor*\n*Company:* ${org}\n*Location:* ${city}, ${region}\n*Page:* ${page}`,
+        text: `:eyes: *Notable Visitor*\n*Company:* ${sanitizeMrkdwn(org)}\n*Location:* ${sanitizeMrkdwn(city)}, ${sanitizeMrkdwn(region)}\n*Page:* ${sanitizeMrkdwn(page)}`,
       },
     },
   ], text);

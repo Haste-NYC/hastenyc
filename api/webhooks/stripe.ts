@@ -57,7 +57,11 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
         ? `$${(amount / 100).toFixed(0)}/payment`
         : 'subscription';
 
-      await notifySubscription(customerEmail, planDesc, 'new');
+      try {
+        await notifySubscription(customerEmail, planDesc, 'new');
+      } catch (e: any) {
+        console.error('[Stripe] Failed to send checkout notification:', e.message);
+      }
       // TODO: Activate subscription in your database
       break;
     }
@@ -101,7 +105,11 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
       });
 
       const failedEmail = invoice.customer_email || 'unknown';
-      await notifySubscription(failedEmail, 'invoice payment', 'payment_failed');
+      try {
+        await notifySubscription(failedEmail, 'invoice payment', 'payment_failed');
+      } catch (e: any) {
+        console.error('[Stripe] Failed to send payment failure notification:', e.message);
+      }
       break;
     }
 
