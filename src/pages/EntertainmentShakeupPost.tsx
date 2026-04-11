@@ -21,7 +21,7 @@ const EntertainmentShakeupPost = () => {
         type="article"
         image={heroImage}
         article={{
-          publishedTime: "2024-12-19",
+          publishedTime: "2025-12-19",
           section: "Breaking News",
           author: "HASTE",
         }}
@@ -60,7 +60,7 @@ const EntertainmentShakeupPost = () => {
                 And its possible repercussions on the economy
               </p>
               <div className="flex items-center gap-6 mt-8 text-sm text-muted-foreground animate-fade-in" style={{ animationDelay: "0.4s" }}>
-                <time dateTime="2024-12-19">December 19, 2024</time>
+                <time dateTime="2025-12-19">December 19, 2025</time>
                 <span className="w-1 h-1 rounded-full bg-brand-orange" />
                 <span>12 min read</span>
               </div>

@@ -4,7 +4,6 @@ import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { Download, Loader2 } from 'lucide-react';
-import { supabase } from '@/integrations/supabase/client';
 import { toast } from 'sonner';
 import { premiereRewindButtonClassName } from '@/components/premiere-rewind/buttonStyles';
 
@@ -31,13 +30,14 @@ export function EmailGateDialog({ open, onOpenChange, onEmailSubmitted, fileName
     setIsSubmitting(true);
 
     try {
-      const { error } = await supabase
-        .from('mailing_list')
-        .insert({ email: email.trim().toLowerCase() });
+      const res = await fetch('/api/notify/signup', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ email: email.trim().toLowerCase(), source: 'premiere-rewind' }),
+      });
 
-      if (error) {
-        console.error('[EmailGate] Insert error:', error);
-        // Don't block download on error, just log it
+      if (!res.ok) {
+        console.error('[EmailGate] Signup API error:', res.status);
       }
 
       // Store email in localStorage to not ask again
