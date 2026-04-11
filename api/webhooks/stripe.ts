@@ -1,5 +1,6 @@
 import type { VercelRequest, VercelResponse } from '@vercel/node';
 import Stripe from 'stripe';
+import { notifySubscription } from '../lib/slack.js';
 
 const stripe = new Stripe(process.env.STRIPE_SECRET_KEY || '', {
   apiVersion: '2025-12-15.clover',
@@ -42,14 +43,26 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
   switch (event.type) {
     case 'checkout.session.completed': {
       const session = event.data.object as Stripe.Checkout.Session;
+      const customerEmail = session.customer_email || session.customer_details?.email || 'unknown';
       console.log('Checkout completed:', {
         sessionId: session.id,
-        customerEmail: session.customer_email,
+        customerEmail,
         subscriptionId: session.subscription,
         customerId: session.customer,
       });
+
+      // Determine plan description from the session amount
+      const amount = session.amount_total;
+      const planDesc = amount
+        ? `$${(amount / 100).toFixed(0)}/payment`
+        : 'subscription';
+
+      try {
+        await notifySubscription(customerEmail, planDesc, 'new');
+      } catch (e: any) {
+        console.error('[Stripe] Failed to send checkout notification:', e.message);
+      }
       // TODO: Activate subscription in your database
-      // e.g. update Supabase user record with subscription status
       break;
     }
 
@@ -70,7 +83,16 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
         subscriptionId: subscription.id,
         customerId: subscription.customer,
       });
-      // TODO: Deactivate subscription in database
+
+      // Retrieve customer email for the notification
+      try {
+        const customer = await stripe.customers.retrieve(subscription.customer as string);
+        if (customer && !customer.deleted) {
+          await notifySubscription(customer.email || 'unknown', 'subscription', 'cancelled');
+        }
+      } catch (e: any) {
+        console.error('[Stripe] Failed to retrieve customer for cancellation:', e.message);
+      }
       break;
     }
 
@@ -81,7 +103,13 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
         customerId: invoice.customer,
         subscriptionId: invoice.subscription,
       });
-      // TODO: Notify user of failed payment
+
+      const failedEmail = invoice.customer_email || 'unknown';
+      try {
+        await notifySubscription(failedEmail, 'invoice payment', 'payment_failed');
+      } catch (e: any) {
+        console.error('[Stripe] Failed to send payment failure notification:', e.message);
+      }
       break;
     }
 
