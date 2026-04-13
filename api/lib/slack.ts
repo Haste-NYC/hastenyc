@@ -119,3 +119,96 @@ export async function notifyVisitor(org: string, city: string, region: string, p
     },
   ], text);
 }
+
+// --- Haste Pulse notifications (Supabase desktop app events) ---
+
+async function postToPulse(blocks: any[], text: string) {
+  const webhookUrl = process.env.SLACK_PULSE_WEBHOOK_URL;
+  if (!webhookUrl) {
+    console.warn('[Slack] SLACK_PULSE_WEBHOOK_URL not set, skipping Pulse notification');
+    return;
+  }
+
+  try {
+    const res = await fetch(webhookUrl, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ text, blocks }),
+    });
+    if (!res.ok) {
+      console.error('[Slack] Pulse webhook failed:', res.status, await res.text());
+    }
+  } catch (err: any) {
+    console.error('[Slack] Pulse webhook error:', err.message);
+  }
+}
+
+export async function notifyNewUser(email: string, displayName: string | null, company: string | null) {
+  const domain = extractCompanyDomain(email);
+  const domainLabel = domain ? ` (${sanitizeMrkdwn(domain)})` : '';
+  const nameLabel = displayName ? sanitizeMrkdwn(displayName) : 'Unknown';
+  const companyLabel = company ? `\n*Company:* ${sanitizeMrkdwn(company)}` : '';
+  const text = `New Conform Studio user: ${email}`;
+
+  await postToPulse([
+    {
+      type: 'section',
+      text: {
+        type: 'mrkdwn',
+        text: `:new: *New Conform Studio User*\n*Name:* ${nameLabel}\n*Email:* ${sanitizeMrkdwn(email)}${domainLabel}${companyLabel}`,
+      },
+    },
+  ], text);
+}
+
+export async function notifyConversion(
+  userEmail: string,
+  projectName: string,
+  sourceApp: string,
+  targetApp: string,
+  totalClips: number | null,
+  totalSequences: number | null,
+  durationSeconds: number | null,
+  success: boolean,
+) {
+  const domain = extractCompanyDomain(userEmail);
+  const domainLabel = domain ? ` (${sanitizeMrkdwn(domain)})` : '';
+  const icon = success ? ':white_check_mark:' : ':x:';
+  const status = success ? 'Successful' : 'Failed';
+  const durationLabel = durationSeconds != null
+    ? `\n*Duration:* ${Math.floor(durationSeconds / 60)}m ${durationSeconds % 60}s`
+    : '';
+  const clipsLabel = totalClips != null ? `\n*Clips:* ${totalClips.toLocaleString()}` : '';
+  const seqLabel = totalSequences != null ? `\n*Sequences:* ${totalSequences}` : '';
+  const text = `${status} conversion: ${projectName} (${sourceApp} -> ${targetApp})`;
+
+  await postToPulse([
+    {
+      type: 'section',
+      text: {
+        type: 'mrkdwn',
+        text: `${icon} *${status} Conversion*\n*User:* ${sanitizeMrkdwn(userEmail)}${domainLabel}\n*Project:* ${sanitizeMrkdwn(projectName)}\n*Workflow:* ${sanitizeMrkdwn(sourceApp)} -> ${sanitizeMrkdwn(targetApp)}${seqLabel}${clipsLabel}${durationLabel}`,
+      },
+    },
+  ], text);
+}
+
+export async function notifyAppSession(
+  userEmail: string,
+  appVersion: string,
+  osName: string,
+) {
+  const domain = extractCompanyDomain(userEmail);
+  const domainLabel = domain ? ` (${sanitizeMrkdwn(domain)})` : '';
+  const text = `Conform Studio session: ${userEmail} on v${appVersion}`;
+
+  await postToPulse([
+    {
+      type: 'section',
+      text: {
+        type: 'mrkdwn',
+        text: `:desktop_computer: *App Session Started*\n*User:* ${sanitizeMrkdwn(userEmail)}${domainLabel}\n*Version:* ${sanitizeMrkdwn(appVersion)}\n*OS:* ${sanitizeMrkdwn(osName)}`,
+      },
+    },
+  ], text);
+}
