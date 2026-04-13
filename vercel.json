@@ -17,10 +17,10 @@
     }
   ],
   "redirects": [
-    { "source": "/conform.studio", "destination": "/", "permanent": false }
+    { "source": "/conform.studio", "destination": "/", "permanent": false },
+    { "source": "/", "has": [{ "type": "host", "value": "get.conform.studio" }], "destination": "https://www.haste.nyc/get", "permanent": false }
   ],
   "rewrites": [
-    { "source": "/", "has": [{ "type": "host", "value": "get.conform.studio" }], "destination": "/get" },
     { "source": "/((?!api/).*)", "destination": "/index.html" }
   ],
   "crons": [
