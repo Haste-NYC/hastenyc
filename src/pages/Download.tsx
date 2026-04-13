@@ -87,6 +87,7 @@ function useReleaseInfo(): ReleaseInfo & { isLoading: boolean } {
 const Download = () => {
   const [searchParams] = useSearchParams();
   const sessionId = searchParams.get("session_id");
+  const ref = searchParams.get("ref");
   const [hasScrolledToBottom, setHasScrolledToBottom] = useState(false);
   const [agreedToTerms, setAgreedToTerms] = useState(false);
 
@@ -94,7 +95,7 @@ const Download = () => {
 
   // Email gate state -- skip if user came from Stripe checkout or already provided email
   const storedEmail = localStorage.getItem(STORAGE_KEY);
-  const [emailCaptured, setEmailCaptured] = useState(!!sessionId || !!storedEmail);
+  const [emailCaptured, setEmailCaptured] = useState(!!sessionId || !!storedEmail || ref === 'promo');
   const [email, setEmail] = useState(storedEmail || "");
   const [isSubmittingEmail, setIsSubmittingEmail] = useState(false);
 
@@ -189,8 +190,8 @@ const Download = () => {
             </p>
 
             <p className="text-base md:text-lg text-foreground/80 max-w-3xl mx-auto pt-4">
-              Conform Studio connects previously siloed creative software -- Premiere, Resolve, Avid,
-              Pro Tools -- and bridges the gaps between them. Say goodbye to relinking errors, round-trip
+              Conform Studio connects previously siloed creative software -- Premiere, Resolve,
+              Avid -- and bridges the gaps between them. Say goodbye to relinking errors, round-trip
               workflows, and days of manual QC.
             </p>
           </div>

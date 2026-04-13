@@ -2,7 +2,7 @@ import { Toaster } from "@/components/ui/toaster";
 import { Toaster as Sonner } from "@/components/ui/sonner";
 import { TooltipProvider } from "@/components/ui/tooltip";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
-import { BrowserRouter, Routes, Route, useLocation } from "react-router-dom";
+import { BrowserRouter, Routes, Route, Navigate, useLocation } from "react-router-dom";
 import { useEffect } from "react";
 import SmoothScrollProvider from "@/components/SmoothScrollProvider";
 import Index from "./pages/Index";
@@ -33,6 +33,7 @@ import ConformChangelog from "./pages/conform-studio/Changelog";
 import ConformDocsEnterprise from "./pages/conform-studio/DocsEnterprise";
 import ConformDocsQC from "./pages/conform-studio/DocsQC";
 import ConformDocsGettingStarted from "./pages/conform-studio/DocsGettingStarted";
+import GetConformStudio from "./pages/GetConformStudio";
 import NotFound from "./pages/NotFound";
 
 const queryClient = new QueryClient();
@@ -94,6 +95,9 @@ const App = () => (
             <Route path="/experiments/lava-lamp" element={<LavaLampExperiments />} />
             <Route path="/experiments/hero-mockup" element={<HeroMockup />} />
             <Route path="/og-preview" element={<OgImagePreview />} />
+
+            <Route path="/get" element={<GetConformStudio />} />
+            <Route path="/conform.studio" element={<Navigate to="/" replace />} />
 
             <Route path="/conform-studio/docs" element={<ConformDocs />} />
             <Route path="/conform-studio/docs/getting-started" element={<ConformDocsGettingStarted />} />
