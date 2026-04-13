@@ -14,6 +14,7 @@ const ISP_KEYWORDS = [
   'mobile', 'wireless', 'cellular', 'broadband', 'telecom',
   'isp', 'internet service',
   'apple inc', // iCloud Private Relay
+  'peoples communications', // Owner's ISP in Quitman, TX
 ];
 
 export function isInterestingOrg(org: string | undefined): boolean {
