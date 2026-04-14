@@ -18,7 +18,9 @@
   ],
   "redirects": [
     { "source": "/conform.studio", "destination": "/", "permanent": false },
-    { "source": "/", "has": [{ "type": "host", "value": "get.conform.studio" }], "destination": "https://www.haste.nyc/get", "permanent": false }
+    { "source": "/", "has": [{ "type": "host", "value": "get.conform.studio" }], "destination": "https://www.haste.nyc/free90", "permanent": false },
+    { "source": "/(.*)", "has": [{ "type": "host", "value": "conform.studio" }], "destination": "https://www.haste.nyc/$1", "permanent": true },
+    { "source": "/(.*)", "has": [{ "type": "host", "value": "www.conform.studio" }], "destination": "https://www.haste.nyc/$1", "permanent": true }
   ],
   "rewrites": [
     { "source": "/((?!api/).*)", "destination": "/index.html" }
