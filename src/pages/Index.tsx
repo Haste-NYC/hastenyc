@@ -16,7 +16,6 @@ import Footer from "@/components/Footer";
 import SEO from "@/components/SEO";
 import { Helmet } from "react-helmet-async";
 import LavaLampBackground from "@/components/LavaLampBackground";
-import MuxPlayer from "@mux/mux-player-react";
 import FeatureComparisonChart from "@/components/FeatureComparisonChart";
 const Conform3DVisualization = lazy(() => import("@/components/Conform3DVisualization"));
 import AppRoadmap from "@/components/AppRoadmap";
@@ -176,14 +175,13 @@ function MobileTextWithVideo() {
               <line x1="6" y1="6" x2="18" y2="18" />
             </svg>
           </button>
-          <div className="w-full px-2">
-            <MuxPlayer
-              playbackId="gtPwF4v2ID1xx2F3J900qShA8M1KpZepZNXuKga3SYK8"
-              autoPlay
-              accentColor="#ffffff"
-              primaryColor="#ffffff"
-              secondaryColor="#000000"
-              style={{ aspectRatio: "16/9", width: "100%" }}
+          <div className="w-full px-2" style={{ padding: "56.25% 0 0 0", position: "relative" }}>
+            <iframe
+              src="https://player.vimeo.com/video/1081347302?autoplay=1&badge=0&autopause=0&player_id=0&app_id=58479"
+              frameBorder="0"
+              allow="autoplay; fullscreen; picture-in-picture"
+              style={{ position: "absolute", top: 0, left: 0, width: "100%", height: "100%" }}
+              title="CONFORMSTUDIO-WEBSITE-R1"
             />
           </div>
         </motion.div>
@@ -220,14 +218,15 @@ function DesktopVideoSection() {
           [ See it in action ]
         </span>
       </div>
-      <MuxPlayer
-        playbackId="gtPwF4v2ID1xx2F3J900qShA8M1KpZepZNXuKga3SYK8"
-        accentColor="#ffffff"
-        primaryColor="#ffffff"
-        secondaryColor="#000000"
-        loading="viewport"
-        style={{ aspectRatio: "16/9", width: "100%" }}
-      />
+      <div style={{ padding: "56.25% 0 0 0", position: "relative" }}>
+        <iframe
+          src="https://player.vimeo.com/video/1081347302?badge=0&autopause=0&player_id=0&app_id=58479"
+          frameBorder="0"
+          allow="autoplay; fullscreen; picture-in-picture"
+          style={{ position: "absolute", top: 0, left: 0, width: "100%", height: "100%" }}
+          title="CONFORMSTUDIO-WEBSITE-R1"
+        />
+      </div>
     </section>
   );
 }
@@ -333,8 +332,8 @@ const Index = () => {
           description: "See how Haste Conform Studio instantly migrates your Adobe Premiere timeline to DaVinci Resolve. 300X faster timeline conform for film and TV post-production.",
           thumbnailUrl: "https://www.haste.nyc/og-image.png",
           uploadDate: "2025-01-01",
-          contentUrl: "https://stream.mux.com/gtPwF4v2ID1xx2F3J900qShA8M1KpZepZNXuKga3SYK8",
-          embedUrl: "https://stream.mux.com/gtPwF4v2ID1xx2F3J900qShA8M1KpZepZNXuKga3SYK8",
+          contentUrl: "https://vimeo.com/1081347302",
+          embedUrl: "https://player.vimeo.com/video/1081347302",
           duration: "PT1M30S",
         }}
       />
