@@ -1,5 +1,8 @@
 import { useState } from "react";
 import { motion } from "framer-motion";
+import MuxPlayer from "@mux/mux-player-react";
+
+const MUX_PLAYBACK_ID = "gtPwF4v2ID1xx2F3J900qShA8M1KpZepZNXuKga3SYK8";
 
 const VideoSection = () => {
   const [activated, setActivated] = useState(false);
@@ -36,36 +39,24 @@ const VideoSection = () => {
           See it in action
         </motion.p>
 
-        {/* Video container with Vimeo embed */}
+        {/* Video container with Mux player */}
         <div className="relative rounded-lg overflow-hidden bg-black/40">
-          <div style={{ padding: "52.5% 0 0 0", position: "relative" }}>
-            {/* Loading placeholder */}
-            <div className="absolute inset-0 flex items-center justify-center z-0">
-              <div className="w-6 h-6 border-2 border-white/10 border-t-white/40 rounded-full animate-spin" />
-            </div>
-            <iframe
-              src="https://player.vimeo.com/video/1081347302?badge=0&autopause=0&player_id=0&app_id=58479"
-              frameBorder="0"
-              allow="autoplay; fullscreen; picture-in-picture; clipboard-write; encrypted-media"
-              loading="lazy"
-              style={{
-                position: "absolute",
-                top: 0,
-                left: 0,
-                width: "100%",
-                height: "100%",
-              }}
-              title="CONFORMSTUDIO-WEBSITE-R1"
-              className="relative z-10"
+          <MuxPlayer
+            playbackId={MUX_PLAYBACK_ID}
+            metadata={{ video_title: "Conform Studio Demo" }}
+            accentColor="#ffffff"
+            primaryColor="#ffffff"
+            secondaryColor="#000000"
+            loading="viewport"
+            style={{ aspectRatio: "16/9", width: "100%" }}
+          />
+          {/* Scroll pass-through overlay - click to activate player interaction */}
+          {!activated && (
+            <div
+              className="absolute inset-0 z-20 cursor-pointer"
+              onClick={() => setActivated(true)}
             />
-            {/* Scroll pass-through overlay - click to activate iframe interaction */}
-            {!activated && (
-              <div
-                className="absolute inset-0 z-20 cursor-pointer"
-                onClick={() => setActivated(true)}
-              />
-            )}
-          </div>
+          )}
         </div>
       </motion.div>
     </section>
