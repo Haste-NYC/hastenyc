@@ -96,7 +96,7 @@ const App = () => (
             <Route path="/experiments/hero-mockup" element={<HeroMockup />} />
             <Route path="/og-preview" element={<OgImagePreview />} />
 
-            <Route path="/get" element={<GetConformStudio />} />
+            <Route path="/free90" element={<GetConformStudio />} />
             <Route path="/conform.studio" element={<Navigate to="/" replace />} />
 
             <Route path="/conform-studio/docs" element={<ConformDocs />} />
