@@ -59,7 +59,7 @@ export const TermsOfService = ({ onScrollToBottom }: TermsOfServiceProps) => {
         <div
           ref={scrollRef}
           data-lenis-prevent
-          className="h-[400px] overflow-y-auto overscroll-contain p-6 space-y-6 text-sm text-muted-foreground leading-relaxed cursor-default"
+          className="h-[400px] overflow-y-auto p-6 space-y-6 text-sm text-muted-foreground leading-relaxed cursor-default"
           style={{ WebkitOverflowScrolling: "touch" }}
         >
           <p className="font-medium text-foreground">
