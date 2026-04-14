@@ -1,14 +1,34 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { motion } from "framer-motion";
-import MuxPlayer from "@mux/mux-player-react";
 
+const VIMEO_URL = "https://player.vimeo.com/video/1081347302?badge=0&autopause=0&player_id=0&app_id=58479";
 const MUX_PLAYBACK_ID = "gtPwF4v2ID1xx2F3J900qShA8M1KpZepZNXuKga3SYK8";
 
 const VideoSection = () => {
   const [activated, setActivated] = useState(false);
+  const [useMux, setUseMux] = useState(false);
+
+  useEffect(() => {
+    // Check if Vimeo player is reachable; fall back to Mux if not
+    fetch(VIMEO_URL, { method: "HEAD", mode: "no-cors" })
+      .then(() => {
+        // no-cors returns opaque response -- if it doesn't throw, network is reachable
+        // but we can't read status. Use a timeout as secondary check.
+      })
+      .catch(() => setUseMux(true));
+
+    // If the Vimeo iframe hasn't signaled within 5s, switch to Mux
+    const timeout = setTimeout(() => {
+      const iframe = document.querySelector<HTMLIFrameElement>('iframe[title="CONFORMSTUDIO-WEBSITE-R1"]');
+      if (!iframe) setUseMux(true);
+    }, 5000);
+
+    return () => clearTimeout(timeout);
+  }, []);
+
   return (
     <section id="video" className="py-12 sm:py-16 px-4 sm:px-6 md:px-12 lg:px-24 relative w-full min-h-screen flex flex-col justify-center">
-      {/* Atmospheric blue glow behind video - extends well beyond section to eliminate seams */}
+      {/* Atmospheric blue glow behind video */}
       <div
         className="absolute pointer-events-none z-0"
         style={{
@@ -28,7 +48,6 @@ const VideoSection = () => {
         transition={{ duration: 0.7 }}
         className="max-w-6xl mx-auto relative z-10 w-full"
       >
-        {/* Accent label above video - Frame.io style */}
         <motion.p
           initial={{ opacity: 0 }}
           whileInView={{ opacity: 1 }}
@@ -39,23 +58,52 @@ const VideoSection = () => {
           See it in action
         </motion.p>
 
-        {/* Video container with Mux player */}
         <div className="relative rounded-lg overflow-hidden bg-black/40">
-          <MuxPlayer
-            playbackId={MUX_PLAYBACK_ID}
-            metadata={{ video_title: "Conform Studio Demo" }}
-            accentColor="#ffffff"
-            primaryColor="#ffffff"
-            secondaryColor="#000000"
-            loading="viewport"
-            style={{ aspectRatio: "16/9", width: "100%" }}
-          />
-          {/* Scroll pass-through overlay - click to activate player interaction */}
-          {!activated && (
-            <div
-              className="absolute inset-0 z-20 cursor-pointer"
-              onClick={() => setActivated(true)}
-            />
+          {useMux ? (
+            <div style={{ padding: "56.25% 0 0 0", position: "relative" }}>
+              <iframe
+                src={`https://stream.mux.com/${MUX_PLAYBACK_ID}?thumbnail_time=90`}
+                frameBorder="0"
+                allow="autoplay; fullscreen; picture-in-picture"
+                allowFullScreen
+                style={{
+                  position: "absolute",
+                  top: 0,
+                  left: 0,
+                  width: "100%",
+                  height: "100%",
+                }}
+                title="Conform Studio Demo"
+              />
+            </div>
+          ) : (
+            <div style={{ padding: "52.5% 0 0 0", position: "relative" }}>
+              <div className="absolute inset-0 flex items-center justify-center z-0">
+                <div className="w-6 h-6 border-2 border-white/10 border-t-white/40 rounded-full animate-spin" />
+              </div>
+              <iframe
+                src={VIMEO_URL}
+                frameBorder="0"
+                allow="autoplay; fullscreen; picture-in-picture; clipboard-write; encrypted-media"
+                loading="lazy"
+                style={{
+                  position: "absolute",
+                  top: 0,
+                  left: 0,
+                  width: "100%",
+                  height: "100%",
+                }}
+                title="CONFORMSTUDIO-WEBSITE-R1"
+                className="relative z-10"
+                onError={() => setUseMux(true)}
+              />
+              {!activated && (
+                <div
+                  className="absolute inset-0 z-20 cursor-pointer"
+                  onClick={() => setActivated(true)}
+                />
+              )}
+            </div>
           )}
         </div>
       </motion.div>
