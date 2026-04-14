@@ -18,8 +18,8 @@ const Index = () => {
           description: "See how Haste Conform Studio instantly migrates your Adobe Premiere timeline to DaVinci Resolve. 300X faster timeline conform for film and TV post-production.",
           thumbnailUrl: "https://www.haste.nyc/og-image.png",
           uploadDate: "2025-01-01",
-          contentUrl: "https://stream.mux.com/gtPwF4v2ID1xx2F3J900qShA8M1KpZepZNXuKga3SYK8",
-          embedUrl: "https://stream.mux.com/gtPwF4v2ID1xx2F3J900qShA8M1KpZepZNXuKga3SYK8",
+          contentUrl: "https://vimeo.com/1081347302",
+          embedUrl: "https://player.vimeo.com/video/1081347302",
           duration: "PT1M30S",
         }}
       />
