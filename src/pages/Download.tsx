@@ -10,6 +10,7 @@ import Header from "@/components/Header";
 import SEO from "@/components/SEO";
 
 const STORAGE_KEY = "conform_studio_email";
+const USER_ID_KEY = "conform_studio_user_id";
 
 const METADATA_URL =
   "https://fpgieuoozfvoqjsdltgh.supabase.co/storage/v1/object/public/conform-studio/metadata.json";
@@ -117,7 +118,13 @@ const Download = () => {
         body: JSON.stringify({ email: email.trim().toLowerCase(), source: 'conform-studio-download' }),
       });
 
-      if (!res.ok) {
+      if (res.ok) {
+        const data = await res.json();
+        // Store user ID returned from signup (used for Stripe checkout linking)
+        if (data.user_id) {
+          localStorage.setItem(USER_ID_KEY, data.user_id);
+        }
+      } else {
         console.error("[Download] Signup API error:", res.status);
       }
 
@@ -143,6 +150,11 @@ const Download = () => {
     window.open(url, "_blank");
   };
 
+  // If user arrived from Stripe checkout with session_id and already
+  // has the app, show a simpler activation message instead of the
+  // full ToS/download flow again.
+  const isReturningUser = !!sessionId && !!storedEmail;
+
   return (
     <div className="min-h-screen bg-background">
       <SEO
@@ -159,7 +171,9 @@ const Download = () => {
             <div className="max-w-3xl mx-auto flex items-center justify-center gap-3 py-4 px-6 rounded-lg border border-green-500/20 bg-green-500/5">
               <CheckCircle2 className="w-5 h-5 text-green-500 flex-shrink-0" />
               <p className="text-sm text-green-400">
-                Payment successful -- your subscription is now active. Agree to the terms below to download.
+                {isReturningUser
+                  ? "Payment successful -- your subscription is now active. Open Conform Studio to continue."
+                  : "Payment successful -- your subscription is now active. Agree to the terms below to download."}
               </p>
             </div>
           </div>
@@ -249,15 +263,44 @@ const Download = () => {
             </section>
           )}
 
-          {/* Terms Section -- only shown after email is captured */}
-          {emailCaptured && (
+          {/* Returning user from Stripe -- skip ToS/download, just show activation */}
+          {isReturningUser && (
+            <section className="max-w-xl mx-auto">
+              <div className="glass-card p-8 md:p-10 rounded-2xl text-center space-y-6 border border-border">
+                <div className="space-y-2">
+                  <h2 className="text-2xl font-bold tracking-tight">
+                    Subscription Activated
+                  </h2>
+                  <p className="text-sm text-muted-foreground">
+                    Your subscription is active. Open Conform Studio on your Mac -- the app will detect your subscription automatically.
+                  </p>
+                </div>
+                <p className="text-xs text-muted-foreground/60">
+                  If you need to reinstall, you can download again below.
+                </p>
+                <button
+                  onClick={() => {
+                    // Clear sessionId to show the full download flow
+                    window.history.replaceState({}, '', '/download');
+                    window.location.reload();
+                  }}
+                  className="text-sm text-muted-foreground hover:text-foreground transition-colors underline underline-offset-4"
+                >
+                  Need to download again?
+                </button>
+              </div>
+            </section>
+          )}
+
+          {/* Terms Section -- only shown after email is captured and not a returning user */}
+          {emailCaptured && !isReturningUser && (
             <section>
               <TermsOfService onScrollToBottom={setHasScrolledToBottom} />
             </section>
           )}
 
-          {/* Download Section -- only shown after email is captured */}
-          {emailCaptured && (
+          {/* Download Section -- only shown after email is captured and not a returning user */}
+          {emailCaptured && !isReturningUser && (
           <section className="max-w-3xl mx-auto">
             <div className="glass-card p-8 md:p-12 rounded-2xl text-center space-y-6 border border-border">
               <div className="space-y-2">
