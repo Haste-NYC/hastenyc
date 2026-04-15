@@ -38,18 +38,20 @@ async function resolveUserId(customer: string | Stripe.Customer | Stripe.Deleted
 
   if (stripeCustomer.deleted) return null;
 
+  const activeCustomer = stripeCustomer as Stripe.Customer;
+
   // Check metadata first (set during checkout linking)
-  if (stripeCustomer.metadata?.supabase_user_id) {
-    return stripeCustomer.metadata.supabase_user_id;
+  if (activeCustomer.metadata?.supabase_user_id) {
+    return activeCustomer.metadata.supabase_user_id;
   }
 
   // Fall back to email lookup in profiles
-  if (stripeCustomer.email) {
+  if (activeCustomer.email) {
     const supabase = getSupabase();
     const { data } = await supabase
       .from('profiles')
       .select('id')
-      .eq('email', stripeCustomer.email.toLowerCase())
+      .eq('email', activeCustomer.email.toLowerCase())
       .single();
     if (data) return data.id;
   }
@@ -72,11 +74,11 @@ async function upsertSubscription(subscription: Stripe.Subscription, userId: str
       : subscription.customer.id,
     stripe_price_id: priceId,
     status: subscription.status,
-    current_period_start: subscription.current_period_start
-      ? new Date(subscription.current_period_start * 1000).toISOString()
+    current_period_start: item?.current_period_start
+      ? new Date(item.current_period_start * 1000).toISOString()
       : null,
-    current_period_ends_at: subscription.current_period_end
-      ? new Date(subscription.current_period_end * 1000).toISOString()
+    current_period_ends_at: item?.current_period_end
+      ? new Date(item.current_period_end * 1000).toISOString()
       : null,
     cancel_at_period_end: subscription.cancel_at_period_end,
     trial_start: subscription.trial_start
@@ -201,7 +203,7 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
       try {
         const customer = await stripe.customers.retrieve(subscription.customer as string);
         if (customer && !customer.deleted) {
-          await notifySubscription(customer.email || 'unknown', 'subscription', 'cancelled');
+          await notifySubscription((customer as Stripe.Customer).email || 'unknown', 'subscription', 'cancelled');
         }
       } catch (e: any) {
         console.error('[Stripe] Failed to retrieve customer for cancellation:', e.message);
@@ -214,7 +216,7 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
       console.log('Payment failed:', {
         invoiceId: invoice.id,
         customerId: invoice.customer,
-        subscriptionId: invoice.subscription,
+        subscriptionId: invoice.parent?.subscription_details?.subscription,
       });
 
       const failedEmail = invoice.customer_email || 'unknown';
