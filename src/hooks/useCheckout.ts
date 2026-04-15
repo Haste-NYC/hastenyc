@@ -1,6 +1,8 @@
 import { useState } from 'react';
 import { toast } from 'sonner';
 
+const USER_ID_KEY = 'conform_studio_user_id';
+
 interface CheckoutParams {
   priceId: string;
   customerEmail?: string;
@@ -25,12 +27,19 @@ export function useCheckout(): UseCheckoutReturn {
     setError(null);
 
     try {
+      // Include the Supabase user ID if available (set during download email entry)
+      const supabaseUserId = localStorage.getItem(USER_ID_KEY) || undefined;
+
       const response = await fetch(`${API_URL}/api/create-checkout-session`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
         },
-        body: JSON.stringify({ priceId, ...(customerEmail ? { customerEmail } : {}) }),
+        body: JSON.stringify({
+          priceId,
+          ...(customerEmail ? { customerEmail } : {}),
+          ...(supabaseUserId ? { supabaseUserId } : {}),
+        }),
       });
 
       if (!response.ok) {
