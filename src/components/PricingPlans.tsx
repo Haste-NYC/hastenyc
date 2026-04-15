@@ -86,7 +86,7 @@ const PricingPlans = ({
   onScheduleCall,
 }: PricingPlansProps) => {
   const navigate = useNavigate();
-  const [isYearly, setIsYearly] = useState(true);
+  const [isYearly, setIsYearly] = useState(false);
   const [activeCardIndex, setActiveCardIndex] = useState(0);
   const scrollContainerRef = useRef<HTMLDivElement>(null);
   const cardRefs = useRef<(HTMLDivElement | null)[]>([]);
