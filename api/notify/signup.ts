@@ -1,6 +1,7 @@
 import type { VercelRequest, VercelResponse } from '@vercel/node';
 import { createClient } from '@supabase/supabase-js';
 import { notifySignup } from '../lib/slack.js';
+import crypto from 'crypto';
 
 function setCorsHeaders(res: VercelResponse) {
   res.setHeader('Access-Control-Allow-Origin', process.env.FRONTEND_URL || '*');
@@ -33,11 +34,11 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
   const normalizedEmail = email.trim().toLowerCase();
   const signupSource = source || 'unknown';
 
-  // Insert into Supabase
   const supabaseUrl = process.env.VITE_SUPABASE_URL || '';
   const supabaseKey = process.env.SUPABASE_SERVICE_ROLE_KEY || process.env.VITE_SUPABASE_PUBLISHABLE_KEY || '';
   const supabase = createClient(supabaseUrl, supabaseKey);
 
+  // Insert into mailing list (existing behavior)
   try {
     const { error } = await supabase
       .from('mailing_list')
@@ -50,6 +51,43 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
     console.error('[notify/signup] Supabase error:', err.message);
   }
 
+  // Create a Supabase auth account so the user has a profile row
+  // that webhooks and the app can match against.  If the user later
+  // signs in via OAuth with the same email, Supabase merges the
+  // identity automatically.
+  let supabaseUserId: string | null = null;
+  try {
+    // Try to create the user first. If they already exist, look them up.
+    const randomPassword = crypto.randomBytes(32).toString('base64url');
+    const { data: newUser, error: signupError } = await supabase.auth.admin.createUser({
+      email: normalizedEmail,
+      password: randomPassword,
+      email_confirm: true, // auto-confirm so profile trigger fires
+      user_metadata: { signup_source: signupSource },
+    });
+
+    if (!signupError && newUser?.user) {
+      supabaseUserId = newUser.user.id;
+      console.log(`[notify/signup] Created auth user: ${supabaseUserId}`);
+    } else if (signupError?.message?.includes('already been registered')) {
+      // User exists -- look up by email directly
+      const { data } = await supabase
+        .from('auth.users')
+        .select('id')
+        .eq('email', normalizedEmail)
+        .single();
+
+      if (data) {
+        supabaseUserId = data.id;
+        console.log(`[notify/signup] Existing auth user found: ${supabaseUserId}`);
+      }
+    } else if (signupError) {
+      console.error('[notify/signup] Auth signup error:', signupError);
+    }
+  } catch (err: any) {
+    console.error('[notify/signup] Auth account creation error:', err.message);
+  }
+
   // Send Slack notification (non-blocking for the response)
   try {
     await notifySignup(normalizedEmail, signupSource);
@@ -57,5 +95,5 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
     console.error('[notify/signup] Slack error:', err.message);
   }
 
-  res.status(200).json({ success: true });
+  res.status(200).json({ success: true, user_id: supabaseUserId });
 }
