@@ -1,5 +1,6 @@
 import type { VercelRequest, VercelResponse } from '@vercel/node';
 import Stripe from 'stripe';
+import { createClient } from '@supabase/supabase-js';
 import { notifySubscription } from '../lib/slack.js';
 
 const stripe = new Stripe(process.env.STRIPE_SECRET_KEY || '', {
@@ -18,6 +19,83 @@ async function buffer(readable: VercelRequest): Promise<Buffer> {
     chunks.push(typeof chunk === 'string' ? Buffer.from(chunk) : chunk);
   }
   return Buffer.concat(chunks);
+}
+
+function getSupabase() {
+  const url = process.env.VITE_SUPABASE_URL || '';
+  const key = process.env.SUPABASE_SERVICE_ROLE_KEY || '';
+  return createClient(url, key);
+}
+
+// Resolve the Supabase user ID from Stripe customer metadata or email lookup
+async function resolveUserId(customer: string | Stripe.Customer | Stripe.DeletedCustomer | null): Promise<string | null> {
+  if (!customer) return null;
+
+  const customerId = typeof customer === 'string' ? customer : customer.id;
+  const stripeCustomer = typeof customer === 'string'
+    ? await stripe.customers.retrieve(customerId)
+    : customer;
+
+  if (stripeCustomer.deleted) return null;
+
+  // Check metadata first (set during checkout linking)
+  if (stripeCustomer.metadata?.supabase_user_id) {
+    return stripeCustomer.metadata.supabase_user_id;
+  }
+
+  // Fall back to email lookup in profiles
+  if (stripeCustomer.email) {
+    const supabase = getSupabase();
+    const { data } = await supabase
+      .from('profiles')
+      .select('id')
+      .eq('email', stripeCustomer.email.toLowerCase())
+      .single();
+    if (data) return data.id;
+  }
+
+  return null;
+}
+
+// Upsert subscription data into the subscriptions table
+async function upsertSubscription(subscription: Stripe.Subscription, userId: string) {
+  const supabase = getSupabase();
+
+  const item = subscription.items.data[0];
+  const priceId = item?.price?.id || null;
+
+  const record = {
+    user_id: userId,
+    stripe_subscription_id: subscription.id,
+    stripe_customer_id: typeof subscription.customer === 'string'
+      ? subscription.customer
+      : subscription.customer.id,
+    stripe_price_id: priceId,
+    status: subscription.status,
+    current_period_start: subscription.current_period_start
+      ? new Date(subscription.current_period_start * 1000).toISOString()
+      : null,
+    current_period_ends_at: subscription.current_period_end
+      ? new Date(subscription.current_period_end * 1000).toISOString()
+      : null,
+    cancel_at_period_end: subscription.cancel_at_period_end,
+    trial_start: subscription.trial_start
+      ? new Date(subscription.trial_start * 1000).toISOString()
+      : null,
+    trial_end: subscription.trial_end
+      ? new Date(subscription.trial_end * 1000).toISOString()
+      : null,
+  };
+
+  const { error } = await supabase
+    .from('subscriptions')
+    .upsert(record, { onConflict: 'stripe_subscription_id' });
+
+  if (error) {
+    console.error('[Stripe webhook] Subscription upsert error:', error);
+  } else {
+    console.log(`[Stripe webhook] Upserted subscription ${subscription.id} for user ${userId} (status: ${subscription.status})`);
+  }
 }
 
 export default async function handler(req: VercelRequest, res: VercelResponse) {
@@ -62,7 +140,21 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
       } catch (e: any) {
         console.error('[Stripe] Failed to send checkout notification:', e.message);
       }
-      // TODO: Activate subscription in your database
+
+      // Activate subscription in database
+      if (session.subscription && session.customer) {
+        try {
+          const userId = await resolveUserId(session.customer as string);
+          if (userId) {
+            const subscription = await stripe.subscriptions.retrieve(session.subscription as string);
+            await upsertSubscription(subscription, userId);
+          } else {
+            console.warn('[Stripe webhook] Could not resolve Supabase user for customer:', session.customer);
+          }
+        } catch (e: any) {
+          console.error('[Stripe webhook] Failed to activate subscription:', e.message);
+        }
+      }
       break;
     }
 
@@ -73,7 +165,18 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
         status: subscription.status,
         customerId: subscription.customer,
       });
-      // TODO: Update subscription status in database
+
+      // Update subscription status in database
+      try {
+        const userId = await resolveUserId(subscription.customer as string);
+        if (userId) {
+          await upsertSubscription(subscription, userId);
+        } else {
+          console.warn('[Stripe webhook] Could not resolve Supabase user for customer:', subscription.customer);
+        }
+      } catch (e: any) {
+        console.error('[Stripe webhook] Failed to update subscription:', e.message);
+      }
       break;
     }
 
@@ -83,6 +186,16 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
         subscriptionId: subscription.id,
         customerId: subscription.customer,
       });
+
+      // Update subscription status to cancelled in database
+      try {
+        const userId = await resolveUserId(subscription.customer as string);
+        if (userId) {
+          await upsertSubscription(subscription, userId);
+        }
+      } catch (e: any) {
+        console.error('[Stripe webhook] Failed to update cancelled subscription:', e.message);
+      }
 
       // Retrieve customer email for the notification
       try {
