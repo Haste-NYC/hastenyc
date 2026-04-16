@@ -111,10 +111,9 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
       }
     }
 
-    // If a promo code was provided, look it up and check if the coupon
-    // covers the trial period (100% off) so we can skip the 7-day trial
-    let promoCodeId: string | undefined;
-    let skipTrial = false;
+    // If a promo code was provided, validate it and convert to trial days.
+    // NAB90 = 90 days, NAB60 = 60 days, NAB30 = 30 days.
+    let trialDays = 7;
     if (promoCode && typeof promoCode === 'string') {
       const promos = await stripe.promotionCodes.list({
         code: promoCode.trim(),
@@ -124,12 +123,11 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
       if (promos.data.length === 0) {
         return res.status(400).json({ error: 'Invalid promo code' });
       }
-      promoCodeId = promos.data[0].id;
       const couponId = (promos.data[0] as any).promotion?.coupon;
       if (couponId) {
         const coupon = await stripe.coupons.retrieve(couponId);
-        if (coupon.percent_off === 100) {
-          skipTrial = true;
+        if (coupon.percent_off === 100 && coupon.duration_in_months) {
+          trialDays = coupon.duration_in_months * 30;
         }
       }
     }
@@ -138,12 +136,12 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
       mode: 'subscription',
       payment_method_types: ['card'],
       line_items: [{ price: priceId, quantity: 1 }],
-      ...(promoCodeId
-        ? { discounts: [{ promotion_code: promoCodeId }] }
-        : { allow_promotion_codes: true }),
+      allow_promotion_codes: true,
       success_url: `${process.env.FRONTEND_URL || 'http://localhost:5173'}/download?session_id={CHECKOUT_SESSION_ID}`,
       cancel_url: `${process.env.FRONTEND_URL || 'http://localhost:5173'}/#pricing`,
-      ...(!skipTrial ? { subscription_data: { trial_period_days: 7 } } : {}),
+      subscription_data: {
+        trial_period_days: trialDays,
+      },
       metadata: {
         ...(supabaseUserId ? { supabase_user_id: supabaseUserId } : {}),
       },
