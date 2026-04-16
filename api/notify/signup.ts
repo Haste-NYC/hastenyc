@@ -2,7 +2,6 @@ import type { VercelRequest, VercelResponse } from '@vercel/node';
 import { createClient } from '@supabase/supabase-js';
 import { Resend } from 'resend';
 import { notifySignup } from '../lib/slack.js';
-import crypto from 'crypto';
 
 function buildWelcomeEmailHtml(): string {
   return `
@@ -89,56 +88,17 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
   const supabaseKey = process.env.SUPABASE_SERVICE_ROLE_KEY || process.env.VITE_SUPABASE_PUBLISHABLE_KEY || '';
   const supabase = createClient(supabaseUrl, supabaseKey);
 
-  // Insert into mailing list (existing behavior)
+  // Insert into mailing list (upsert to handle duplicates gracefully)
   try {
     const { error } = await supabase
       .from('mailing_list')
-      .insert({ email: normalizedEmail, source: signupSource });
+      .upsert({ email: normalizedEmail, source: signupSource }, { onConflict: 'email' });
 
     if (error) {
       console.error('[notify/signup] Supabase insert error:', error);
     }
   } catch (err: any) {
     console.error('[notify/signup] Supabase error:', err.message);
-  }
-
-  // Create a Supabase auth account so the user has a profile row
-  // that webhooks and the app can match against.  If the user later
-  // signs in via OAuth with the same email, Supabase merges the
-  // identity automatically.
-  let supabaseUserId: string | null = null;
-  let isNewUser = false;
-  try {
-    // Try to create the user first. If they already exist, look them up.
-    const randomPassword = crypto.randomBytes(32).toString('base64url');
-    const { data: newUser, error: signupError } = await supabase.auth.admin.createUser({
-      email: normalizedEmail,
-      password: randomPassword,
-      email_confirm: true, // auto-confirm so profile trigger fires
-      user_metadata: { signup_source: signupSource },
-    });
-
-    if (!signupError && newUser?.user) {
-      supabaseUserId = newUser.user.id;
-      isNewUser = true;
-      console.log(`[notify/signup] Created auth user: ${supabaseUserId}`);
-    } else if (signupError?.message?.includes('already been registered')) {
-      // User exists -- look up by email directly
-      const { data } = await supabase
-        .from('auth.users')
-        .select('id')
-        .eq('email', normalizedEmail)
-        .single();
-
-      if (data) {
-        supabaseUserId = data.id;
-        console.log(`[notify/signup] Existing auth user found: ${supabaseUserId}`);
-      }
-    } else if (signupError) {
-      console.error('[notify/signup] Auth signup error:', signupError);
-    }
-  } catch (err: any) {
-    console.error('[notify/signup] Auth account creation error:', err.message);
   }
 
   // Send Slack notification (non-blocking for the response)
@@ -148,23 +108,22 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
     console.error('[notify/signup] Slack error:', err.message);
   }
 
-  // Send welcome email via Resend (only for new signups)
-  if (isNewUser) {
-    const resendKey = process.env.RESEND_API_KEY;
-    if (resendKey) {
-      try {
-        const resend = new Resend(resendKey);
-        await resend.emails.send({
-          from: process.env.RESEND_FROM_EMAIL || 'Conform Studio <noreply@conform.studio>',
-          to: normalizedEmail,
-          subject: 'Welcome to Conform Studio',
-          html: buildWelcomeEmailHtml(),
-        });
-      } catch (err: any) {
-        console.error('[notify/signup] Resend error:', err.message);
-      }
+  // Send welcome email via Resend
+  const resendKey = process.env.RESEND_API_KEY;
+  if (resendKey) {
+    try {
+      const resend = new Resend(resendKey);
+      await resend.emails.send({
+        from: process.env.RESEND_FROM_EMAIL || 'Conform Studio <noreply@conform.studio>',
+        replyTo: 'jordan@haste.nyc',
+        to: normalizedEmail,
+        subject: 'Welcome to Conform Studio',
+        html: buildWelcomeEmailHtml(),
+      });
+    } catch (err: any) {
+      console.error('[notify/signup] Resend error:', err.message);
     }
   }
 
-  res.status(200).json({ success: true, user_id: supabaseUserId });
+  res.status(200).json({ success: true });
 }
