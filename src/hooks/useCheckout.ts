@@ -6,6 +6,7 @@ const USER_ID_KEY = 'conform_studio_user_id';
 interface CheckoutParams {
   priceId: string;
   customerEmail?: string;
+  promoCode?: string;
 }
 
 interface UseCheckoutReturn {
@@ -22,7 +23,7 @@ export function useCheckout(): UseCheckoutReturn {
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
 
-  const startCheckout = async ({ priceId, customerEmail }: CheckoutParams): Promise<boolean> => {
+  const startCheckout = async ({ priceId, customerEmail, promoCode }: CheckoutParams): Promise<boolean> => {
     setIsLoading(true);
     setError(null);
 
@@ -39,6 +40,7 @@ export function useCheckout(): UseCheckoutReturn {
           priceId,
           ...(customerEmail ? { customerEmail } : {}),
           ...(supabaseUserId ? { supabaseUserId } : {}),
+          ...(promoCode ? { promoCode } : {}),
         }),
       });
 

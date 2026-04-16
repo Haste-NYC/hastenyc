@@ -12,7 +12,7 @@ export default defineConfig(({ mode }) => ({
     port: 8080,
     proxy: {
       '/api': {
-        target: 'https://haste.nyc',
+        target: 'https://www.haste.nyc',
         changeOrigin: true,
       },
     },
