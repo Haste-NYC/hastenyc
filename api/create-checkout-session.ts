@@ -125,9 +125,12 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
         return res.status(400).json({ error: 'Invalid promo code' });
       }
       promoCodeId = promos.data[0].id;
-      const coupon = promos.data[0].coupon as Stripe.Coupon;
-      if (coupon.percent_off === 100) {
-        skipTrial = true;
+      const couponId = (promos.data[0] as any).promotion?.coupon;
+      if (couponId) {
+        const coupon = await stripe.coupons.retrieve(couponId);
+        if (coupon.percent_off === 100) {
+          skipTrial = true;
+        }
       }
     }
 

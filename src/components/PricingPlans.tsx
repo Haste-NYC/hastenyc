@@ -94,7 +94,7 @@ const PricingPlans = ({
   onApplyPromo,
 }: PricingPlansProps) => {
   const navigate = useNavigate();
-  const [isYearly, setIsYearly] = useState(false);
+  const [isYearly, setIsYearly] = useState(true);
   const [promoOpen, setPromoOpen] = useState(false);
   const [activeCardIndex, setActiveCardIndex] = useState(0);
   const scrollContainerRef = useRef<HTMLDivElement>(null);

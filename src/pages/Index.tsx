@@ -477,7 +477,7 @@ const Index = () => {
               </Suspense>
             </LazyOnView>
           </div>
-          <div className="relative z-10 pb-3 md:pt-2">
+          <div className="relative z-10 pb-3 md:pt-2 mb-12 sm:mb-20">
             <AppRoadmap />
           </div>
         </section>

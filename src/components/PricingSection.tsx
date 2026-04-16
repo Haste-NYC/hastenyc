@@ -87,7 +87,7 @@ const PricingSection = () => {
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
           transition={{ duration: 0.6, delay: 0.15 }}
-          className="text-center text-foreground/60 text-xs sm:text-sm uppercase tracking-wider mb-4 sm:mb-12"
+          className={`text-center text-xs sm:text-sm uppercase tracking-wider mb-4 sm:mb-12 transition-colors duration-700 ${trialDays > 7 ? "text-white" : "text-foreground/60"}`}
         >
           <span className="inline-block tabular-nums">{displayDays}</span> day free {trialDays > 7 ? "subscription" : "trial"} included
         </motion.p>
