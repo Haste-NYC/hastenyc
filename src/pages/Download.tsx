@@ -118,13 +118,7 @@ const Download = () => {
         body: JSON.stringify({ email: email.trim().toLowerCase(), source: 'conform-studio-download' }),
       });
 
-      if (res.ok) {
-        const data = await res.json();
-        // Store user ID returned from signup (used for Stripe checkout linking)
-        if (data.user_id) {
-          localStorage.setItem(USER_ID_KEY, data.user_id);
-        }
-      } else {
+      if (!res.ok) {
         console.error("[Download] Signup API error:", res.status);
       }
 
