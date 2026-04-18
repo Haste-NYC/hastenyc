@@ -76,6 +76,20 @@ const Vignette = () => (
   />
 );
 
+// Seamless section-edge fades to eliminate visible seams between sections
+const SectionFadeTop = () => (
+  <div
+    className="absolute left-0 right-0 top-0 h-24 pointer-events-none z-[1]"
+    style={{ background: "linear-gradient(to bottom, hsl(0 0% 0%) 0%, transparent 100%)" }}
+  />
+);
+const SectionFadeBottom = () => (
+  <div
+    className="absolute left-0 right-0 bottom-0 h-24 pointer-events-none z-[1]"
+    style={{ background: "linear-gradient(to top, hsl(0 0% 0%) 0%, transparent 100%)" }}
+  />
+);
+
 const isMobile = typeof window !== "undefined" && window.innerWidth < 768;
 
 // Mobile: text with play button at bottom, video launches fullscreen
@@ -325,11 +339,11 @@ const Index = () => {
     <div className={containerClass}>
       <SEO
         title="Conform Studio"
-        description="Instant project migration from Adobe Premiere to Davinci Resolve. Haste Conform Studio uses AI to automate post-production. 300X faster timeline conform for film and TV. Built for studios, secure, and scalable."
+        description="Instant project migration from Adobe Premiere to Davinci Resolve. Conform Studio uses AI to automate post-production. 300X faster timeline conform for film and TV. Built for studios, secure, and scalable."
         canonical="/"
         video={{
-          name: "Haste Conform Studio Demo - Premiere to Resolve Timeline Migration",
-          description: "See how Haste Conform Studio instantly migrates your Adobe Premiere timeline to DaVinci Resolve. 300X faster timeline conform for film and TV post-production.",
+          name: "Conform Studio Demo - Premiere to Resolve Timeline Migration",
+          description: "See how Conform Studio instantly migrates your Adobe Premiere timeline to DaVinci Resolve. 300X faster timeline conform for film and TV post-production.",
           thumbnailUrl: "https://www.haste.nyc/og-image.png",
           uploadDate: "2025-01-01",
           contentUrl: "https://vimeo.com/1081347302",
@@ -342,7 +356,7 @@ const Index = () => {
           {JSON.stringify({
             "@context": "https://schema.org",
             "@type": "SoftwareApplication",
-            "name": "Haste Conform Studio",
+            "name": "Conform Studio",
             "applicationCategory": "MultimediaApplication",
             "operatingSystem": "macOS 14.0+",
             "url": "https://www.haste.nyc",
@@ -428,6 +442,7 @@ const Index = () => {
               background: "radial-gradient(ellipse 120% 80% at 15% 75%, rgba(60, 100, 255, 0.12) 0%, rgba(60, 100, 255, 0.03) 35%, transparent 60%)",
             }}
           />
+          <SectionFadeBottom />
           <HeroFeatures />
         </section>
 
@@ -444,6 +459,8 @@ const Index = () => {
               background: "radial-gradient(ellipse 120% 90% at 30% 50%, rgba(80, 120, 255, 0.10) 0%, rgba(80, 120, 255, 0.03) 35%, transparent 60%)",
             }}
           />
+          <SectionFadeTop />
+          <SectionFadeBottom />
           <FeatureGrid />
         </section>
 
@@ -457,6 +474,8 @@ const Index = () => {
               background: "radial-gradient(ellipse 120% 90% at 70% 40%, rgba(100, 70, 230, 0.10) 0%, rgba(100, 70, 230, 0.03) 35%, transparent 60%)",
             }}
           />
+          <SectionFadeTop />
+          <SectionFadeBottom />
           <CLISection />
         </section>
 
@@ -470,6 +489,8 @@ const Index = () => {
               background: "radial-gradient(ellipse 160% 140% at 50% 50%, rgba(70, 110, 245, 0.12) 0%, rgba(70, 110, 245, 0.04) 30%, transparent 55%)",
             }}
           />
+          <SectionFadeTop />
+          <SectionFadeBottom />
           <div className="max-w-7xl mx-auto w-full flex-1 md:min-h-[600px] md:flex-none">
             <LazyOnView>
               <Suspense fallback={<div className="h-full md:h-[600px] flex items-center justify-center"><div className="w-8 h-8 border-2 border-white/20 border-t-white/60 rounded-full animate-spin" /></div>}>
@@ -492,6 +513,8 @@ const Index = () => {
               background: "radial-gradient(ellipse 120% 90% at 50% 50%, rgba(70, 110, 245, 0.10) 0%, rgba(70, 110, 245, 0.03) 35%, transparent 60%)",
             }}
           />
+          <SectionFadeTop />
+          <SectionFadeBottom />
           <FeatureComparisonChart />
         </section>
 
@@ -505,6 +528,8 @@ const Index = () => {
               background: "radial-gradient(ellipse 120% 90% at 70% 40%, rgba(100, 70, 230, 0.10) 0%, rgba(100, 70, 230, 0.03) 35%, transparent 60%)",
             }}
           />
+          <SectionFadeTop />
+          <SectionFadeBottom />
           <CLISection />
         </section>
 
@@ -526,6 +551,8 @@ const Index = () => {
               background: "radial-gradient(ellipse 160% 120% at 15% 65%, rgba(80, 130, 255, 0.03) 0%, rgba(80, 130, 255, 0.01) 40%, transparent 70%)",
             }}
           />
+          <SectionFadeTop />
+          <SectionFadeBottom />
           <PricingSection />
         </section>
 
@@ -539,6 +566,8 @@ const Index = () => {
               background: "radial-gradient(ellipse 160% 120% at 70% 40%, rgba(80, 120, 255, 0.06) 0%, rgba(80, 120, 255, 0.02) 40%, transparent 70%)",
             }}
           />
+          <SectionFadeTop />
+          <SectionFadeBottom />
           <FAQSection />
         </section>
 
@@ -553,6 +582,7 @@ const Index = () => {
             background: "radial-gradient(ellipse 140% 120% at 50% 55%, rgba(30, 120, 255, 0.05) 0%, rgba(59, 130, 246, 0.015) 30%, transparent 65%)",
           }}
         />
+        <SectionFadeTop />
         <Footer />
       </div>
     </div>

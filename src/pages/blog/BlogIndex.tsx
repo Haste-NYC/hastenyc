@@ -11,11 +11,11 @@ const Index = () => {
     <div className="min-h-screen bg-background">
       <SEO
         title="Conform Studio"
-        description="Instant project migration from Adobe Premiere to Davinci Resolve. Haste Conform Studio uses AI to automate post-production. 300X faster timeline conform for film and TV. Built for studios, secure, and scalable."
+        description="Instant project migration from Adobe Premiere to Davinci Resolve. Conform Studio uses AI to automate post-production. 300X faster timeline conform for film and TV. Built for studios, secure, and scalable."
         canonical="/"
         video={{
-          name: "Haste Conform Studio Demo - Premiere to Resolve Timeline Migration",
-          description: "See how Haste Conform Studio instantly migrates your Adobe Premiere timeline to DaVinci Resolve. 300X faster timeline conform for film and TV post-production.",
+          name: "Conform Studio Demo - Premiere to Resolve Timeline Migration",
+          description: "See how Conform Studio instantly migrates your Adobe Premiere timeline to DaVinci Resolve. 300X faster timeline conform for film and TV post-production.",
           thumbnailUrl: "https://www.haste.nyc/og-image.png",
           uploadDate: "2025-01-01",
           contentUrl: "https://vimeo.com/1081347302",
