@@ -197,9 +197,9 @@ const PricingPlans = ({
 
   return (
     <div className="w-full space-y-4 sm:space-y-8">
-      {/* Billing Toggle + Promo Code */}
-      <div className="flex items-center justify-center relative">
-        <div className="relative flex items-center gap-4">
+      {/* Billing Toggle */}
+      <div className="flex items-center justify-center">
+        <div className="flex items-center gap-4">
           <span className={`text-sm ${!isYearly ? "text-white font-medium" : "text-gray-400"}`}>
             Monthly
           </span>
@@ -213,82 +213,6 @@ const PricingPlans = ({
             Yearly
           </span>
         </div>
-
-        {/* Promo code -- right-aligned, hidden on small screens in collapsed state */}
-        <div className="absolute right-0 hidden md:flex items-center gap-2">
-          {!promoOpen && !promoApplied && (
-            <button
-              onClick={() => setPromoOpen(true)}
-              className="text-[13px] text-white/35 hover:text-white/60 transition-colors"
-            >
-              Have a promo code?
-            </button>
-          )}
-          {promoOpen && !promoApplied && (
-            <>
-              <input
-                type="text"
-                value={promoCode}
-                onChange={(e) => onPromoCodeChange?.(e.target.value.toUpperCase())}
-                onKeyDown={(e) => { if (e.key === "Enter") onApplyPromo?.(); }}
-                autoFocus
-                placeholder="Enter code"
-                className="w-[120px] px-3 py-1.5 bg-white/[0.04] border border-white/[0.08] rounded-lg text-[13px] text-white placeholder:text-white/20 focus:outline-none focus:border-white/20 transition-colors"
-              />
-              <button
-                onClick={() => onApplyPromo?.()}
-                disabled={!promoCode.trim()}
-                className="px-3 py-1.5 text-[13px] font-medium text-white/50 hover:text-white border border-white/[0.08] hover:border-white/20 rounded-lg transition-colors disabled:opacity-40 disabled:cursor-not-allowed"
-              >
-                Apply
-              </button>
-            </>
-          )}
-          {promoApplied && (
-            <span className="flex items-center gap-1.5 text-[13px] text-emerald-500">
-              <span className="w-4 h-4 rounded-full bg-emerald-500 flex items-center justify-center text-[10px] text-black font-bold">&#10003;</span>
-              Applied
-            </span>
-          )}
-        </div>
-      </div>
-
-      {/* Promo code -- mobile: shown below toggle */}
-      <div className="flex items-center justify-center gap-2 md:hidden">
-        {!promoOpen && !promoApplied && (
-          <button
-            onClick={() => setPromoOpen(true)}
-            className="text-[13px] text-white/35 hover:text-white/60 transition-colors"
-          >
-            Have a promo code?
-          </button>
-        )}
-        {promoOpen && !promoApplied && (
-          <>
-            <input
-              type="text"
-              value={promoCode}
-              onChange={(e) => onPromoCodeChange?.(e.target.value.toUpperCase())}
-              onKeyDown={(e) => { if (e.key === "Enter") onApplyPromo?.(); }}
-              autoFocus
-              placeholder="Enter code"
-              className="w-[140px] px-3 py-2 bg-white/[0.04] border border-white/[0.08] rounded-lg text-sm text-white placeholder:text-white/20 focus:outline-none focus:border-white/20 transition-colors"
-            />
-            <button
-              onClick={() => onApplyPromo?.()}
-              disabled={!promoCode.trim()}
-              className="px-3 py-2 text-sm font-medium text-white/50 hover:text-white border border-white/[0.08] hover:border-white/20 rounded-lg transition-colors disabled:opacity-40 disabled:cursor-not-allowed"
-            >
-              Apply
-            </button>
-          </>
-        )}
-        {promoApplied && (
-          <span className="flex items-center gap-1.5 text-sm text-emerald-500">
-            <span className="w-4 h-4 rounded-full bg-emerald-500 flex items-center justify-center text-[10px] text-black font-bold">&#10003;</span>
-            Applied
-          </span>
-        )}
       </div>
 
       {/* Pricing Cards - Horizontal scroll on mobile, grid on md+ */}
@@ -440,6 +364,44 @@ const PricingPlans = ({
             aria-label={`Go to pricing card ${index + 1}`}
           />
         ))}
+      </div>
+
+      {/* Promo code -- centered below all pricing cards */}
+      <div className="flex items-center justify-center gap-2 pt-2">
+        {!promoOpen && !promoApplied && (
+          <button
+            onClick={() => setPromoOpen(true)}
+            className="text-[13px] text-white/70 hover:text-white transition-colors"
+          >
+            Have a promo code?
+          </button>
+        )}
+        {promoOpen && !promoApplied && (
+          <>
+            <input
+              type="text"
+              value={promoCode}
+              onChange={(e) => onPromoCodeChange?.(e.target.value.toUpperCase())}
+              onKeyDown={(e) => { if (e.key === "Enter") onApplyPromo?.(); }}
+              autoFocus
+              placeholder="Enter code"
+              className="w-[140px] px-3 py-1.5 bg-white/[0.04] border border-white/[0.08] rounded-lg text-[13px] text-white placeholder:text-white/20 focus:outline-none focus:border-white/20 transition-colors"
+            />
+            <button
+              onClick={() => onApplyPromo?.()}
+              disabled={!promoCode.trim()}
+              className="px-3 py-1.5 text-[13px] font-medium text-white/50 hover:text-white border border-white/[0.08] hover:border-white/20 rounded-lg transition-colors disabled:opacity-40 disabled:cursor-not-allowed"
+            >
+              Apply
+            </button>
+          </>
+        )}
+        {promoApplied && (
+          <span className="flex items-center gap-1.5 text-[13px] text-emerald-500">
+            <span className="w-4 h-4 rounded-full bg-emerald-500 flex items-center justify-center text-[10px] text-black font-bold">&#10003;</span>
+            Applied
+          </span>
+        )}
       </div>
     </div>
   );

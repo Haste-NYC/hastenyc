@@ -34,7 +34,17 @@ function createRoundedRectShape(w: number, h: number, r: number) {
   return shape;
 }
 
-const UIShowcase = () => {
+type UIShowcaseProps = {
+  transparent?: boolean;
+  staticCamera?: boolean;
+  videoStart?: number;
+};
+
+const UIShowcase = ({
+  transparent = false,
+  staticCamera = false,
+  videoStart = 0,
+}: UIShowcaseProps = {}) => {
   const containerRef = useRef<HTMLDivElement>(null);
   const isVisibleRef = useRef(false);
 
@@ -51,7 +61,9 @@ const UIShowcase = () => {
 
     // -- Scene --
     const scene = new THREE.Scene();
-    scene.background = new THREE.Color(0x000000);
+    if (!transparent) {
+      scene.background = new THREE.Color(0x000000);
+    }
 
     // -- Camera --
     const camera = new THREE.PerspectiveCamera(45, 1, 0.1, 100);
@@ -62,7 +74,11 @@ const UIShowcase = () => {
     const renderer = new THREE.WebGLRenderer({
       antialias: true,
       powerPreference: "high-performance",
+      alpha: transparent,
     });
+    if (transparent) {
+      renderer.setClearColor(0x000000, 0);
+    }
     const isMobile = window.innerWidth < 768;
     const scale = isMobile ? 0.75 : 1;
     renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2) * scale);
@@ -264,29 +280,45 @@ const UIShowcase = () => {
 
       const t = clock.getElapsedTime();
 
-      smoothMouse.x += (mouse.x - smoothMouse.x) * 0.03;
-      smoothMouse.y += (mouse.y - smoothMouse.y) * 0.03;
+      if (staticCamera) {
+        camera.position.set(0, 0, 3.8);
+        camera.lookAt(0, 0, 0);
+      } else {
+        smoothMouse.x += (mouse.x - smoothMouse.x) * 0.03;
+        smoothMouse.y += (mouse.y - smoothMouse.y) * 0.03;
 
-      const autoOrbitX = Math.sin(t * orbitSpeed) * orbitRange;
-      const autoOrbitY = Math.cos(t * (orbitSpeed * 0.8)) * (orbitRange * 0.5);
+        const autoOrbitX = Math.sin(t * orbitSpeed) * orbitRange;
+        const autoOrbitY = Math.cos(t * (orbitSpeed * 0.8)) * (orbitRange * 0.5);
 
-      const targetX = autoOrbitX + smoothMouse.x * parallaxX;
-      const targetY = autoOrbitY + smoothMouse.y * parallaxY;
+        const targetX = autoOrbitX + smoothMouse.x * parallaxX;
+        const targetY = autoOrbitY + smoothMouse.y * parallaxY;
 
-      const radius = 3.8;
-      camera.position.x = Math.sin(targetX) * radius;
-      camera.position.y = targetY * 0.8;
-      camera.position.z = Math.cos(targetX) * radius;
-      camera.lookAt(0, 0, 0);
+        const radius = 3.8;
+        camera.position.x = Math.sin(targetX) * radius;
+        camera.position.y = targetY * 0.8;
+        camera.position.z = Math.cos(targetX) * radius;
+        camera.lookAt(0, 0, 0);
 
-      const breathe = Math.sin(t * 0.5) * 0.003;
-      bezelMesh.position.y = breathe;
-      screenMesh.position.y = breathe;
+        const breathe = Math.sin(t * 0.5) * 0.003;
+        bezelMesh.position.y = breathe;
+        screenMesh.position.y = breathe;
+      }
 
       composer.render();
     };
 
     // Start video and animation
+    const seekToStart = () => {
+      if (videoStart > 0) {
+        try { video.currentTime = videoStart; } catch {}
+      }
+    };
+    if (video.readyState >= 1) {
+      seekToStart();
+    } else {
+      video.addEventListener("loadedmetadata", seekToStart, { once: true });
+    }
+
     let startOnClick: (() => void) | null = null;
     video.play().catch(() => {
       startOnClick = () => {
@@ -320,14 +352,18 @@ const UIShowcase = () => {
         ref={containerRef}
         className="absolute inset-0"
       />
-      {/* Top fade to blend with section above */}
-      <div className="absolute top-0 left-0 right-0 h-24 pointer-events-none z-10"
-        style={{ background: "linear-gradient(to bottom, hsl(0 0% 0%) 0%, transparent 100%)" }}
-      />
-      {/* Bottom fade to blend with section below */}
-      <div className="absolute bottom-0 left-0 right-0 h-24 pointer-events-none z-10"
-        style={{ background: "linear-gradient(to top, hsl(0 0% 0%) 0%, transparent 100%)" }}
-      />
+      {!transparent && (
+        <>
+          {/* Top fade to blend with section above */}
+          <div className="absolute top-0 left-0 right-0 h-24 pointer-events-none z-10"
+            style={{ background: "linear-gradient(to bottom, hsl(0 0% 0%) 0%, transparent 100%)" }}
+          />
+          {/* Bottom fade to blend with section below */}
+          <div className="absolute bottom-0 left-0 right-0 h-24 pointer-events-none z-10"
+            style={{ background: "linear-gradient(to top, hsl(0 0% 0%) 0%, transparent 100%)" }}
+          />
+        </>
+      )}
     </div>
   );
 };

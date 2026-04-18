@@ -296,7 +296,7 @@ export default function HeroFeatures() {
         return (
           <motion.div
             key={i}
-            className="px-4 sm:px-6 md:px-12 lg:px-20 py-6 md:py-10 border-b border-white/[0.04] min-h-[var(--vh,100dvh)] md:min-h-0 flex flex-col justify-start pt-[72px] md:pt-6 snap-section-flow md:!scroll-snap-align-none"
+            className={`px-4 sm:px-6 md:px-12 lg:px-20 py-6 md:py-10 min-h-[var(--vh,100dvh)] md:min-h-0 flex flex-col justify-start pt-[72px] md:pt-6 snap-section-flow md:!scroll-snap-align-none${i < heroFeatures.length - 1 ? " border-b border-white/[0.04]" : ""}`}
             initial={{ opacity: 0, ...(isMobile ? {} : { y: 30 }) }}
             whileInView={{ opacity: 1, ...(isMobile ? {} : { y: 0 }) }}
             viewport={{ once: true, margin: "-80px" }}
