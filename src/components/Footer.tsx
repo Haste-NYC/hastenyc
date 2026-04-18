@@ -86,6 +86,7 @@ const Footer = ({ hideAsciiLogo = false }: { hideAsciiLogo?: boolean }) => {
           { label: 'Privacy Notice', to: '/privacy' },
           { label: 'License Agreement', to: '/eula' },
           { label: 'Refund Policy', to: '/refund' },
+          { label: 'Press', to: '/press' },
           { label: 'Blog', to: '/blog' },
         ].map((item, i, arr) => (
           <span key={item.label} className="inline-flex items-center">

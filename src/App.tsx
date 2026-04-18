@@ -34,6 +34,8 @@ import ConformDocsEnterprise from "./pages/conform-studio/DocsEnterprise";
 import ConformDocsQC from "./pages/conform-studio/DocsQC";
 import ConformDocsGettingStarted from "./pages/conform-studio/DocsGettingStarted";
 import GetConformStudio from "./pages/GetConformStudio";
+import Press from "./pages/Press";
+import UIShowcaseCapture from "./pages/UIShowcaseCapture";
 import NotFound from "./pages/NotFound";
 
 const queryClient = new QueryClient();
@@ -92,6 +94,8 @@ const App = () => (
             <Route path="/schedule" element={<Schedule />} />
             <Route path="/download" element={<Download />} />
             <Route path="/about" element={<About />} />
+            <Route path="/press" element={<Press />} />
+            <Route path="/_capture/ui-showcase" element={<UIShowcaseCapture />} />
             <Route path="/experiments/lava-lamp" element={<LavaLampExperiments />} />
             <Route path="/experiments/hero-mockup" element={<HeroMockup />} />
             <Route path="/og-preview" element={<OgImagePreview />} />
