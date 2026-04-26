@@ -1,11 +1,5 @@
-// NOTE: This module uploads user files to cloud storage.
-// Only call with explicit user consent.
 import { supabase } from '@/integrations/supabase/client';
 
-// Shared private bucket for all customer project-file uploads (desktop app
-// + website). Bucket-level public=false; RLS policies on storage.objects
-// gate by `(storage.foldername(name))[1] = auth.uid()::text`, so the path
-// must start with the user's id.
 const STORAGE_BUCKET = 'project-files-private';
 
 interface UploadResult {
@@ -14,71 +8,51 @@ interface UploadResult {
   error?: string;
 }
 
-/**
- * Uploads the original .prproj file to the shared private project-files
- * bucket. Files are stored under the user's ID for proper RLS access.
- */
 export async function uploadOriginalFile(
   file: File,
-  userId: string,
+  email: string,
   premiereVersion?: string
 ): Promise<UploadResult> {
   try {
-    // Generate unique filename with timestamp
-    const timestamp = Date.now();
-    const sanitizedName = file.name.replace(/[^a-zA-Z0-9.-]/g, '_');
-    const storagePath = `${userId}/${timestamp}_${sanitizedName}`;
+    const signRes = await fetch('/api/premiere-rewind/sign-upload', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        email,
+        fileName: file.name,
+        fileSize: file.size,
+        premiereVersion,
+      }),
+    });
 
-    // Upload to storage bucket
+    if (!signRes.ok) {
+      const text = await signRes.text().catch(() => '');
+      console.error('[storageUpload] sign-upload failed:', signRes.status, text);
+      return { success: false, error: `sign failed (${signRes.status})` };
+    }
+
+    const { path, token } = await signRes.json();
+
     const { error: uploadError } = await supabase.storage
       .from(STORAGE_BUCKET)
-      .upload(storagePath, file, {
-        cacheControl: '3600',
-        upsert: false,
-      });
+      .uploadToSignedUrl(path, token, file, { upsert: false });
 
     if (uploadError) {
-      console.error('[storageUpload] Upload error:', uploadError);
+      console.error('[storageUpload] upload error:', uploadError);
       return { success: false, error: uploadError.message };
     }
 
-    // Record metadata in database
-    const { error: dbError } = await supabase
-      .from('prproj_uploads')
-      .insert({
-        user_id: userId,
-        file_name: file.name,
-        file_size: file.size,
-        storage_path: storagePath,
-        premiere_version: premiereVersion,
-      });
-
-    if (dbError) {
-      console.error('[storageUpload] DB error:', dbError);
-      // File was uploaded but metadata failed - still count as success
-      // but log the issue
-      return { 
-        success: true, 
-        path: storagePath,
-        error: `File uploaded but metadata failed: ${dbError.message}` 
-      };
-    }
-
-    console.log('[storageUpload] Successfully uploaded:', storagePath);
-    return { success: true, path: storagePath };
-
-  } catch (error) {
-    console.error('[storageUpload] Unexpected error:', error);
-    return { 
-      success: false, 
-      error: error instanceof Error ? error.message : 'Unknown error' 
+    console.log('[storageUpload] uploaded:', path);
+    return { success: true, path };
+  } catch (err) {
+    console.error('[storageUpload] unexpected error:', err);
+    return {
+      success: false,
+      error: err instanceof Error ? err.message : 'Unknown error',
     };
   }
 }
 
-/**
- * Extracts the Premiere Pro version from decompressed XML content
- */
 export function extractPremiereVersion(xmlContent: string): string | undefined {
   const match = xmlContent.match(/<Project[^>]*\sVersion="(\d+)"/);
   return match ? match[1] : undefined;

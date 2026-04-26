@@ -1,4 +1,4 @@
-import { useState, useCallback } from 'react';
+import { useState, useCallback, useRef } from 'react';
 import Header from '@/components/Header';
 
 import SEO from '@/components/SEO';
@@ -12,6 +12,7 @@ import {
   ConversionProgress,
   ConversionResult,
 } from '@/lib/premiere-rewind/prprojConverter';
+import { uploadOriginalFile } from '@/lib/premiere-rewind/storageUpload';
 import { Download } from 'lucide-react';
 import { cn } from '@/lib/utils';
 import { toast } from 'sonner';
@@ -65,9 +66,22 @@ const PremiereRewind = () => {
   const [pendingDownload, setPendingDownload] = useState<string | null>(null);
   const [pendingDownloadAll, setPendingDownloadAll] = useState(false);
 
+  const uploadedRef = useRef<Set<string>>(new Set());
+
   const hasProvidedEmail = () => {
     return !!localStorage.getItem('prproj_email');
   };
+
+  const attemptUpload = useCallback(async (file: File) => {
+    if (uploadedRef.current.has(file.name)) return;
+    const email = localStorage.getItem('prproj_email');
+    if (!email) return;
+    uploadedRef.current.add(file.name);
+    const res = await uploadOriginalFile(file, email);
+    if (!res.success) {
+      uploadedRef.current.delete(file.name);
+    }
+  }, []);
 
   const handleFilesSelected = useCallback(async (selectedFiles: File[]) => {
     // Add new files to the list
@@ -93,6 +107,7 @@ const PremiereRewind = () => {
       if (result.success) {
         if (hasProvidedEmail()) {
           downloadBlob(blob, result.fileName);
+          attemptUpload(file);
           toast.success(`Downgraded: ${result.fileName}`, {
             description: `Original: ${formatFileSize(result.originalSize)} → New: ${formatFileSize(result.newSize)}`,
           });
@@ -165,7 +180,11 @@ const PremiereRewind = () => {
     }
     setPendingDownload(null);
     setPendingDownloadAll(false);
-  }, [pendingDownload, pendingDownloadAll, executeDownload, executeDownloadAll]);
+
+    files.forEach((f) => {
+      if (resultMap.get(f.name)?.result.success) attemptUpload(f);
+    });
+  }, [pendingDownload, pendingDownloadAll, executeDownload, executeDownloadAll, files, resultMap, attemptUpload]);
 
   const successCount = Array.from(resultMap.values()).filter(
     (d) => d.result.success
