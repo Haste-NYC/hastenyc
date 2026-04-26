@@ -53,17 +53,5 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
     return res.status(500).json({ error: 'failed to create upload URL' });
   }
 
-  try {
-    await supabase.from('prproj_uploads').insert({
-      email: normalizedEmail,
-      file_name: fileName,
-      file_size: fileSize,
-      storage_path: data.path,
-      premiere_version: premiereVersion ?? null,
-    });
-  } catch (err: any) {
-    console.error('[sign-upload] metadata insert error (non-fatal):', err?.message ?? err);
-  }
-
   res.status(200).json({ path: data.path, token: data.token });
 }
