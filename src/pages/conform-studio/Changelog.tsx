@@ -23,12 +23,16 @@ const API_URL = import.meta.env.PROD
   ? (import.meta.env.VITE_API_URL || '')
   : (import.meta.env.VITE_API_URL || 'http://localhost:3001');
 
+const CHANGELOG_FETCH_ENABLED = false;
+
 const Changelog = () => {
   const [releases, setReleases] = useState<Release[]>([]);
   const [fetchedFromGitHub, setFetchedFromGitHub] = useState(false);
-  const [loading, setLoading] = useState(true);
+  const [loading, setLoading] = useState(CHANGELOG_FETCH_ENABLED);
 
   useEffect(() => {
+    if (!CHANGELOG_FETCH_ENABLED) return;
+
     let cancelled = false;
 
     async function fetchChangelog() {
@@ -84,6 +88,11 @@ const Changelog = () => {
           <div className="max-w-3xl mx-auto">
             {loading && releases.length === 0 && (
               <p className="text-sm text-white/30 text-center">Loading releases...</p>
+            )}
+            {!loading && releases.length === 0 && (
+              <p className="text-sm text-white/30 text-center">
+                Release notes are temporarily unavailable.
+              </p>
             )}
             <div className="border-l border-white/[0.08] pl-8 space-y-10">
               {releases.map((release) => (
