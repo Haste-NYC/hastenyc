@@ -515,7 +515,9 @@ const Index = () => {
           />
           <SectionFadeTop />
           <SectionFadeBottom />
-          <FeatureComparisonChart />
+          <div className="relative z-10">
+            <FeatureComparisonChart />
+          </div>
         </section>
 
         {/* CLI / Pipeline Integration - mobile only, after comparison chart */}
