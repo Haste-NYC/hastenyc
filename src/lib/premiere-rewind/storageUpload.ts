@@ -2,6 +2,12 @@
 // Only call with explicit user consent.
 import { supabase } from '@/integrations/supabase/client';
 
+// Shared private bucket for all customer project-file uploads (desktop app
+// + website). Bucket-level public=false; RLS policies on storage.objects
+// gate by `(storage.foldername(name))[1] = auth.uid()::text`, so the path
+// must start with the user's id.
+const STORAGE_BUCKET = 'project-files-private';
+
 interface UploadResult {
   success: boolean;
   path?: string;
@@ -9,8 +15,8 @@ interface UploadResult {
 }
 
 /**
- * Uploads the original .prproj file to Lovable Cloud Storage
- * Files are stored under the user's ID for proper RLS access
+ * Uploads the original .prproj file to the shared private project-files
+ * bucket. Files are stored under the user's ID for proper RLS access.
  */
 export async function uploadOriginalFile(
   file: File,
@@ -25,7 +31,7 @@ export async function uploadOriginalFile(
 
     // Upload to storage bucket
     const { error: uploadError } = await supabase.storage
-      .from('prproj-originals')
+      .from(STORAGE_BUCKET)
       .upload(storagePath, file, {
         cacheControl: '3600',
         upsert: false,
