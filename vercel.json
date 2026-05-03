@@ -27,6 +27,7 @@
     { "source": "/((?!api/).*)", "destination": "/index.html" }
   ],
   "crons": [
-    { "path": "/api/cron/daily-analytics", "schedule": "0 3 * * *" }
+    { "path": "/api/cron/daily-analytics", "schedule": "0 3 * * *" },
+    { "path": "/api/cron/check-api-keys", "schedule": "0 13 * * *" }
   ]
 }

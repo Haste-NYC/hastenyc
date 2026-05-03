@@ -161,9 +161,9 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
 
     res.status(200).json({ url: session.url });
   } catch (error) {
-    console.error('Error creating checkout session:', error);
+    console.error('[checkout] Error creating checkout session:', error);
     res.status(500).json({
-      error: error instanceof Error ? error.message : 'Failed to create checkout session'
+      error: 'Checkout is temporarily unavailable. Please try again in a few minutes.',
     });
   }
 }
