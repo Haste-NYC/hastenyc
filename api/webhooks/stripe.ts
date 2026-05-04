@@ -59,20 +59,16 @@ async function resolveUserId(customer: string | Stripe.Customer | Stripe.Deleted
   return null;
 }
 
-// Upsert subscription data into the subscriptions table
-async function upsertSubscription(subscription: Stripe.Subscription, userId: string) {
-  const supabase = getSupabase();
-
+// Build the shared record shape used by both subscription rows and
+// pending_subscription_links rows.
+function buildSubscriptionRecord(subscription: Stripe.Subscription) {
   const item = subscription.items.data[0];
-  const priceId = item?.price?.id || null;
-
-  const record = {
-    user_id: userId,
+  return {
     stripe_subscription_id: subscription.id,
     stripe_customer_id: typeof subscription.customer === 'string'
       ? subscription.customer
       : subscription.customer.id,
-    stripe_price_id: priceId,
+    stripe_price_id: item?.price?.id || null,
     status: subscription.status,
     current_period_start: item?.current_period_start
       ? new Date(item.current_period_start * 1000).toISOString()
@@ -88,15 +84,50 @@ async function upsertSubscription(subscription: Stripe.Subscription, userId: str
       ? new Date(subscription.trial_end * 1000).toISOString()
       : null,
   };
+}
+
+// Upsert subscription data into the subscriptions table.
+async function upsertSubscription(subscription: Stripe.Subscription, userId: string) {
+  const supabase = getSupabase();
 
   const { error } = await supabase
     .from('subscriptions')
-    .upsert(record, { onConflict: 'stripe_subscription_id' });
+    .upsert(
+      { user_id: userId, ...buildSubscriptionRecord(subscription) },
+      { onConflict: 'stripe_subscription_id' },
+    );
 
   if (error) {
     console.error('[Stripe webhook] Subscription upsert error:', error);
   } else {
     console.log(`[Stripe webhook] Upserted subscription ${subscription.id} for user ${userId} (status: ${subscription.status})`);
+  }
+}
+
+// Persist an orphan subscription so that when the customer eventually signs
+// up in Supabase with the same email, the auth.users insert trigger can link
+// it to their new profile.
+async function stashPendingSubscription(
+  subscription: Stripe.Subscription,
+  email: string | null | undefined,
+) {
+  if (!email) {
+    console.warn('[Stripe webhook] Orphan subscription with no email, dropping:', subscription.id);
+    return;
+  }
+
+  const supabase = getSupabase();
+  const { error } = await supabase
+    .from('pending_subscription_links')
+    .upsert(
+      { email: email.toLowerCase(), ...buildSubscriptionRecord(subscription) },
+      { onConflict: 'stripe_subscription_id' },
+    );
+
+  if (error) {
+    console.error('[Stripe webhook] pending_subscription_links upsert error:', error);
+  } else {
+    console.log(`[Stripe webhook] Queued pending link ${subscription.id} for ${email.toLowerCase()}`);
   }
 }
 
@@ -143,15 +174,16 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
         console.error('[Stripe] Failed to send checkout notification:', e.message);
       }
 
-      // Activate subscription in database
+      // Activate subscription in database, or stash for post-signup linking
       if (session.subscription && session.customer) {
         try {
+          const subscription = await stripe.subscriptions.retrieve(session.subscription as string);
           const userId = await resolveUserId(session.customer as string);
           if (userId) {
-            const subscription = await stripe.subscriptions.retrieve(session.subscription as string);
             await upsertSubscription(subscription, userId);
           } else {
-            console.warn('[Stripe webhook] Could not resolve Supabase user for customer:', session.customer);
+            const sessionEmail = session.customer_details?.email || session.customer_email;
+            await stashPendingSubscription(subscription, sessionEmail);
           }
         } catch (e: any) {
           console.error('[Stripe webhook] Failed to activate subscription:', e.message);
@@ -168,13 +200,15 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
         customerId: subscription.customer,
       });
 
-      // Update subscription status in database
+      // Update subscription status in database, or stash for post-signup linking
       try {
         const userId = await resolveUserId(subscription.customer as string);
         if (userId) {
           await upsertSubscription(subscription, userId);
         } else {
-          console.warn('[Stripe webhook] Could not resolve Supabase user for customer:', subscription.customer);
+          const customer = await stripe.customers.retrieve(subscription.customer as string);
+          const email = !customer.deleted ? (customer as Stripe.Customer).email : null;
+          await stashPendingSubscription(subscription, email);
         }
       } catch (e: any) {
         console.error('[Stripe webhook] Failed to update subscription:', e.message);

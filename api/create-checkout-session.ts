@@ -1,6 +1,6 @@
 import type { VercelRequest, VercelResponse } from '@vercel/node';
 import Stripe from 'stripe';
-import { createClient } from '@supabase/supabase-js';
+import { createClient, SupabaseClient } from '@supabase/supabase-js';
 
 const stripe = new Stripe(process.env.STRIPE_SECRET_KEY || '', {
   apiVersion: '2025-12-15.clover',
@@ -10,6 +10,60 @@ function setCorsHeaders(res: VercelResponse) {
   res.setHeader('Access-Control-Allow-Origin', process.env.FRONTEND_URL || '*');
   res.setHeader('Access-Control-Allow-Methods', 'POST, OPTIONS');
   res.setHeader('Access-Control-Allow-Headers', 'Content-Type');
+}
+
+function getSupabase(): SupabaseClient | null {
+  const url = process.env.VITE_SUPABASE_URL || '';
+  const key = process.env.SUPABASE_SERVICE_ROLE_KEY || '';
+  if (!url || !key) return null;
+  return createClient(url, key);
+}
+
+// Pick a canonical Stripe customer from a list of duplicates and tag the rest.
+// Preference order: customer whose metadata already matches the current
+// supabaseUserId, otherwise the most-recent (Stripe returns most-recent first).
+async function selectCanonicalCustomer(
+  candidates: Stripe.Customer[],
+  supabaseUserId: string | undefined,
+): Promise<Stripe.Customer> {
+  const matchByUser = supabaseUserId
+    ? candidates.find((c) => c.metadata?.supabase_user_id === supabaseUserId)
+    : undefined;
+  const canonical = matchByUser || candidates[0];
+
+  await Promise.all(
+    candidates
+      .filter((c) => c.id !== canonical.id && !c.metadata?.deduped_into)
+      .map((c) =>
+        stripe.customers
+          .update(c.id, {
+            metadata: { ...(c.metadata || {}), deduped_into: canonical.id },
+          })
+          .catch((err) => {
+            console.error(`[checkout] Failed to tag duplicate ${c.id}:`, err.message);
+          }),
+      ),
+  );
+
+  return canonical;
+}
+
+// Has any prior subscription ever existed for any of these customers?
+// Used to suppress a fresh trial when the same email has trialed before.
+async function hasPriorSubscription(customers: Stripe.Customer[]): Promise<boolean> {
+  for (const customer of customers) {
+    try {
+      const subs = await stripe.subscriptions.list({
+        customer: customer.id,
+        status: 'all',
+        limit: 1,
+      });
+      if (subs.data.length > 0) return true;
+    } catch (err: any) {
+      console.error(`[checkout] Failed listing subs for ${customer.id}:`, err.message);
+    }
+  }
+  return false;
 }
 
 export default async function handler(req: VercelRequest, res: VercelResponse) {
@@ -30,91 +84,91 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
       return res.status(400).json({ error: 'Missing priceId' });
     }
 
-    // If we have a supabase user ID, look up or create a Stripe Customer
-    // with supabase_user_id in metadata.  This gives the webhook handler
-    // a direct link instead of relying on email matching.
-    let customerId: string | undefined;
-    let resolvedEmail = customerEmail;
+    const supabase = getSupabase();
+    let resolvedEmail: string | undefined = customerEmail;
+    let cachedCustomerId: string | undefined;
 
-    if (supabaseUserId) {
-      // Look up the user's email from Supabase if not provided
-      if (!resolvedEmail) {
-        try {
-          const supabaseUrl = process.env.VITE_SUPABASE_URL || '';
-          const supabaseKey = process.env.SUPABASE_SERVICE_ROLE_KEY || '';
-          if (supabaseUrl && supabaseKey) {
-            const supabase = createClient(supabaseUrl, supabaseKey);
-            const { data: profile } = await supabase
-              .from('profiles')
-              .select('email, stripe_customer_id')
-              .eq('id', supabaseUserId)
-              .single();
-
-            if (profile) {
-              resolvedEmail = profile.email;
-              // Reuse existing Stripe customer if already linked
-              if (profile.stripe_customer_id) {
-                try {
-                  await stripe.customers.retrieve(profile.stripe_customer_id);
-                  customerId = profile.stripe_customer_id;
-                } catch {
-                  // Stale customer ID, will create a new one below
-                }
-              }
+    // 1. If a Supabase user was passed, fetch their email + cached stripe id.
+    if (supabaseUserId && supabase) {
+      try {
+        const { data: profile } = await supabase
+          .from('profiles')
+          .select('email, stripe_customer_id')
+          .eq('id', supabaseUserId)
+          .single();
+        if (profile) {
+          resolvedEmail = resolvedEmail || profile.email;
+          if (profile.stripe_customer_id) {
+            try {
+              await stripe.customers.retrieve(profile.stripe_customer_id);
+              cachedCustomerId = profile.stripe_customer_id;
+            } catch {
+              // Stale customer id — fall through to email lookup.
             }
           }
-        } catch (err: any) {
-          console.error('[checkout] Profile lookup error:', err.message);
         }
+      } catch (err: any) {
+        console.error('[checkout] Profile lookup error:', err.message);
       }
+    }
 
-      // Create or find a Stripe customer linked to this Supabase user
-      if (!customerId) {
-        // Search for existing Stripe customer by email first
-        if (resolvedEmail) {
-          const existing = await stripe.customers.list({
-            email: resolvedEmail,
-            limit: 1,
-          });
-          if (existing.data.length > 0) {
-            customerId = existing.data[0].id;
-            // Ensure metadata is up to date
-            await stripe.customers.update(customerId, {
-              metadata: { supabase_user_id: supabaseUserId },
+    // 2. Resolve a single canonical Stripe customer.
+    //    Email-based dedup runs unconditionally so that anonymous marketing-site
+    //    visitors who paid before signing up don't mint a second Stripe customer
+    //    on every checkout. (Sam Stenson, 2026-05-04: two trials, same email.)
+    let customerId: string | undefined = cachedCustomerId;
+    let allMatchedCustomers: Stripe.Customer[] = [];
+
+    if (resolvedEmail) {
+      const matches = await stripe.customers.list({ email: resolvedEmail, limit: 5 });
+      allMatchedCustomers = matches.data;
+
+      if (matches.data.length > 0) {
+        const canonical = await selectCanonicalCustomer(matches.data, supabaseUserId);
+        customerId = customerId || canonical.id;
+
+        if (supabaseUserId && canonical.metadata?.supabase_user_id !== supabaseUserId) {
+          try {
+            await stripe.customers.update(canonical.id, {
+              metadata: { ...(canonical.metadata || {}), supabase_user_id: supabaseUserId },
             });
+          } catch (err: any) {
+            console.error('[checkout] Failed stamping supabase_user_id:', err.message);
           }
-        }
-
-        // Still no customer -- create one
-        if (!customerId) {
-          const customer = await stripe.customers.create({
-            email: resolvedEmail || undefined,
-            metadata: { supabase_user_id: supabaseUserId },
-          });
-          customerId = customer.id;
-        }
-
-        // Save stripe_customer_id back to Supabase profile
-        try {
-          const supabaseUrl = process.env.VITE_SUPABASE_URL || '';
-          const supabaseKey = process.env.SUPABASE_SERVICE_ROLE_KEY || '';
-          if (supabaseUrl && supabaseKey) {
-            const supabase = createClient(supabaseUrl, supabaseKey);
-            await supabase
-              .from('profiles')
-              .update({ stripe_customer_id: customerId })
-              .eq('id', supabaseUserId);
-          }
-        } catch (err: any) {
-          console.error('[checkout] Profile update error:', err.message);
         }
       }
     }
 
-    // If a promo code was provided, validate it and convert to trial days.
-    // NAB90 = 90 days, NAB60 = 60 days, NAB30 = 30 days.
-    let trialDays = 7;
-    if (promoCode && typeof promoCode === 'string') {
+    if (!customerId) {
+      const customer = await stripe.customers.create({
+        email: resolvedEmail || undefined,
+        metadata: supabaseUserId ? { supabase_user_id: supabaseUserId } : {},
+      });
+      customerId = customer.id;
+      allMatchedCustomers = [customer];
+    }
+
+    if (supabaseUserId && supabase) {
+      try {
+        await supabase
+          .from('profiles')
+          .update({ stripe_customer_id: customerId })
+          .eq('id', supabaseUserId);
+      } catch (err: any) {
+        console.error('[checkout] Profile update error:', err.message);
+      }
+    }
+
+    // 3. Decide trial length. Block fresh trials when this email has
+    //    *any* prior subscription history (active, trialing, canceled, …).
+    let trialDays: number | undefined = 7;
+    if (await hasPriorSubscription(allMatchedCustomers)) {
+      trialDays = undefined;
+    }
+
+    // Promo codes can extend the trial — only honor that when a trial is
+    // actually being granted. NAB90 = 90 days, NAB60 = 60, NAB30 = 30.
+    if (trialDays && promoCode && typeof promoCode === 'string') {
       const promos = await stripe.promotionCodes.list({
         code: promoCode.trim(),
         active: true,
@@ -139,23 +193,12 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
       allow_promotion_codes: false,
       success_url: `${process.env.FRONTEND_URL || 'http://localhost:5173'}/download?session_id={CHECKOUT_SESSION_ID}`,
       cancel_url: `${process.env.FRONTEND_URL || 'http://localhost:5173'}/#pricing`,
-      subscription_data: {
-        trial_period_days: trialDays,
-      },
+      customer: customerId,
+      ...(trialDays ? { subscription_data: { trial_period_days: trialDays } } : {}),
       metadata: {
         ...(supabaseUserId ? { supabase_user_id: supabaseUserId } : {}),
       },
     };
-
-    if (customerId) {
-      // Use the linked Stripe customer -- webhook gets supabase_user_id
-      // from customer metadata for a direct link
-      sessionParams.customer = customerId;
-    } else if (resolvedEmail) {
-      // Fallback: pre-fill email so Stripe creates a customer, but
-      // webhook will need to match by email
-      sessionParams.customer_email = resolvedEmail;
-    }
 
     const session = await stripe.checkout.sessions.create(sessionParams);
 
