@@ -120,6 +120,50 @@ export async function notifyVisitor(org: string, city: string, region: string, p
   ], text);
 }
 
+type DuplicateSubRef = {
+  customer: string;
+  subscription: string;
+  status: string;
+  amount_cents: number | null;
+  interval: string | null;
+  trial_end: number | null;
+};
+
+type DuplicateSubGroup = {
+  email: string;
+  active_subs: DuplicateSubRef[];
+};
+
+function formatDupSub(ref: DuplicateSubRef): string {
+  const amount = ref.amount_cents != null ? `$${(ref.amount_cents / 100).toFixed(2)}` : '?';
+  const interval = ref.interval || '?';
+  const trial = ref.trial_end ? ` (trial → ${new Date(ref.trial_end * 1000).toISOString().slice(0, 10)})` : '';
+  return `\`${ref.subscription}\` ${ref.status} ${amount}/${interval}${trial} on \`${ref.customer}\``;
+}
+
+export async function notifyDuplicateSubs(groups: DuplicateSubGroup[]) {
+  if (groups.length === 0) return;
+
+  const lines = groups
+    .map((g) => {
+      const subs = g.active_subs.map((s) => `    - ${formatDupSub(s)}`).join('\n');
+      return `*${sanitizeMrkdwn(g.email)}* (${g.active_subs.length} active subs):\n${subs}`;
+    })
+    .join('\n\n');
+
+  const text = `Duplicate Stripe subscriptions detected for ${groups.length} email(s)`;
+
+  await postToSlack([
+    {
+      type: 'section',
+      text: {
+        type: 'mrkdwn',
+        text: `:rotating_light: *Duplicate Stripe subscriptions detected*\n${lines}\n\n_Tag the duplicate customer with \`metadata.deduped_into\` once resolved to silence future alerts._`,
+      },
+    },
+  ], text);
+}
+
 // --- Haste Pulse notifications (Supabase desktop app events) ---
 
 async function postToPulse(blocks: any[], text: string) {
