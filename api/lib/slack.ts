@@ -256,3 +256,35 @@ export async function notifyAppSession(
     },
   ], text);
 }
+
+export async function notifyAuthSignin(
+  email: string,
+  userMeta: Record<string, unknown> | null | undefined,
+  userAgent: string | null,
+) {
+  const domain = extractCompanyDomain(email);
+  const domainLabel = domain ? ` (${sanitizeMrkdwn(domain)})` : '';
+  const meta = userMeta || {};
+  const rawName = (meta.display_name || meta.full_name || meta.name || '') as string;
+  const nameLabel = rawName
+    ? `\n*Name:* ${sanitizeMrkdwn(String(rawName).slice(0, 80))}`
+    : '';
+  const provider = (meta.provider || meta.iss || '') as string;
+  const providerLabel = provider
+    ? `\n*Provider:* ${sanitizeMrkdwn(String(provider).slice(0, 40))}`
+    : '';
+  const uaLabel = userAgent
+    ? `\n*Client:* ${sanitizeMrkdwn(userAgent.slice(0, 120))}`
+    : '';
+  const text = `Conform Studio sign-in: ${email}`;
+
+  await postToPulse([
+    {
+      type: 'section',
+      text: {
+        type: 'mrkdwn',
+        text: `:key: *Desktop Sign-In*\n*User:* ${sanitizeMrkdwn(email)}${domainLabel}${nameLabel}${providerLabel}${uaLabel}`,
+      },
+    },
+  ], text);
+}
