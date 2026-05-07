@@ -1,12 +1,17 @@
 import type { VercelRequest, VercelResponse } from '@vercel/node';
 import { notifyNewUser, notifyConversion, notifyAppSession } from '../lib/slack.js';
 
-const IGNORED_USERS = new Set(['DEV', 'test-debug@example.com']);
+const IGNORED_USERS = new Set(['test-debug@example.com']);
+const INTERNAL_DOMAINS = new Set(['haste.nyc', 'conform.studio']);
 
 function isIgnoredUser(userId: string): boolean {
-  if (IGNORED_USERS.has(userId)) return true;
-  if (userId.includes('test') && userId.includes('@example.com')) return true;
-  if (userId.endsWith('@conform.studio')) return true;
+  const id = userId.trim().toLowerCase();
+  if (!id) return true;
+  if (id === 'dev') return true;
+  if (IGNORED_USERS.has(id)) return true;
+  if (id.includes('test') && id.includes('@example.com')) return true;
+  const domain = id.split('@')[1];
+  if (domain && INTERNAL_DOMAINS.has(domain)) return true;
   return false;
 }
 
