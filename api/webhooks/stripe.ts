@@ -151,6 +151,25 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
     return res.status(400).json({ error: `Webhook Error: ${err.message}` });
   }
 
+  // Idempotency + audit log (best-effort; must never block event processing).
+  // event_id is the PRIMARY KEY of stripe_webhook_events, so a retried delivery
+  // conflicts (Postgres 23505) and we short-circuit to avoid reprocessing.
+  try {
+    const supabase = getSupabase();
+    const { error: auditError } = await supabase
+      .from('stripe_webhook_events')
+      .insert({ event_id: event.id, event_type: event.type, status: 'received' });
+    if (auditError) {
+      if ((auditError as { code?: string }).code === '23505') {
+        console.log(`[Stripe webhook] Duplicate event ${event.id} (${event.type}); already processed, skipping.`);
+        return res.status(200).json({ received: true, duplicate: true });
+      }
+      console.error('[Stripe webhook] Audit log insert failed (non-fatal):', auditError);
+    }
+  } catch (e: any) {
+    console.error('[Stripe webhook] Audit log threw (non-fatal):', e.message);
+  }
+
   switch (event.type) {
     case 'checkout.session.completed': {
       const session = event.data.object as Stripe.Checkout.Session;
@@ -192,9 +211,10 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
       break;
     }
 
+    case 'customer.subscription.created':
     case 'customer.subscription.updated': {
       const subscription = event.data.object as Stripe.Subscription;
-      console.log('Subscription updated:', {
+      console.log(`Subscription ${event.type === 'customer.subscription.created' ? 'created' : 'updated'}:`, {
         subscriptionId: subscription.id,
         status: subscription.status,
         customerId: subscription.customer,
