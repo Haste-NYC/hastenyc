@@ -4,6 +4,7 @@ import { TooltipProvider } from "@/components/ui/tooltip";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { BrowserRouter, Routes, Route, Navigate, useLocation } from "react-router-dom";
 import { useEffect } from "react";
+import { SpeedInsights } from "@vercel/speed-insights/react";
 import SmoothScrollProvider from "@/components/SmoothScrollProvider";
 import Index from "./pages/Index";
 import Terms from "./pages/Terms";
@@ -116,6 +117,7 @@ const App = () => (
             <Route path="*" element={<NotFound />} />
           </Routes>
         </BrowserRouter>
+        <SpeedInsights />
       </TooltipProvider>
     </SmoothScrollProvider>
   </QueryClientProvider>
