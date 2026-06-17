@@ -61,15 +61,21 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
   }
 
   try {
-    const token = process.env.GITHUB_TOKEN;
-    const headers: Record<string, string> = {
+    const token = process.env.GITHUB_TOKEN?.trim();
+    const baseHeaders: Record<string, string> = {
       Accept: 'application/vnd.github+json',
     };
-    if (token) {
-      headers.Authorization = `token ${token}`;
-    }
+    const authHeaders = token
+      ? { ...baseHeaders, Authorization: `token ${token}` }
+      : baseHeaders;
 
-    const response = await fetch(RELEASES_URL, { headers });
+    let response = await fetch(RELEASES_URL, { headers: authHeaders });
+    // Releases endpoint is public; if a stale token is rejected, retry unauthenticated
+    // so the changelog keeps working (just at the 60/hr unauth rate limit).
+    if (token && response.status === 401) {
+      console.warn('[changelog] GITHUB_TOKEN rejected; falling back to unauthenticated fetch');
+      response = await fetch(RELEASES_URL, { headers: baseHeaders });
+    }
     if (!response.ok) {
       return res.status(response.status).json({ error: 'Failed to fetch releases' });
     }
